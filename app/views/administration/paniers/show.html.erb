@@ -1,0 +1,65 @@
+<div class="well">
+	<p id="notice"><%= notice %></p>
+	
+	<p>
+	  <b>Id:</b>
+	  <%= @panier.id %>
+	</p>
+	
+	<p>
+	  <b>Revendeur:</b>
+	  <%= @panier.revendeur_id %>
+	</p>
+	
+	<p>
+	  <b>Categorie:</b>
+	  <%= @panier.categorie.nom %>
+	</p>
+	
+	<p>
+	  <b>Titre:</b>
+	  <%= @panier.titre %>
+	</p>
+	
+	<p>
+	  <b>Description:</b>
+	  <%= @panier.description %>
+	</p>
+	
+	<p>
+	  <b>Nb pack:</b>
+	  <%= @panier.nb_pack %>
+	</p>
+	
+	<p>
+	  <b>Prix unite ht:</b>
+	  <%= @panier.prix_unite_ht %>
+	</p>
+	
+	<p>
+	  <b>Prix unite ttc:</b>
+	  <%= @panier.prix_unite_ttc %>
+	</p>
+	
+	<p>
+	  <b>Alaune:</b>
+	  <%= @panier.alaune %>
+	</p>
+	
+	<p>
+	  <b>Deleted:</b>
+	  <%= @panier.deleted %>
+	</p>
+	
+	
+	<%= link_to 'Edit', edit_administration_user_panier_path(params[:user_id],@panier) %> |
+	<%= link_to 'Back', administration_user_paniers_path(current_user) %>
+	
+</div>
+
+<div class="well">
+
+	<%= render :partial => "/administration/produit_paniers/index", :locals => {:produit_paniers => @produit_paniers} %>
+
+
+</div>

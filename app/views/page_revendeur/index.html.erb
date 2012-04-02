@@ -1,0 +1,37 @@
+<h1><%= @titre %></h1>
+<p>Find me in app/views/page_revendeur/index.html.erb</p>
+
+<% if @revendeurs.count == 0 %>
+	<p> Aucun agriculteur sur le site</p>
+<% else %>
+	<table class="table table-striped">
+		<tr>
+			<th>Nom</th>
+			<th>Prenom</th>
+			<th>Amap</th>
+			<th>Ville</th>
+			<th>Description</th>
+			<th> Produit en vente </th>
+			<th> Panier en vente</th>
+			<th> Action</th>
+			
+		</tr>
+	
+	
+	<% @revendeurs.each do |revendeur| %>
+	<tr>
+		<td> <%= revendeur.nom %> </td>
+		<td> <%= revendeur.prenom %> </td>
+		<td> <%= revendeur.direction.nom %> </td>
+		<td> <%= revendeur.ville.nom %> </td>
+		<td> <%= revendeur.description %></td>
+		<td> <%= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %></td>
+		<td><%= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %></td>
+		<td> <%= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %></td>
+		
+	
+	</tr>
+	<% end %>
+<% end %>
+
+</table>

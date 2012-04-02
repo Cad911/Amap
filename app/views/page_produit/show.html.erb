@@ -1,0 +1,35 @@
+<h1>PageProduit#show</h1>
+<p>Find me in app/views/page_produit/show.html.erb</p>
+
+<div class="well">
+	<h1> <%= @produit.titre %></h1>
+	
+	<p> Description :<%= @produit.description %> </p>
+	<p> Prix HT : <%= @produit.prix_unite_ht %></p>
+	<p>Agriculteur : <%= @produit.user.nom %></p>
+	
+	
+	<!-- PARTIE INFO AGRICULTEUR -->
+	<div class="thumbnail">
+		<p> Produit par</p>
+		<img src="">
+		<div class="caption">
+			<h5><%= @produit.user.nom %></h5>
+			<p><%= @produit.user.description %></p>
+		</div>
+		
+			
+			<% if @other_produits.count != 0 %>
+			<h6> Autre produit en vente par ces agriculteurs </h6>
+			<ul>
+				<%	@other_produits.each do |other_produit| %>
+					<li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
+			
+				<%	end %>
+			</ul>
+			<%	else %>
+				<p> Aucun autre produit</p>
+			<% end %>
+		<a> Voir la fiche de l'agriculteur </a>
+	</div>
+</div>

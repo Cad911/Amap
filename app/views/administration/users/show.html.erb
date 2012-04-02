@@ -1,0 +1,84 @@
+		 <div class="page-header">
+   			<h1> <%= @title_user %> </h1>
+  		</div>
+   
+			
+
+			<div class="well">
+			<p> id current <%= current_user.id %></p>
+			<p id="notice"><%= notice %></p>
+				<p>
+				  <b>Id:</b>
+				  <%= @user.id %>
+				</p>
+				
+				<p>
+				  <b>Entite:</b>
+				  <%= @user.entite.nom %>
+				</p>
+				<% if !@user.direction.nil?  %>
+				<p>
+				  <b>Direction:</b>
+				  <%= @user.direction.nom %>
+				</p>
+				
+				<% end %>
+				<p>
+				  <b>Ville:</b>
+				  <%= @user.ville.nom %>
+				</p>
+				
+				<p>
+				  <b>Mode denvoi:</b>
+				  <%= @user.mode_denvoi_id %>
+				</p>
+				
+				<p>
+				  <b>Genre:</b>
+				  <%= @user.genre %>
+				</p>
+				
+				<p>
+				  <b>Nom:</b>
+				  <%= @user.nom %>
+				</p>
+				
+				<p>
+				  <b>Prenom:</b>
+				  <%= @user.prenom %>
+				</p>
+				
+				<p>
+				  <b>Nom societe:</b>
+				  <%= @user.nom_societe %>
+				</p>
+				
+				<p>
+				  <b>Description:</b>
+				  <%= @user.description %>
+				</p>
+				
+				<p>
+				  <b>Adresse:</b>
+				  <%= @user.adresse %>
+				</p>
+				
+				<p>
+				  <b>Telephone:</b>
+				  <%= @user.telephone %>
+				</p>
+				
+				<p>
+				  <b>Naissance:</b>
+				  <%= @user.naissance %>
+				</p>
+				
+				<p>
+				  <b>Alaune:</b>
+				  <%= @user.alaune %>
+				</p>
+				
+				
+				<%= link_to 'Modifier', edit_administration_user_path(@user), :class => "btn" %> 
+				<%= link_to 'Retour', administration_users_path,:class => "btn btn-inverse" %>
+			</div>		

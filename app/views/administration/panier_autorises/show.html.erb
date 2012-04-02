@@ -1,0 +1,48 @@
+<div class="page-header">
+   	<h1> Panier:  <%= @panier_autorise.titre %> autorisé </h1>
+</div>
+
+<div class="well">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @panier_autorise.id %>
+</p>
+
+<p>
+  <b>Dirigé par:</b>
+  <%= @panier_autorise.user.nom %>
+</p>
+
+<p>
+  <b>Categorie:</b>
+  <%= @panier_autorise.categorie.nom %>
+</p>
+
+<p>
+  <b>Titre:</b>
+  <%= @panier_autorise.titre %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @panier_autorise.description %>
+</p>
+
+<p>
+  <b>Prix panier ht:</b>
+  <%= @panier_autorise.prix_panier_ht %>
+</p>
+
+<p>
+  <b>Prix panier ttc:</b>
+  <%= @panier_autorise.prix_panier_ttc %>
+</p>
+
+
+
+
+<%= link_to 'Modifier', edit_administration_user_panier_autorise_path(params[:user_id],@panier_autorise) %> |
+<%= link_to 'Retour', administration_user_panier_autorises_path %>
+</div>
