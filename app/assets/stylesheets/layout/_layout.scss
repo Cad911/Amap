@@ -1,0 +1,24 @@
+body {
+  .l_wrapper {
+    width:930px;
+    margin:0 auto 0 auto;
+    padding:15px;
+    background:#fafafa;
+  }
+}
+// page produit //
+body {
+  .l_wrapper {
+    .l_main_left {
+      width:605px;
+      padding:0 15px 0 0;
+      margin:0;
+      float:left;
+    }
+    .l_main_right {
+      width:310px;
+      float:left;
+    }
+  }
+}
+
