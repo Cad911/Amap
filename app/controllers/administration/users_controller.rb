@@ -6,12 +6,8 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		@revendeurs = User.where(:direction_id => params[:user_id])
 		authorize! :manage, User.find(params[:user_id]) #AUTORISATION POUR LA PAGE REVENDEUR
 	end
-	
-	
-	
-	
-	
-	
+
+
 	# _____________________________________ SHOW ____________________________________________________
 	def show
 		@user = User.find(params[:id])

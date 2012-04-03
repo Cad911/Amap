@@ -62,7 +62,7 @@
 							<li> <%= link_to "Mes produits en ligne" , administration_user_produit_vente_libres_path(current_user) %> </li>
 							<li> <%= link_to "Mes paniers" , administration_user_paniers_path(current_user) %></li>
 							<% end %>
-						<li><%= link_to "deconnexion", logout_path() , :method => 'delete' %></li>
+						<li><%= link_to "deconnexion", user_logout_path() , :method => 'delete' %></li>
 					</ul>
 				</div>
 				<% end %>

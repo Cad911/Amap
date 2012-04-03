@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   belongs_to :direction, :class_name => "User",
     :foreign_key => "direction_id"
     
+
 	#______ VERIFICATION DES DROITS _______________
     def has_revendeur
     	if(self.entite.droit.has_revendeur == 1)
