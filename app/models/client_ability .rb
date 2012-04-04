@@ -1,8 +1,14 @@
 class ClientAbility
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(client)
+  	client ||= Client.new
   	
+  	if client.nil?
+  	
+  	else
+  	
+  	end
   end
     # Define abilities for the passed in user here. For example:
     #

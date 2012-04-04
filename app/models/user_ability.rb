@@ -2,7 +2,8 @@ class UserAbility
   include CanCan::Ability
 
   def initialize(user)
-  	
+  
+  	user ||= new.User
   	
   	if user.nil?
 	  	

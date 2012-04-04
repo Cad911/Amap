@@ -1,8 +1,10 @@
 ECommerce::Application.routes.draw do
  
  
-  devise_for :clients
-
+#_____ CONNEXION ESPACE CLIENT _______________________
+  devise_for :clients do
+    delete 'client_logout' => 'devise/sessions#destroy'
+  end
 #_________ CLIENTS _______________
   namespace :espace_client do
   		resources :clients
@@ -36,9 +38,9 @@ ECommerce::Application.routes.draw do
 
 
   root :to => "devise/sessions#new"
-#_____________________CONEXION ADMINISTRATION USER_________________________________  		
+#_____________________ CONEXION AGRICULTEUR / AMAP USER_________________________________  		
   devise_for :users do
-    delete 'logout' => 'devise/sessions#destroy'
+    delete 'user_logout' => 'devise/sessions#destroy'
   end
 
 #_____________________ADMINISTRATION USER_________________________________
