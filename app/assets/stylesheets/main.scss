@@ -1,2 +1,21 @@
+// Inclusion de fichier .scss
 @import "layout/layout";
 @import "state/state";
+@import "base/base";
+
+// Définition des couleurs principales
+$brown:#69513b;
+$red:#d1534a;
+
+@font-face {
+  font-family: bellopro;
+  src: url('/../public/fonts/bellopro.otf');
+  font-weight:regular;
+}
+
+h1 {
+  font-family: bellopro;
+  color:$brown;
+  text-shadow: 1px 1px 1px #ffffff;
+  font-size: 30px;
+}
