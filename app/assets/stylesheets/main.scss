@@ -23,16 +23,9 @@ $red:#d1534a;
 
 // Inclusion de fichier .scss
 @import "base/normalize";
+@import "module/module";
 @import "base/base";
 @import "layout/layout";
 @import "layout/product_show.scss";
 @import "state/state";
-@import "module/module";
-
-
-h1 {
-  font-family: bellopro;
-  color:$brown;
-  text-shadow: 1px 1px 1px #ffffff;
-  font-size: 30px;
-}
+@import url(http://fonts.googleapis.com/css?family=Lobster);     // police google web-fond alternative de Bello Pro

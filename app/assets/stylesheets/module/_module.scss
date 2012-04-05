@@ -9,35 +9,57 @@
   font-family: helveticaneue-italic;
 }
 
-// Ombre 2 coins pliés
-.has_corners_shadow {
-  position: relative;
-  &:before, &:after     {
-    z-index: -1;
-    position: absolute;
-    content: “”;
-    bottom: 15px;
-    left: 10px;
-    width: 50%;
-    top: 80%;
-    max-width:300px;
-    background: #777;
-    -webkit-box-shadow: 0 15px 10px #777;
-    -moz-box-shadow: 0 15px 10px #777;
-    box-shadow: 0 15px 10px #777;
-    -webkit-transform: rotate(-3deg);
-    -moz-transform: rotate(-3deg);
-    -o-transform: rotate(-3deg);
-    -ms-transform: rotate(-3deg);
-    transform: rotate(-3deg);
+// Style de titre
+@mixin title($style, $taille) {
+  @if $style == 1 {
+    font-family: bellopro, Lobster;
+    color:$brown;
   }
+  @else if $style == 2 {
+    font-family: helveticaneue, helvetica;
+    color: $red;
+  }
+  text-shadow:1px 1px 1px #ffffff;
+  font-size: $taille;
+}
+
+// Ombre 2 coins pliés pour grosse image
+.has_corners_shadow.big {
+  width:273px;
+  height:273px;
+  display: block;
+  position: relative;
+  padding:5px;
+  background:#ffffff;
+  border:solid 1px #dcdcdc;
   &:after {
-    -webkit-transform: rotate(3deg);
-    -moz-transform: rotate(3deg);
-    -o-transform: rotate(3deg);
-    -ms-transform: rotate(3deg);
-    transform: rotate(3deg);
-    right: 10px;
-    left: auto;
+    content:"";
+    position:absolute;
+    left:0;
+    bottom: -11px;
+    background: url("/../images/shadow_big.png") left center  no-repeat;
+    width: 285px;
+    height:11px;
+    margin:0 auto;
   }
 }
+.has_corners_shadow.small {
+  width:53px;
+  height:53px;
+  display: block;
+  position: relative;
+  padding:5px;
+  background:#ffffff;
+  border:solid 1px #dcdcdc;
+  &:after {
+    content:"";
+    position:absolute;
+    left:0;
+    bottom: -7px;
+    background: url("/../images/shadow_small.png") left center no-repeat;
+    width: 65px;
+    height:7px;
+    margin:0 auto;
+  }
+}
+

@@ -1,42 +1,76 @@
-<div class="l_main_gutter">
+<div class="l_main_gutter column">
+
   <div class="l_area_left">
+
     <div class="l_content_left pictures">
+
       <div class="big has_corners_shadow"></div>
+
+      <ul>
+        <li>
+          <div class="small has_corners_shadow"></div>
+        </li>
+        <li>
+          <div class="small has_corners_shadow"></div>
+        </li>
+        <li>
+          <div class="small has_corners_shadow"></div>
+        </li>
+        <li>
+          <div class="small has_corners_shadow"></div>
+        </li>
+      </ul>
+
     </div>
+
     <div class="l_content_right details">
+
       <h1><%= @produit.titre %></h1>
       <p class="note italic">Fruits et légumes</p>
       <p>C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
       <p>4€<span class="note"></span></p>
+
     </div>
+
   </div>
 
-  <!--  <%= @produit.description %>
-  <%= @produit.prix_unite_ht %>-->
+<!--
+  <%= @produit.description %>
+  <%= @produit.prix_unite_ht %>
+  <%= @produit.user.nom %>
+  <%= @produit.user.description %>
+-->
 
   <div class="l_area_right">
-    <div class="">
-      <p> Produit par</p>
-      <img src="">
-      <div class="caption">
-        <h5><%= @produit.user.nom %></h5>
-        <p><%= @produit.user.description %></p>
+    <h3 class="product_by"> Produit par</h3>
+    <div class="presentation">
+
+      <div class="photo">
+        <div class="small has_corners_shadow"></div>
       </div>
 
+      <div class="farmer">
+        <h2>François Dumont</h2>
+        <p class="note italic location">Lys les Lannoy - relais du bourg</p>
+      </div>
 
-      <% if @other_produits.count != 0 %>
-        <h6> Autre produit en vente par ces agriculteurs </h6>
-        <ul>
-          <%	@other_produits.each do |other_produit| %>
-            <li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
+      <p>Les fruits et légumes que je cultive sont grais et capable de neutraliser les radicaux loyaliste de l'empereur palpatine lorem ipsum</p>
 
-          <%	end %>
-        </ul>
-      <%	else %>
-        <p> Aucun autre produit</p>
-      <% end %>
-      <a> Voir la fiche de l'agriculteur </a>
     </div>
+
+
+    <% if @other_produits.count != 0 %>
+      <h3 class="other_products">Ses autres produits </h3>
+      <ul>
+        <%	@other_produits.each do |other_produit| %>
+          <li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
+
+        <%	end %>
+      </ul>
+    <%	else %>
+      <p> Aucun autre produit</p>
+    <% end %>
+    <a> Voir la fiche de l'agriculteur </a>
   </div>
 
   <br class="clear">
