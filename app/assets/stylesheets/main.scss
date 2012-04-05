@@ -1,17 +1,34 @@
-// Inclusion de fichier .scss
-@import "layout/layout";
-@import "state/state";
-@import "base/base";
-
 // Définition des couleurs principales
 $brown:#69513b;
 $red:#d1534a;
 
+// Définition des polices en CSS3
 @font-face {
   font-family: bellopro;
-  src: url('/../public/fonts/bellopro.otf');
+  src: url('/../fonts/bellopro.otf');
   font-weight:regular;
 }
+@font-face {
+  font-family: helveticaneue;
+  src: url('/../fonts/HelveticaNeueLTStd-Roman.otf');
+}
+@font-face {
+  font-family: helveticaneue-italic;
+  src: url('/../fonts/HelveticaNeueLTStd-It.otf');
+}
+@font-face {
+  font-family: helveticaneue-bold;
+  src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
+}
+
+// Inclusion de fichier .scss
+@import "base/normalize";
+@import "base/base";
+@import "layout/layout";
+@import "layout/product_show.scss";
+@import "state/state";
+@import "module/module";
+
 
 h1 {
   font-family: bellopro;

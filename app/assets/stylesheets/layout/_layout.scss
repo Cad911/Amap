@@ -1,23 +1,33 @@
 body {
   .l_wrapper {
-    width:930px;
+    width:960px;
     margin:0 auto 0 auto;
-    padding:15px;
-    background:#fafafa url(/../public/patterns/paper.png) repeat;
+    background:#fafafa url(/../images/patterns/paper.png) repeat;
+    .l_main_gutter {
+      padding:20px;
+      .l_content_left, .l_content_right {                 // 3 columns équitable
+        float:left;
+        width:285px;
+        margin-left:20px;
+      }
+      .l_content_left {
+        margin-left:0;
+      }
+    }
   }
 }
 // page produit //
 body {
   .l_wrapper {
-    .l_main_left {
-      width:605px;
-      padding:0 15px 0 0;
+    .l_area_left {
+      width:590px;
       margin:0;
       float:left;
     }
-    .l_main_right {
+    .l_area_right {
       width:310px;
       float:left;
+      margin-left:20px;
     }
   }
 }

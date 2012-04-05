@@ -1,17 +1,21 @@
-<div class="l_main_left">
-    <h1>PageProduit#show</h1>
-    <p>Find me in app/views/page_produit/show.html.erb</p>
+<div class="l_main_gutter">
+  <div class="l_area_left">
+    <div class="l_content_left pictures">
+      <div class="big has_corners_shadow"></div>
+    </div>
+    <div class="l_content_right details">
+      <h1><%= @produit.titre %></h1>
+      <p class="note italic">Fruits et légumes</p>
+      <p>C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
+      <p>4€<span class="note"></span></p>
+    </div>
+  </div>
 
-    <h1> <%= @produit.titre %></h1>
+  <!--  <%= @produit.description %>
+  <%= @produit.prix_unite_ht %>-->
 
-    <p> Description :<%= @produit.description %> </p>
-    <p> Prix HT : <%= @produit.prix_unite_ht %></p>
-    <p> Agriculteur : <%= @produit.user.nom %></p>
-</div>
-
-
-<div class="l_main_right">
-    <div class="thumbnail">
+  <div class="l_area_right">
+    <div class="">
       <p> Produit par</p>
       <img src="">
       <div class="caption">
@@ -21,19 +25,20 @@
 
 
       <% if @other_produits.count != 0 %>
-          <h6> Autre produit en vente par ces agriculteurs </h6>
-          <ul>
-            <%	@other_produits.each do |other_produit| %>
-                <li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
+        <h6> Autre produit en vente par ces agriculteurs </h6>
+        <ul>
+          <%	@other_produits.each do |other_produit| %>
+            <li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
 
-            <%	end %>
-          </ul>
+          <%	end %>
+        </ul>
       <%	else %>
-          <p> Aucun autre produit</p>
+        <p> Aucun autre produit</p>
       <% end %>
       <a> Voir la fiche de l'agriculteur </a>
     </div>
+  </div>
+
+  <br class="clear">
+
 </div>
-
-<br class="clear">
-

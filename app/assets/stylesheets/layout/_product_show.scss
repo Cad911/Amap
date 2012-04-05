@@ -1,0 +1,17 @@
+body {
+  .l_wrapper {
+    .l_area_left {
+      .pictures {
+        height:300px;
+        .big {
+          display:block;
+          padding:5px;
+          background:#ffffff;
+          border:solid 1px #dcdcdc;
+          width:270px;
+          height:270px;
+        }
+      }
+    }
+  }
+}
