@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   						 when current_client
   						 	 ClientAbility.new(current_client)
   						 else 
-  						 	
+  						 	GuestAbility.new
   						 end			  		
   end
    #EXCEPTION CANCAN __________________________________
