@@ -57,6 +57,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    compass-rails (1.0.1)
+      compass (~> 0.12.0)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -157,7 +159,7 @@ DEPENDENCIES
   activeadmin
   cancan
   coffee-rails (~> 3.2.1)
-  compass (~> 0.12.rc.0)
+  compass-rails (~> 1.0.0.rc.2)
   jquery-rails
   mysql2
   rails (= 3.2.1)

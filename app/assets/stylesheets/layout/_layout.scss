@@ -2,6 +2,7 @@ body {
   .l_wrapper {
     width:960px;
     margin:0 auto 0 auto;
+    @include borderradius(5px);
     background:#fafafa url(/../images/patterns/paper.png) repeat;
     .l_main_gutter {
       padding:20px;
