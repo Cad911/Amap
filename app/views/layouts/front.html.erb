@@ -92,6 +92,20 @@
 								<li> <a> Laitier </a> </li>
 							</ul>
 						</li>
+						<% if !current_client.nil? %>
+							<% if can? :update, Client.find(current_client.id) %>
+								<li class="dropdown">
+									<a href="" class="dropdown-toggle" data-toggle="dropdown"> Espace Client <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li> <%= link_to "Mes infos",espace_client_client_path(current_client.id) %> </li>
+										<li class="divider"></li>
+										<li> <%= link_to "Se deconnecter", client_logout_path(), :method => 'delete' %> </li>
+									</ul>
+								</li>
+							<% end %>
+						<% else %>
+							<li> <%= link_to "Se connecter",new_client_session_path() %> </li>
+						<% end %>
 					</ul>
 				</div>
 
