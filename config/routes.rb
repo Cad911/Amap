@@ -7,7 +7,9 @@ ECommerce::Application.routes.draw do
   end
 #_________ CLIENTS _______________
   namespace :espace_client do
-  		resources :clients
+  		resources :clients do
+  			match "edit_password" => "clients#edit_password", :via => :get
+   		end
   end
 
 #_______ PAGE REVENDEURS _______________
