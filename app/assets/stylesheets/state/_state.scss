@@ -1,3 +1,48 @@
 .clear {
   clear:both;
 }
+
+
+// Attribue le style italic / gras du texte normal (police helveticaneue)
+.is_italic {
+  font-family: helveticaneue-italic;
+}
+.is_bold {
+  font-family: helveticaneue-bold;
+  font-style:normal;
+}
+
+// Attribue la taille de l'ombre au images à la classe: has_corners_shadow
+.has_corners_shadow.is_big {
+  width:273px;
+  height:273px;
+  &:after {
+    left:0;
+    bottom: -11px;
+    background: url("/../images/shadow_big.png") left center  no-repeat;
+    width: 285px;
+    height:11px;
+  }
+}
+.has_corners_shadow.is_small {
+  width:53px;
+  height:53px;
+  &:after {
+    left:0;
+    bottom: -7px;
+    background: url("/../images/shadow_small.png") left center no-repeat;
+    width: 65px;
+    height:7px;
+  }
+}
+
+
+// Attribue la taille de l'image dans la structure à la classe: .l_photo_description
+.l_photo_description.is_small {
+  .image {
+    width:65px;
+  }
+  .description {
+    margin-left:85px;
+  }
+}

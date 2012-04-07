@@ -1,40 +1,12 @@
-// Texte alternatif
+// Texte alternatif, a 2 états
 .note {
-  font-style: italic;
   font-size: 13px;
   color:#B2B2B2;
 }
-// Mode italic du texte normal (police helveticaneue)
-.italic {
-  font-family: helveticaneue-italic;
-}
 
-// Style de titre
-@mixin title($style, $taille) {
-  @if $style == 1 {
-    font-family: bellopro, Lobster;
-    color:$brown;
-    font-weight:normal;
-  }
-  @else if $style == 2 {
-    font-family: helveticaneue, helvetica;
-    color: $red;
-  }
-  text-shadow:1px 1px 1px #ffffff;
-  font-size: $taille;
-}
 
-// Coins arrondis
-@mixin borderradius($arrdondis) {
-  -webkit-border-radius: $arrdondis;
-  -moz-border-radius: $arrdondis;
-  border-radius: $arrdondis;
-}
-
-// Ombre 2 coins pliés pour grosse image
-.has_corners_shadow.big {
-  width:273px;
-  height:273px;
+// Ombre 2 coins pliés, a 2 états
+.has_corners_shadow {
   display: block;
   position: relative;
   padding:5px;
@@ -51,25 +23,8 @@
     margin:0 auto;
   }
 }
-.has_corners_shadow.small {
-  width:53px;
-  height:53px;
-  display: block;
-  position: relative;
-  padding:5px;
-  background:#ffffff;
-  border:solid 1px #dcdcdc;
-  &:after {
-    content:"";
-    position:absolute;
-    left:0;
-    bottom: -7px;
-    background: url("/../images/shadow_small.png") left center no-repeat;
-    width: 65px;
-    height:7px;
-    margin:0 auto;
-  }
-}
+
+
 
 // Bouton basique
 span.button {
@@ -101,12 +56,12 @@ span.button {
     }
     &:active {
       background-position:66px;
+      border:solid 1px #78d355; // pour IE
+      border:solid 1px rgba(120, 211,85, 0);
       -moz-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
       -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
       -o-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
       box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
-      border:solid 1px #78d355; // pour IE
-      border:solid 1px rgba(120, 211,85, 0);
     }
     &::before {
       content: "";

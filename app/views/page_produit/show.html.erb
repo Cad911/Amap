@@ -4,20 +4,20 @@
 
     <div class="l_content_left pictures">
 
-      <div class="big has_corners_shadow"></div>
+      <div class="is_big has_corners_shadow"></div>
 
       <ul>
         <li>
-          <div class="small has_corners_shadow"></div>
+          <div class="is_small has_corners_shadow"></div>
         </li>
         <li>
-          <div class="small has_corners_shadow"></div>
+          <div class="is_small has_corners_shadow"></div>
         </li>
         <li>
-          <div class="small has_corners_shadow"></div>
+          <div class="is_small has_corners_shadow"></div>
         </li>
         <li>
-          <div class="small has_corners_shadow"></div>
+          <div class="is_small has_corners_shadow"></div>
         </li>
       </ul>
 
@@ -26,51 +26,99 @@
     <div class="l_content_right details">
 
       <h1><%= @produit.titre %></h1>
-      <p class="note italic">Fruits et légumes</p>
+      <p class="note is_italic">Fruits et légumes</p>
       <p>C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
-      <p>4€<span class="note"></span></p>
-      <span class="button"><a href="">ajouter au panier</a></span>
+
+      <div class="price_button">
+        <p class="price  is_bold">4€ <span class="note is_italic">le kilo</span></p>
+        <span class="button"><a href="">ajouter à ma cagette</a></span>
+      </div>
+
     </div>
 
   </div>
 
-<!--
-  <%= @produit.description %>
-  <%= @produit.prix_unite_ht %>
-  <%= @produit.user.nom %>
-  <%= @produit.user.description %>
--->
+  <%#= @produit.description %>
+  <%#= @produit.prix_unite_ht %>
+  <%#= @produit.user.nom %>
+  <%#= @produit.user.description %>
+  <%#= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %>
 
   <div class="l_area_right">
-    <h3 class="product_by"> Produit par</h3>
-    <div class="presentation">
+    <div class="product_by">
+      <h3> Produit par</h3>
+      <p class="note is_italic">En France, dans le Nord-pas-de-Calais</p>
+      <div class="l_photo_description is_small">
 
-      <div class="photo">
-        <div class="small has_corners_shadow"></div>
+        <div class="image">
+          <div class="is_small has_corners_shadow"></div>
+        </div>
+
+        <div class="description">
+          <h2>François Dumont</h2>
+          <p class="note is_italic location">Lys les Lannoy - relais du bourg</p>
+        </div>
+
+        <p>Les fruits et légumes que je cultive sont grais et capable de neutraliser les radicaux loyaliste de l'empereur palpatine lorem ipsum</p>
+
       </div>
-
-      <div class="farmer">
-        <h2>François Dumont</h2>
-        <p class="note italic location">Lys les Lannoy - relais du bourg</p>
-      </div>
-
-      <p>Les fruits et légumes que je cultive sont grais et capable de neutraliser les radicaux loyaliste de l'empereur palpatine lorem ipsum</p>
-
     </div>
 
+    <div class="other_products">
+      <% if @other_produits.count != 0 %>
+        <h3>Ses autres produits </h3>
+        <ul>
+          <%	@other_produits.each do |other_produit| %>
+          <%	end %>
+          <li>
+            <div class="l_photo_description is_small">
 
-    <% if @other_produits.count != 0 %>
-      <h3 class="other_products">Ses autres produits </h3>
-      <ul>
-        <%	@other_produits.each do |other_produit| %>
-          <li> <%= link_to other_produit.titre, page_produit_show_path(other_produit.user_id,other_produit) %></li>
+              <div class="image">
+                <div class="is_small has_corners_shadow"></div>
+              </div>
 
-        <%	end %>
-      </ul>
-    <%	else %>
-      <p> Aucun autre produit</p>
-    <% end %>
-    <a> Voir la fiche de l'agriculteur </a>
+              <div class="description">
+                <p class="note is_bold title">Carottes</p>
+                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
+              </div>
+          </li>
+
+          <li>
+            <div class="l_photo_description is_small">
+
+              <div class="image">
+                <div class="is_small has_corners_shadow"></div>
+              </div>
+
+              <div class="description">
+                <p class="note is_bold title">Citrons verts</p>
+                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
+              </div>
+          </li>
+
+          <li>
+            <div class="l_photo_description is_small">
+
+              <div class="image">
+                <div class="is_small has_corners_shadow"></div>
+              </div>
+
+              <div class="description">
+                <p class="note is_bold title">Choux de Burxelles</p>
+                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
+              </div>
+          </li>
+
+        </ul>
+      <%	else %>
+        <p> Aucun autre produit</p>
+      <% end %>
+    </div>
+
+      <div class="about_the_farmer">
+        <span class="button"><a>découvrez François </a></span>
+      </div>
+
   </div>
 
   <br class="clear">

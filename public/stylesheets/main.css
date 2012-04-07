@@ -6,22 +6,22 @@ Syntax error: File to import not found or unreadable: base/normalize.
                 /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets
                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/blueprint/stylesheets
                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/compass/stylesheets
-        on line 25 of /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss
+        on line 27 of /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss
 
-20:   font-family: helveticaneue-bold;
-21:   src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
-22: }
-23: 
-24: // Inclusion de fichier .scss
-25: @import "base/normalize";
-26: @import "module/module";
-27: @import "base/base";
-28: @import "layout/layout";
-29: @import "layout/product_show.scss";
-30: @import "state/state";
+22:   font-family: helveticaneue-bold;
+23:   src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
+24: }
+25: 
+26: // Inclusion de fichier .scss
+27: @import "base/normalize";
+28: @import "mixins";
+29: @import "module/module";
+30: @import "base/base";
+31: @import "layout/layout";
+32: @import "layout/product_show.scss";
 
 Backtrace:
-/Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss:25
+/Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss:27
 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/sass-3.1.15/lib/sass/tree/import_node.rb:64:in `rescue in import'
 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/sass-3.1.15/lib/sass/tree/import_node.rb:42:in `import'
 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/sass-3.1.15/lib/sass/tree/import_node.rb:25:in `imported_file'
@@ -96,4 +96,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: File to import not found or unreadable: base/normalize.\A               Load paths:\A                 Compass::SpriteImporter\A                 /Users/thomasdelissen/Sites/Amap/public/stylesheets/sass\A                 /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets\A                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/blueprint/stylesheets\A                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/compass/stylesheets\A         on line 25 of /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss\A \A 20:   font-family: helveticaneue-bold;\A 21:   src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');\A 22: }\A 23: \A 24: // Inclusion de fichier .scss\A 25: @import \"base/normalize\";\A 26: @import \"module/module\";\A 27: @import \"base/base\";\A 28: @import \"layout/layout\";\A 29: @import \"layout/product_show.scss\";\A 30: @import \"state/state\";"; }
+  content: "Syntax error: File to import not found or unreadable: base/normalize.\A               Load paths:\A                 Compass::SpriteImporter\A                 /Users/thomasdelissen/Sites/Amap/public/stylesheets/sass\A                 /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets\A                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/blueprint/stylesheets\A                 /Users/thomasdelissen/.rvm/gems/ruby-1.9.2-p318@rails3tutorial/gems/compass-0.11.7/frameworks/compass/stylesheets\A         on line 27 of /Users/thomasdelissen/Sites/Amap/app/assets/stylesheets/main.scss\A \A 22:   font-family: helveticaneue-bold;\A 23:   src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');\A 24: }\A 25: \A 26: // Inclusion de fichier .scss\A 27: @import \"base/normalize\";\A 28: @import \"mixins\";\A 29: @import \"module/module\";\A 30: @import \"base/base\";\A 31: @import \"layout/layout\";\A 32: @import \"layout/product_show.scss\";"; }

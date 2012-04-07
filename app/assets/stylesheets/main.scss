@@ -1,6 +1,8 @@
 // Définition des couleurs principales
 $brown:#69513b;
 $red:#d1534a;
+$grey:#969696;
+$lightgrey:#B2B2B2;
 
 // Définition des polices en CSS3
 @font-face {
@@ -23,6 +25,7 @@ $red:#d1534a;
 
 // Inclusion de fichier .scss
 @import "base/normalize";
+@import "mixins";
 @import "module/module";
 @import "base/base";
 @import "layout/layout";

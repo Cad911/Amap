@@ -1,0 +1,22 @@
+// Style de titre
+@mixin title($style, $taille) {
+  @if $style == 1 {
+    font-family: bellopro, Lobster;
+    color:$brown;
+    font-weight:normal;
+  }
+  @else if $style == 2 {
+    font-family: helveticaneue, helvetica;
+    color: $red;
+  }
+  text-shadow:1px 1px 1px #ffffff;
+  font-size: $taille;
+}
+
+
+// Coins arrondis
+@mixin borderradius($arrdondis) {
+  -webkit-border-radius: $arrdondis;
+  -moz-border-radius: $arrdondis;
+  border-radius: $arrdondis;
+}
