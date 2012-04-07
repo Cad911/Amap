@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @cageot.id %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @cageot.client_id %>
+</p>
+
+<p>
+  <b>Etat:</b>
+  <%= @cageot.etat %>
+</p>
+
+
+<%= link_to 'Edit', edit_cageot_path(@cageot) %> |
+<%= link_to 'Back', cageots_path %>
