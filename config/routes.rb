@@ -1,6 +1,10 @@
 ECommerce::Application.routes.draw do
  
  
+  resources :rel_cageot_produits
+
+  resources :cageots
+
 #_____ CONNEXION ESPACE CLIENT _______________________
   devise_for :clients do
     delete 'client_logout' => 'devise/sessions#destroy'

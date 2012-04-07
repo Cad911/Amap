@@ -1,0 +1,27 @@
+<h1>Listing cageots</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Client</th>
+    <th>Etat</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cageots.each do |cageot| %>
+  <tr>
+    <td><%= cageot.id %></td>
+    <td><%= cageot.client_id %></td>
+    <td><%= cageot.etat %></td>
+    <td><%= link_to 'Show', cageot %></td>
+    <td><%= link_to 'Edit', edit_cageot_path(cageot) %></td>
+    <td><%= link_to 'Destroy', cageot, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cageot', new_cageot_path %>
