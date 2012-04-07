@@ -46,3 +46,38 @@
     margin-left:85px;
   }
 }
+
+
+// Dans le menu, définie si le panneaux est double ou simple
+.l_nav_element {
+  &.l_dual_sign {
+    width: 220px;
+    background-position: left;
+    .l_link {
+      float:left;
+      &.basket {
+        background-position: left top;
+      }
+      &.product {
+        background-position: center top;
+        width:117px !important;
+      }
+      &.blog {
+        background-image: none !important;
+      }
+      &.about_us {
+        background-image: none !important;
+        width:117px !important;
+      }
+    }
+  }
+  &.l_single_sign {
+    background-position: -220px top;
+    .l_link {
+      &.farmer {
+        width: 123px !important;
+        background-position: -200px top;
+      }
+    }
+  }
+}

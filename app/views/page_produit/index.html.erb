@@ -1,33 +1,37 @@
-<h1><%= @titre %></h1>
-<p>Find me in app/views/page_produit/index.html.erb</p>
+<div class="l_main_gutter">
 
-<% if @produits.count == 0 %>
-	<p> Aucun produit</p>
-<% else %>
-	<table class="table table-striped">
-		<tr>
-			<th>Titre</th>
-			<th>Description</th>
-			<th>Agriculteur</th>
-			<th>Prix</th>
-			<th>Catgorie</th>
-			<th> Action</th>
-			
-		</tr>
-	
-	
-	<% @produits.each do |produit| %>
-	<tr>
-		<td> <%= produit.titre %> </td>
-		<td> <%= produit.description %> </td>
-		<td> <%= produit.user.nom %> </td>
-		<td> <%= produit.prix_unite_ht %> </td>
-		<td> <%= produit.stock.categorie.nom %></td>
-		<td> <%= link_to "Voir le produit", page_produit_show_path(produit.user_id,produit), :class => "btn btn-primary" %></td>
-		
-	
-	</tr>
-	<% end %>
-<% end %>
+  <h1><%= @titre %></h1>
+  <p>Find me in app/views/page_produit/index.html.erb</p>
 
-</table>
+  <% if @produits.count == 0 %>
+    <p> Aucun produit</p>
+  <% else %>
+    <table class="table table-striped">
+      <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Agriculteur</th>
+        <th>Prix</th>
+        <th>Catgorie</th>
+        <th> Action</th>
+
+      </tr>
+
+
+    <% @produits.each do |produit| %>
+    <tr>
+      <td> <%= produit.titre %> </td>
+      <td> <%= produit.description %> </td>
+      <td> <%= produit.user.nom %> </td>
+      <td> <%= produit.prix_unite_ht %> </td>
+      <td> <%= produit.stock.categorie.nom %></td>
+      <td> <%= link_to "Voir le produit", page_produit_show_path(produit.user_id,produit), :class => "btn btn-primary" %></td>
+
+
+    </tr>
+    <% end %>
+  <% end %>
+
+  </table>
+
+</div>

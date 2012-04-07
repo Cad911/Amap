@@ -80,3 +80,45 @@ span.button {
     }
   }
 }
+
+// Fil d'arianne
+.breadcrumb {
+  padding:0;
+  margin:0 0 0 10px !important;
+  height:20px;
+  padding-bottom:20px;
+  ul {
+    margin:0;
+    li {
+     display: block;
+     float: left;
+     text-decoration: none;
+     a {
+       font-size: 12px !important;
+       color:$brown;
+       padding: 5px 20px 2px 20px;
+       position: relative;
+       background-image: url("/../images/breadcrumb.png");
+       background-position: right top;
+       margin-left: -10px;
+     }
+    a:hover {
+      background-position: right -21px;
+      cursor: pointer;
+    }
+     a:active {
+       background-position: right -42px;
+     }
+    &:first-child {
+      a {
+        border-left:1px solid #bea47d;
+      }
+    }
+    &:first-child {
+      a {
+        padding-left:20px;
+      }
+    }
+    }
+  }
+}
