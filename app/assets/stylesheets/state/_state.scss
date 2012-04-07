@@ -53,6 +53,11 @@
   &.l_dual_sign {
     width: 220px;
     background-position: left;
+    .dropdown.product {
+      .dropdown_menu {
+        left:103px;
+      }
+    }
     .l_link {
       float:left;
       &.basket {
