@@ -1519,13 +1519,6 @@ legend + .control-group {
   cursor: pointer;
   *margin-left: .3em;
 }
-.btn:hover,
-.btn:active,
-.btn.active,
-.btn.disabled,
-.btn[disabled] {
-  background-color: #e6e6e6;
-}
 .btn:active,
 .btn.active {
   background-color: #cccccc \9;
@@ -3704,13 +3697,6 @@ a.thumbnail:hover {
   line-height: 18px;
   color: #333333;
   white-space: nowrap;
-}
-.dropdown-menu li > a:hover,
-.dropdown-menu .active > a,
-.dropdown-menu .active > a:hover {
-  color: #ffffff;
-  text-decoration: none;
-  background-color: #0088cc;
 }
 .dropdown.open {
   *z-index: 1000;
