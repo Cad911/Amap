@@ -1,4 +1,4 @@
 class RelCageotProduit < ActiveRecord::Base
 	belongs_to :cageot
-	has_many :produit_vente_libres
+	belongs_to :produit_vente_libre
 end

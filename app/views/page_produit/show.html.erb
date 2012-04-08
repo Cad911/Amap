@@ -33,16 +33,19 @@
     </div>
 
     <div class="l_content_right details">
-
+	 <%= simple_form_for(@produit, :url => ajout_produit_cageot_path, :method => "post") do |f| %>
+	 <%= f.input :id, :as => :hidden %>
       <h1><%= @produit.titre %></h1>
       <p class="note is_italic">Fruits et légumes</p>
       <p>C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
 
       <div class="price_button">
         <p class="price  is_bold">4€ <span class="note is_italic">le kilo</span></p>
+        <p> Quantité : <%= f.input :nombre_pack, :collection => (1..5).map(), :include_blank => false%> 500g </p>
+        <p><input type="submit" value="ajouter à ma cagette"></p>
         <span class="button"><a href="">ajouter à ma cagette</a></span>
       </div>
-
+	<% end %>
     </div>
 
   </div>

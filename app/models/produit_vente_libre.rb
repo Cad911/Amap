@@ -2,6 +2,8 @@ class ProduitVenteLibre < ActiveRecord::Base
 	belongs_to :stock
 	belongs_to :user
 	
+	has_many :rel_cageot_produits
+	
 	
 	#POUR AJAX, ON A BESOIN DE L'ID USER
 	attr_accessor :id_user_input
