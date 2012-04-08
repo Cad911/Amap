@@ -1,0 +1,41 @@
+.l_main_gutter.product_list {
+  ul.l_product_list {
+    margin:0;
+    padding:0;
+    li {
+      float:left;
+      margin:0 0 25px 25px;
+      &:first-child {
+        margin-left:0;
+      }
+      &.is_huge {
+        margin-left:5px;
+      }
+      .content {
+        .title {
+          text-align: center;
+          color: $red;
+          font-family: helveticaneue-bold;
+          margin-top:8px;
+        }
+        .description {
+          margin-top:8px;
+          margin-bottom: 0;
+          font-size: 13px;
+        }
+        .price {
+          margin-top:8px;
+        }
+      }
+    }
+  }
+  ul.l_product_list.huge_right {
+    li {
+      float:right;
+      margin:0 25px 25px 0;
+      &.is_huge {
+        margin-right:5px;
+      }
+    }
+  }
+}

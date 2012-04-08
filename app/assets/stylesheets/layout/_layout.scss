@@ -1,3 +1,8 @@
+// Inclusion des fichier de structure
+@import "layout/product_show.scss";
+@import "layout/product_list.scss";
+
+
 // Squelette général du site
 body {
   position:relative;
@@ -81,15 +86,9 @@ body {
 // Structure photo + description
 .l_photo_description {
   width:auto;
-  .image {
-    float:left;
-    position:relative;
-    z-index: 2;
-  }
-  .description {
+  .content {
     width:auto;
     padding-bottom:5px;
-    z-index: 1;
     h2 {
       margin:0;
     }

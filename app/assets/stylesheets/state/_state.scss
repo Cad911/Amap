@@ -2,6 +2,10 @@
   clear:both;
 }
 
+// Ajoute un fond pour créer une colonne "fictive" à la div l_main_gutter {
+.has_column {
+  background: url(/../images/bg_column.png) repeat;
+}
 
 // Attribue le style italic / gras du texte normal (police helveticaneue)
 .is_italic {
@@ -12,43 +16,159 @@
   font-style:normal;
 }
 
+/*--------------------------------------------------------
+|                                                        |
+|    Ombres pour les images: .has_corners_shadow         |
+|                                                        |
+|    A 4 tailles:       -   .is_small                    |
+|                       -   .is_medium                   |
+|                       -   .is_big                      |
+|                       -   .is_huge                     |
+|                                                        |
+--------------------------------------------------------*/
 // Attribue la taille de l'ombre au images à la classe: has_corners_shadow
-.has_corners_shadow.is_big {
-  width:273px;
-  height:273px;
-  &:after {
-    left:0;
-    bottom: -11px;
-    background: url("/../images/shadow_big.png") left center  no-repeat;
-    width: 285px;
-    height:11px;
+.has_corners_shadow {
+  &.is_huge {
+    width:428px;
+    height:428px;
+    &:after {
+      bottom:-13px;
+      width:440px;
+      height:13px;
+      background-position: left top;
+    }
   }
-}
-.has_corners_shadow.is_small {
-  width:53px;
-  height:53px;
-  &:after {
-    left:0;
-    bottom: -7px;
-    background: url("/../images/shadow_small.png") left center no-repeat;
-    width: 65px;
-    height:7px;
+  &.is_big {
+    width:273px;
+    height:273px;
+    &:after {
+      bottom:-10px;
+      width:285px;
+      height:10px;
+      background-position: left -13px;
+    }
+  }
+  &.is_medium {
+    width:188px;
+    height:188px;
+    &:after {
+      bottom:-9px;
+      width:200px;
+      height:9px;
+      background-position: left -23px;
+    }
+  }
+  &.is_small {
+    width:53px;
+    height:53px;
+    &:after {
+      bottom:-5px;
+      width:65px;
+      height:5px;
+      background-position: left -32px;
+    }
   }
 }
 
 
-// Attribue la taille de l'image dans la structure à la classe: .l_photo_description
-.l_photo_description.is_small {
+/*--------------------------------------------------------
+|                                                        |
+|    Structure photo + contenu: .l_photo_description     |
+|                                                        |
+|    A 2 dispositions:  -   .is_horizontal               |
+|                       -   .is_vertical                 |
+|                                                        |
+|    A 3 tailles:       -   .is_small                    |
+|                       -   .is_medium                   |
+|                       -   .is_big                      |
+|                                                        |
+--------------------------------------------------------*/
+// Attribue la taille de l'image en vertical & horizontal
+.l_photo_description {
+  &.is_small {
+    .image {
+      width:65px;
+    }
+  }
+  &.is_medium {
+    .image {
+      width:200px;
+    }
+  }
+  &.is_big {
+    .image {
+      width:285px;
+    }
+  }
+}
+// Attribue la disposition vertical et ajuste la taille
+.l_photo_description.is_vertical {
   .image {
+    clear:both;
+    margin:0 auto;
+    .has_corners_shadow {
+      float:none;
+    }
+  }
+  .content {
+    text-align: center;
+    .price {
+      text-align: center;
+      font-family: helveticaneue-bold;
+    }
+  }
+  &.is_small {
     width:65px;
   }
-  .description {
-    margin-left:85px;
+  &.is_medium {
+    width:210px;
+  }
+  &.is_big {
+    width:285px;
+  }
+  &.is_huge {
+    width:440px;
+    .title {
+      font-size:22px;
+    }
+    .description {
+      font-size: 15px !important;
+      padding-bottom:10px;
+    }
+    .price {
+      font-size:30px;
+    }
+  }
+}
+// Attribue la disposition horizontal et ajuste les marges en focntion des tailles
+.l_photo_description.is_horizontal {
+  .image {
+    float:left;
+    position:relative;
+    z-index: 2;
+  }
+  .content {
+    z-index: 1;
+  }
+  &.is_small {
+    .content {
+      margin-left:85px;
+    }
+  }
+  &.is_medium {
+    .content {
+      margin-left:220px;
+    }
+  }
+  &.is_big {
+    .content {
+      margin-left:305px;
+    }
   }
 }
 
 
-// Dans le menu, définie si le panneaux est double ou simple
+// Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu
 .l_nav_element {
   &.l_dual_sign {
     width: 220px;
