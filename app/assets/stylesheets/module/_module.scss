@@ -134,10 +134,11 @@ span.button {
 // Menu dropdown
 ul.dropdown_menu {
   @include borderradius(5px);
-  border:solid 1px $lightbrown;
+  border:solid 2px $lightbrown;
   margin:0;
   padding:0;
-  overflow:hidden;
+  position:absolute;
+  background:$bg_color;
   -webkit-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
   box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
@@ -182,6 +183,31 @@ ul.dropdown_menu {
     }
   }
 }
+
+
+// Flèches pour les menu dropdown
+.arrow {
+  &:after {
+    position:absolute;
+    display:block;
+    content: "";
+    background: transparent;
+    background-image: url("/../images/arrows.png");
+    background-repeat:no-repeat;
+    z-index:-1;
+  }
+}
+.arrow.top {
+  &:after {
+    width:27px;
+    height:14px;
+    background-position: left top;
+    top:-15px;
+    left:15px;
+  }
+}
+
+// Icon HP utilisée dans le fil d'arianne
 .home_icon {
   background:url('/../images/ultime_sprite.png') left center no-repeat;
   width:11px;

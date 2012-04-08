@@ -36,7 +36,7 @@
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
           <a href="" class="dropdown-toggle l_link basket" data-toggle="dropdown">Paniers</a>
-          <ul class="dropdown-menu dropdown_menu">
+          <ul class="dropdown-menu dropdown_menu arrow top">
             <li> <%= link_to "Tous",page_produit_index_path %> </li>
             <%	Categorie.all.each do |categorie| %>
               <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
@@ -45,7 +45,7 @@
         </div>
         <div class="dropdown product">
           <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown">Produits</a>
-          <ul class="dropdown-menu dropdown_menu">
+          <ul class="dropdown-menu dropdown_menu arrow top">
             <li> <%= link_to "Tous",page_produit_index_path %> </li>
             <% Categorie.all.each do |categorie| %>
               <li> <%= link_to categorie.nom,page_produit_index_by_categorie_path(categorie.id) %> </li>
@@ -57,7 +57,7 @@
       <div class="l_nav_element l_single_sign">
         <div class="dropdown">
           <a href="" class="l_link farmer" data-toggle="dropdown">Agriculteur</a>
-          <ul class="dropdown-menu dropdown_menu">
+          <ul class="dropdown-menu dropdown_menu arrow top">
             <li><%= link_to "Tous",page_revendeur_index_path %></li>
           </ul>
         </div>
@@ -66,14 +66,14 @@
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
           <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown">Le Blog</a>
-          <ul class="dropdown-menu dropdown_menu">
+          <ul class="dropdown-menu dropdown_menu arrow top">
             <li><a> Fruit et legumes </a> </li>
             <li><a> Laitier </a> </li>
           </ul>
         </div>
         <div class="dropdown">
           <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown">Nous</a>
-          <ul class="dropdown-menu dropdown_menu">
+          <ul class="dropdown-menu dropdown_menu arrow top">
             <li> <a> Fruit et legumes </a> </li>
             <li> <a> Laitier </a> </li>
           </ul>
