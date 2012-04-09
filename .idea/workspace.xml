@@ -22,32 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_product_list.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_product_list.scss">
+      <file leaf-file-name="main.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="44" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/page_produit/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="132" selection-end="132" vertical-scroll-proportion="-5.0">
-              <folding>
-                <element signature="tag#ul#0;tag#div#0" expanded="false" />
-                <element signature="tag#ul#1;tag#div#0" expanded="false" />
-                <element signature="tag#ul#2;tag#div#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="front.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/front.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="12" selection-start="3434" selection-end="3434" vertical-scroll-proportion="0.7938144">
+            <state line="30" column="56" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -65,7 +43,7 @@
       <file leaf-file-name="_layout.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="41" selection-start="1836" selection-end="1836" vertical-scroll-proportion="0.0">
+            <state line="14" column="116" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,7 +61,25 @@
       <file leaf-file-name="_mixins.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="121" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
+            <state line="44" column="18" selection-start="987" selection-end="987" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/page_revendeur/index.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="24" selection-start="189" selection-end="189" vertical-scroll-proportion="0.13530928">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_farmer_list.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -99,22 +95,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/application.scss" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/application.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/base/_base.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.min.css" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/main.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_product_show.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss" />
         <option value="$PROJECT_DIR$/app/views/page_produit/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_product_list.scss" />
         <option value="$PROJECT_DIR$/app/views/page_produit/show.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/main.scss" />
         <option value="$PROJECT_DIR$/app/views/layouts/front.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss" />
+        <option value="$PROJECT_DIR$/app/views/page_revendeur/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss" />
       </list>
     </option>
   </component>
@@ -238,29 +234,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="page_produit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
+              <option name="myItemId" value="page_revendeur" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -297,32 +271,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="state" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -369,31 +317,15 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -408,16 +340,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -425,11 +347,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.keymap" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/stylesheets/layout/product" />
+      <recent name="$PROJECT_DIR$/app/assets/stylesheets/layout/farmer" />
       <recent name="$PROJECT_DIR$/app/assets/stylesheets" />
     </key>
   </component>
@@ -535,8 +459,9 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21264368" sideWeight="0.6711004" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21623564" sideWeight="0.6711004" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
@@ -545,7 +470,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -605,114 +529,102 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/bootstrap-responsive.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="599" selection-start="7849" selection-end="7849" vertical-scroll-proportion="0.081190795" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3706" column="14" selection-start="86862" selection-end="86876" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="676" column="31" selection-start="77977" selection-end="77977" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/administration/produit_vente_libres_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="37" selection-start="1078" selection-end="1143" vertical-scroll-proportion="0.52056557">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/page_produit_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/base/_base.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="28" column="7" selection-start="409" selection-end="414" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_show.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_product_show.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="928" selection-end="947" vertical-scroll-proportion="0.5012854">
-          <folding />
-        </state>
+        <state line="41" column="19" selection-start="928" selection-end="947" vertical-scroll-proportion="0.5012854" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="59" selection-start="148" selection-end="148" vertical-scroll-proportion="-0.83916086">
-          <folding />
-        </state>
+        <state line="4" column="59" selection-start="148" selection-end="148" vertical-scroll-proportion="-0.83916086" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="7" selection-start="789" selection-end="796" vertical-scroll-proportion="0.77792555">
-          <folding />
-        </state>
+        <state line="8" column="44" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
+    <entry file="file://$PROJECT_DIR$/app/views/page_produit/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="121" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="41" selection-start="1836" selection-end="1836" vertical-scroll-proportion="0.0">
+        <state line="8" column="0" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="33" selection-start="3504" selection-end="3510" vertical-scroll-proportion="0.0">
+        <state line="149" column="33" selection-start="3504" selection-end="3510" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="0" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/espace_client/clients/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="38" selection-start="474" selection-end="474" vertical-scroll-proportion="0.7780083">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/page_produit/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="132" selection-end="132" vertical-scroll-proportion="-5.0">
-          <folding>
-            <element signature="tag#ul#0;tag#div#0" expanded="false" />
-            <element signature="tag#ul#1;tag#div#0" expanded="false" />
-            <element signature="tag#ul#2;tag#div#0" expanded="false" />
-          </folding>
+        <state line="44" column="18" selection-start="987" selection-end="987" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_product_list.scss">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/cagette/_cagette_show.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="44" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/cagette/_cagette_list.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="116" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/front.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="12" selection-start="3434" selection-end="3434" vertical-scroll-proportion="0.7938144">
+        <state line="89" column="63" selection-start="3693" selection-end="3693" vertical-scroll-proportion="1.8337913">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="56" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/page_revendeur/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="189" selection-end="189" vertical-scroll-proportion="0.13530928">
           <folding />
         </state>
       </provider>

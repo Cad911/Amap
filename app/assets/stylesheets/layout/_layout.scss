@@ -1,6 +1,10 @@
 // Inclusion des fichier de structure
-@import "layout/product_show.scss";
-@import "layout/product_list.scss";
+@import "layout/product/product_list.scss";
+@import "layout/product/product_show.scss";
+@import "layout/farmer/farmer_list.scss";
+@import "layout/farmer/farmer_show.scss";
+@import "layout/cagette/cagette_show.scss";
+@import "layout/cagette/cagette_list.scss";
 
 
 // Squelette général du site

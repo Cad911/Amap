@@ -20,3 +20,46 @@
   -moz-border-radius: $arrdondis;
   border-radius: $arrdondis;
 }
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+// fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
+@mixin sunshine {
+  position:absolute;
+  display:block;
+  width:257px;
+  height:257px;
+  top:0;
+  left:0;
+  .round_of_sunshine {
+    display:block;
+    width: 115px;
+    height: 115px;
+    background-image:url('/../images/sunshine_sprite_small.png');
+    background-position: center top;
+    z-index:100;
+    top:0;
+    left:0;
+  }
+  .ray_of_sunshine {
+    position:absolute;
+    top:-71px;
+    left:-71px;
+    display:block;
+    width: 257px;
+    height: 257px;
+    background-image:url('/../images/sunshine_sprite_small.png');
+    background-position: center bottom;
+    z-index:-1;
+    -webkit-animation-name:             rotate;
+    -webkit-animation-duration:         100s;
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-transition-timing-function: linear;
+  }
+}
