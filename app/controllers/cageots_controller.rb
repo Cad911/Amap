@@ -80,11 +80,11 @@ class CageotsController < InheritedResources::Base
 			
 			#________ SI CAGEOT EXISTE ________________
 			if @cageot.count >0
-				@produit_to_add = RelCageotProduit.where("cageot_id = ? AND produit_vente_libre_id = ?",@cageot[0].id, params[:produit_vente_libre_id])
+				@produit_to_add = RelCageotProduit.where("cageot_id = ? AND produit_vente_libre_id = ?",@cageot[0].id, params[:produit_vente_libre][:id])
 				#________ SI PRODUIT EXISTE DEJA DANS LE CAGEOT _________
 				if @produit_to_add.count > 0
 					@produit = RelCageotProduit.find(@produit_to_add[0].id)
-					@produit.nombre_pack += params[:nombre_pack]
+					@produit.nombre_pack += params[:produit_vente_libre][:nombre_pack].to_i
 					if @produit.save
 						flash[:notice] = "Produit updater"
 						redirect_to cageot_path(@cageot[0])
@@ -92,11 +92,11 @@ class CageotsController < InheritedResources::Base
 				else
 					@rel_cageot_produit = RelCageotProduit.new
 					@rel_cageot_produit.cageot_id = @cageot[0].id
-					@rel_cageot_produit.produit_vente_libre_id = params[:produit_vente_libre_id]
-					@rel_cageot_produit.nombre_pack = params[:nombre_pack]
+					@rel_cageot_produit.produit_vente_libre_id = params[:produit_vente_libre][:id]
+					@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack].to_i
 					if @rel_cageot_produit.save
 						flash[:notice] = "Produit ajouter"
-						redirect_to cageot_path(@cageot)
+						redirect_to cageot_path(@cageot[0])
 					end
 				end
 			#________ SI CAGEOT N'EXISTE PAS __________
@@ -105,8 +105,8 @@ class CageotsController < InheritedResources::Base
 				if @new_cageot.save
 					@rel_cageot_produit = RelCageotProduit.new
 					@rel_cageot_produit.cageot_id = @new_cageot.id
-					@rel_cageot_produit.produit_vente_libre_id = params[:produit_vente_libre_id]
-					@rel_cageot_produit.nombre_pack = params[:nombre_pack]
+					@rel_cageot_produit.produit_vente_libre_id = params[:produit_vente_libre][:id]
+					@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack].to_i
 					if @rel_cageot_produit.save
 								flash[:notice] = "Produit ajoute et panier creer (info)"
 								redirect_to cageot_path(@new_cageot)
@@ -117,6 +117,47 @@ class CageotsController < InheritedResources::Base
 			end
 						
 		end
+	end
+	
+	
+	#______________________________ AJOUTER QUANTITE DANS LE PANIER ________________________
+	def ajouterQuantite
+		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
+		@cageot = Cageot.find(@produit_cageot.cageot_id)
+		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id
+			@produit_cageot.ajoutQuantite
+			flash[:notice] = "Quantite agrandit"
+			redirect_to cageot_path(@cageot)
+		end
+	end
+	#______________________________ SUPPRIMER QUANTITE DANS LE PANIER ________________________
+	def supprimerQuantite
+		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
+		@cageot = Cageot.find(@produit_cageot.cageot_id)
+		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id #__ POUR EVITER QU'UN UTILISATEUR N'AYANT PAS LE DROIT METTENT A JOUR
+			#__ SI IL NE RESTE QU'UN PACK ALORS ON SUPPRIME LE PRODUIT DU PANIER
+			if @produit_cageot.nombre_pack == 1
+				@produit_cageot.destroy
+				flash[:notice] = "Produit supprimer car il n en rester qu un"
+			else
+				@produit_cageot.suppQuantite
+				flash[:notice] = "Quantite diminue"
+			end
+			redirect_to cageot_path(@cageot)
+		end
+	end
+	
+	
+	#_______________________________ SUPPRIMER LE PRODUIT DU PANIER ________________________
+	def supprimerProduitCageot
+		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
+		@cageot = Cageot.find(@produit_cageot.cageot_id)
+		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id
+			@produit_cageot.destroy
+			flash[:notice] = "Produit supprimer"
+			redirect_to cageot_path(@cageot)
+		end
+		
 	end
 	
 	

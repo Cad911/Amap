@@ -22,6 +22,15 @@ class ApplicationController < ActionController::Base
   		if resource.is_a?(User)
     		administration_user_path(current_user.id)
     	elsif resource.is_a?(Client)
+    		#__ ASSOCIATION PANIER A L'UTILISATEUR SI IL EXISTE __
+    		if !session[:panier_id].nil?
+    			@cageot_session = Cageot.where(:session_id => session[:panier_id])
+    			if @cageot_session.count > 0
+    				@cageot = Cageot.find(@cageot_session[0].id)
+    				@cageot.client_id = current_client.id
+    				@cageot.save
+    			end
+    		end
     		espace_client_client_path(current_client.id)
     	else
     		admin_dashboard_path

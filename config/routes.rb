@@ -4,6 +4,9 @@ ECommerce::Application.routes.draw do
 #______ CAGEOT ______________________________________
 resources :cageots
 match 'cageot/ajoutProduit' => 'cageots#ajoutProduitCageot', :via => :post, :as => :ajout_produit_cageot
+match 'cageot/ajoutQuantite/:product_cageot_id' => 'cageots#ajouterQuantite', :via => :get, :as => :ajout_quantite_cageot
+match 'cageot/suppQuantite/:product_cageot_id' => 'cageots#supprimerQuantite', :via => :get, :as => :supp_quantite_cageot
+match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot', :via => :delete, :as => :supp_produit_cageot
 
 #_____ CONNEXION ESPACE CLIENT _______________________
   devise_for :clients do
