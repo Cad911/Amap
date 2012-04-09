@@ -1,79 +1,78 @@
 body {
-  .l_main_gutter.column {
-    background: url(/../images/bg_column.png) repeat;
-  }
   .l_wrapper {
-    .l_area_left {
-      h1 {
-        margin: 0 0 10px 0;
-        padding: 0;
-      }
-      .pictures {
-        ul {
-          height:72px;
-          padding:0;
-          li {
-            display:block;
-            float:left;
-            margin-left:8px;
+    .l_main_gutter.product_show {
+      .l_area_left {
+        h1 {
+          margin: 0 0 10px 0;
+          padding: 0;
+        }
+        .pictures {
+          ul {
+            height:72px;
+            padding:0;
+            li {
+              display:block;
+              float:left;
+              margin-left:8px;
+            }
+            li:first-child {margin-left:0;}
           }
-        li:first-child {margin-left:0;}
         }
-      }
-      .price_button {
-        padding-top:20px;
-        p.price {
-          font-size: 20px;
-          display:inline;
-          text-align: right;
-          padding-right: 15px;
-        }
-      }
-    }
-    .l_area_right {
-      width:290px;
-      margin-left:40px;
-      h3 {
-        @include title(1, 30px);
-        margin: 0 0 10px 0;
-        padding: 0;
-        height: 36px !important;
-        line-height: 36px !important;
-      }
-    .product_by {
-      .l_photo_description {
-        margin-top:-9px;
-        .image {
-          margin-top:9px;
-        }
-        .description {
-          padding-bottom:15px;
-        }
-      }
-    }
-      .other_products {
-        padding-top:20px;
-        ul {
-          li {
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ccc6c0;
-            border-top: solid 1px #ffffff;
+        .price_button {
+          padding-top:20px;
+          p.price {
+            font-size: 20px;
+            display:inline;
+            text-align: right;
+            padding-right: 15px;
           }
-          li:last-child {border-bottom: none;}
-          li:first-child {border-top: none;}
         }
       }
-      h3.product_by, h3.other_products {
-        @include title(1, 30px);
-        margin: 0 0 10px 0;
-      }
-      h2 {
-        @include title(2, 18px);
-        font-family: helveticaneue-bold;
-      }
-      .about_the_farmer {
-        padding:20px 0 20px 0;
-        text-align: center;
+      .l_area_right {
+        width:290px;
+        margin-left:40px;
+        h3 {
+          @include title(1, 30px);
+          margin: 0 0 10px 0;
+          padding: 0;
+          height: 36px !important;
+          line-height: 36px !important;
+        }
+        .product_by {
+          .l_photo_description {
+            margin-top:-9px;
+            .image {
+              margin-top:9px;
+            }
+            .content {
+              padding-bottom:15px;
+            }
+          }
+        }
+        .other_products {
+          padding-top:20px;
+          ul {
+            li {
+              padding-bottom: 20px;
+              border-bottom: 1px solid #ccc6c0;
+              border-top: solid 1px #ffffff;
+            }
+            li:last-child {border-bottom: none;}
+            li:first-child {border-top: none;}
+          }
+        }
+        h3.product_by, h3.other_products {
+          @include title(1, 30px);
+          margin: 0 0 10px 0;
+        }
+        h2 {
+          @include title(2, 18px);
+          font-family: helveticaneue-bold;
+        }
+        .about_the_farmer {
+          padding:20px 0 20px 0;
+          text-align: center;
+        }
       }
     }
   }

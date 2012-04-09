@@ -17,7 +17,9 @@
     position:absolute;
     left:0;
     bottom: -11px;
-    background: url("/../images/shadow_big.png") left center  no-repeat;
+    background: transparent;
+    background-image: url("/../images/shadows.png");
+    background-repeat:no-repeat;
     width: 285px;
     height:11px;
     margin:0 auto;
@@ -90,35 +92,40 @@ span.button {
   ul {
     margin:0;
     li {
-     display: block;
-     float: left;
-     text-decoration: none;
-     a {
-       font-size: 12px !important;
-       color:$brown;
-       padding: 5px 20px 2px 20px;
-       position: relative;
-       background-image: url("/../images/breadcrumb.png");
-       background-position: right top;
-       margin-left: -10px;
-     }
-    a:hover {
-      background-position: right -21px;
-      cursor: pointer;
-    }
-     a:active {
-       background-position: right -42px;
-     }
-    &:first-child {
+      display: block;
+      float: left;
+      text-decoration: none;
       a {
-        border-left:1px solid #bea47d;
+        font-size: 12px !important;
+        color:$brown;
+        padding: 5px 20px 2px 20px;
+        position: relative;
+        background-image: url("/../images/breadcrumb.png");
+        background-position: right top;
+        margin-left: -10px;
       }
-    }
-    &:first-child {
-      a {
-        padding-left:20px;
+      a:hover {
+        background-position: right -21px;
+        cursor: pointer;
       }
-    }
+      a:active {
+        background-position: right -42px;
+        text-shadow: none;
+      }
+      &:first-child {
+        a {
+          border-left:1px solid #bea47d;
+        }
+      }
+      &:first-child {
+        a {
+          padding-left:7px;
+          .home_icon {
+            margin-bottom: -3px;
+            padding-right: 4px;
+          }
+        }
+      }
     }
   }
 }
@@ -127,13 +134,38 @@ span.button {
 // Menu dropdown
 ul.dropdown_menu {
   @include borderradius(5px);
-  border:solid 1px $lightbrown;
+  border:solid 2px $brown;
   margin:0;
   padding:0;
-  overflow:hidden;
+  position:absolute;
+  background:$bg_color;
   -webkit-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
   box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+  li.dropdown_arrow {
+    .inner_arrow {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-bottom-color: $brown;
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      display: inline-block;
+      margin-left: -2px;
+    }
+    .outer_arrow {
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 9px solid $light_bg_color;
+      border-bottom-color: $light_bg_color;
+      position: absolute;
+      top: -7px;
+      left: 16px;
+      display: inline-block;
+      margin-left: -2px;
+    }
+  }
   li {
     margin:0;
     text-align:left;
@@ -149,6 +181,7 @@ ul.dropdown_menu {
       }
       &:hover {
         background:$light_bg_color;
+        color:$red;
       }
     }
     &:first-child {
@@ -174,4 +207,12 @@ ul.dropdown_menu {
       }
     }
   }
+}
+
+// Icon HP utilisée dans le fil d'arianne
+.home_icon {
+  background:url('/../images/ultime_sprite.png') left center no-repeat;
+  width:11px;
+  height:13px;
+  display: inline-block;
 }

@@ -39,6 +39,7 @@
           <ul class="dropdown-menu dropdown_menu">
             <li> <%= link_to "Tous",page_produit_index_path %> </li>
             <%	Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
               <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
             <% end %>
           </ul>
@@ -46,8 +47,9 @@
         <div class="dropdown product">
           <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown">Produits</a>
           <ul class="dropdown-menu dropdown_menu">
-            <li> <%= link_to "Tous",page_produit_index_path %> </li>
+          <li> <%= link_to "Tous",page_produit_index_path %> </li>
             <% Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
               <li> <%= link_to categorie.nom,page_produit_index_by_categorie_path(categorie.id) %> </li>
             <% end %>
           </ul>
@@ -59,6 +61,7 @@
           <a href="" class="l_link farmer" data-toggle="dropdown">Agriculteur</a>
           <ul class="dropdown-menu dropdown_menu">
             <li><%= link_to "Tous",page_revendeur_index_path %></li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
           </ul>
         </div>
       </div>
@@ -68,6 +71,7 @@
           <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown">Le Blog</a>
           <ul class="dropdown-menu dropdown_menu">
             <li><a> Fruit et legumes </a> </li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
             <li><a> Laitier </a> </li>
           </ul>
         </div>
@@ -75,12 +79,15 @@
           <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown">Nous</a>
           <ul class="dropdown-menu dropdown_menu">
             <li> <a> Fruit et legumes </a> </li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
             <li> <a> Laitier </a> </li>
           </ul>
         </div>
       </div>
 
     </div>
+
+    <div class="sunshine"><span class="ray_of_sunshine"></span><span class="round_of_sunshine"></span></div>
 
   </div>
 
@@ -103,6 +110,7 @@
     <% end %>-->
 
   <div class="grass"></div>
+  
 
 </header>
 <div class="ground_top"></div>
