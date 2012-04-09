@@ -1,22 +1,46 @@
-<h1><%= @titre %></h1>
-<p>Find me in app/views/page_revendeur/index.html.erb</p>
+<div class="l_main_gutter l_farmer_list">
+  <h1><%= @titre %></h1>
 
-<% if @revendeurs.count == 0 %>
-	<p> Aucun agriculteur sur le site</p>
-<% else %>
+  <% if @revendeurs.count == 0 %>
+    <p> Aucun agriculteur sur le site</p>
+  <% else %>
 
-<ul class="l_farmer_list">
+    <ul class="l_farmer_list">
 
-</ul>
-	<% @revendeurs.each do |revendeur| %>
-		<td> <%= revendeur.nom %> </td>
-		<td> <%= revendeur.prenom %> </td>
-		<td> <%= revendeur.direction.nom %> </td>
-		<td> <%= revendeur.ville.nom %> </td>
-		<td> <%= revendeur.description %></td>
-		<td> <%= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %></td>
-		<td><%= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %></td>
-		<td> <%= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %></td>
-	<% end %>
-<% end %>
+      <% @revendeurs.each do |revendeur| %>
 
+        <li class="l_vcard">
+          <div class="l_head_vcard l_photo_description is_horizontal is_small">
+
+            <div class="image has_corners_shadow is_small"></div>
+
+            <div class="content">
+              <p class="title">
+                <%= revendeur.nom %>
+                <%= revendeur.prenom %>
+              </p>
+              <p>
+                <span class="note is_italic"><%= revendeur.direction.nom %></span>
+                <span class="note is_italic"><%= revendeur.ville.nom %></span>
+              </p>
+              <%#= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %>
+              <%#= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %>
+              <%#= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %>
+
+            </div>
+
+          </div>
+
+          <p class="description"><span><%= revendeur.description %></span></p>
+
+        </li>
+
+      <% end %>
+
+      <br class="clear">
+
+    </ul>
+
+  <% end %>
+
+</div>

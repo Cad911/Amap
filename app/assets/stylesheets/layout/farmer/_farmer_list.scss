@@ -1,0 +1,29 @@
+.l_main_gutter.l_farmer_list {
+  ul.l_farmer_list {
+    margin:0;
+    padding: 0;
+    li.l_vcard {
+      float:left;
+      width:370px;
+      padding: 20px;
+      margin:20px;
+      background:url("/../images/bg_vcard.png") repeat;
+      -webkit-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
+      .image {
+        width:60px;
+        height:60px;
+        &:after {
+          display:none;
+        }
+      }
+      .content {
+        .title {
+          margin-top:0;
+          @include title(1, 22px);
+        }
+      }
+    }
+  }
+}

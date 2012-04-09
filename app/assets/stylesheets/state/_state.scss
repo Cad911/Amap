@@ -87,17 +87,17 @@
 .l_photo_description {
   &.is_small {
     .image {
-      width:65px;
+      width:55px;
     }
   }
   &.is_medium {
     .image {
-      width:200px;
+      width:190px;
     }
   }
   &.is_big {
     .image {
-      width:285px;
+      width:275px;
     }
   }
 }
@@ -118,16 +118,16 @@
     }
   }
   &.is_small {
-    width:65px;
+    width:55px;
   }
   &.is_medium {
-    width:210px;
+    width:190px;
   }
   &.is_big {
-    width:285px;
+    width:275px;
   }
   &.is_huge {
-    width:440px;
+    width:430px;
     .title {
       font-size:22px;
     }
