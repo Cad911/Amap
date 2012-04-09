@@ -1,9 +1,9 @@
 ECommerce::Application.routes.draw do
  
  
-  resources :rel_cageot_produits
-
-  resources :cageots
+#______ CAGEOT ______________________________________
+resources :cageots
+match 'cageot/ajoutProduit' => 'cageots#ajoutProduitCageot', :via => :post, :as => :ajout_produit_cageot
 
 #_____ CONNEXION ESPACE CLIENT _______________________
   devise_for :clients do
