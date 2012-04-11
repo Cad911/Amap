@@ -25,7 +25,7 @@
       <file leaf-file-name="main.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="56" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
+            <state line="7" column="10" selection-start="107" selection-end="117" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -34,16 +34,7 @@
       <file leaf-file-name="_module.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="149" column="33" selection-start="3504" selection-end="3510" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_layout.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="20" selection-start="2265" selection-end="2284" vertical-scroll-proportion="0.0">
+            <state line="232" column="14" selection-start="5418" selection-end="5418" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -52,7 +43,16 @@
       <file leaf-file-name="_state.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="13" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.0">
+            <state line="30" column="19" selection-start="1092" selection-end="1110" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_layout.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="1" selection-start="2240" selection-end="2240" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -61,25 +61,43 @@
       <file leaf-file-name="_mixins.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="8" selection-start="813" selection-end="813" vertical-scroll-proportion="0.0">
+            <state line="11" column="45" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/page_revendeur/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="16" selection-start="494" selection-end="494" vertical-scroll-proportion="0.34793815">
+            <state line="11" column="54" selection-start="289" selection-end="289" vertical-scroll-proportion="-6.7083335">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_farmer_list.scss" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="111" column="62" selection-start="3857" selection-end="3857" vertical-scroll-proportion="-12.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_product_list.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_farmer_list.scss" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="34" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0">
+            <state line="26" column="25" selection-start="903" selection-end="903" vertical-scroll-proportion="0.5012854">
               <folding />
             </state>
           </provider>
@@ -95,22 +113,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/application.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/base/_base.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_product_show.scss" />
-        <option value="$PROJECT_DIR$/app/views/page_produit/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_product_list.scss" />
-        <option value="$PROJECT_DIR$/app/views/page_produit/show.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/main.scss" />
         <option value="$PROJECT_DIR$/app/views/layouts/front.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss" />
+        <option value="$PROJECT_DIR$/app/views/page_produit/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/page_produit/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss" />
         <option value="$PROJECT_DIR$/app/views/page_revendeur/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss" />
       </list>
     </option>
   </component>
@@ -166,6 +184,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -318,32 +346,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="state" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -374,7 +376,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="basket" />
+              <option name="myItemId" value="product" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -394,16 +396,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -537,9 +529,8 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21623564" sideWeight="0.6711004" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23060344" sideWeight="0.6711004" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
@@ -548,6 +539,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -612,101 +604,93 @@
         <state line="41" column="19" selection-start="928" selection-end="947" vertical-scroll-proportion="0.5012854" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="59" selection-start="148" selection-end="148" vertical-scroll-proportion="-0.83916086" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="44" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/espace_client/clients/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="38" selection-start="474" selection-end="474" vertical-scroll-proportion="0.7780083">
-          <folding />
-        </state>
+        <state line="25" column="38" selection-start="474" selection-end="474" vertical-scroll-proportion="0.7780083" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/basket/_basket_show.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/basket/_basket_list.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/front.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="63" selection-start="3693" selection-end="3693" vertical-scroll-proportion="1.8337913">
-          <folding />
-        </state>
+        <state line="89" column="63" selection-start="3693" selection-end="3693" vertical-scroll-proportion="1.8337913" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_show.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/page_produit/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="25" selection-start="12" selection-end="38" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="7" column="10" selection-start="107" selection-end="117" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="45" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="20" selection-start="2265" selection-end="2284" vertical-scroll-proportion="0.0">
+        <state line="86" column="1" selection-start="2240" selection-end="2240" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="33" selection-start="3504" selection-end="3510" vertical-scroll-proportion="0.0" />
+        <state line="232" column="14" selection-start="5418" selection-end="5418" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/page_produit/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="45" selection-start="237" selection-end="244" vertical-scroll-proportion="0.24291497">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="62" selection-start="3857" selection-end="3857" vertical-scroll-proportion="-12.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="13" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="56" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/_mixins.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="8" selection-start="813" selection-end="813" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="34" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0">
+        <state line="30" column="19" selection-start="1092" selection-end="1110" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/page_revendeur/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="16" selection-start="494" selection-end="494" vertical-scroll-proportion="0.34793815">
+        <state line="11" column="54" selection-start="289" selection-end="289" vertical-scroll-proportion="-6.7083335">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="25" selection-start="903" selection-end="903" vertical-scroll-proportion="0.5012854">
           <folding />
         </state>
       </provider>

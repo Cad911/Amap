@@ -20,6 +20,16 @@
   -moz-border-radius: $arrdondis;
   border-radius: $arrdondis;
 }
+
+
+// Box shadow
+@mixin boxshadow($x, $y, $blur, $spread, $color) {
+  -webkit-box-shadow: $x $y $blur $spread $color;
+  -moz-box-shadow: $x $y $blur $spread $color;
+  box-shadow: $x $y $blur $spread $color;
+}
+
+
 @-webkit-keyframes rotate {
     from {
         -webkit-transform: rotate(0deg);

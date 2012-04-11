@@ -20,7 +20,8 @@
 |                                                        |
 |    Ombres pour les images: .has_corners_shadow         |
 |                                                        |
-|    A 4 tailles:       -   .is_small                    |
+|    A 5 tailles:       -   .is_small                    |
+|                       -   .is_vcard                    |
 |                       -   .is_medium                   |
 |                       -   .is_big                      |
 |                       -   .is_huge                     |
@@ -36,6 +37,15 @@
       width:440px;
       height:13px;
       background-position: left top;
+    }
+  }
+  &.is_vcard {
+    width:418px;
+    &:after {
+      bottom:-11px;
+      width:428px;
+      height:11px;
+      background-position: left -37px;
     }
   }
   &.is_big {
@@ -78,26 +88,22 @@
 |    A 2 dispositions:  -   .is_horizontal               |
 |                       -   .is_vertical                 |
 |                                                        |
-|    A 3 tailles:       -   .is_small                    |
-|                       -   .is_medium                   |
-|                       -   .is_big                      |
-|                                                        |
 --------------------------------------------------------*/
 // Attribue la taille de l'image en vertical & horizontal
 .l_photo_description {
   &.is_small {
     .image {
-      width:55px;
+      width:65px;
     }
   }
   &.is_medium {
     .image {
-      width:190px;
+      width:200px;
     }
   }
   &.is_big {
     .image {
-      width:275px;
+      width:285px;
     }
   }
 }
@@ -118,16 +124,16 @@
     }
   }
   &.is_small {
-    width:55px;
+    width:65px;
   }
   &.is_medium {
-    width:190px;
+    width:200px;
   }
   &.is_big {
-    width:275px;
+    width:285px;
   }
   &.is_huge {
-    width:430px;
+    width:440px;
     .title {
       font-size:22px;
     }
@@ -140,33 +146,6 @@
     }
   }
 }
-// Attribue la disposition horizontal et ajuste les marges en focntion des tailles
-.l_photo_description.is_horizontal {
-  .image {
-    float:left;
-    position:relative;
-    z-index: 2;
-  }
-  .content {
-    z-index: 1;
-  }
-  &.is_small {
-    .content {
-      margin-left:85px;
-    }
-  }
-  &.is_medium {
-    .content {
-      margin-left:220px;
-    }
-  }
-  &.is_big {
-    .content {
-      margin-left:305px;
-    }
-  }
-}
-
 
 // Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu
 .l_nav_element {
