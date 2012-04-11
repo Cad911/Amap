@@ -1,6 +1,8 @@
 ECommerce::Application.routes.draw do
  
  
+  resources :abonnements
+
 #______ CAGEOT ______________________________________
 resources :cageots
 match 'cageot/ajoutProduit' => 'cageots#ajoutProduitCageot', :via => :post, :as => :ajout_produit_cageot

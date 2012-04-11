@@ -25,12 +25,14 @@ class ApplicationController < ActionController::Base
     		#__ ASSOCIATION PANIER A L'UTILISATEUR SI IL EXISTE __
     		if !session[:panier_id].nil?
     			@cageot_session = Cageot.where(:session_id => session[:panier_id])
-    			if @cageot_session.count > 0
+    			@cageot_user = Cageot.where("client_id = ? AND etat='en_cours'", current_client.id)
+    			if @cageot_session.count > 0 && @cageot_user.count == 0 #__ SI PANIER EN COURS ET CLIENT N A PAS DE PANIER __
     				@cageot = Cageot.find(@cageot_session[0].id)
     				@cageot.client_id = current_client.id
     				@cageot.save
     			end
     		end
+    		flash[:notice] = "Bienvenue dans votre compte"
     		espace_client_client_path(current_client.id)
     	else
     		admin_dashboard_path
@@ -41,6 +43,12 @@ class ApplicationController < ActionController::Base
      if resource_or.is_a?(User) || resource_or == :user
     	new_user_session_path
      elsif resource_or.is_a?(Client) || resource_or == :client
+     	@cageot = Cageot.where(:session_id => session[:panier_id])
+     	if @cageot.count > 0
+	     	@cageot_modif = Cageot.find(@cageot[0].id)
+	     	@cageot_modif.etat = 'annule'
+	     	@cageot_modif.save
+     	end
      	new_client_session_path
      else
        new_admin_user_session_path()

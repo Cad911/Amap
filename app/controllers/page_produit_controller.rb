@@ -1,20 +1,52 @@
 class PageProduitController < ApplicationController
   layout "front"
   
-  #____ LISTING TOUS LES PRODUITS ________
+  #__________________________________________________________ LISTING TOUS LES PRODUITS ____________________________________________
   def index
   	@titre = "Tous les produits"
   	@produits = ProduitVenteLibre.all
+  	@produits_first_block = []
+  	@produit_middle_block = []
+  	@produit_last_block = []
+  	
+  	if @produits.count < 5
+  		@produit_middle_block = @produits
+  	elsif @produits.count == 5
+  		@first_huge_product = @produits[0]
+  		(1..4).each do |i|
+  			@produits_first_block << @produits[i]
+  		end
+  	elsif 5 < @produits.count
+  		@first_huge_product = @produits[0]
+  		(1..4).each do |i|
+  			@produits_first_block << @produits[i]
+  		end
+  		
+  		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
+	  		(5..@produits.count-6).each do |i|
+	  			@produit_middle_block << @produits[i]
+	  		end
+		 
+	  		(@produits.count-5..@produits.count-2).each do |i|
+	  			@produit_last_block << @produits[i]
+	  		end
+	  		@last_huge_product = @produits[@produits.count-1] 
+  		else
+  			(5..@produits.count-1).each do |i|
+	  			@produit_middle_block << @produits[i]
+	  		end
+  		end
+  	end
   end
 
-  #____ AFFICHAGE PAGE PRODUIT _______
+  #________________________________________ AFFICHAGE PAGE PRODUIT ____________________________________________________
   def show
    @produit = ProduitVenteLibre.find(params[:product_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
    @other_produits = ProduitVenteLibre.where("user_id=? AND id != ?",@produit.user_id, @produit.id)
   end
   
-  #_____ LISTING PAR REVENDEUR / AGRICULTEUR ________
+  #________________________________ LISTING PAR REVENDEUR / AGRICULTEUR _____________________________________________________
   def index_by_revendeur
   	@user = User.find(params[:user_id])
   	@titre = "Produit de l'agriculteur #{@user.nom}"
@@ -22,7 +54,7 @@ class PageProduitController < ApplicationController
   	render :index
   end
   
-  #__ LISTING PAR DIRECTION / AMAP _________
+  #_______________________________________________ LISTING PAR DIRECTION / AMAP _____________________________________________
   def index_by_directeur
   	@direction = User.find(params[:direction_id])
   	@titre = "Produit de l'amap #{@direction.nom}"
@@ -37,7 +69,7 @@ class PageProduitController < ApplicationController
   	render :index
   end
   
-  #___ LISTING BY CATEGORIE __
+  #_________________________________________________________ LISTING BY CATEGORIE _______________________________________________
   def index_by_categorie
   	@categorie = Categorie.find(params[:categorie_id])
   	if @categorie.nil?
