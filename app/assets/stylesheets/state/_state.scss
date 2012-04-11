@@ -38,6 +38,16 @@
       background-position: left top;
     }
   }
+  &.is_vcard {
+    width:418px;
+    height:418px;
+    &:after {
+      bottom:-11px;
+      width:440px;
+      height:11px;
+      background-position: left top;
+    }
+  }
   &.is_big {
     width:273px;
     height:273px;

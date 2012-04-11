@@ -11,18 +11,31 @@
       -webkit-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
       -moz-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
       box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
-      .image {
-        width:60px;
-        height:60px;
-        &:after {
-          display:none;
+      .l_photo_description {
+        border-bottom:solid 1px #e5e5e5;
+        .image {
+          width:60px;
+          height:60px;
+          @include boxshadow(1px, 1px, 0px, 0px, rgba(255,255,255, 0.5));
+          background:url('/../images/header/ciel.png');
+          &:after {
+            display:none;
+          }
+        }
+        .content {
+          .title {
+            margin-top:0;
+            @include title(1, 22px);
+          }
+          .location {
+            color:$lightgrey;
+          }
         }
       }
-      .content {
-        .title {
-          margin-top:0;
-          @include title(1, 22px);
-        }
+      .description {
+        margin-top:0;
+        padding-top:15px;
+        border-top:solid 1px #fcfcfc;
       }
     }
   }
