@@ -5,12 +5,12 @@ gem 'rails', '3.2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development, :test do
-  gem 'mysql2'
-end
-group :production do
-  gem 'pg'
-end
+
+gem 'mysql2' , :group => :development
+
+
+gem 'pg',:group => :production
+
 
 gem 'activeadmin'
 gem 'cancan'
