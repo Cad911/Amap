@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  client_id: 1
+  panier_id: 1
+  date_debut: 2012-04-11
+  date_fin: 2012-04-11
+  duree: 2012-04-11
+  deleted: 1
+
+two:
+  id: 1
+  client_id: 1
+  panier_id: 1
+  date_debut: 2012-04-11
+  date_fin: 2012-04-11
+  duree: 2012-04-11
+  deleted: 1

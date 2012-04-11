@@ -4,9 +4,18 @@
 <div class="well">
 	<h1> <%= @panier.titre %></h1>
 	
+	
 	<p> Description :<%= @panier.description %> </p>
 	<p> Prix HT : <%= @panier.prix_unite_ht %></p>
 	<p>Agriculteur : <%= @panier.user.nom %></p>
+	
+	<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
+		<%= f.input :id, :as => :hidden %>
+		<%= f.input :duree %>
+	
+		<p> <input type="submit" value="S'abonner" class="btn btn-info"/></p>
+	<% end %>
+	
 	
 	
 	<!-- PARTIE INFO AGRICULTEUR -->
