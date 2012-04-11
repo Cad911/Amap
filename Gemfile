@@ -7,10 +7,8 @@ gem 'rails', '3.2.1'
 
 
 gem 'mysql2' , :group => :development
-
-
 gem 'pg',:group => :production
-
+gem 'thin'
 
 gem 'activeadmin'
 gem 'cancan'
