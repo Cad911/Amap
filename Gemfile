@@ -16,6 +16,7 @@ group :assets do
   gem 'compass-rails','~> 1.0.0.rc.2'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'pg'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'

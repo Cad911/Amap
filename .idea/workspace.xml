@@ -79,7 +79,16 @@
       <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="62" selection-start="3857" selection-end="3857" vertical-scroll-proportion="-12.5">
+            <state line="44" column="8" selection-start="1571" selection-end="1589" vertical-scroll-proportion="-13.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gemfile" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Gemfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="9" selection-start="420" selection-end="420" vertical-scroll-proportion="0.3470437">
               <folding />
             </state>
           </provider>
@@ -94,10 +103,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_farmer_list.scss" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="_farmer_list.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="25" selection-start="903" selection-end="903" vertical-scroll-proportion="0.5012854">
+            <state line="8" column="75" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -113,7 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/base/_base.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_product_show.scss" />
@@ -124,11 +132,12 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/_layout.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/module/_module.scss" />
         <option value="$PROJECT_DIR$/app/views/page_produit/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/page_produit/show.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/state/_state.scss" />
         <option value="$PROJECT_DIR$/app/views/page_revendeur/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss" />
+        <option value="$PROJECT_DIR$/app/views/page_produit/show.html.erb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
       </list>
     </option>
   </component>
@@ -599,11 +608,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_show.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="928" selection-end="947" vertical-scroll-proportion="0.5012854" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/espace_client/clients/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="38" selection-start="474" selection-end="474" vertical-scroll-proportion="0.7780083" />
@@ -660,13 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="62" selection-start="3857" selection-end="3857" vertical-scroll-proportion="-12.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/product/_product_list.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="44" column="13" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
@@ -690,7 +687,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout/farmer/_farmer_list.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="25" selection-start="903" selection-end="903" vertical-scroll-proportion="0.5012854">
+        <state line="8" column="75" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/page_produit/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="8" selection-start="1571" selection-end="1589" vertical-scroll-proportion="-13.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="9" selection-start="420" selection-end="420" vertical-scroll-proportion="0.3470437">
           <folding />
         </state>
       </provider>
