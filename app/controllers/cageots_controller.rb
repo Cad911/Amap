@@ -1,10 +1,10 @@
 class CageotsController < InheritedResources::Base
 	layout 'front'
 
-	#__ AFFICHE LES ARTICLES DANS LE CAGEOT _____
+	#__________________________________________ AFFICHE LES ARTICLES DANS LE CAGEOT ________________________________________
 	def show
 		if current_client.nil?
-			@select_cageot = Cageot.where("etat='en_cours' AND session_id = ?", session[:panier_id])
+			@select_cageot = Cageot.where("etat='en_cours' AND session_id = ?", session[:cageot_id])
 		else
 			@select_cageot = Cageot.where("etat='en_cours' AND client_id = ?", current_client.id) #SI CAGEOT EN COURS
 		end
@@ -19,14 +19,25 @@ class CageotsController < InheritedResources::Base
 	end
 	
 	
-	#______________________________________ AJOUT PRODUIT DANS LE CAGEOT _________________________
+	#__________________________________________________________ AJOUT PRODUIT DANS LE CAGEOT _____________________________________________
 	def ajoutProduitCageot
 		#2 VARIABLES EN POST => params[:produit_vente_libre][:id] / params[:produit_vente_libre][:nombre_pack]
 		#_________________
 		#________________ SI CLIENT PAS CONNECTED _____________________
 		#__________________
+		flash[:notice]= ""
 		if current_client.nil?
-			@cageot = Cageot.where("etat='en_cours' AND session_id = ?", session[:panier_id])
+			#_____ SI ABONNEMENT CHOISI _______
+			#_____
+			@abonnement_exist = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
+			if @abonnement_exist.count > 0
+				@abonnement = Abonnement.find(@abonnement_exist[0].id)
+				@abonnement.etat = "annule"
+				@abonnement.save
+				flash[:notice] = "Abonnement existant et supprimer. "
+			end
+			
+			@cageot = Cageot.where("etat='en_cours' AND session_id = ?", session[:cageot_id])
 				#________ SI CAGEOT EXISTE ________________
 				if @cageot.count >0
 					@produit_to_add = RelCageotProduit.where("cageot_id = ? AND produit_vente_libre_id = ?",@cageot[0].id, params[:produit_vente_libre][:id])
@@ -35,7 +46,7 @@ class CageotsController < InheritedResources::Base
 						@produit = RelCageotProduit.find(@produit_to_add[0].id)
 						@produit.nombre_pack += params[:produit_vente_libre][:nombre_pack].to_i
 						if @produit.save
-							flash[:notice] = "Produit updater"
+							flash[:notice] += "Produit updater"
 							redirect_to cageot_path(@cageot[0])
 						end
 					else
@@ -46,15 +57,15 @@ class CageotsController < InheritedResources::Base
 							@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack]
 						
 							if @rel_cageot_produit.save
-								flash[:notice] = "Produit ajouter"
-								redirect_to cageot_path(@cageot)
+								flash[:notice] += "Produit ajouter"
+								redirect_to cageot_path(@cageot[0])
 							end
 						end
 					end
 				#________ SI CAGEOT N'EXISTE PAS __________
 				else
-					session[:panier_id] = ("#{DateTime.now.to_i}#{('a'..'z').to_a.shuffle.join}").split('').shuffle.join #__ GENERATION ID POUR PANIER __
-					@new_cageot = Cageot.new({:session_id => session[:panier_id],:etat => 'en_cours'})
+					session[:cageot_id] = "#{DateTime.now.to_i}"+("#{(1..100).to_a.shuffle.join}#{('a'..'z').to_a.shuffle.join}").split('').shuffle.join #__ GENERATION ID POUR PANIER __
+					@new_cageot = Cageot.new({:session_id => session[:cageot_id],:etat => 'en_cours'})
 					if @new_cageot.save
 						#__ SI ID PRODUIT ___
 						if !params[:produit_vente_libre][:id].nil?
@@ -63,7 +74,7 @@ class CageotsController < InheritedResources::Base
 							@rel_cageot_produit.produit_vente_libre_id = params[:produit_vente_libre][:id]
 							@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack]
 							if @rel_cageot_produit.save
-								flash[:notice] = "Produit ajoute et panier creer (info)"
+								flash[:notice] += "Produit ajoute et panier creer (info)"
 								redirect_to cageot_path(@new_cageot)
 							end
 						end
@@ -73,9 +84,19 @@ class CageotsController < InheritedResources::Base
 				
 				end
 		#_________________
-		#_______________ SI CLIENT CONNECTED _________________________________________________________
+		#____________________ SI CLIENT CONNECTED _________________________________________________________
 		#_________________
 		else
+			#_____ SI ABONNEMENT CHOISI _______
+			#_____
+			@abonnement_exist = Abonnement.where("etat = 'en_cours' AND client_id = ?", current_client.id)
+			if @abonnement_exist.count > 0
+				@abonnement = Abonnement.find(@abonnement_exist[0].id)
+				@abonnement.etat = "annule"
+				@abonnement.save
+				flash[:notice] = "Abonnement existant et supprimer. "
+			end
+			
 			@cageot = Cageot.where("etat='en_cours' AND client_id = ?", current_client.id) #SI CAGEOT EN COURS
 			
 			#________ SI CAGEOT EXISTE ________________
@@ -120,21 +141,21 @@ class CageotsController < InheritedResources::Base
 	end
 	
 	
-	#______________________________ AJOUTER QUANTITE DANS LE PANIER ________________________
+	#_____________________________________________ AJOUTER QUANTITE DANS LE PANIER ____________________________________________
 	def ajouterQuantite
 		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
 		@cageot = Cageot.find(@produit_cageot.cageot_id)
-		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id
+		if @cageot.session_id == session[:cageot_id] || @cageot.client_id == current_client.id
 			@produit_cageot.ajoutQuantite
 			flash[:notice] = "Quantite agrandit"
 			redirect_to cageot_path(@cageot)
 		end
 	end
-	#______________________________ SUPPRIMER QUANTITE DANS LE PANIER ________________________
+	#_____________________________________________ SUPPRIMER QUANTITE DANS LE PANIER _______________________________________
 	def supprimerQuantite
 		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
 		@cageot = Cageot.find(@produit_cageot.cageot_id)
-		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id #__ POUR EVITER QU'UN UTILISATEUR N'AYANT PAS LE DROIT METTENT A JOUR
+		if @cageot.session_id == session[:cageot_id] || @cageot.client_id == current_client.id #__ POUR EVITER QU'UN UTILISATEUR N'AYANT PAS LE DROIT METTENT A JOUR
 			#__ SI IL NE RESTE QU'UN PACK ALORS ON SUPPRIME LE PRODUIT DU PANIER
 			if @produit_cageot.nombre_pack == 1
 				@produit_cageot.destroy
@@ -148,11 +169,11 @@ class CageotsController < InheritedResources::Base
 	end
 	
 	
-	#_______________________________ SUPPRIMER LE PRODUIT DU PANIER ________________________
+	#___________________________________________________ SUPPRIMER LE PRODUIT DU PANIER _______________________________________
 	def supprimerProduitCageot
 		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
 		@cageot = Cageot.find(@produit_cageot.cageot_id)
-		if @cageot.session_id == session[:panier_id] || @cageot.client_id == current_client.id
+		if @cageot.session_id == session[:cageot_id] || @cageot.client_id == current_client.id
 			@produit_cageot.destroy
 			flash[:notice] = "Produit supprimer"
 			redirect_to cageot_path(@cageot)

@@ -11,7 +11,7 @@
 	
 	<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
 		<%= f.input :id, :as => :hidden %>
-		<%= f.input :duree %>
+		<%= f.input :duree, :collection => (1..12).map, :include_blank => false %>
 	
 		<p> <input type="submit" value="S'abonner" class="btn btn-info"/></p>
 	<% end %>

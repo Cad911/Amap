@@ -1,0 +1,41 @@
+<h1>ProcessOrder#confirmation</h1>
+<p>Find me in app/views/process_order/confirmation.html.erb</p>
+
+<p> Choisissez votre point relais </p>
+
+
+<% if current_client.nil? %>
+	<!-- ______________ SE CONNECTER _________________ -->
+	<h2>Se connecter</h2>
+	
+	<%= simple_form_for(Client.new, :as => "client", :url => session_path("client"), :class => "form") do |f| %>
+	  <div class="inputs">
+	    <%= f.input :email, :required => false, :autofocus => true %>
+	    <%= f.input :password, :required => false %>
+	  </div>
+	
+	  <div class="actions">
+	    <%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
+	  </div>
+	<% end %>
+	
+	
+	<!-- ______________ S'INSCRIRE _________________ -->
+	<h2>Sign up</h2>
+
+	<%= simple_form_for(Client.new, :as => "client", :url => registration_path("client")) do |f| %>
+  	<%= f.error_notification %>
+
+	  <div class="inputs">
+	    <%= f.input :email, :required => true, :autofocus => true %>
+	    <%= f.input :nom, :required => true, :autofocus => true %> 
+	    <%= f.input :password, :required => true %>
+	    <%= f.input :password_confirmation, :required => true %>
+	  </div>
+
+  	 <div class="actions">
+    	<%= f.button :submit, "Sign up" %>
+  	</div>
+<% end %>
+
+<% end %>

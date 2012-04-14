@@ -8,15 +8,19 @@ class UserAbility
   	if user.nil?
 	  	
 	else
-		# ______________________________________ REVENDEUR ___________________________________
+		# ______________________________________ SI DIRECTEUR / AMAP ___________________________________
 	  	if user.has_revendeur
 	  		cannot :index, User
 	  		can :create, User
 	  		can :manage , User, :id => user.id
 	  		can [:show,:update,:destroy], User, :direction_id => user.id #PEUT MANAGER SEULEMENT SES REVENDEUR
+	  		
+	  		can :index, PointRelai
+	  		can :manage, PointRelai, :user_id => user.id
+	  		can :create, PointRelai
 	  	end
 	  	
-	  	# ______________________________________ AUTORISATION PRODUIT ___________________________________
+	  	# ______________________________________ METTRE DES PRODUITS AUTORISES ___________________________________
 	  	if user.autorisation_produit
 	  		can :index, User
 	  		can [:show,:update], User, :id => user.id
@@ -46,6 +50,9 @@ class UserAbility
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
 	  		can :create, ProduitPanier
+	  		
+	  		can :indexForRevendeur,PointRelai
+	  		can :show, PointRelai, :user_id => user.direction_id
 	  	end
 	  	
 	  	# ______________________________________ VENDRE AVEC RESTRICTION ___________________________________

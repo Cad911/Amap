@@ -1,7 +1,14 @@
 ECommerce::Application.routes.draw do
  
- 
+
+  get "process_order/resume"
+
+  get "process_order/confirmation"
+
+  get "process_order/paiement"
+
   resources :abonnements
+  match 'abonnements/sabonner' => 'abonnements#sabonner', :via => :post, :as => :sabonner
 
 #______ CAGEOT ______________________________________
 resources :cageots
@@ -61,7 +68,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       resources :produit_autorises
       resources :panier_autorises
       resources :paniers do
-       resources :produit_paniers
+       	resources :produit_paniers
       end
       
       resources :stocks
@@ -69,6 +76,9 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       
       resources :produit_vente_libres
       match 'exist_vente/:stock_id' => "produit_vente_libres#dejaEnVente", :as => :exist_vente, :via => :get #VERIF AJAX SI PRODUIT DEJA EN VENTE
+    
+      resources :point_relais
+      match "mespointrelais" => "point_relais#indexForRevendeur", :as => :index_point_relais_for_revendeur, :via => :get
     end
   end
 	

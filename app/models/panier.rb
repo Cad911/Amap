@@ -5,4 +5,7 @@ class Panier < ActiveRecord::Base
     belongs_to :panier_autorise
     
     has_many :produit_paniers
+    has_many :abonnements
+    
+    attr_accessor :duree
 end
