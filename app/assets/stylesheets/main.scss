@@ -32,13 +32,16 @@ $dark_bg_color:#f0ede6;
 }
 
 // Inclusion de fichier .scss
+@import "compass/css3";
 @import "base/normalize";
 @import "mixins";
-@import "module/module";
 @import "base/base";
 @import "layout/layout";
 @import "state/state";
 @import url(http://fonts.googleapis.com/css?family=Lobster);     // police google web-fond alternative de Bello Pro
+@import "bg/*.png";
+@include all-bg-sprites;
+@import "module/module";
 
 .sunshine {
   @include sunshine;
