@@ -88,6 +88,40 @@ class PageProduitController < ApplicationController
 	    			@produit_vente_libre.each do |produit|
 	    				@produits << produit	
 	    			end
+	    			
+	    			@produits_first_block = []
+				  	@produit_middle_block = []
+				  	@produit_last_block = []
+				  	
+				  	if @produits.count < 5
+				  		@produit_middle_block = @produits
+				  	elsif @produits.count == 5
+				  		@first_huge_product = @produits[0]
+				  		(1..4).each do |i|
+				  			@produits_first_block << @produits[i]
+				  		end
+				  	elsif 5 < @produits.count
+				  		@first_huge_product = @produits[0]
+				  		(1..4).each do |i|
+				  			@produits_first_block << @produits[i]
+				  		end
+				  		
+				  		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
+					  		(5..@produits.count-6).each do |i|
+					  			@produit_middle_block << @produits[i]
+					  		end
+						 
+					  		(@produits.count-5..@produits.count-2).each do |i|
+					  			@produit_last_block << @produits[i]
+					  		end
+					  		@last_huge_product = @produits[@produits.count-1] 
+				  		else
+				  			(5..@produits.count-1).each do |i|
+					  			@produit_middle_block << @produits[i]
+					  		end
+				  		end
+				  	end
+
 	    		end   	
 	    	end
 	    end

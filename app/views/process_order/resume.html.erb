@@ -1,0 +1,71 @@
+<h1><%= @titre %> </h1>
+<p>Find me in app/views/page_produit/index.html.erb</p>
+
+<% if !@abonnement_panier.nil? %>
+	<table class="table table-striped">
+			<tr>
+				<th>Titre</th>
+				<th>Agriculteur</th>
+				<th> Quantite </th>
+				<th> Date debut </th>
+				<th> Date fin </th>
+				<th> Prix(unitaire)</th>
+				<th> Action</th>
+				
+			</tr>
+			
+			<tr>
+				<td> <%= @abonnement_panier.panier.titre %> </td>
+				<td> <%= @abonnement_panier.panier.user.nom %> </td>
+				<td> <%= @abonnement_panier.id %>  (voir dans la table)</td>
+				<td> <%= @abonnement_panier.date_debut %> </td>
+				<td> <%= @abonnement_panier.date_fin %> </td>
+				<td> <%= @abonnement_panier.panier.prix_unite_ttc %> € </td>
+				<td> <%= @abonnement_panier.date_fin %> </td>
+			
+			</tr>
+	</table>
+<% elsif !@listing_produit.nil? %>
+	
+		<table class="table table-striped">
+			<tr>
+				<th>Titre</th>
+				<th>Agriculteur</th>
+				<th> Quantite </th>
+				<th> Poids(Unitaire) </th>
+				<th>Prix(unitaire)</th>
+				<th> Action</th>
+				
+			</tr>
+		
+		
+		<% @listing_produit.each do |panier| %>
+		<tr>
+			<td> <%= panier.produit_vente_libre.titre %> </td>
+			<td> <%= panier.produit_vente_libre.user.nom %> </td>
+			<td> <%= panier.nombre_pack %> </td>
+			<td> <%= panier.produit_vente_libre.quantite %> <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
+			<td> <%= panier.produit_vente_libre.prix_unite_ttc %> </td>
+			<td> 
+				<span class="btn btn-info"> <%= link_to "+", ajout_quantite_cageot_path(panier.id) %> </span>
+				<span class="btn btn-info"> <%= link_to "-", supp_quantite_cageot_path(panier.id) %> </span>
+				<span class="btn btn-info"> <%= link_to "SUPP", supp_produit_cageot_path(panier.id), :method => :delete  %> </span>
+			</td>
+			
+		
+		</tr>
+		<% end %>
+		
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td> <%= @total %> €</td>
+		</tr>
+		
+<% else %>
+	<p> Aucun produit</p>
+<% end %>
+
+</table>

@@ -2,11 +2,12 @@ class ClientAbility
   include CanCan::Ability
 
   def initialize(client)
+  	
   	client ||= Client.new
   	
   	if client.nil?
-  	
-  	else
+  		
+   	else
   		can :manage, Client, :id => client.id
   	end
   end

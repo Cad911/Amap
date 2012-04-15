@@ -2,6 +2,16 @@ class EspaceClient::ClientsController < InheritedResources::Base
 	load_and_authorize_resource
 	layout 'espace_client'
 	
+	#______ CREATE __________
+	def create 
+		@client = Client.new(params[:client])
+		if @client.save
+			respond_to do |format|
+  				format.json { render :json => [@client] }
+  				#format.html { render :show }
+  			end
+		end
+	end
 	#______ EDIT PASSWORD ________________
 	def edit_password
 		@client = Client.find(current_client.id)

@@ -22,14 +22,24 @@ class ApplicationController < ActionController::Base
   		if resource.is_a?(User)
     		administration_user_path(current_user.id)
     	elsif resource.is_a?(Client)
-    		#__ ASSOCIATION PANIER A L'UTILISATEUR SI IL EXISTE __
-    		if !session[:panier_id].nil?
-    			@cageot_session = Cageot.where(:session_id => session[:panier_id])
+    		#__ ASSOCIATION CAGEOT A L'UTILISATEUR SI IL EXISTE __
+    		if !session[:cageot_id].nil?
+    			@cageot_session = Cageot.where('etat = "en_cours" AND session_id = ?', session[:cageot_id])
     			@cageot_user = Cageot.where("client_id = ? AND etat='en_cours'", current_client.id)
     			if @cageot_session.count > 0 && @cageot_user.count == 0 #__ SI PANIER EN COURS ET CLIENT N A PAS DE PANIER __
     				@cageot = Cageot.find(@cageot_session[0].id)
     				@cageot.client_id = current_client.id
     				@cageot.save
+    			end
+    		end
+    		#__ ASSOCIATION PANIER/ABONNEMENT A L'UTILISATEUR SI IL EXISTE __
+    		if !session[:abonnement_id].nil?
+    			@abonnement_session = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
+    			@abonnement_user = Abonnement.where("client_id = ? AND etat='en_cours'", current_client.id)
+    			if @abonnement_session.count > 0 && @abonnement_user.count == 0 #__ SI PANIER EN COURS ET CLIENT N A PAS DE PANIER __
+    				@abonnement = Abonnement.find(@abonnement_session[0].id)
+    				@abonnement.client_id = current_client.id
+    				@abonnement.save
     			end
     		end
     		flash[:notice] = "Bienvenue dans votre compte"
@@ -58,9 +68,9 @@ class ApplicationController < ActionController::Base
   
   
   #____ RECUPERATION ERREUR ________________________________________
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_missing
+  #rescue_from ActiveRecord::RecordNotFound, :with => :render_missing
   
-  def render_missing
-  	render :file => "public/404.html", :status => 404
-  end
+  #def render_missing
+  #	render :file => "public/404.html", :status => 404
+  #end
 end
