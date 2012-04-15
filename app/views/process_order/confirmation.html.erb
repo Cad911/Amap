@@ -3,47 +3,66 @@
 	<p>Find me in app/views/process_order/confirmation.html.erb</p>
 	
 	<p> Choisissez votre point relais </p>
+	<form>
 	<ul class="l_farmer_list">
 		<% @point_relais.each do |pr| %>
-			<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <%= pr.adresse %> <%= pr.ville.nom %> </p></li>
+			<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input type="radio" value="" name="test" /><%= pr.adresse %> <%= pr.ville.nom %> </p></li>
 		<% end %>
 	</ul>
-	
+	</form>
 	<% if current_client.nil? %>
 		
-		<h2> Etes vous inscrit ?</h2>
+		
 		<!-- ______________ SE CONNECTER _________________ -->
-		<h2>Se connecter</h2>
+		<div id="l_se_connecter" style="display:none;float:right;margin:0 100px 0">
+			<h2>Se connecter</h2>
+			
+			<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
+			  <div class="inputs">
+			    <%= f.input :email, :required => false, :autofocus => true %>
+			    <%= f.input :password, :required => false %>
+			  </div>
+			
+			  <div class="actions">
+			    <%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
+			  </div>
+			<% end %>
 		
-		<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
-		  <div class="inputs">
-		    <%= f.input :email, :required => false, :autofocus => true %>
-		    <%= f.input :password, :required => false %>
-		  </div>
-		
-		  <div class="actions">
-		    <%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
-		  </div>
-		<% end %>
+		</div>
 		
 		
 		<!-- ______________ S'INSCRIRE _________________ -->
-		<h2>Sign up</h2>
-	
-		<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
-	  	<%= f.error_notification %>
-	
-		  <div class="inputs">
-		    <%= f.input :email, :required => true, :autofocus => true %>
-		    <%= f.input :nom, :required => true, :autofocus => true %> 
-		    <%= f.input :password, :required => true %>
-		    <%= f.input :password_confirmation, :required => true %>
-		  </div>
-	
-	  	 <div class="actions">
-	    	<%= f.button :submit, "Sign up" %>
-	  	</div>
-	<% end %>
-	
+		<div id="l_sinscrire" style="display:none;float:right;margin:0 100px 0">	
+			<h2>Sign up</h2>
+		
+			<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
+		  	<%= f.error_notification %>
+		
+			  <div class="inputs">
+			    <%= f.input :email, :required => true, :autofocus => true %>
+			    <%= f.input :nom, :required => true, :autofocus => true %> 
+			    <%= f.input :password, :required => true %>
+			    <%= f.input :password_confirmation, :required => true %>
+			  </div>
+		
+		  	 <div class="actions">
+		    	<%= f.button :submit, "Sign up" %>
+		  	 </div>
+	  	
+			<% end %>
+		</div>
+		
+		<!-- ARE YOU INSCRIT -------- -->
+		<div id="l_areyouinscrit">
+			<h2> Etes vous inscrit ?</h2>
+			<form>
+				<ul class="l_farmer_list">
+					<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input class="is_inscrit" type="radio" value="oui" name="is_inscrit" /> Oui </p></li>
+					<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input class="is_inscrit" type="radio" value="non" name="is_inscrit" /> Non </p></li>
+				</ul>
+			</form>
+		</div>
+		<br class="clear">
+		
 	<% end %>
 </div>

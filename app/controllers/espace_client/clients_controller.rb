@@ -1,8 +1,9 @@
 class EspaceClient::ClientsController < InheritedResources::Base
 	load_and_authorize_resource
+    skip_load_and_authorize_resource :only => :emailExist
 	layout 'espace_client'
 	
-	#______ CREATE __________
+	#___________________________ CREATE _____________________________________
 	def create 
 		@client = Client.new(params[:client])
 		if @client.save
@@ -12,16 +13,16 @@ class EspaceClient::ClientsController < InheritedResources::Base
   			end
 		end
 	end
-	#______ EDIT PASSWORD ________________
+	#___________________________ EDIT PASSWORD ____________________________
 	def edit_password
 		@client = Client.find(current_client.id)
 	end
 	
-	#______ UPDATE ________________
+	#______________________________ UPDATE __________________________________
 	def update
 		@client = Client.find(current_client.id)
 		
-		#___ SI UPDATE INFOS ___
+		#_________ SI UPDATE INFOS _________
 		if params[:client][:password_confirmation].nil?
 			if @client.update_attributes(params[:client])
 			      		flash[:notice] = "Infos modifie"
@@ -29,7 +30,7 @@ class EspaceClient::ClientsController < InheritedResources::Base
 			   		 else
 			      		render "edit"
 			    	end
-		#___ SI UPDATE MDP ___
+		#_________ SI UPDATE MDP _________
 		else 
 			if @client.valid_password?(params[:client][:actual_password])
 				if params[:client][:password] == params[:client][:password_confirmation]
@@ -52,5 +53,23 @@ class EspaceClient::ClientsController < InheritedResources::Base
 		    end
 	    end
 	end
+	
+	
+	#__________________ VERIF EMAIL EXIST ________________________
+	def emailExist
+	  @email_exist = Client.where(:email => params[:email])
+	  @exist = false
+	  if @email_exist.count > 0
+	  	@exist = true
+	  else
+	    @exist = false
+	  end
+	  respond_to do |format|
+  		format.json { render :json => @exist }
+  		#format.html { render :show }
+  	  end 
+	end
+	
+	
 	
 end

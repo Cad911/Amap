@@ -2,7 +2,7 @@
 (function() {
 
   $(document).ready(function() {
-    var form_se_connecter, form_sinscrire, message_information;
+    var form_areyouinscrit, form_se_connecter, form_sinscrire, message_information;
     message_information = {
       message_success: function(id, titre, message) {
         var div_message;
@@ -29,18 +29,37 @@
         return $("#" + id).after(div_message);
       }
     };
-    form_se_connecter = function() {
-      $('#form_se_connecter').bind('ajax:success', function(data, response) {
-        console.log(data);
-        return message_information.message_success("form_se_connecter", "Success", "Conexion réussi");
-      });
-      return $('#form_se_connecter').bind('ajax:error', function(data, response) {
-        console.log(data);
-        console.log(response);
-        return message_information.message_error("form_se_connecter", "Erreur", response.responseText);
-      });
+    form_se_connecter = {
+      display: function() {
+        return $('#l_se_connecter').fadeIn(1000);
+      },
+      hide: function() {
+        return $('#l_se_connecter').css('display', 'none');
+      },
+      ajax_formulaire: function() {
+        $('#form_se_connecter').bind('ajax:success', function(data, response) {
+          console.log(response);
+          return message_information.message_success("form_se_connecter", "Success", response.message);
+        });
+        return $('#form_se_connecter').bind('ajax:error', function(data, response) {
+          console.log(data);
+          console.log(response);
+          return message_information.message_error("form_se_connecter", "Erreur", response.responseText);
+        });
+      }
     };
     form_sinscrire = {
+      init: function() {
+        form_sinscrire.ajax_formulaire();
+        form_sinscrire.form_event();
+        return form_sinscrire.email_existant();
+      },
+      display: function() {
+        return $('#l_sinscrire').fadeIn(1000);
+      },
+      hide: function() {
+        return $('#l_sinscrire').css('display', 'none');
+      },
       ajax_formulaire: function() {
         $('#form_sinscrire').bind('ajax:success', function(data, response) {
           console.log(data);
@@ -60,7 +79,25 @@
           return form_sinscrire.email_existant();
         });
       },
-      email_existant: function() {},
+      email_existant: function() {
+        return $('#form_sinscrire #client_email').bind('change', function() {
+          return $.ajax({
+            type: "POST",
+            url: "/clients/emailExist",
+            data: {
+              email: $(this).val()
+            },
+            success: function(data) {
+              console.log(data);
+              if (data === true) {
+                return message_information.message_error("form_sinscrire #client_email", "titre", "existe deja");
+              } else {
+                return message_information.message_success("form_sinscrire #client_email", "titre", "email inutilise");
+              }
+            }
+          });
+        });
+      },
       verif_password: function() {
         var password, password_confirmation;
         password = $('#form_sinscrire input#client_password').val();
@@ -73,9 +110,31 @@
         }
       }
     };
-    form_se_connecter();
-    form_sinscrire.ajax_formulaire();
-    return form_sinscrire.form_event();
+    form_areyouinscrit = {
+      init: function() {
+        form_areyouinscrit.change();
+        if ($('.is_inscrit:checked').val() !== void 0) {
+          return form_areyouinscrit.event($('.is_inscrit:checked').val());
+        }
+      },
+      change: function() {
+        return $('.is_inscrit').bind('change', function() {
+          return form_areyouinscrit.event($(this).val());
+        });
+      },
+      event: function(val) {
+        if (val === "non") {
+          form_se_connecter.hide();
+          return form_sinscrire.display();
+        } else if (val === "oui") {
+          form_sinscrire.hide();
+          return form_se_connecter.display();
+        }
+      }
+    };
+    form_se_connecter.ajax_formulaire();
+    form_sinscrire.init();
+    return form_areyouinscrit.init();
   });
 
 }).call(this);
