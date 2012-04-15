@@ -1,41 +1,48 @@
-<h1>ProcessOrder#confirmation</h1>
-<p>Find me in app/views/process_order/confirmation.html.erb</p>
-
-<p> Choisissez votre point relais </p>
-
-
-<% if current_client.nil? %>
-	<!-- ______________ SE CONNECTER _________________ -->
-	<h2>Se connecter</h2>
+<div class="l_main_gutter">
+	<h1>ProcessOrder#confirmation</h1>
+	<p>Find me in app/views/process_order/confirmation.html.erb</p>
 	
-	<%= simple_form_for(Client.new, :as => "client", :url => session_path("client"), :class => "form") do |f| %>
-	  <div class="inputs">
-	    <%= f.input :email, :required => false, :autofocus => true %>
-	    <%= f.input :password, :required => false %>
-	  </div>
+	<p> Choisissez votre point relais </p>
+	<ul class="l_farmer_list">
+		<% @point_relais.each do |pr| %>
+			<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <%= pr.adresse %> <%= pr.ville.nom %> </p></li>
+		<% end %>
+	</ul>
 	
-	  <div class="actions">
-	    <%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
-	  </div>
+	<% if current_client.nil? %>
+		<h2> Etes vous inscrit ?</h2>
+		<!-- ______________ SE CONNECTER _________________ -->
+		<h2>Se connecter</h2>
+		
+		<%= simple_form_for(Client.new, :as => "client", :url => session_path("client"), :class => "form", :remote => true) do |f| %>
+		  <div class="inputs">
+		    <%= f.input :email, :required => false, :autofocus => true %>
+		    <%= f.input :password, :required => false %>
+		  </div>
+		
+		  <div class="actions">
+		    <%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
+		  </div>
+		<% end %>
+		
+		
+		<!-- ______________ S'INSCRIRE _________________ -->
+		<h2>Sign up</h2>
+	
+		<%= simple_form_for([:espace_client,Client.new] ,:remote => true) do |f| %>
+	  	<%= f.error_notification %>
+	
+		  <div class="inputs">
+		    <%= f.input :email, :required => true, :autofocus => true %>
+		    <%= f.input :nom, :required => true, :autofocus => true %> 
+		    <%= f.input :password, :required => true %>
+		    <%= f.input :password_confirmation, :required => true %>
+		  </div>
+	
+	  	 <div class="actions">
+	    	<%= f.button :submit, "Sign up" %>
+	  	</div>
 	<% end %>
 	
-	
-	<!-- ______________ S'INSCRIRE _________________ -->
-	<h2>Sign up</h2>
-
-	<%= simple_form_for(Client.new, :as => "client", :url => registration_path("client")) do |f| %>
-  	<%= f.error_notification %>
-
-	  <div class="inputs">
-	    <%= f.input :email, :required => true, :autofocus => true %>
-	    <%= f.input :nom, :required => true, :autofocus => true %> 
-	    <%= f.input :password, :required => true %>
-	    <%= f.input :password_confirmation, :required => true %>
-	  </div>
-
-  	 <div class="actions">
-    	<%= f.button :submit, "Sign up" %>
-  	</div>
-<% end %>
-
-<% end %>
+	<% end %>
+</div>

@@ -1,4 +1,5 @@
 class ProcessOrderController < ApplicationController
+
   layout 'front'
   #_________________________________________________________________ RESUME DU PANIER ____________________________________________________________________
   def resume

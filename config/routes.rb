@@ -18,7 +18,7 @@ match 'cageot/suppQuantite/:product_cageot_id' => 'cageots#supprimerQuantite', :
 match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot', :via => :delete, :as => :supp_produit_cageot
 
 #_____ CONNEXION ESPACE CLIENT _______________________
-  devise_for :clients do
+  devise_for :clients,:controllers => {:sessions => 'sessions'} do
     delete 'client_logout' => 'devise/sessions#destroy'
   end
 #_________ CLIENTS _______________

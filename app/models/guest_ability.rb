@@ -2,7 +2,7 @@ class GuestAbility
   include CanCan::Ability
 
   def initialize
-  
+  	can :create, Client
   end
     # Define abilities for the passed in user here. For example:
     #
