@@ -10,11 +10,12 @@
 	</ul>
 	
 	<% if current_client.nil? %>
+		
 		<h2> Etes vous inscrit ?</h2>
 		<!-- ______________ SE CONNECTER _________________ -->
 		<h2>Se connecter</h2>
 		
-		<%= simple_form_for(Client.new, :as => "client", :url => session_path("client"), :class => "form", :remote => true) do |f| %>
+		<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
 		  <div class="inputs">
 		    <%= f.input :email, :required => false, :autofocus => true %>
 		    <%= f.input :password, :required => false %>
@@ -29,7 +30,7 @@
 		<!-- ______________ S'INSCRIRE _________________ -->
 		<h2>Sign up</h2>
 	
-		<%= simple_form_for([:espace_client,Client.new] ,:remote => true) do |f| %>
+		<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
 	  	<%= f.error_notification %>
 	
 		  <div class="inputs">
