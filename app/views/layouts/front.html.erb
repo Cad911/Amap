@@ -89,10 +89,9 @@
 
     <div class="sunshine"><span class="ray_of_sunshine"></span><span class="round_of_sunshine"></span></div>
 
+
   </div>
-
-
-
+ 
 
 
   <!-- <% if !current_client.nil? %>
@@ -110,7 +109,16 @@
     <% end %>-->
 
   <div class="grass"></div>
-  
+
+    <div class="clouds">
+      <div class="big_clouds">
+        <span class="cloud one"></span>
+        <span class="cloud two"></span>
+      </div>
+      <div class="little_clouds">
+        <span class="cloud one"></span>
+      </div>
+    </div>
 
 </header>
 <div class="ground_top"></div>
@@ -120,6 +128,20 @@
 
   <%= yield %>
 
+</div>
+<div class="dock bg-height_70">
+  <div class="l_dock_wrapper">
+    <ul>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+    </ul>
+    <div class="checkout">
+      <span class="price">28€</span>
+      <span class="button"><a>Acheter !</a></span>
+    </div>
+  </div>
+  
 </div>
 </body>
 </html>

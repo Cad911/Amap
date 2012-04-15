@@ -6,7 +6,6 @@
 @import "layout/basket/basket_show.scss";
 @import "layout/basket/basket_list.scss";
 
-
 // Squelette général du site
 body {
   position:relative;
@@ -50,6 +49,9 @@ body {
       bottom: 0;
       height: 50px;
       background:url("/../images/header/grass.png");
+    }
+    .clouds {
+      @include clouds;
     }
   }
   .ground_top{background:url("/../images/terre-haut.png");height:76px;width:100%;position:absolute;top:220px;z-index:-1;}

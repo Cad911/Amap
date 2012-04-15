@@ -73,3 +73,20 @@
     -webkit-transition-timing-function: linear;
   }
 }
+@mixin clouds {
+  width:100%;
+  .big_clouds {
+    position:absolute;
+    .cloud {
+      width:133px;
+      height:141px;
+      backgorund-image:url("/../images/cloud.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+
+    }
+  }
+  .little_clouds {
+
+  }
+}
