@@ -1,3 +1,3 @@
 app/views/.DS_Store
-tmp/*
-log/*
+/tmp/*
+/log/*
