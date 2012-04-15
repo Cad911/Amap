@@ -1,6 +1,8 @@
 ECommerce::Application.routes.draw do
  
 
+  get "page_front/index"
+
   get "process_order/resume"
 
   get "process_order/confirmation"
