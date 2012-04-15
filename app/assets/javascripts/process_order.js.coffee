@@ -71,7 +71,7 @@ $(document).ready(->
       form_event: ->
           $('#form_sinscrire input#client_password_confirmation').bind('change',->
             form_sinscrire.verif_password()
-          ) 
+          )  
 
       email_existant: ->
           $('#form_sinscrire input#client_email').bind('change', ->
