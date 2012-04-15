@@ -1,7 +1,6 @@
 ECommerce::Application.routes.draw do
  
-
-  get "page_front/index"
+  match '/' => "page_front#index", :via => :get
 
   get "process_order/resume"
 
