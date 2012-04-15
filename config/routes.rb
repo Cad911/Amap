@@ -28,6 +28,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   			match "edit_password" => "clients#edit_password", :via => :get
    		end
   end
+  match "clients/emailExist" => "espace_client/clients#emailExist", :via => :post
 
 #_______ PAGE REVENDEURS _______________
   match "page_revendeur/index" => "page_revendeur#index", :as => :page_revendeur_index
