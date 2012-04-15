@@ -72,23 +72,22 @@ $(document).ready(->
           $('#form_sinscrire input#client_password_confirmation').bind('change',->
             form_sinscrire.verif_password()
           )
-          $('#form_sinscrire input#client_email').bind('change',->
-            form_sinscrire.email_existant()
-          )
 
       email_existant: ->
-          $('#form_sinscrire #client_email').bind('change', ->
+          $('#form_sinscrire input#client_email').bind('change', ->
           	$.ajax(
           	  type : "POST"
           	  url: "/clients/emailExist"
           	  data: {email : $(this).val()}
           	  success: (data) ->
           	      console.log(data)
-          	      if data == true
-          	        message_information.message_error("form_sinscrire #client_email","titre","existe deja")  
-          	      else
-          	        message_information.message_success("form_sinscrire #client_email","titre","email inutilise")
-          	      
+          	      message_info = ""
+          	      if data.exist == true
+          	        message_info += "existe deja. <br/>"
+          	      if data.good_format == false
+          	        message_info += "ce n'est pas une adresse mail."
+          	      if message_info != ""
+          	       message_information.message_error("form_sinscrire #client_email","titre",message_info)  
           	)
           )
       verif_password : ->

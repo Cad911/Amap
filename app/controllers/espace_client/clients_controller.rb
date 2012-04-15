@@ -59,13 +59,19 @@ class EspaceClient::ClientsController < InheritedResources::Base
 	def emailExist
 	  @email_exist = Client.where(:email => params[:email])
 	  @exist = false
+	  @good_format = true
+	  #@expression = "/^[\w.-]+ @ [\w]{2,} \. [a-z]{2,4}$/" # les '/' definissent le debut et la fin du regex 
+	  if params[:email].match(/^[\w.-]+@[\w]{2,}\.[a-z]{2,4}$/).nil?
+	  	@good_format = false
+	  end
+	  
 	  if @email_exist.count > 0
 	  	@exist = true
 	  else
 	    @exist = false
 	  end
 	  respond_to do |format|
-  		format.json { render :json => @exist }
+  		format.json { render :json => {:exist => @exist, :good_format => @good_format}}
   		#format.html { render :show }
   	  end 
 	end
