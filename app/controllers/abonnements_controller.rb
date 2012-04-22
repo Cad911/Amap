@@ -37,6 +37,7 @@ class AbonnementsController < InheritedResources::Base
   		@abonnement.panier_id = params[:panier][:id]
   		@abonnement.duree = params[:panier][:duree].to_i #EN MOIS
   		@abonnement.etat = 'en_cours'
+  		@abonnement.quantite = 1
   		@abonnement.date_debut = @date_debut
   		@abonnement.date_fin = @date_debut.months_since(params[:panier][:duree].to_i)
   	
