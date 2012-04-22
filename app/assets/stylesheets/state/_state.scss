@@ -153,10 +153,10 @@
 }
 
 // Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu
-.l_nav_element {
+body header .l_header_wrapper .l_nav .l_nav_element {
   &.l_dual_sign {
+    @include nav-sprite(sign_double);
     width: 220px;
-    background-position: left;
     .dropdown.product {
       .dropdown_menu {
         left:103px;
@@ -165,14 +165,44 @@
     .l_link {
       float:left;
       &.basket {
-        background-position: left top;
+        span {
+          width:40px;
+          margin-left:32px;
+          @include nav-sprite(basket); 
+        }
+          &:hover {
+          color:$red;
+          span {
+            @include nav-sprite(basket_hover);       
+          }
+        }
       }
       &.product {
-        background-position: center top;
         width:117px !important;
+        span {
+          width:28px;
+          height:38px;
+          margin:5px 0 -0 50px;
+          @include nav-sprite(product);              
+        }
+        &:hover {
+          span {
+            @include nav-sprite(product_hover);      
+          }
+        }
       }
       &.blog {
-        background-image: none !important;
+        span {
+          width:26px;
+          height:38px;
+          margin:9px 0 -5px 38px;
+          @include nav-sprite(blog);              
+        }
+        &:hover {
+          span {
+            @include nav-sprite(blog_hover);      
+          }      
+        }
       }
       &.about_us {
         background-image: none !important;
@@ -181,11 +211,22 @@
     }
   }
   &.l_single_sign {
-    background-position: -220px top;
+    @include nav-sprite(sign_single);
     .l_link {
       &.farmer {
         width: 123px !important;
-        background-position: -200px top;
+        span {
+          width:33px;
+          height:34px;
+          margin:8px 0 0px 50px;
+          margin-left:40px;               
+          @include nav-sprite(farmer);               
+        }
+        &:hover {
+          span {
+            @include nav-sprite(farmer_hover);       
+          }
+        }
       }
     }
   }

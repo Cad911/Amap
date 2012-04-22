@@ -15,30 +15,41 @@ body {
     background:url("/../images/header/ciel.png");
     position:relative;
     .l_header_wrapper {
+      .logo {
+        float:left;
+        width:356px;
+        height:157px;
+        @include nav-sprite(sign_logo);
+      }
       width:960px;
       margin:0 auto;
-      padding-top:117px;
       position:relative;
+      padding-top:83px;
       z-index:2;
       .l_nav {
         float:right;
+        padding-top:34px;
         .dropdown_menu {
           top:95px;
         }
         .l_nav_element {
           float:left;
           height:103px;
-          margin-left:20px;
-          background-image:url("/../images/header/panneaux.png");
+          margin-left:13px;
           text-align:center;
           .l_link {
             display: block;
             width:103px;
             height: 33px;
-            padding-top:42px;
             @include title(1, 22px);
-            background-image: url("/../images/header/icones.png");
-            background-repeat: no-repeat;
+            span {
+              display:block;
+              height:42px;              
+              margin:8px 0 -7px 0;  
+            }                     
+            &:hover {
+              color:$red; 
+            }                                                                                                                                                                                                 
           }
         }
       }
@@ -51,7 +62,7 @@ body {
       background:url("/../images/header/grass.png");
     }
     .clouds {
-      @include clouds;
+      @include clouds; // utilisation de mxiin pour appeler en dernier les images lors du chargement
     }
   }
   .ground_top{background:url("/../images/terre-haut.png");height:76px;width:100%;position:absolute;top:220px;z-index:-1;}
