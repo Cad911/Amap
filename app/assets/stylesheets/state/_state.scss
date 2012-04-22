@@ -155,8 +155,8 @@
 // Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu
 .l_nav_element {
   &.l_dual_sign {
+    @include nav-sprite(sign_double);
     width: 220px;
-    background-position: left;
     .dropdown.product {
       .dropdown_menu {
         left:103px;
@@ -181,7 +181,7 @@
     }
   }
   &.l_single_sign {
-    background-position: -220px top;
+    @include nav-sprite(sign_single);
     .l_link {
       &.farmer {
         width: 123px !important;
