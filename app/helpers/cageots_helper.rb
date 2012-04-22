@@ -1,0 +1,2 @@
+module CageotsHelper
+end

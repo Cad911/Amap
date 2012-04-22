@@ -1,0 +1,30 @@
+
+
+
+
+<%= simple_form_for([:administration, current_user, @stock], :html => {:class => 'form-horizontal well' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    
+    
+    <% if current_user.can_stock_ar %>
+    	<%= f.input :id_user_input, :as => :hidden, :input_html => { :value => params[:user_id] } %>
+		<%= f.input :titre %>
+    	<%= f.input :description,:input_html => { :rows => "10" } %>
+    	<%= f.association :unite_mesure, :collection => UniteMesure.all.map{ |um| [um.nom,um.id]}, :label => "Unite de mesure", :include_blank => false %>
+    	<%= f.input :quantite %>
+    <% elsif current_user.can_stock_sr %>
+        <%= f.association :categorie, :collection => Categorie.all.map{ |c| [c.nom,c.id]}, :label => "Catégorie", :include_blank => false %>
+        <%= f.association :unite_mesure, :collection => UniteMesure.all.map{ |um| [um.nom,um.id]}, :label => "Unite de mesure", :include_blank => false %>
+        <%= f.input :quantite %>
+    	<%= f.input :titre %>
+    	<%= f.input :description %>
+    <% end %>
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

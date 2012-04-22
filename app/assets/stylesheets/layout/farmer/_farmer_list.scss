@@ -1,0 +1,44 @@
+.l_main_gutter.l_farmer_list {
+  ul.l_farmer_list {
+    margin:0;
+    padding: 0;
+    li.l_vcard {
+      float:left;
+      width:378px;
+      padding: 20px;
+      margin:20px;
+      background:url("/../images/bg_vcard.png") repeat;
+      -webkit-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 1px 0px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 1px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0px 0px 3px 0px #ffffff, 0px 0px 1px 0px rgba(0, 0, 0, 0.2);
+      .l_photo_description {
+        padding-bottom:20px;
+        border-bottom:solid 1px #e5e5e5;
+        .image {
+          width:60px;
+          height:60px;
+          @include boxshadow(1px, 1px, 0px, 0px, rgba(255,255,255, 0.5));
+          background:url('/../images/header/ciel.png');
+          &:after {
+            display:none;
+          }
+        }
+        .content {
+          padding-bottom: 0px;
+          .title {
+            margin-top:0;
+            @include title(1, 22px);
+          }
+          .location {
+            color:$lightgrey;
+          }
+        }
+      }
+      .description {
+        margin-top:0;
+        padding-top:15px;
+        border-top:solid 1px #fcfcfc;
+      }
+    }
+  }
+}

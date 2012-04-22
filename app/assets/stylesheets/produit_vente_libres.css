@@ -1,0 +1,16 @@
+
+
+.etape_formulaire
+{
+	display: none;
+}
+
+.etape_active
+{
+	display: block;
+}
+
+#light_box
+{
+	display: none;
+}

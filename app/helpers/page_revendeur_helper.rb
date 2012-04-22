@@ -1,0 +1,2 @@
+module PageRevendeurHelper
+end

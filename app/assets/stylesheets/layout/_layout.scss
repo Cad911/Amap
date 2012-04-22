@@ -1,0 +1,101 @@
+// Inclusion des fichier de structure
+@import "layout/product/product_list.scss";
+@import "layout/product/product_show.scss";
+@import "layout/farmer/farmer_list.scss";
+@import "layout/farmer/farmer_show.scss";
+@import "layout/basket/basket_show.scss";
+@import "layout/basket/basket_list.scss";
+@import "layout/index.scss";
+
+// Squelette général du site
+body {
+  position:relative;
+  background:url("/../images/body_bg.png");
+  header {
+    height:220px;
+    background:url("/../images/header/ciel.png");
+    position:relative;
+    .l_header_wrapper {
+      .logo {
+        float:left;
+        width:356px;
+        height:157px;
+        @include nav-sprite(sign_logo);
+      }
+      width:960px;
+      margin:0 auto;
+      position:relative;
+      padding-top:83px;
+      z-index:2;
+      .l_nav {
+        float:right;
+        padding-top:34px;
+        .dropdown_menu {
+          top:95px;
+        }
+        .l_nav_element {
+          float:left;
+          height:103px;
+          margin-left:13px;
+          text-align:center;
+          .l_link {
+            display: block;
+            width:103px;
+            height: 33px;
+            @include title(1, 22px);
+            span {
+              display:block;
+              height:42px;              
+              margin:8px 0 -7px 0;  
+            }                     
+            &:hover {
+              color:$red; 
+            }                                                                                                                                                                                                 
+          }
+        }
+      }
+    }
+    .grass {
+      width: 100%;
+      position:absolute;
+      bottom: 0;
+      height: 50px;
+      background:url("/../images/header/grass.png");
+    }
+    .clouds {
+      @include clouds; // utilisation de mxiin pour appeler en dernier les images lors du chargement
+    }
+  }
+  .ground_top{background:url("/../images/terre-haut.png");height:76px;width:100%;position:absolute;top:220px;z-index:-1;}
+  .l_wrapper {
+    width:960px;
+    margin:20px auto;
+    @include borderradius(5px);
+    -webkit-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    -moz-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    border: solid 1px #ffffff;
+    background:#fafafa url(/../images/patterns/paper.png) repeat;
+    .l_main_gutter {
+      padding:20px;
+      .l_content_left, .l_content_right {
+        float:left;
+        width:285px;
+        margin-left:20px;
+      }
+      .l_content_left {
+        margin-left:0;
+      }
+    }
+    .l_area_left {
+      width:590px;
+      margin:0;
+      float:left;
+    }
+    .l_area_right {
+      width:310px;
+      float:left;
+      margin-left:20px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<%= semantic_form_for [:admin, @entite] do |f| %>
+    <%= f.input :nom, :name => 'Nom' %>
+    
+    <%= f.semantic_fields_for :droit do |droit| %>
+    	<%= droit.input :has_revendeur %>
+    	<%= droit.input :autorisation_product %>
+    <% end %>
+    
+    <%= f.buttons :commit %>
+  <% end %>

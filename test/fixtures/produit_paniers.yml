@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  panier_id: 1
+  stock_id: 1
+  titre: MyString
+  description: MyText
+  quantite: 1
+  deleted: 1
+
+two:
+  id: 1
+  panier_id: 1
+  stock_id: 1
+  titre: MyString
+  description: MyText
+  quantite: 1
+  deleted: 1
