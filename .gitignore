@@ -1,5 +1,5 @@
 # ignore les DS_Store sur mac
-app/views/.DS_Store
+.DS_Store
 
 #  ignore tout les fichiers temporaires
 tmp/*
