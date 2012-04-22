@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413092925) do
+ActiveRecord::Schema.define(:version => 20120422084450) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120413092925) do
     t.datetime "updated_at", :null => false
     t.string   "session_id"
     t.string   "etat"
+    t.integer  "quantite"
   end
 
   create_table "active_admin_comments", :force => true do |t|

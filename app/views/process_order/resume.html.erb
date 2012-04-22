@@ -1,6 +1,6 @@
 <h1><%= @titre %> </h1>
 <p>Find me in app/views/page_produit/index.html.erb</p>
-
+<p id="notice"><%= notice %></p>
 <% if !@abonnement_panier.nil? %>
 	<table class="table table-striped">
 			<tr>
@@ -17,11 +17,16 @@
 			<tr>
 				<td> <%= @abonnement_panier.panier.titre %> </td>
 				<td> <%= @abonnement_panier.panier.user.nom %> </td>
-				<td> <%= @abonnement_panier.id %>  (voir dans la table)</td>
+				<td> <%= @abonnement_panier.quantite %>  (voir dans la table)</td>
 				<td> <%= @abonnement_panier.date_debut %> </td>
 				<td> <%= @abonnement_panier.date_fin %> </td>
 				<td> <%= @abonnement_panier.panier.prix_unite_ttc %> € </td>
-				<td> <%= @abonnement_panier.date_fin %> </td>
+				<td> 
+					<span class="btn btn-info"> <%= link_to "+",add_quantite_abo_path(@abonnement_panier.id) %> </span> 
+					<span class="btn btn-info"> <%= link_to "-",supp_quantite_abo_path(@abonnement_panier.id) %> </span> 
+					<span class="btn btn-info"> <%= link_to "SUPP",supp_abonnement_path(@abonnement_panier.id) %> </span> 
+				
+				</td>
 			
 			</tr>
 	</table>
