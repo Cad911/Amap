@@ -27,7 +27,7 @@ class CageotsController < InheritedResources::Base
 		#__________________
 		flash[:notice]= ""
 		if current_client.nil?
-			#_____ SI ABONNEMENT CHOISI _______
+			#_____ SI ABONNEMENT CHOISI/ EXIST _______
 			#_____
 			@abonnement_exist = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
 			if @abonnement_exist.count > 0

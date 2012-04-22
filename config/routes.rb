@@ -8,8 +8,13 @@ ECommerce::Application.routes.draw do
 
   get "process_order/paiement"
 
+#________ ABONNEMENT ___________________________________________________________________________________________________
   resources :abonnements
   match 'abonnements/sabonner' => 'abonnements#sabonner', :via => :post, :as => :sabonner
+  match 'abonnements/addQuantite/:id_abonnement' => 'abonnements#ajouterQuantite', :via => :get, :as => :add_quantite_abo
+  match 'abonnements/suppQuantite/:id_abonnement' => 'abonnements#diminuerQuantite', :via => :get, :as => :supp_quantite_abo
+  match 'abonnements/suppAbonnement/:id_abonnement' => 'abonnements#suppAbonnement', :via => :get, :as => :supp_abonnement
+  
 
 #______ CAGEOT ______________________________________
 resources :cageots

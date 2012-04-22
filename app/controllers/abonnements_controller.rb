@@ -37,6 +37,7 @@ class AbonnementsController < InheritedResources::Base
   		@abonnement.panier_id = params[:panier][:id]
   		@abonnement.duree = params[:panier][:duree].to_i #EN MOIS
   		@abonnement.etat = 'en_cours'
+  		@abonnement.quantite = 1
   		@abonnement.date_debut = @date_debut
   		@abonnement.date_fin = @date_debut.months_since(params[:panier][:duree].to_i)
   	
@@ -72,10 +73,134 @@ class AbonnementsController < InheritedResources::Base
   
   end
   
-  
+  #_________________________________________________ AJOUT QUANTITE ___________________________________________________
   def ajouterQuantite
-  
+  	#_____ PARAMS ENVOYER ID Abonnement ____
+  	@abonnement = Abonnement.find(params[:id_abonnement])
+  	@isnt_yours = 0
+  	if Abonnement.exists?(@abonnement)
+  		
+  		#______ VERIF SI CLIENT CONNECTED OR NOT AND SI ABONNEMENT ASSOCIE AU CLIENT OU A LA SESSION ______
+  		if current_client.nil?
+	  		if @abonnement.session_id != session[:abonnement_id]
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	else
+	  		if @abonnement.client_id != current_client.id
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	end
+  		
+  		if @isnt_yours == 0
+	  		@abonnement.quantite += 1
+	  		if @abonnement.save
+	  			flash[:notice] = "Quantite panier/abonnmement updater"
+	  			redirect_to process_order_resume_path
+	  		else
+	  			flash[:notice] = "ERREUR"
+	  			redirect_to process_order_resume_path
+	  		end
+	  	else
+	  		redirect_to process_order_resume_path
+	  	end
+  	else
+  		flash[:notice] = "Abonnement n'existe pas"
+  		redirect_to process_order_resume_path
+  	end
   end
+  
+
+  #_________________________________________________ AJOUT QUANTITE ___________________________________________________
+  def diminuerQuantite
+  	#_____ PARAMS ENVOYER ID Abonnement ____
+  	@abonnement = Abonnement.find(params[:id_abonnement])
+  	@isnt_yours = 0
+  	if Abonnement.exists?(@abonnement)
+  		
+  		#______ VERIF SI CLIENT CONNECTED OR NOT AND SI ABONNEMENT ASSOCIE AU CLIENT OU A LA SESSION ______
+  		if current_client.nil?
+	  		if @abonnement.session_id != session[:abonnement_id]
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	else
+	  		if @abonnement.client_id != current_client.id
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	end
+  		
+  		if @isnt_yours == 0
+  			if @abonnement.quantite == 1
+  				#___ ON ANNULE LABONNEMENT
+  				@abonnement.etat = 'annule'
+  				if @abonnement.save
+  					flash[:notice] = "Abonnement enlever du panier"
+  					redirect_to process_order_resume_path
+  				end
+  			else
+  				@abonnement.quantite -= 1
+		  		if @abonnement.save
+		  			flash[:notice] = "Quantite panier/abonnmement diminuer"
+		  			redirect_to process_order_resume_path
+		  		else
+		  			flash[:notice] = "ERREUR"
+		  			redirect_to process_order_resume_path
+		  		end
+  			end
+	  	else
+	  		redirect_to process_order_resume_path
+	  	end
+  	else
+  		flash[:notice] = "Abonnement n'existe pas"
+  		redirect_to process_order_resume_path
+  	end
+  end
+  
+  #___________________________________ SUPP ABONNEMENT DU PANIER _________________________________________________________
+  def suppAbonnement
+  	#_____ PARAMS ENVOYER ID Abonnement ____
+  	@abonnement = Abonnement.find(params[:id_abonnement])
+  	@isnt_yours = 0
+  	if Abonnement.exists?(@abonnement)
+  		
+  		#______ VERIF SI CLIENT CONNECTED OR NOT AND SI ABONNEMENT ASSOCIE AU CLIENT OU A LA SESSION ______
+  		if current_client.nil?
+	  		if @abonnement.session_id != session[:abonnement_id]
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	else
+	  		if @abonnement.client_id != current_client.id
+	  			flash[:notice] = "Cet abonnement n'est pas a vous"
+	  			@isnt_yours = 1
+	  		end
+	  	end
+  		
+  		if @isnt_yours == 0
+  			#__ ON ANNULE LABONNEMENT
+	  		@abonnement.etat = 'annule'
+	  		if @abonnement.save
+	  			flash[:notice] = "Abonnement supprimer"
+	  			redirect_to process_order_resume_path
+	  		else
+	  			flash[:notice] = "ERREUR"
+	  			redirect_to process_order_resume_path
+	  		end
+	  	else
+	  		redirect_to process_order_resume_path
+	  	end
+  	else
+  		flash[:notice] = "Abonnement n'existe pas"
+  		redirect_to process_order_resume_path
+  	end
+  end
+  
+  
+ 
+  #_____________________________________ CONFIRMATION ABONNEMENT __________________________________________________________ 
   def confirmation_abonnement
   
   end

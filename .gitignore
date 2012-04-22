@@ -1,8 +1,0 @@
-# ignore les DS_Store sur mac
-.DS_Store
-
-#  ignore tout les fichiers temporaires
-tmp/*
-
-# ignore tout les fichiers de log
-log/*
