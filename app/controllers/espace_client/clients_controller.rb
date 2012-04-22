@@ -7,9 +7,6 @@ class EspaceClient::ClientsController < InheritedResources::Base
 	def create 
 		@client = Client.new(params[:client])
 		if @client.save
-			#__ CONEXION DU CLIENT VIA DEVISE
-			sign_in(:client, @client)
-			#________________________________
 			respond_to do |format|
   				format.json { render :json => [@client] }
   				#format.html { render :show }

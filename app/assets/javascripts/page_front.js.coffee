@@ -1,6 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+<<<<<<< HEAD
 $(document).ready(->
     cloud =
        "generate_big_cloud" : ->
@@ -42,3 +43,5 @@ $(document).ready(->
     cloud.generate_big_cloud()
     cloud.generate_little_cloud() 
 )
+=======
+>>>>>>> 8d54f9ba8639a8ca0acfaa09264b14cc2c40cbec

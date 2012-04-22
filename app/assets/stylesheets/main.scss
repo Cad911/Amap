@@ -134,12 +134,10 @@ $nav-basket-spacing:27px;
     }
   }
   .little_clouds {
-    .cloud {
     display:block;    
     width:100px;
     height:32px;      
     @include nav-sprite(cloud_little); 
-    }
   }
 }
 
