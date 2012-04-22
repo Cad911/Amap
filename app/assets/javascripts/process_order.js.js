@@ -72,8 +72,15 @@
         });
       },
       form_event: function() {
-        return $('#form_sinscrire input#client_password_confirmation').bind('change', function() {
+        $('#form_sinscrire input#client_password_confirmation').bind('keyup', function() {
           return form_sinscrire.verif_password();
+        });
+        return $('#form_sinscrire #b_sign_up').bind('click', function() {
+          if (form_sinscrire.verif_all_input() === true) {
+            return alert('Certain champ sont vide');
+          } else {
+            return $('#form_sinscrire').submit();
+          }
         });
       },
       email_existant: function() {
@@ -109,6 +116,14 @@
           message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe different");
           return console.log("client_password Erreur Mot de passe different");
         }
+      },
+      verif_all_input: function() {
+        var champ_vide;
+        champ_vide = false;
+        $('#form_sinscrire input').each(function() {
+          if ($(this).val() === "") return champ_vide = true;
+        });
+        return champ_vide;
       }
     };
     form_areyouinscrit = {
