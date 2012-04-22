@@ -69,26 +69,32 @@ $(document).ready(->
             message_information.message_error("form_sinscrire","Erreur",response.responseText)
           )
       form_event: ->
-          $('#form_sinscrire input#client_password_confirmation').bind('change',->
+          $('#form_sinscrire input#client_password_confirmation').bind('keyup',->
             form_sinscrire.verif_password()
           )
-          $('#form_sinscrire input#client_email').bind('change',->
-            form_sinscrire.email_existant()
+          $('#form_sinscrire #b_sign_up').bind('click',->
+            if form_sinscrire.verif_all_input() == true
+              alert('Certain champ sont vide')
+            else
+              $('#form_sinscrire').submit()
+              #form_sinscrire.hide()
           )
 
       email_existant: ->
-          $('#form_sinscrire #client_email').bind('change', ->
+          $('#form_sinscrire input#client_email').bind('change', ->
           	$.ajax(
           	  type : "POST"
           	  url: "/clients/emailExist"
           	  data: {email : $(this).val()}
           	  success: (data) ->
           	      console.log(data)
-          	      if data == true
-          	        message_information.message_error("form_sinscrire #client_email","titre","existe deja")  
-          	      else
-          	        message_information.message_success("form_sinscrire #client_email","titre","email inutilise")
-          	      
+          	      message_info = ""
+          	      if data.exist == true
+          	        message_info += "existe deja. <br/>"
+          	      if data.good_format == false
+          	        message_info += "ce n'est pas une adresse mail."
+          	      if message_info != ""
+          	       message_information.message_error("form_sinscrire #client_email","titre",message_info)  
           	)
           )
       verif_password : ->
@@ -99,7 +105,13 @@ $(document).ready(->
           else
             message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe different")
             console.log("client_password Erreur Mot de passe different")
-      
+      verif_all_input : ->
+         champ_vide = false
+         $('#form_sinscrire input').each(->
+              if ($(this).val() == "")
+              	champ_vide = true
+         )
+         champ_vide
   
   #__________________________ FUNCTION POUR FORM CHOIX SI INSCRIT OU PAS ________________________________________    
   form_areyouinscrit =

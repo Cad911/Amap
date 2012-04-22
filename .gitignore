@@ -1,3 +1,8 @@
+# ignore les DS_Store sur mac
 app/views/.DS_Store
-/tmp/*
-/log/*
+
+#  ignore tout les fichiers temporaires
+tmp/*
+
+# ignore tout les fichiers de log
+log/*
