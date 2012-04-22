@@ -42,52 +42,14 @@ body {
             width:103px;
             height: 33px;
             @include title(1, 22px);
-            background-image: url("/../images/header/icones.png");
-            background-repeat: no-repeat;
             span {
               display:block;
               height:42px;              
               margin:8px 0 -7px 0;  
-            }
-            &.basket {
-              span {
-                width:40px;
-                margin-left:32px;
-                @include nav-sprite(basket);                              
-              }
-              &:hover {
-                color:$red;
-                span {
-                  @include nav-sprite(basket_hover);                                                                
-                }
-              }
-            }
-            &.product {
-              span {
-                width:28px;
-                margin:5px 0 -5px 50px;
-                @include nav-sprite(product);                            
-              }
-              &:hover {
-              color:$red;
-                span {
-                  @include nav-sprite(product_hover);                                                                
-                }
-              }
-            }
-            &.farmer {
-              span {
-                width:33px;
-                margin-left:40px;               
-                @include nav-sprite(farmer);                            
-              }
-              &:hover {
-              color:$red;
-                span {
-                  @include nav-sprite(farmer_hover);                                                                
-                }
-              }
-            }
+            }                     
+            &:hover {
+              color:$red; 
+            }                                                                                                                                                                                                 
           }
         }
       }
