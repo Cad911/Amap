@@ -1,0 +1,43 @@
+
+<%= simple_form_for([:administration, User.find(params[:user_id]),@produit_vente_libre], :html => {:class => 'form-horizontal' }, :remote => true) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  	<%= f.input :id_user_input, :as => "hidden",:input_html => { :value => params[:user_id] } %>
+  	<div class="etape_1 etape_formulaire etape_active">
+  		<div class="modal-body">
+    		<%= f.association :stock, :collection => Stock.where(:user_id => params[:user_id]).map{ |s| [s.titre,s.id]}, :include_blank => false %>
+    	</div>
+    	<div class="form-actions modal-footer">
+    		<%= f.button :submit, :type => :button,:value => "Suivant", :class => "next btn-primary"  %>
+    	</div>
+  	</div>
+  	<div class="etape_2 etape_formulaire">
+  		<div class="modal-body">
+	    	<%= f.input :titre, :disabled => true %>
+	    	<%= f.input :description, :disabled => true, :input_html => { :rows => "10" } %>
+	    </div>
+	    <div class="form-actions modal-footer">
+	    	<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous btn"  %>
+    		<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next btn-primary"  %>
+    	</div>
+    </div>
+  	<div class="etape_3 etape_formulaire">
+  		<div class="modal-body">
+  			<div class="alert alert-info">
+  				<strong> En stock : </strong> <span id="quantite_stock"></span> <span id="unite_mesure_stock"></span>
+  			</div>
+	    	<%= f.input :quantite, :as => :integer %>
+	    	<%= f.input :nombre_pack, :as => :integer %>
+	    	<%= f.input :prix_unite_ht, :as => :float %>
+	    	<%= f.input :prix_unite_ttc, :as => :float %>
+	    </div>
+	    <div class="form-actions modal-footer">
+	    	<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous btn"  %>
+    		<%= f.button :submit, :class => "btn-primary envoi_form" %>
+    	</div>
+    </div>
+
+  </div>
+
+<% end %>

@@ -1,0 +1,56 @@
+<div class="page-header">
+   	<h1> <%= @produit_vente_libre.titre %> en vente </h1>
+</div>
+
+<div class="well">
+	<p id="notice"><%= notice %></p>
+	
+	<p>
+	  <b>Stock:</b>
+	  <%= @produit_vente_libre.stock_id %>
+	</p>
+	
+	<p>
+	  <b>Titre:</b>
+	  <%= @produit_vente_libre.titre %>
+	</p>
+	
+	<p>
+	  <b>Description:</b>
+	  <%= @produit_vente_libre.description %>
+	</p>
+	
+	<p>
+	  <b>Quantite:</b>
+	  <%= @produit_vente_libre.quantite %>
+	</p>
+	
+	<p>
+	  <b>Nombre pack:</b>
+	  <%= @produit_vente_libre.nombre_pack %>
+	</p>
+	
+	<p>
+	  <b>Prix unite ht:</b>
+	  <%= @produit_vente_libre.prix_unite_ht %>
+	</p>
+	
+	<p>
+	  <b>Prix unite ttc:</b>
+	  <%= @produit_vente_libre.prix_unite_ttc %>
+	</p>
+	
+	<p>
+	  <b>Alaune:</b>
+	  <%= @produit_vente_libre.alaune %>
+	</p>
+	
+	<p>
+	  <b>Deleted:</b>
+	  <%= @produit_vente_libre.deleted %>
+	</p>
+	
+	
+	<%= link_to 'Modifier', edit_administration_user_produit_vente_libre_path(params[:user_id],@produit_vente_libre) %> |
+	<%= link_to 'Plus d\'info', administration_user_produit_vente_libres_path(params[:user_id]) %>
+</div>

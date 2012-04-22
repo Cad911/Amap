@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  has_revendeur: 1
+  autorisation_produit: 1
+  can_stock_sr: 1
+  can_stock_ar: 1
+  deleted: 1
+
+two:
+  id: 1
+  has_revendeur: 1
+  autorisation_produit: 1
+  can_stock_sr: 1
+  can_stock_ar: 1
+  deleted: 1

@@ -1,0 +1,2 @@
+module PageFrontHelper
+end

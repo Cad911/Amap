@@ -1,0 +1,35 @@
+
+<%= simple_form_for([:administration,@user], :html => {:class => 'form-horizontal well' }) do |u| %>
+	<% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+	<%= u.association :entite, :collection => Entite.all.map{|e| [e.nom,e.id]}, :label => "Votre entite", :include_blank => false %>
+	<%= u.association :ville,:collection => Ville.all.map{|v| [v.nom,v.id]}, :label => "Votre ville", :include_blank => false %>
+	<%= u.input :mode_denvoi_id, :label => "Votre mode d'envoi " %>
+	<%= u.input :genre, :collection => {'Homme'=>'H','Femme'=>'F'}, :label => "Votre genre", :include_blank => false%>
+	<%= u.input :nom, :label => "Votre nom" %>
+	<%= u.input :prenom, :label => "Votre prenom" %>
+	<%= u.input :nom_societe, :label => "Votre societe" %>
+	<%= u.input :description, :label => "Votre description" %>
+	<%= u.input :adresse, :label => "Votre adresse" %>
+	<%= u.input :telephone, :label => "Votre telephone" %>
+	<%= u.input :naissance, :label => "Votre date de naissance" %>
+	<%= u.input :alaune, :collection => {'Oui'=>'1','Non'=>'0'}, :label => "Etre à la une?", :include_blank => false  %>
+	
+	<%= u.input :password %>
+	<%= u.input :password_confirmation %>
+	
+	<%= u.input :email %>
+	
+	<%= u.button :submit %>
+<% end %>
+

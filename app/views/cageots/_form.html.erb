@@ -1,0 +1,13 @@
+<%= simple_form_for(@cageot) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :id %>
+    <%= f.input :client_id %>
+    <%= f.input :etat %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

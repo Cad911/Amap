@@ -1,0 +1,31 @@
+<h1>Listing rel_cageot_produits</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Produit vente libre</th>
+    <th>Cageot</th>
+    <th>Nombre pack</th>
+    <th>Deleted</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @rel_cageot_produits.each do |rel_cageot_produit| %>
+  <tr>
+    <td><%= rel_cageot_produit.id %></td>
+    <td><%= rel_cageot_produit.produit_vente_libre_id %></td>
+    <td><%= rel_cageot_produit.cageot_id %></td>
+    <td><%= rel_cageot_produit.nombre_pack %></td>
+    <td><%= rel_cageot_produit.deleted %></td>
+    <td><%= link_to 'Show', rel_cageot_produit %></td>
+    <td><%= link_to 'Edit', edit_rel_cageot_produit_path(rel_cageot_produit) %></td>
+    <td><%= link_to 'Destroy', rel_cageot_produit, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rel cageot produit', new_rel_cageot_produit_path %>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ECommerce</title>
+  <!-- ___________________________ CSS __________________________________ -->
+  <%= stylesheet_link_tag    "bootstrap-responsive", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap", :media => "all" %>
+  <%= stylesheet_link_tag    "users", :media => "all" %>
+  <%= stylesheet_link_tag    "produit_vente_libres", :media => "all" %>
+  <%#= stylesheet_link_tag    "main", :media => "all" %>
+  <%= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'print.css', :media => 'print' %>
+  <!--[if IE]><%= stylesheet_link_tag 'ie.css', :media => 'screen, projection' %><![endif]-->
+  <%= stylesheet_link_tag    "main" %>
+
+
+
+  <%= javascript_include_tag "jquery-1.7.1.min" %>
+  <%= javascript_include_tag "bootstrap" %>
+  <%= javascript_include_tag 'jquery_ujs' %>
+
+  <%= javascript_include_tag 'produit_vente_libres' %>
+  <%= javascript_include_tag 'stocks' %>
+  <%= javascript_include_tag 'process_order' %>
+  
+  <%= javascript_include_tag :defaults%>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<header>
+
+  <div class="l_header_wrapper">
+
+    <div class="logo"></div>
+
+    <div class="l_nav">
+
+      <div class="l_nav_element l_dual_sign">
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link basket" data-toggle="dropdown"><span></span>Paniers</a>
+          <ul class="dropdown-menu dropdown_menu">
+            <li> <%= link_to "Tous",page_panier_index_path %> </li>
+            <%	Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+              <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="dropdown product">
+          <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown"><span></span>Produits</a>
+          <ul class="dropdown-menu dropdown_menu">
+          <li> <%= link_to "Tous",page_produit_index_path %> </li>
+            <% Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+              <li> <%= link_to categorie.nom,page_produit_index_by_categorie_path(categorie.id) %> </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="l_nav_element l_single_sign">
+        <div class="dropdown">
+          <a href="" class="l_link farmer" data-toggle="dropdown"><span></span>Agriculteur</a>
+          <ul class="dropdown-menu dropdown_menu">
+            <li><%= link_to "Tous",page_revendeur_index_path %></li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="l_nav_element l_dual_sign">
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown"><span></span>Le Blog</a>
+          <ul class="dropdown-menu dropdown_menu">
+            <li><a> Fruit et legumes </a> </li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+            <li><a> Laitier </a> </li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown"><span></span>Nous</a>
+          <ul class="dropdown-menu dropdown_menu">
+            <li> <a> Fruit et legumes </a> </li>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+            <li> <a> Laitier </a> </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sunshine"><span class="ray_of_sunshine"></span><span class="round_of_sunshine"></span></div>
+
+
+  </div>
+ 
+
+
+  <!-- <% if !current_client.nil? %>
+      <% if can? :update, Client.find(current_client.id) %>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown"> Espace Client <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li> <%= link_to "Mes infos",espace_client_client_path(current_client.id) %> </li>
+            <li> <%= link_to "Se deconnecter", client_logout_path(), :method => 'delete' %> </li>
+          </ul>
+        </li>
+      <% end %>
+    <% else %>
+      <li> <%= link_to "Se connecter",new_client_session_path() %> </li>
+    <% end %>-->
+
+  <div class="grass"></div>
+
+    <div class="clouds">
+      <div class="big_clouds">
+        <span class="cloud one"></span>
+      </div>
+      <div class="little_clouds">
+        <span class="cloud one"></span>
+        <span class="cloud two"></span>
+      </div>
+    </div>
+
+</header>
+<div class="ground_top"></div>
+
+<div class="l_wrapper">
+
+
+  <%= yield %>
+
+</div>
+<div class="dock bg-height_70">
+  <div class="l_dock_wrapper">
+    <ul>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+      <li><img src="" class="has_corners_shadow is_small"></li>
+    </ul>
+    <div class="checkout">
+      <span class="price">28€</span>
+      <span class="button"><a>Acheter !</a></span>
+    </div>
+  </div>
+  
+</div>
+</body>
+</html>
