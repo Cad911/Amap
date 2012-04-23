@@ -15,7 +15,7 @@
           i++;
           $('.big_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
           time_interval = cloud.random_perso(min_speed, max_speed);
-          _results.push(setInterval(cloud.move_cloud, time_interval, ".big_clouds .cloud_" + i));
+          _results.push(cloud.move_cloud_2(".big_clouds .cloud_" + i, time_interval));
         }
         return _results;
       },
@@ -30,13 +30,13 @@
           i++;
           $('.little_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
           time_interval = cloud.random_perso(min_speed, max_speed);
-          _results.push(setInterval(cloud.move_cloud, time_interval, ".little_clouds .cloud_" + i));
+          _results.push(cloud.move_cloud_2(".little_clouds .cloud_" + i, time_interval));
         }
         return _results;
       },
       "move_cloud": function(class_cloud) {
         var left_cloud, taille_maxi;
-        taille_maxi = $(window).width();
+        taille_maxi = $(window).width() - $(class_cloud).width();
         left_cloud = $(class_cloud).css('left');
         left_cloud = left_cloud.replace('px');
         if (parseInt(left_cloud) < taille_maxi) {
@@ -45,6 +45,20 @@
           left_cloud = 0;
         }
         return $(class_cloud).css('left', left_cloud + 'px');
+      },
+      "move_cloud_2": function(class_cloud, duree) {
+        var taille_maxi;
+        taille_maxi = $(window).width() - $(class_cloud).width();
+        return $(class_cloud).animate({
+          left: taille_maxi + "px"
+        }, {
+          duration: duree,
+          easing: 'linear',
+          complete: function() {
+            $(class_cloud).css('left', '-150px');
+            return cloud.move_cloud_2(class_cloud, duree);
+          }
+        });
       },
       "random_perso": function(min, max) {
         var var_random;
@@ -56,8 +70,8 @@
         }
       }
     };
-    cloud.generate_big_cloud(2, 500, 700);
-    return cloud.generate_little_cloud(2, 100, 200);
+    cloud.generate_big_cloud(2, 5000, 6000);
+    return cloud.generate_little_cloud(2, 2000, 4000);
   });
 
 }).call(this);
