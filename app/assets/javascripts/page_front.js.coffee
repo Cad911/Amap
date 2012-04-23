@@ -41,7 +41,7 @@ $(document).ready(->
            var_random
          
          
-    cloud.generate_big_cloud(4)
-    cloud.generate_little_cloud(4) 
+    cloud.generate_big_cloud(2)
+    cloud.generate_little_cloud(2) 
 )
 
