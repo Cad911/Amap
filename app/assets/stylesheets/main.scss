@@ -138,10 +138,12 @@ $home_page-layout:smart;
     }
   }
   .little_clouds {
-    display:block;    
-    width:100px;
-    height:32px;      
-    @include nav-sprite(cloud_little); 
+    .cloud{
+       display:block;    
+       width:100px;
+       height:32px;      
+       @include nav-sprite(cloud_little);
+    } 
   }
 }
 

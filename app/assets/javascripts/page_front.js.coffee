@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-<<<<<<< HEAD
+
 $(document).ready(->
     cloud =
        "generate_big_cloud" : ->
@@ -12,7 +12,7 @@ $(document).ready(->
            left = 150 * i
            i++
            $('.big_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
-           time_interval = cloud.random_perso(150,200)
+           time_interval = cloud.random_perso(500,700)
            setInterval(cloud.move_cloud, time_interval, ".big_clouds .cloud_#{i}")
        "generate_little_cloud" : ->
          nb_nuage = 15 #Math.floor(Math.random()*14)
@@ -22,7 +22,7 @@ $(document).ready(->
            left = 120 * i
            i++
            $('.little_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
-           time_interval = cloud.random_perso(100,150)
+           time_interval = cloud.random_perso(100,250)
            setInterval(cloud.move_cloud, time_interval, ".little_clouds .cloud_#{i}")
        "move_cloud": (class_cloud) ->
           taille_maxi = $(window).width()
@@ -33,15 +33,14 @@ $(document).ready(->
           else
             left_cloud = 0
           $(class_cloud).css('left',left_cloud+'px')
-       "random_perso":(debut,fin) ->
-         var_random = Math.floor(Math.random()*fin)
-         if var_random < debut
-           cloud.random_perso(debut,fin)
+       "random_perso":(min,max) ->
+         var_random = Math.floor(Math.random()*max)
+         if var_random < min
+           cloud.random_perso(min,max)
          else
            var_random
          
     cloud.generate_big_cloud()
     cloud.generate_little_cloud() 
 )
-=======
->>>>>>> 8d54f9ba8639a8ca0acfaa09264b14cc2c40cbec
+

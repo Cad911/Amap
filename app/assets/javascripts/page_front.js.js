@@ -14,7 +14,7 @@
           left = 150 * i;
           i++;
           $('.big_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
-          time_interval = cloud.random_perso(150, 200);
+          time_interval = cloud.random_perso(500, 700);
           _results.push(setInterval(cloud.move_cloud, time_interval, ".big_clouds .cloud_" + i));
         }
         return _results;
@@ -29,7 +29,7 @@
           left = 120 * i;
           i++;
           $('.little_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
-          time_interval = cloud.random_perso(100, 150);
+          time_interval = cloud.random_perso(100, 250);
           _results.push(setInterval(cloud.move_cloud, time_interval, ".little_clouds .cloud_" + i));
         }
         return _results;
@@ -46,11 +46,11 @@
         }
         return $(class_cloud).css('left', left_cloud + 'px');
       },
-      "random_perso": function(debut, fin) {
+      "random_perso": function(min, max) {
         var var_random;
-        var_random = Math.floor(Math.random() * fin);
-        if (var_random < debut) {
-          return cloud.random_perso(debut, fin);
+        var_random = Math.floor(Math.random() * max);
+        if (var_random < min) {
+          return cloud.random_perso(min, max);
         } else {
           return var_random;
         }
