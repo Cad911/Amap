@@ -38,15 +38,9 @@ $(document).ready(->
          if var_random < min
            cloud.random_perso(min,max)
          else
-           var_random
-         
-         
-<<<<<<< HEAD
-    cloud.generate_big_cloud(2)
-    cloud.generate_little_cloud(2) 
-=======
-    cloud.generate_big_cloud(2,500,700)
+           var_random                
+    #nommbre , vitesse minimum, vitesse maxium  
+    cloud.generate_big_cloud(2,500,700) #nommbre , vitesse minimum, vitesse maxium
     cloud.generate_little_cloud(2, 100,200) 
->>>>>>> e4321c3461f5540a64baaf92af748c257ff78de4
 )
 
