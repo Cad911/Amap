@@ -84,6 +84,10 @@ $nav-basket-spacing:27px;
 @import "bg/*.png";
 @include all-bg-sprites;
 
+$home_page-layout:smart;
+@import "home_page/*.png";
+@include all-home_page-sprites;
+
 
 // fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
 @mixin sunshine {

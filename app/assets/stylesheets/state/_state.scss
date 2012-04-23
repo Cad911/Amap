@@ -195,7 +195,7 @@ body header .l_header_wrapper .l_nav .l_nav_element {
         span {
           width:26px;
           height:38px;
-          margin:9px 0 -5px 38px;
+          margin:12px 0 -7px 38px;
           @include nav-sprite(blog);              
         }
         &:hover {
@@ -205,8 +205,18 @@ body header .l_header_wrapper .l_nav .l_nav_element {
         }
       }
       &.about_us {
-        background-image: none !important;
-        width:117px !important;
+        width:117px !important;        
+        span {
+          width:35px;
+          height:35px;
+          margin:9px 0 -1px 45px;
+          @include nav-sprite(logo);              
+        }
+        &:hover {
+          span {
+            @include nav-sprite(logo_hover);      
+          }      
+        }
       }
     }
   }
@@ -218,7 +228,7 @@ body header .l_header_wrapper .l_nav .l_nav_element {
         span {
           width:33px;
           height:34px;
-          margin:8px 0 0px 50px;
+          margin:8px 0 1px 50px;
           margin-left:40px;               
           @include nav-sprite(farmer);               
         }
