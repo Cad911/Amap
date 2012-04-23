@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  produit_vente_libre_id: 1
+  cageot_id: 1
+  nombre_pack: 1
+  deleted: 1
+
+two:
+  id: 1
+  produit_vente_libre_id: 1
+  cageot_id: 1
+  nombre_pack: 1
+  deleted: 1

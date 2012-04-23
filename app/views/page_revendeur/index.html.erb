@@ -1,0 +1,46 @@
+<div class="l_main_gutter l_farmer_list">
+  <h1><%= @titre %></h1>
+
+  <% if @revendeurs.count == 0 %>
+    <p> Aucun agriculteur sur le site</p>
+  <% else %>
+
+    <ul class="l_farmer_list">
+
+      <% @revendeurs.each do |revendeur| %>
+
+        <li class="l_vcard has_corners_shadow is_vcard">
+          <div class="l_head_vcard l_photo_description is_horizontal ">
+
+            <div class="image has_corners_shadow is_small"></div>
+
+            <div class="content">
+              <p class="title">
+                <%= revendeur.nom %>
+                <%= revendeur.prenom %>
+              </p>
+              <p class="location">
+                <span class="note is_italic"><%= revendeur.direction.nom %></span>
+                <span class="note is_italic"><%= revendeur.ville.nom %></span>
+              </p>
+              <%#= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %>
+              <%#= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %>
+              <%#= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %>
+
+            </div>
+
+          </div>
+
+          <p class="description"><span><%= revendeur.description %></span></p>
+
+        </li>
+
+      <% end %>
+
+      <br class="clear">
+
+    </ul>
+
+  <% end %>
+
+</div>

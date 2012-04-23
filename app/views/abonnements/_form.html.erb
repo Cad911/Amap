@@ -1,0 +1,17 @@
+<%= simple_form_for(@abonnement) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :id %>
+    <%= f.input :client_id %>
+    <%= f.input :panier_id %>
+    <%= f.input :date_debut %>
+    <%= f.input :date_fin %>
+    <%= f.input :duree %>
+    <%= f.input :deleted %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

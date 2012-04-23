@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @client.id %>
+</p>
+
+<p>
+  <b>Genre:</b>
+  <%= @client.genre %>
+</p>
+
+<p>
+  <b>Nom:</b>
+  <%= @client.nom %>
+</p>
+
+<p>
+  <b>Prenom:</b>
+  <%= @client.prenom %>
+</p>
+
+<p>
+  <b>Adresse:</b>
+  <%= @client.adresse %>
+</p>
+
+<p>
+  <b>Ville:</b>
+  <%= @client.ville %>
+</p>
+
+<p>
+  <b>Code postal:</b>
+  <%= @client.code_postal %>
+</p>
+
+<p>
+  <b>Pays:</b>
+  <%= @client.pays %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @client.telephone %>
+</p>
+
+<p>
+  <b>Naissance:</b>
+  <%= @client.naissance %>
+</p>
+
+<p>
+  <b>Newsletter:</b>
+  <%= @client.newsletter %>
+</p>
+
+<p>
+  <b>Point relai:</b>
+  <%= @client.point_relai_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_espace_client_client_path(@client) %> (<%= link_to "Changer de mot de passe", espace_client_client_edit_password_path(current_client) %>)|
+<%= link_to 'Back', espace_client_clients_path %>

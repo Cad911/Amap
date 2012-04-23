@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<% if @cageot.nil? %>
+<p> Rien dans le panier </p>
+
+<% else %>
+	<% if @product_cageot.nil? %>
+		<p> Rien dans le panier (product)</p>
+	<% else %>
+		<p>
+		  <b>Id:</b>
+		  <%= @cageot.id %>
+		</p>
+		
+		<p>
+		  <b>Client:</b>
+		  <%=  "None" if @cageot.client_id.nil? %>
+		</p>
+		
+		<p>
+		  <b>Etat:</b>
+		  <%= @cageot.etat %>
+		</p>
+		
+		<h2> Produits </h2>
+			<% @product_cageot.each do |pc| %>
+				<p> 
+					Produit : <%= pc.produit_vente_libre.titre %> | quantité :  <%= pc.nombre_pack %>  | prix unitaire = <%= pc.produit_vente_libre.prix_unite_ttc %> | 
+					Total = <%= pc.produit_vente_libre.prix_unite_ttc * pc.nombre_pack %> 
+					<span class="btn btn-info"> <%= link_to "+", ajout_quantite_cageot_path(pc.id) %> </span>
+					<span class="btn btn-info"> <%= link_to "-", supp_quantite_cageot_path(pc.id) %> </span>
+					<span class="btn btn-info"> <%= link_to "SUPP", supp_produit_cageot_path(pc.id), :method => :delete  %> </span>
+				</p>
+				
+				
+				
+				
+			
+			<% end %>
+	<% end %>
+<% end %>
+
