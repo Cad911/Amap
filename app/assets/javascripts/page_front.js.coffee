@@ -4,7 +4,7 @@
 
 $(document).ready(->
     cloud =
-       "generate_big_cloud" : (nombre_nuage) ->
+       "generate_big_cloud" : (nombre_nuage, min_speed, max_speed) ->
          nb_nuage = nombre_nuage #Math.floor(Math.random()*14)
          i = 0
          while i < nb_nuage
@@ -12,9 +12,9 @@ $(document).ready(->
            left = 150 * i
            i++
            $('.big_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
-           time_interval = cloud.random_perso(100,250)
+           time_interval = cloud.random_perso(min_speed,max_speed)
            setInterval(cloud.move_cloud, time_interval, ".big_clouds .cloud_#{i}")
-       "generate_little_cloud" : (nombre_nuage) ->
+       "generate_little_cloud" : (nombre_nuage, min_speed, max_speed) ->
          nb_nuage = nombre_nuage #Math.floor(Math.random()*14)
          i = 0
          while i < nb_nuage
@@ -22,7 +22,7 @@ $(document).ready(->
            left = 120 * i
            i++
            $('.little_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
-           time_interval = cloud.random_perso(500,700)
+           time_interval = cloud.random_perso(min_speed,max_speed)
            setInterval(cloud.move_cloud, time_interval, ".little_clouds .cloud_#{i}")
        "move_cloud": (class_cloud) ->
           taille_maxi = $(window).width()
@@ -41,7 +41,12 @@ $(document).ready(->
            var_random
          
          
+<<<<<<< HEAD
     cloud.generate_big_cloud(2)
     cloud.generate_little_cloud(2) 
+=======
+    cloud.generate_big_cloud(2,500,700)
+    cloud.generate_little_cloud(2, 100,200) 
+>>>>>>> e4321c3461f5540a64baaf92af748c257ff78de4
 )
 

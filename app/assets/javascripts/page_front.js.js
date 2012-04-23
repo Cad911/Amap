@@ -4,7 +4,7 @@
   $(document).ready(function() {
     var cloud;
     cloud = {
-      "generate_big_cloud": function(nombre_nuage) {
+      "generate_big_cloud": function(nombre_nuage, min_speed, max_speed) {
         var i, left, nb_nuage, time_interval, top, _results;
         nb_nuage = nombre_nuage;
         i = 0;
@@ -14,12 +14,12 @@
           left = 150 * i;
           i++;
           $('.big_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
-          time_interval = cloud.random_perso(100, 250);
+          time_interval = cloud.random_perso(min_speed, max_speed);
           _results.push(setInterval(cloud.move_cloud, time_interval, ".big_clouds .cloud_" + i));
         }
         return _results;
       },
-      "generate_little_cloud": function(nombre_nuage) {
+      "generate_little_cloud": function(nombre_nuage, min_speed, max_speed) {
         var i, left, nb_nuage, time_interval, top, _results;
         nb_nuage = nombre_nuage;
         i = 0;
@@ -29,7 +29,7 @@
           left = 120 * i;
           i++;
           $('.little_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
-          time_interval = cloud.random_perso(500, 700);
+          time_interval = cloud.random_perso(min_speed, max_speed);
           _results.push(setInterval(cloud.move_cloud, time_interval, ".little_clouds .cloud_" + i));
         }
         return _results;
@@ -56,8 +56,8 @@
         }
       }
     };
-    cloud.generate_big_cloud(4);
-    return cloud.generate_little_cloud(4);
+    cloud.generate_big_cloud(2, 500, 700);
+    return cloud.generate_little_cloud(2, 100, 200);
   });
 
 }).call(this);
