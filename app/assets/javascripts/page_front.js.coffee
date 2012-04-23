@@ -56,5 +56,6 @@ $(document).ready(->
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
     cloud.generate_big_cloud(2,5000,6000)
     cloud.generate_little_cloud(2, 2000,4000) 
+
 )
 
