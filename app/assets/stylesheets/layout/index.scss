@@ -70,11 +70,56 @@ body .l_wrapper .l_main_gutter.home_page {
 		height:322px;
 		border-top:solid 1px #ffffff;
 		border-bottom:solid 1px #ffffff;
+		position:relative;
+		overflow:hidden;
+  	@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
 		&.agriculteurs {
-			@include home_page-sprite(agriculteurs);	
+			@include home_page-sprite(agriculteurs);
+			.content {
+				height:272;
+				padding-top:50px;
+			}	
 		}
 		&.raisonnee {
 			@include home_page-sprite(raisonnee);
+			.content {
+				height:272;
+				padding-top:50px;
+			}
+		}
+		.content {
+			height:322px;
+			margin:0;
+			padding:0;
+			width:962px;
+			background-color:#ffffff;
+			background:rgba(255,255,255,0.85);				
+			position:absolute;
+			left:0;
+			top:322px;
+			text-align:center;
+		  @include transition-property(all);
+  		@include transition-duration(0.8s);
+  		@include transition-timing-function(ease-out);
+			.wrapper {
+				width:500px;
+				margin:0 auto;
+				h4 {
+					@include title(1,30px);
+					margin:15px;
+				}
+				p {
+					padding-top:5px;
+					padding-bottom:20px;					
+				}
+				.button {
+				}
+			}
+		}
+		&:hover {
+			.content {
+				top:0;
+			}
 		}
 	}
 }
