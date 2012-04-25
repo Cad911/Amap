@@ -19,9 +19,6 @@ body .l_wrapper .l_main_gutter.home_page {
 				font-size:16px;
 				padding-bottom:20px;
 			}
-			bouton {
-
-			}
 		}
 		&.content_left {				//définie la position du texte à gauche ou à droite
 			.image {
@@ -37,6 +34,16 @@ body .l_wrapper .l_main_gutter.home_page {
 			}
 			.content {
 				float:right;
+			}
+		}
+		&.slider {
+			height:360px;
+			border-bottom:#C8C5BF 1px solid;
+			padding:20px;
+			.image {
+				width:525px;				
+				height:270px;				
+				border:solid 1px #ffffff;
 			}
 		}
 		&.ceuillettes {					// définie les images d'illustration
@@ -59,6 +66,44 @@ body .l_wrapper .l_main_gutter.home_page {
 			}
 			.content {
 				margin-top:54px;
+			}
+		}
+		&.process {
+			text-align:center;
+			border-top:solid 1px #ffffff;
+			h1 {
+				margin:0;
+				padding-top:17px;
+				padding-bottom:17px;
+				line-height:1.4em;
+			}
+			.image {
+				display:bock;
+				width:720px;
+				height:105px;
+				@include home_page-sprite(process);
+				@include margin;
+			}
+			.content {
+				width:895px;
+				@include margin;
+				li {					
+					display:block;
+					float:left;
+					margin-left:50px;
+					width:265px;
+					&:first-child {
+						margin-left:0;
+					}
+				}
+				h4 {
+					margin:10px 0;
+					@include title(2,18px);
+					span {
+						@include title(1,30px);
+						color:$red;
+					}
+				}
 			}
 		}
 	}
@@ -93,7 +138,7 @@ body .l_wrapper .l_main_gutter.home_page {
 			padding:0;
 			width:962px;
 			background-color:#ffffff;
-			background:rgba(255,255,255,0.85);				
+			background:rgba(255,255,255,0.9);				
 			position:absolute;
 			left:0;
 			top:322px;
@@ -110,7 +155,8 @@ body .l_wrapper .l_main_gutter.home_page {
 				}
 				p {
 					padding-top:5px;
-					padding-bottom:20px;					
+					padding-bottom:20px;		
+					color:$brown;			
 				}
 				.button {
 				}
