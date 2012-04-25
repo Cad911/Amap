@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @rel_commande_produit.id %>
+</p>
+
+<p>
+  <b>Produit vente libre:</b>
+  <%= @rel_commande_produit.produit_vente_libre_id %>
+</p>
+
+<p>
+  <b>Commande:</b>
+  <%= @rel_commande_produit.commande_id %>
+</p>
+
+<p>
+  <b>Prix unite ht:</b>
+  <%= @rel_commande_produit.prix_unite_ht %>
+</p>
+
+<p>
+  <b>Prix unite ttc:</b>
+  <%= @rel_commande_produit.prix_unite_ttc %>
+</p>
+
+<p>
+  <b>Nb pack:</b>
+  <%= @rel_commande_produit.nb_pack %>
+</p>
+
+<p>
+  <b>Quantite:</b>
+  <%= @rel_commande_produit.quantite %>
+</p>
+
+
+<%= link_to 'Edit', edit_rel_commande_produit_path(@rel_commande_produit) %> |
+<%= link_to 'Back', rel_commande_produits_path %>

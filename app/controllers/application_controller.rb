@@ -26,7 +26,12 @@ class ApplicationController < ActionController::Base
     		if !session[:cageot_id].nil?
     			@cageot_session = Cageot.where('etat = "en_cours" AND session_id = ?', session[:cageot_id])
     			@cageot_user = Cageot.where("client_id = ? AND etat='en_cours'", current_client.id)
-    			if @cageot_session.count > 0 && @cageot_user.count == 0 #__ SI PANIER EN COURS ET CLIENT N A PAS DE PANIER __
+    			if @cageot_user.count > 0 # __ SI LE CLIENT AVAIT UN PANIER AUPARAVANT ___
+    				@cageot_annule = Cageot.find(@cageot_user[0].id)
+    				@cageot_annule.etat = "annule"
+    				@cageot_annule.save
+    			end
+    			if @cageot_session.count > 0 #__ SI PANIER EN COURS  __
     				@cageot = Cageot.find(@cageot_session[0].id)
     				@cageot.client_id = current_client.id
     				@cageot.save
@@ -36,6 +41,11 @@ class ApplicationController < ActionController::Base
     		if !session[:abonnement_id].nil?
     			@abonnement_session = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
     			@abonnement_user = Abonnement.where("client_id = ? AND etat='en_cours'", current_client.id)
+    			if @abonnement_user.count > 0
+    				@abonnement_annule = Abonnement.find(@abonnement_user[0].id)
+    				@abonnement_annule.etat = "annule"
+    				@abonnement.save
+    			end
     			if @abonnement_session.count > 0 && @abonnement_user.count == 0 #__ SI PANIER EN COURS ET CLIENT N A PAS DE PANIER __
     				@abonnement = Abonnement.find(@abonnement_session[0].id)
     				@abonnement.client_id = current_client.id

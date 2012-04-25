@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @commande.id %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @commande.client_id %>
+</p>
+
+<p>
+  <b>Cageot:</b>
+  <%= @commande.cageot_id %>
+</p>
+
+<p>
+  <b>Point relai:</b>
+  <%= @commande.point_relai_id %>
+</p>
+
+<p>
+  <b>Date livraison:</b>
+  <%= @commande.date_livraison %>
+</p>
+
+<p>
+  <b>Total:</b>
+  <%= @commande.total %>
+</p>
+
+<p>
+  <b>Etat:</b>
+  <%= @commande.etat %>
+</p>
+
+
+<%= link_to 'Edit', edit_commande_path(@commande) %> |
+<%= link_to 'Back', commandes_path %>

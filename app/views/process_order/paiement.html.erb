@@ -1,2 +1,32 @@
 <h1>ProcessOrder#paiement</h1>
 <p>Find me in app/views/process_order/paiement.html.erb</p>
+
+<table class="table table-striped">
+			<tr>
+				<th>Article</th>
+				<th>Point Relais</th>
+				<th> Montant </th>
+			</tr>
+			<tr>
+				<td>
+					<% @mes_produit_commande.each do |produit_c| %>
+						<p> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </p>
+					<% end %>
+				</td>
+				<td>
+					<%= @mon_point_relai.adresse %> <%= @mon_point_relai.ville.nom %> 
+				</td>
+				<td>
+					<%= @ma_commande.total %>
+				</td>
+			</tr>
+</table>
+
+<div id="l_paiement">
+	<form class="form-horizontal" method="get" action="/process_order/payer_commande">
+		<p> Numero de la carte <input type="text"/></p>
+		<p> Date d'expiration <input type="text"/><input type="text"/></p>
+		<p> Crypto <input type="text"/></p>
+		<p> <input type="submit" value="Payer" class="btn btn-primary"/></p>
+	</form>
+</div>

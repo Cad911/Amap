@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120422084450) do
+ActiveRecord::Schema.define(:version => 20120425093734) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
@@ -105,6 +105,17 @@ ActiveRecord::Schema.define(:version => 20120422084450) do
 
   add_index "clients", ["email"], :name => "index_clients_on_email", :unique => true
   add_index "clients", ["reset_password_token"], :name => "index_clients_on_reset_password_token", :unique => true
+
+  create_table "commandes", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "cageot_id"
+    t.integer  "point_relai_id"
+    t.date     "date_livraison"
+    t.float    "total"
+    t.string   "etat"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "droits", :force => true do |t|
     t.integer  "has_revendeur"
@@ -210,6 +221,17 @@ ActiveRecord::Schema.define(:version => 20120422084450) do
     t.integer  "cageot_id"
     t.integer  "nombre_pack"
     t.integer  "deleted"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "rel_commande_produits", :force => true do |t|
+    t.integer  "produit_vente_libre_id"
+    t.integer  "commande_id"
+    t.float    "prix_unite_ht"
+    t.float    "prix_unite_ttc"
+    t.integer  "nb_pack"
+    t.integer  "quantite"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end

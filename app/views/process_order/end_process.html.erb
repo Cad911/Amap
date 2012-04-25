@@ -1,0 +1,10 @@
+<h1> Le paiement a été accepté ! </h1>
+<h2> Voici le recap de votre commande</h2>
+
+<h3> Commande n° <%= @ma_commande_payer.id %> </h3>
+<ul>
+<% @produit_de_commande.each do |produit| %>
+	<li> <%= produit.nb_pack %> <%= produit.produit_vente_libre.titre%> </li>
+<% end %>
+<li> Total = <%= @ma_commande_payer.total %></li>
+</ul>

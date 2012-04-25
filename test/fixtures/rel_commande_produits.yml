@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  produit_vente_libre_id: 1
+  commande_id: 1
+  prix_unite_ht: 1.5
+  prix_unite_ttc: 1.5
+  nb_pack: 1
+  quantite: 1
+
+two:
+  id: 1
+  produit_vente_libre_id: 1
+  commande_id: 1
+  prix_unite_ht: 1.5
+  prix_unite_ttc: 1.5
+  nb_pack: 1
+  quantite: 1
