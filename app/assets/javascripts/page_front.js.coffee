@@ -52,10 +52,17 @@ $(document).ready(->
            cloud.random_perso(min,max)
          else
            var_random
+    
+    
+    slider = 
+       "init": ->
+
+      
          
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
     cloud.generate_big_cloud(2,60000,70000)
-    cloud.generate_little_cloud(2, 90000,100000) 
+    cloud.generate_little_cloud(2, 90000,100000)
+    slider.init() 
 
 )
 

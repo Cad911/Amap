@@ -2,7 +2,7 @@
 (function() {
 
   $(document).ready(function() {
-    var cloud;
+    var cloud, slider;
     cloud = {
       "generate_big_cloud": function(nombre_nuage, min_speed, max_speed) {
         var i, left, nb_nuage, time_interval, top, _results;
@@ -70,8 +70,12 @@
         }
       }
     };
+    slider = {
+      "init": function() {}
+    };
     cloud.generate_big_cloud(2, 60000, 70000);
-    return cloud.generate_little_cloud(2, 90000, 100000);
+    cloud.generate_little_cloud(2, 90000, 100000);
+    return slider.init();
   });
 
 }).call(this);
