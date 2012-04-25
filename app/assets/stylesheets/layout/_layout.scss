@@ -54,6 +54,46 @@ body {
           }
         }
       }
+      .box {
+        width:200px;
+        position:absolute;
+        top:0;
+        right:0;
+        background-color:$bg_color;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        .social {
+          ul {
+            li {
+              float:left;
+              width:16px;
+              height:16px;
+              &.facebook {
+                @include nav-sprite(facebook);  
+              }
+              &.twitter {
+                @include nav-sprite(twitter);  
+              }
+              &.google_plus {
+                @include nav-sprite(google_plus);  
+              }                            
+            }
+          }
+        } 
+        .login {
+          text-align:center;
+          a {
+            color:$brown;
+            &:hover {
+              color:$red;
+            }
+          }
+        }       
+      }
     }
     .grass {
       width: 100%;
