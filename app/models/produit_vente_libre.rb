@@ -3,6 +3,7 @@ class ProduitVenteLibre < ActiveRecord::Base
 	belongs_to :user
 	
 	has_many :rel_cageot_produits
+	has_many :rel_commande_produits
 	
 	
 	#POUR AJAX, ON A BESOIN DE L'ID USER

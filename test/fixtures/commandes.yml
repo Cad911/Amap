@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  client_id: 1
+  cageot_id: 1
+  point_relai_id: 1
+  date_livraison: 2012-04-25
+  total: 1.5
+  etat: MyString
+
+two:
+  id: 1
+  client_id: 1
+  cageot_id: 1
+  point_relai_id: 1
+  date_livraison: 2012-04-25
+  total: 1.5
+  etat: MyString

@@ -7,12 +7,34 @@ class EspaceClient::ClientsController < InheritedResources::Base
 	def create 
 		@client = Client.new(params[:client])
 		if @client.save
+		    sign_in(:client,@client) #Connexion devise
+		    #_____________ PARTIE OÙ ON RATTACHE LE CAGEOT OU L'ABONNEMENT A L'UTILISATEUR ____________
+		    @abonnement_en_cours = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
+		    @cageot__en_cours = Cageot.where('etat = "en_cours" AND session_id = ?',session[:cageot_id])
+		    if @abonnement_en_cours.count > 0
+		    	@abonnement_user = Abonnement.find(@abonnement_en_cours[0].id)
+		    	@abonnement_user.client_id = @client.id
+		    	@abonnement_user.save
+		    elsif @cageot__en_cours.count > 0
+		    	@cageot_user = Cageot.find(@cageot__en_cours[0].id)
+		    	@cageot_user.client_id = @client.id
+		    	@cageot_user.save
+		    end
+		    #__________________________________________________________________________________________
 			respond_to do |format|
   				format.json { render :json => [@client] }
-  				#format.html { render :show }
+  				format.js { render :json => [@client] }
+  				format.html { redirect_to espace_client_client_path(@client) }
+  			end
+		else
+			respond_to do |format|
+  				format.json { render :json => {error:@client.errors} }
+  				#format.js { render :json => "erreur" }
+  				#format.html {  }
   			end
 		end
 	end
+	
 	#___________________________ EDIT PASSWORD ____________________________
 	def edit_password
 		@client = Client.find(current_client.id)

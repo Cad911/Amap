@@ -3,13 +3,19 @@
 	<p>Find me in app/views/process_order/confirmation.html.erb</p>
 	
 	<p> Choisissez votre point relais </p>
-	<form>
-	<ul class="l_farmer_list">
-		<% @point_relais.each do |pr| %>
-			<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input type="radio" value="" name="test" /><%= pr.adresse %> <%= pr.ville.nom %> </p></li>
-		<% end %>
-	</ul>
-	</form>
+	<div id="l_select_pr">
+		<form id="form_select_pr" method="get" action="/process_order/select_pr">
+		<ul class="l_farmer_list">
+			<% @point_relais.each do |pr| %>
+				<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input type="radio" value="<%= pr.id %>" name="point_relai[id]" /><%= pr.adresse %> <%= pr.ville.nom %> </p></li>
+			<% end %>
+		</ul>
+		<div class="actions">
+		    <!-- <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span> -->
+		    <input type="submit" value="Proceder au paiment" />
+		</div>
+		</form>
+	</div>
 	<% if current_client.nil? %>
 		
 		

@@ -1,0 +1,17 @@
+<%= simple_form_for(@commande) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :id %>
+    <%= f.input :client_id %>
+    <%= f.input :cageot_id %>
+    <%= f.input :point_relai_id %>
+    <%= f.input :date_livraison %>
+    <%= f.input :total %>
+    <%= f.input :etat %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

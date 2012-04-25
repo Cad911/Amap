@@ -8,26 +8,18 @@ $(document).ready(->
   message_information =
       message_success: (id,titre,message) ->
         div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
-        if titre != ""
-           div_message += "<h4> #{titre} </h4>"
-        if message != ""
-          div_message += "<p> #{message} </p>"
-        div_message += "</div>"  
-        $("##{id}").after(div_message)
+        message_information.content_message(id,titre,message,div_message)
       message_warning: (id,titre,message) ->
         div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
-        if titre != ""
-           div_message += "<h4> #{titre} </h4>"
-        if message != ""
-          div_message += "<p> #{message} </p>"
-        div_message += "</div>"  
-        $("##{id}").after(div_message)
+        message_information.content_message(id,titre,message,div_message)
       message_error: (id,titre,message) ->
         div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
+        message_information.content_message(id,titre,message,div_message)
+      content_message: (id,titre,message,div_message) ->
         if titre != ""
-           div_message += "<h4> #{titre} </h4>"
+           div_message += "<strong> #{titre} </strong>"
         if message != ""
-          div_message += "<p> #{message} </p>"
+          div_message += "#{message}"
         div_message += "</div>"  
         $("##{id}").after(div_message)
 
@@ -40,7 +32,9 @@ $(document).ready(->
       ajax_formulaire: ->
           $('#form_se_connecter').bind('ajax:success', (data,response) ->
             console.log(response)
-            message_information.message_success("form_se_connecter","Success",response.message)
+            message_information.message_success("l_select_pr",response.message,"")
+            form_se_connecter.hide()
+            form_areyouinscrit.hide()
           )
           $('#form_se_connecter').bind('ajax:error', (data,response) ->
             console.log(data)
@@ -53,65 +47,106 @@ $(document).ready(->
       init: ->
         form_sinscrire.ajax_formulaire()
         form_sinscrire.form_event()
-        form_sinscrire.email_existant()
       display : ->
           $('#l_sinscrire').fadeIn(1000)
       hide: ->
           $('#l_sinscrire').css('display','none')
       ajax_formulaire : -> 
           $('#form_sinscrire').bind('ajax:success', (data,response) ->
-              console.log(data)
-              message_information.message_success("form_sinscrire","Success","Inscription réussi! Veuillez vous connectez maintenant")
+              if response.error
+                 all_error = form_sinscrire.extract_error(response.error,"")
+                 message_information.message_error("form_sinscrire","Erreur",all_error)
+              else
+                 message_information.message_success("l_select_pr","Success","Inscription réussi! Vous êtes connecté!")
+                 form_sinscrire.hide()
+                 form_areyouinscrit.hide()
           )
           $('#form_sinscrire').bind('ajax:error', (data,response) ->
-            console.log(data)
-            console.log(response)
             message_information.message_error("form_sinscrire","Erreur",response.responseText)
           )
+      extract_error :(error,text_error) ->
+          for champ, type_erreur of error 
+            if typeof type_erreur == "array"
+               form_sinscrire.extract_error(type_erreur,text_error)
+            else
+               text_error += "<br/><strong> #{champ}</strong> #{type_erreur}"
+          text_error    
       form_event: ->
           $('#form_sinscrire input#client_password_confirmation').bind('keyup',->
-            form_sinscrire.verif_password()
+            form_sinscrire.password_different()
+          )
+          $('#form_sinscrire input#client_email').bind('change', ->
+            form_sinscrire.email_existant($(this).val())
+          )
+          $('#form_sinscrire input').bind('change', ->
+            form_sinscrire.input_is_empty("##{$(this).attr('id')}")
           )
           $('#form_sinscrire #b_sign_up').bind('click',->
-            if form_sinscrire.verif_all_input() == true
+            erreur = false
+            if form_sinscrire.verif_all_input()
               alert('Certain champ sont vide')
-            else
+              erreur = true
+            if form_sinscrire.email_existant($('#form_sinscrire input#client_email').val())
+              erreur = true
+            if form_sinscrire.password_different()
+              erreur = true
+            
+            if erreur == false
+              console.log('tout est ok')
               $('#form_sinscrire').submit()
               #form_sinscrire.hide()
           )
-
-      email_existant: ->
-          $('#form_sinscrire input#client_email').bind('change', ->
+      email_existant: (email_adresse) -> # RENVOI TRUE SI EMAIL EXISTANT
+          	erreur = false
           	$.ajax(
           	  type : "POST"
+          	  async: false,
           	  url: "/clients/emailExist"
-          	  data: {email : $(this).val()}
+          	  data: {email : email_adresse}
           	  success: (data) ->
-          	      console.log(data)
           	      message_info = ""
           	      if data.exist == true
           	        message_info += "existe deja. <br/>"
           	      if data.good_format == false
           	        message_info += "ce n'est pas une adresse mail."
+          	      
           	      if message_info != ""
-          	       message_information.message_error("form_sinscrire #client_email","titre",message_info)  
-          	)
-          )
-      verif_password : ->
+          	         message_information.message_error("form_sinscrire #client_email","titre",message_info)
+          	         erreur = true  
+          	)             
+          	erreur
+      password_different : -> #RENVOI TRUE SI MDP  DIFFERENT
           password = $('#form_sinscrire input#client_password').val()
           password_confirmation = $('#form_sinscrire input#client_password_confirmation').val()
           if password == password_confirmation
-            message_information.message_success("form_sinscrire #client_password","","Mot de passe identique")
+            if password == ""
+              message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe vide")
+              true
+            else if password.length < 6
+              message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe trop court (plus de 6 caractere)")
+              true
+            else
+              message_information.message_success("form_sinscrire #client_password","","Mot de passe identique")
+              false
           else
             message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe different")
-            console.log("client_password Erreur Mot de passe different")
-      verif_all_input : ->
+            true
+      verif_all_input : -> #RENVOI TRUE SI 1 CHAMP VIDE
          champ_vide = false
          $('#form_sinscrire input').each(->
               if ($(this).val() == "")
-              	champ_vide = true
+                $(this).css('border','1px solid red')
+                champ_vide = true
+                console.log("1");
          )
          champ_vide
+      input_is_empty : (id_input) ->
+         if $(id_input).val() == ""
+           $(id_input).css('border','1px solid red')
+           true
+         else
+           $(id_input).css('border','1px solid #CCCCCC')
+           false
   
   #__________________________ FUNCTION POUR FORM CHOIX SI INSCRIT OU PAS ________________________________________    
   form_areyouinscrit =
@@ -123,6 +158,8 @@ $(document).ready(->
            $('.is_inscrit').bind('change', ->
                form_areyouinscrit.event($(this).val())
            )
+      hide: ->
+          $("#l_areyouinscrit").css('display','none')
       event: (val) ->
          	if val == "non"
          	  form_se_connecter.hide() 

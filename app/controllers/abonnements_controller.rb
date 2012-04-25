@@ -21,8 +21,8 @@ class AbonnementsController < InheritedResources::Base
   		end
   		
   		#__ SUPPRESSION CAGEOT SI IL EXISTE
-  		if !session[:panier_id].nil?
-  			@cageot_exist = Cageot.where('etat = "en_cours" AND session_id = ?',session[:panier_id])
+  		if !session[:cageot_id].nil?
+  			@cageot_exist = Cageot.where('etat = "en_cours" AND session_id = ?',session[:cageot_id])
   			#____ SI ABONNEMENT EXIST __
   			if @cageot_exist.count > 0
   				@cageot =  Cageot.find(@cageot_exist[0].id)

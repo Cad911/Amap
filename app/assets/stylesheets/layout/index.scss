@@ -45,6 +45,20 @@ body .l_wrapper .l_main_gutter.home_page {
 				height:270px;				
 				border:solid 1px #ffffff;
 			}
+			ul.nav {
+				li {
+					float:left;
+					@include ui-sprite(puce);
+					width:13px;
+					height:13px;
+					&.active {
+						@include ui-sprite(puce_active);
+					}
+					&:hover {
+						cursor:pointer;
+					}
+				}
+			}
 		}
 		&.ceuillettes {					// définie les images d'illustration
 			.image {

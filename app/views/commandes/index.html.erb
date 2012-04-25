@@ -1,0 +1,35 @@
+<h1>Listing commandes</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Client</th>
+    <th>Cageot</th>
+    <th>Point relai</th>
+    <th>Date livraison</th>
+    <th>Total</th>
+    <th>Etat</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @commandes.each do |commande| %>
+  <tr>
+    <td><%= commande.id %></td>
+    <td><%= commande.client_id %></td>
+    <td><%= commande.cageot_id %></td>
+    <td><%= commande.point_relai_id %></td>
+    <td><%= commande.date_livraison %></td>
+    <td><%= commande.total %></td>
+    <td><%= commande.etat %></td>
+    <td><%= link_to 'Show', commande %></td>
+    <td><%= link_to 'Edit', edit_commande_path(commande) %></td>
+    <td><%= link_to 'Destroy', commande, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Commande', new_commande_path %>

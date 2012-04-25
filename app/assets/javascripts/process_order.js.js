@@ -7,24 +7,21 @@
       message_success: function(id, titre, message) {
         var div_message;
         div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        if (titre !== "") div_message += "<h4> " + titre + " </h4>";
-        if (message !== "") div_message += "<p> " + message + " </p>";
-        div_message += "</div>";
-        return $("#" + id).after(div_message);
+        return message_information.content_message(id, titre, message, div_message);
       },
       message_warning: function(id, titre, message) {
         var div_message;
         div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        if (titre !== "") div_message += "<h4> " + titre + " </h4>";
-        if (message !== "") div_message += "<p> " + message + " </p>";
-        div_message += "</div>";
-        return $("#" + id).after(div_message);
+        return message_information.content_message(id, titre, message, div_message);
       },
       message_error: function(id, titre, message) {
         var div_message;
         div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        if (titre !== "") div_message += "<h4> " + titre + " </h4>";
-        if (message !== "") div_message += "<p> " + message + " </p>";
+        return message_information.content_message(id, titre, message, div_message);
+      },
+      content_message: function(id, titre, message, div_message) {
+        if (titre !== "") div_message += "<strong> " + titre + " </strong>";
+        if (message !== "") div_message += "" + message;
         div_message += "</div>";
         return $("#" + id).after(div_message);
       }
@@ -39,7 +36,9 @@
       ajax_formulaire: function() {
         $('#form_se_connecter').bind('ajax:success', function(data, response) {
           console.log(response);
-          return message_information.message_success("form_se_connecter", "Success", response.message);
+          message_information.message_success("l_select_pr", response.message, "");
+          form_se_connecter.hide();
+          return form_areyouinscrit.hide();
         });
         return $('#form_se_connecter').bind('ajax:error', function(data, response) {
           console.log(data);
@@ -51,8 +50,7 @@
     form_sinscrire = {
       init: function() {
         form_sinscrire.ajax_formulaire();
-        form_sinscrire.form_event();
-        return form_sinscrire.email_existant();
+        return form_sinscrire.form_event();
       },
       display: function() {
         return $('#l_sinscrire').fadeIn(1000);
@@ -62,68 +60,124 @@
       },
       ajax_formulaire: function() {
         $('#form_sinscrire').bind('ajax:success', function(data, response) {
-          console.log(data);
-          return message_information.message_success("form_sinscrire", "Success", "Inscription réussi! Veuillez vous connectez maintenant");
+          var all_error;
+          if (response.error) {
+            all_error = form_sinscrire.extract_error(response.error, "");
+            return message_information.message_error("form_sinscrire", "Erreur", all_error);
+          } else {
+            message_information.message_success("l_select_pr", "Success", "Inscription réussi! Vous êtes connecté!");
+            form_sinscrire.hide();
+            return form_areyouinscrit.hide();
+          }
         });
         return $('#form_sinscrire').bind('ajax:error', function(data, response) {
-          console.log(data);
-          console.log(response);
           return message_information.message_error("form_sinscrire", "Erreur", response.responseText);
         });
       },
+      extract_error: function(error, text_error) {
+        var champ, type_erreur;
+        for (champ in error) {
+          type_erreur = error[champ];
+          if (typeof type_erreur === "array") {
+            form_sinscrire.extract_error(type_erreur, text_error);
+          } else {
+            text_error += "<br/><strong> " + champ + "</strong> " + type_erreur;
+          }
+        }
+        return text_error;
+      },
       form_event: function() {
         $('#form_sinscrire input#client_password_confirmation').bind('keyup', function() {
-          return form_sinscrire.verif_password();
+          return form_sinscrire.password_different();
+        });
+        $('#form_sinscrire input#client_email').bind('change', function() {
+          return form_sinscrire.email_existant($(this).val());
+        });
+        $('#form_sinscrire input').bind('change', function() {
+          return form_sinscrire.input_is_empty("#" + ($(this).attr('id')));
         });
         return $('#form_sinscrire #b_sign_up').bind('click', function() {
-          if (form_sinscrire.verif_all_input() === true) {
-            return alert('Certain champ sont vide');
-          } else {
+          var erreur;
+          erreur = false;
+          if (form_sinscrire.verif_all_input()) {
+            alert('Certain champ sont vide');
+            erreur = true;
+          }
+          if (form_sinscrire.email_existant($('#form_sinscrire input#client_email').val())) {
+            erreur = true;
+          }
+          if (form_sinscrire.password_different()) erreur = true;
+          if (erreur === false) {
+            console.log('tout est ok');
             return $('#form_sinscrire').submit();
           }
         });
       },
-      email_existant: function() {
-        return $('#form_sinscrire input#client_email').bind('change', function() {
-          return $.ajax({
-            type: "POST",
-            url: "/clients/emailExist",
-            data: {
-              email: $(this).val()
-            },
-            success: function(data) {
-              var message_info;
-              console.log(data);
-              message_info = "";
-              if (data.exist === true) message_info += "existe deja. <br/>";
-              if (data.good_format === false) {
-                message_info += "ce n'est pas une adresse mail.";
-              }
-              if (message_info !== "") {
-                return message_information.message_error("form_sinscrire #client_email", "titre", message_info);
-              }
+      email_existant: function(email_adresse) {
+        var erreur;
+        erreur = false;
+        $.ajax({
+          type: "POST",
+          async: false,
+          url: "/clients/emailExist",
+          data: {
+            email: email_adresse
+          },
+          success: function(data) {
+            var message_info;
+            message_info = "";
+            if (data.exist === true) message_info += "existe deja. <br/>";
+            if (data.good_format === false) {
+              message_info += "ce n'est pas une adresse mail.";
             }
-          });
+            if (message_info !== "") {
+              message_information.message_error("form_sinscrire #client_email", "titre", message_info);
+              return erreur = true;
+            }
+          }
         });
+        return erreur;
       },
-      verif_password: function() {
+      password_different: function() {
         var password, password_confirmation;
         password = $('#form_sinscrire input#client_password').val();
         password_confirmation = $('#form_sinscrire input#client_password_confirmation').val();
         if (password === password_confirmation) {
-          return message_information.message_success("form_sinscrire #client_password", "", "Mot de passe identique");
+          if (password === "") {
+            message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe vide");
+            return true;
+          } else if (password.length < 6) {
+            message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe trop court (plus de 6 caractere)");
+            return true;
+          } else {
+            message_information.message_success("form_sinscrire #client_password", "", "Mot de passe identique");
+            return false;
+          }
         } else {
           message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe different");
-          return console.log("client_password Erreur Mot de passe different");
+          return true;
         }
       },
       verif_all_input: function() {
         var champ_vide;
         champ_vide = false;
         $('#form_sinscrire input').each(function() {
-          if ($(this).val() === "") return champ_vide = true;
+          if ($(this).val() === "") {
+            $(this).css('border', '1px solid red');
+            champ_vide = true;
+            return console.log("1");
+          }
         });
         return champ_vide;
+      },
+      input_is_empty: function(id_input) {
+        if ($(id_input).val() === "") {
+          $(id_input).css('border', '1px solid red');
+          return true;
+        } else {
+          $(id_input).css('border', '1px solid #CCCCCC');
+          return false;
+        }
       }
     };
     form_areyouinscrit = {
@@ -137,6 +191,9 @@
         return $('.is_inscrit').bind('change', function() {
           return form_areyouinscrit.event($(this).val());
         });
+      },
+      hide: function() {
+        return $("#l_areyouinscrit").css('display', 'none');
       },
       event: function(val) {
         if (val === "non") {

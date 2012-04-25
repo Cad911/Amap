@@ -1,0 +1,17 @@
+<%= simple_form_for(@rel_commande_produit) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :id %>
+    <%= f.input :produit_vente_libre_id %>
+    <%= f.input :commande_id %>
+    <%= f.input :prix_unite_ht %>
+    <%= f.input :prix_unite_ttc %>
+    <%= f.input :nb_pack %>
+    <%= f.input :quantite %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

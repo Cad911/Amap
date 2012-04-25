@@ -70,8 +70,8 @@
         }
       }
     };
-    cloud.generate_big_cloud(2, 5000, 6000);
-    return cloud.generate_little_cloud(2, 2000, 4000);
+    cloud.generate_big_cloud(2, 60000, 70000);
+    return cloud.generate_little_cloud(2, 90000, 100000);
   });
 
 }).call(this);
