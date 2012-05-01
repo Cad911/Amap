@@ -45,11 +45,20 @@ $dark_bg_color:#f0ede6;
   text-shadow:1px 1px 1px #ffffff;
   font-size: $taille;
 }
+
 // Coins arrondis
 @mixin borderradius($arrdondis) {
   -webkit-border-radius: $arrdondis;
   -moz-border-radius: $arrdondis;
   border-radius: $arrdondis;
+}
+@mixin box {
+    @include borderradius(5px); 
+    -webkit-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    -moz-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
+    border: solid 1px #ffffff;
+    background:#fafafa url(/../images/patterns/paper.png) repeat;
 }
 
 @mixin margin {
