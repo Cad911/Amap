@@ -131,7 +131,7 @@ body .l_wrapper .l_main_gutter.home_page {
 		border-bottom:solid 1px #ffffff;
 		position:relative;
 		overflow:hidden;
-  	@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
+		@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
 		&.agriculteurs {
 			@include home_page-sprite(agriculteurs);
 			.content {
@@ -157,9 +157,9 @@ body .l_wrapper .l_main_gutter.home_page {
 			left:0;
 			top:322px;
 			text-align:center;
-		  @include transition-property(all);
-  		@include transition-duration(0.8s);
-  		@include transition-timing-function(ease-out);
+			@include transition-property(all);
+			@include transition-duration(0.8s);
+			@include transition-timing-function(ease-out);
 			.wrapper {
 				width:500px;
 				margin:0 auto;

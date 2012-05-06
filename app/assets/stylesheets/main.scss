@@ -88,7 +88,6 @@ $dark_bg_color:#f0ede6;
 @import "compass/css3"; //necessaire pour les sprites
 
 $nav-layout:smart;
-$nav-basket-spacing:27px;
 @import "nav/*.png";
 @include all-nav-sprites;
 
