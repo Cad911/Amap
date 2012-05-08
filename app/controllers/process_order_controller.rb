@@ -4,6 +4,7 @@ class ProcessOrderController < ApplicationController
   #_________________________________________________________________ RESUME DU PANIER ____________________________________________________________________
   def resume
   	
+  	#__ REGARDE SI ABONNEMENT 
   	if current_client.nil?
   		@abonnement_exist = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
   	else
@@ -11,9 +12,11 @@ class ProcessOrderController < ApplicationController
   	end
   	@listing_produit = nil
   	@abonnement_panier = nil
+  	#__ SI ABONNEMENT EXISTE ___
   	if @abonnement_exist.count > 0
   		@titre = "Resume abonnement"
   		@abonnement_panier = Abonnement.find(@abonnement_exist[0].id)
+  	#__ SI ABONNEMENT EXISTE PAS
   	else
   		@titre = "Resume cageot"
   		if !current_client.nil?
@@ -26,9 +29,11 @@ class ProcessOrderController < ApplicationController
   			end
   		end
   		
+  		#__ SI PANIER EXISTE _____
   		if @cageot_exist.count > 0
   			@cageot_ = Cageot.find(@cageot_exist[0].id)
   			@rel_cageot = RelCageotProduit.where(:cageot_id => @cageot_.id)
+  			#____ SI PRODUIT DANS PANIER ____
   			if @rel_cageot.count > 0
   				@listing_produit = @rel_cageot
   				@total = 0
@@ -44,8 +49,52 @@ class ProcessOrderController < ApplicationController
 
   #_______________________________ CONFIRMATION PANIER ET CHOIX POINT RELAI ET S'IDENTIFIER SI CE N'EST PAS LE CAS ___________________________________________
   def confirmation
-  	@point_relais = PointRelai.all #__ ACHANGER PEUT ETRE
-	#___________ METTRE DEVISE DANS LA PAGE (LE FORMULAIRE D'IDENTIFICATION ______
+   
+    @has_cageot_or_abo = false 
+    #__ REGARDE SI ABONNEMENT 
+  	if current_client.nil?
+  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
+  	else
+  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND client_id = ?', current_client.id)
+  	end
+  	@listing_produit = nil
+  	@abonnement_panier = nil
+  	#__ SI ABONNEMENT EXISTE ___
+  	if @abonnement_exist.count > 0
+  	    @has_cageot_or_abo = true
+  		#__ @abonnement_panier = Abonnement.find(@abonnement_exist[0].id)
+  	#__ SI ABONNEMENT EXISTE PAS
+  	else
+  		@titre = "Resume cageot"
+  		if !current_client.nil?
+  			@cageot_exist = Cageot.where("etat = 'en_cours' AND client_id = ?", current_client.id)
+  		else
+  			if !session[:cageot_id].nil?
+  				@cageot_exist = Cageot.where("etat = 'en_cours' AND session_id = ?", session[:cageot_id])
+  			else
+  				@cageot_exist = []
+  			end
+  		end
+  		
+  		#__ SI PANIER EXISTE _____
+  		if @cageot_exist.count > 0
+  			@cageot_ = Cageot.find(@cageot_exist[0].id)
+  			@rel_cageot = RelCageotProduit.where(:cageot_id => @cageot_.id)
+  			#____ SI PRODUIT DANS PANIER ____
+  			if @rel_cageot.count > 0
+  			    @has_cageot_or_abo = true
+  				@point_relais = PointRelai.all #__ ACHANGER PEUT ETRE
+  			end
+  		end
+  	end
+	
+	#__ SI ABONNEMENT OU CAGEOT__
+	if @has_cageot_or_abo
+	   render :confirmation
+	else
+	   flash[:notice] = "Votre panier est vide"
+	   redirect_to process_order_resume_path
+	end
   end
   
   
@@ -130,6 +179,7 @@ class ProcessOrderController < ApplicationController
   #________________________________ PAGE PAIEMENT _____________________________________
   def paiement
   	@commande_apayer = Commande.where("client_id = ? AND etat = 'en_cours'", current_client.id)
+  	#___ SI COMMANDE
   	if @commande_apayer.count > 0
   		@ma_commande = Commande.find(@commande_apayer[0].id)
   		@update_mes_produits_commandes  = RelCommandeProduit.where('commande_id = ?', @ma_commande.id)

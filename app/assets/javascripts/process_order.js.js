@@ -2,7 +2,7 @@
 (function() {
 
   $(document).ready(function() {
-    var form_areyouinscrit, form_se_connecter, form_sinscrire, message_information;
+    var div_state, form_areyouinscrit, form_se_connecter, form_select_pr, form_sinscrire, message_information;
     message_information = {
       message_success: function(id, titre, message) {
         var div_message;
@@ -26,6 +26,34 @@
         return $("#" + id).after(div_message);
       }
     };
+    div_state = {
+      div_success: function(element, message) {
+        div_state.remove_class(element, 'warning', 'error');
+        element.parent().parent().addClass('success');
+        return div_state.write_message(element, message);
+      },
+      div_warning: function(element, message) {
+        div_state.remove_class(element, 'success', 'error');
+        element.parent().parent().addClass('warning');
+        return div_state.write_message(element, message);
+      },
+      div_error: function(element, message) {
+        div_state.remove_class(element, 'success', 'warning');
+        element.parent().parent().addClass('error');
+        return div_state.write_message(element, message);
+      },
+      remove_class: function(element, class1, class2) {
+        element.parent().parent().removeClass(class1);
+        return element.parent().parent().removeClass(class2);
+      },
+      write_message: function(element, message) {
+        if (element.next('.help-inline').length > 0) {
+          return element.next('.help-inline').text(message);
+        } else {
+          return element.after('<span class="help-inline">' + message + '</span>');
+        }
+      }
+    };
     form_se_connecter = {
       display: function() {
         return $('#l_se_connecter').fadeIn(1000);
@@ -38,7 +66,8 @@
           console.log(response);
           message_information.message_success("l_select_pr", response.message, "");
           form_se_connecter.hide();
-          return form_areyouinscrit.hide();
+          form_areyouinscrit.hide();
+          return form_select_pr.add_submit();
         });
         return $('#form_se_connecter').bind('ajax:error', function(data, response) {
           console.log(data);
@@ -67,7 +96,8 @@
           } else {
             message_information.message_success("l_select_pr", "Success", "Inscription réussi! Vous êtes connecté!");
             form_sinscrire.hide();
-            return form_areyouinscrit.hide();
+            form_areyouinscrit.hide();
+            return form_select_pr.add_submit();
           }
         });
         return $('#form_sinscrire').bind('ajax:error', function(data, response) {
@@ -131,8 +161,10 @@
               message_info += "ce n'est pas une adresse mail.";
             }
             if (message_info !== "") {
-              message_information.message_error("form_sinscrire #client_email", "titre", message_info);
+              div_state.div_error($('#form_sinscrire #client_email'), message_info);
               return erreur = true;
+            } else {
+              return div_state.div_success($('#form_sinscrire #client_email'), message_info);
             }
           }
         });
@@ -144,17 +176,17 @@
         password_confirmation = $('#form_sinscrire input#client_password_confirmation').val();
         if (password === password_confirmation) {
           if (password === "") {
-            message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe vide");
+            div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe vide");
             return true;
           } else if (password.length < 6) {
-            message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe trop court (plus de 6 caractere)");
+            div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe trop court (plus de 6 caractere)");
             return true;
           } else {
-            message_information.message_success("form_sinscrire #client_password", "", "Mot de passe identique");
+            div_state.div_success($('#form_sinscrire #client_password'), "Mot de passe identique");
             return false;
           }
         } else {
-          message_information.message_warning("form_sinscrire #client_password", "Erreur", "Mot de passe different");
+          div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe different");
           return true;
         }
       },
@@ -203,6 +235,17 @@
           form_sinscrire.hide();
           return form_se_connecter.display();
         }
+      }
+    };
+    form_select_pr = {
+      init: function() {},
+      add_submit: function() {
+        if ($('#form_select_pr>.actions>input').length === 0) {
+          return $('#form_select_pr>.actions').append('<input type="submit" value="Proceder au paiment" />');
+        }
+      },
+      remove_submit: function() {
+        return $('#form_select_pr>.actions').html('');
       }
     };
     form_se_connecter.ajax_formulaire();

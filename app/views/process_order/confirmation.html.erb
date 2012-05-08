@@ -12,7 +12,9 @@
 		</ul>
 		<div class="actions">
 		    <!-- <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span> -->
+		    <% if !current_client.nil? %>
 		    <input type="submit" value="Proceder au paiment" />
+		    <% end %>
 		</div>
 		</form>
 	</div>
@@ -20,7 +22,7 @@
 		
 		
 		<!-- ______________ SE CONNECTER _________________ -->
-		<div id="l_se_connecter" style="display:none;float:right;margin:0 100px 0">
+		<div id="l_se_connecter" style="display:none;float:right;margin:0 0px 0">
 			<h2>Se connecter</h2>
 			
 			<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
@@ -38,14 +40,15 @@
 		
 		
 		<!-- ______________ S'INSCRIRE _________________ -->
-		<div id="l_sinscrire" style="display:none;float:right;margin:0 100px 0">	
+		<div id="l_sinscrire" style="display:none;float:right;margin:0 0px 0">	
 			<h2>Sign up</h2>
 		
 			<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
 		  	<%= f.error_notification %>
 		
 			  <div class="inputs">
-			    <%= f.input :email, :required => true, :autofocus => true %>
+			    <%= f.input :email, :required => true, :autofocus => true, :wrap_with => {:tag => 'span',:class => 'help-inline'} %>
+			    <%= f.error :email %>
 			    <%= f.input :nom, :required => true, :autofocus => true %> 
 			    <%= f.input :password, :required => true %>
 			    <%= f.input :password_confirmation, :required => true %>
