@@ -1,0 +1,185 @@
+body .l_wrapper .l_main_gutter.home_page {
+	padding:0 ;
+	.service {
+		height:400px;
+		background: url(/../images/height_300.png) repeat-x bottom;
+		.image {
+			width:567px;
+			height:400px;			
+			margin:0;
+		}
+		.content {
+			width:353px;
+			padding:0 20px 0 20px;
+			text-align:center;
+			.title {
+				@include title(1, 30px);
+			}
+			.description {
+				font-size:16px;
+				padding-bottom:20px;
+			}
+		}
+		&.content_left {				//définie la position du texte à gauche ou à droite
+			.image {
+				float:right;
+			}
+			.content {
+				float:left;
+			}
+		}
+		&.content_right {
+			.image {
+				float:left;
+			}
+			.content {
+				float:right;
+			}
+		}
+		&.slider {
+			height:360px;
+			border-bottom:#C8C5BF 1px solid;
+			padding:20px;
+			.image {
+				width:525px;				
+				height:270px;				
+				border:solid 1px #ffffff;
+			}
+			ul.nav {
+				li {
+					float:left;
+					@include ui-sprite(puce);
+					width:13px;
+					height:13px;
+					&.active {
+						@include ui-sprite(puce_active);
+					}
+					&:hover {
+						cursor:pointer;
+					}
+				}
+			}
+		}
+		&.ceuillettes {					// définie les images d'illustration
+			.image {
+				height:320px;
+				margin-top:40px;
+				margin-right:-1px;
+				@include home_page-sprite(hand);
+			}
+			.content {
+				margin-top:40px;
+			}
+		}
+		&.boutique {
+			.image {
+				height:284px;
+				margin-top:54px;
+				margin-right:-1px;
+				@include home_page-sprite(store);
+			}
+			.content {
+				margin-top:54px;
+			}
+		}
+		&.process {
+			text-align:center;
+			border-top:solid 1px #ffffff;
+			h1 {
+				margin:0;
+				padding-top:17px;
+				padding-bottom:17px;
+				line-height:1.4em;
+			}
+			.image {
+				display:bock;
+				width:720px;
+				height:105px;
+				@include home_page-sprite(process);
+				@include margin;
+			}
+			.content {
+				width:895px;
+				@include margin;
+				li {					
+					display:block;
+					float:left;
+					margin-left:50px;
+					width:265px;
+					&:first-child {
+						margin-left:0;
+					}
+				}
+				h4 {
+					margin:10px 0;
+					@include title(2,18px);
+					span {
+						@include title(1,30px);
+						color:$red;
+					}
+				}
+			}
+		}
+	}
+	.message {
+		padding:0;
+		margin:0;
+		width:962px;
+		margin-left:-1px;		
+		height:322px;
+		border-top:solid 1px #ffffff;
+		border-bottom:solid 1px #ffffff;
+		position:relative;
+		overflow:hidden;
+		@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
+		&.agriculteurs {
+			@include home_page-sprite(agriculteurs);
+			.content {
+				height:272;
+				padding-top:50px;
+			}	
+		}
+		&.raisonnee {
+			@include home_page-sprite(raisonnee);
+			.content {
+				height:272;
+				padding-top:50px;
+			}
+		}
+		.content {
+			height:322px;
+			margin:0;
+			padding:0;
+			width:962px;
+			background-color:#ffffff;
+			background:rgba(255,255,255,0.9);				
+			position:absolute;
+			left:0;
+			top:322px;
+			text-align:center;
+			@include transition-property(all);
+			@include transition-duration(0.8s);
+			@include transition-timing-function(ease-out);
+			.wrapper {
+				width:500px;
+				margin:0 auto;
+				h4 {
+					@include title(1,30px);
+					margin:15px;
+				}
+				p {
+					padding-top:5px;
+					padding-bottom:20px;		
+					color:$brown;			
+				}
+				.button {
+				}
+			}
+		}
+		&:hover {
+			.content {
+				top:0;
+			}
+		}
+	}
+}
