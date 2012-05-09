@@ -11,7 +11,7 @@
         _results = [];
         while (i < nb_nuage) {
           top = Math.floor(Math.random() * 80);
-          left = 150 * i;
+          left = 150 * Math.floor(Math.random() * 9);
           i++;
           $('.big_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
           time_interval = cloud.random_perso(min_speed, max_speed);
@@ -26,7 +26,7 @@
         _results = [];
         while (i < nb_nuage) {
           top = Math.floor(Math.random() * 80);
-          left = 120 * i;
+          left = 120 * Math.floor(Math.random() * 9);
           i++;
           $('.little_clouds').append("<span class='cloud cloud_" + i + "' style='position:absolute;top:" + top + "px;left:" + left + "px;'></span>");
           time_interval = cloud.random_perso(min_speed, max_speed);
@@ -71,11 +71,90 @@
       }
     };
     slider = {
-      "init": function() {}
+      "duration_fadeout": 0,
+      "duration_fadein": 0,
+      "id_active": "",
+      "next_id_active": "",
+      "init": function(duration_fadeout, duration_fadein) {
+        slider.duration_fadeout = duration_fadeout;
+        slider.duration_fadein = duration_fadein;
+        return setTimeout(slider.move_slide, 2000);
+      },
+      "move_slide": function() {
+        var nb_slide, numero_slider;
+        nb_slide = $('.container_slider>.slider').length;
+        slider.id_active = $('.container_slider>.active').attr('id');
+        numero_slider = parseInt(slider.id_active.replace('slider_', ''));
+        if (numero_slider === nb_slide) {
+          slider.next_id_active = 'slider_1';
+        } else {
+          slider.next_id_active = 'slider_' + (numero_slider + 1);
+        }
+        slider.fade_out();
+        return slider.slide_out();
+      },
+      "set_inactive": function() {
+        return $("#" + slider.id_active).removeClass('active');
+      },
+      "set_active": function() {
+        if ($("#" + slider.next_id_active + ">.content").length > 0) {
+          $("#" + slider.next_id_active + ">.content").css('opacity', '0');
+        }
+        if ($("#" + slider.next_id_active + ">.image").length > 0) {
+          $("#" + slider.next_id_active + ">.image").css('margin-left', '-5000px');
+        }
+        $("#" + slider.next_id_active).addClass('active');
+        if ($("#" + slider.next_id_active + ">.content").length > 0) {
+          console.log('test');
+          slider.fade_in();
+        }
+        if ($("#" + slider.next_id_active + ">.image").length > 0) {
+          return slider.slide_in();
+        }
+      },
+      "fade_out": function() {
+        return $("#" + slider.id_active + ">.content").animate({
+          opacity: "0"
+        }, {
+          duration: slider.duration_fadeout
+        });
+      },
+      "fade_in": function() {
+        $("#" + slider.next_id_active + ">.content>.button").css('display', 'none');
+        return $("#" + slider.next_id_active + ">.content").animate({
+          opacity: "1"
+        }, {
+          duration: slider.duration_fadein,
+          complete: function() {
+            return $("#" + slider.next_id_active + ">.content>.button").fadeIn(2000);
+          }
+        });
+      },
+      "slide_in": function() {
+        return $("#" + slider.next_id_active + ">.image").animate({
+          marginLeft: "0px"
+        }, {
+          duration: slider.duration_fadein + 2000,
+          complete: function() {
+            return setTimeout(slider.move_slide, slider.duration_fadein);
+          }
+        });
+      },
+      "slide_out": function() {
+        return $("#" + slider.id_active + ">.image").animate({
+          marginLeft: "-6000px"
+        }, {
+          duration: slider.duration_fadeout,
+          complete: function() {
+            slider.set_inactive();
+            return slider.set_active();
+          }
+        });
+      }
     };
     cloud.generate_big_cloud(2, 60000, 70000);
     cloud.generate_little_cloud(2, 90000, 100000);
-    return slider.init();
+    return slider.init(1000, 1000, 5000);
   });
 
 }).call(this);

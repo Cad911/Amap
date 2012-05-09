@@ -9,7 +9,7 @@ $(document).ready(->
          i = 0
          while i < nb_nuage
            top = Math.floor(Math.random()*80)
-           left = 150 * i
+           left = 150 * Math.floor(Math.random()*9)
            i++
            $('.big_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
            time_interval = cloud.random_perso(min_speed,max_speed)
@@ -20,7 +20,7 @@ $(document).ready(->
          i = 0
          while i < nb_nuage
            top = Math.floor(Math.random()*80)
-           left = 120 * i
+           left = 120 * Math.floor(Math.random()*9)
            i++
            $('.little_clouds').append("<span class='cloud cloud_#{i}' style='position:absolute;top:#{top}px;left:#{left}px;'></span>")
            time_interval = cloud.random_perso(min_speed,max_speed)
@@ -52,17 +52,94 @@ $(document).ready(->
            cloud.random_perso(min,max)
          else
            var_random
+   
+   
+   
+   
     
-    
-    slider = 
-       "init": ->
+    slider =
+       "duration_fadeout":0
+       "duration_fadein":0
+       "duration_between":0
+       "id_active":""
+       "next_id_active":""
+       "init": (duration_fadeout,duration_fadein,duration_between) ->
+           slider.duration_fadeout = duration_fadeout
+           slider.duration_fadein = duration_fadein
+           slider.duration_between = duration_between
+           setTimeout(slider.move_slide,slider.duration_between)
+       "move_slide" : ->
+           nb_slide = $('.container_slider>.slider').length
+           slider.id_active = $('.container_slider>.active').attr('id')
+           numero_slider = parseInt(slider.id_active.replace('slider_',''))
+           
+           if numero_slider == nb_slide
+             slider.next_id_active = 'slider_1'
+           else
+             slider.next_id_active = 'slider_'+(numero_slider+1)
+           
+           slider.fade_out()
+           slider.slide_out()
+       
+       "set_inactive":  ->
+           $("##{slider.id_active}").removeClass('active')
+           console.log(slider.id_active)
+       
+       "set_active":  ->
+           if $("##{slider.next_id_active}>.content").length > 0
+             $("##{slider.next_id_active}>.content").css('opacity','0')
+           if $("##{slider.next_id_active}>.image").length > 0
+             $("##{slider.next_id_active}>.image").css('margin-left','-5000px')       
+           $("##{slider.next_id_active}").addClass('active')
+           
+           
+           if $("##{slider.next_id_active}>.content").length > 0
+             console.log('test')
+             slider.fade_in()
+           if $("##{slider.next_id_active}>.image").length > 0
+             slider.slide_in()
 
-      
+       "fade_out":  ->
+         $("##{slider.id_active}>.content").animate({
+           	 opacity: "0"
+         },{
+               duration:slider.duration_fadeout
+         })
+       "fade_in" :  ->
+           $("##{slider.next_id_active}>.content>.button").css('display','none')
+           $("##{slider.next_id_active}>.content").animate({
+           	 opacity: "1"
+           },{
+             duration :slider.duration_fadein
+             complete : ->
+                  $("##{slider.next_id_active}>.content>.button").fadeIn(1000)     
+           }) 
+       "slide_in": ->
+            $("##{slider.next_id_active}>.image").animate({
+           		marginLeft: "0px"
+            },{
+                duration :slider.duration_fadein+1000
+                complete : ->
+                   setTimeout(slider.move_slide,slider.duration_between)  
+            }) 
+       "slide_out":  ->
+                 $("##{slider.id_active}>.image").animate({
+           		    marginLeft: "-6000px"
+                 },{
+                    duration: slider.duration_fadeout
+                    complete : ->
+                      slider.set_inactive()
+                      slider.set_active()
+                 })
+
+
+           
          
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
-    cloud.generate_big_cloud(2,60000,70000)
-    cloud.generate_little_cloud(2, 90000,100000)
-    slider.init() 
+    cloud.generate_big_cloud(2,120000,140000)
+    cloud.generate_little_cloud(2, 150000,180000)
+    #__VAR : DURATION_FADEOUT, DURATION FADE IN,DURATION BETWEEN TWO SLIDE
+    slider.init(1000,1000,5000) 
 
 )
 

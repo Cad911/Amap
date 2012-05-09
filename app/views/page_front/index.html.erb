@@ -1,17 +1,70 @@
 <div class="l_main_gutter home_page">
-	<div class="service step slider content_right panier_ete">
-		<div class="image"><img src="public/images/slider/1.png"></div>		
-		<div class="content">
-			<h3 class="title">Les paniers d'été sont là !</h3>
-			<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis facilisis, lectus nisi gravida diam, et sollicitudin ante ligula</p>
-			<span class="button"><a href="">découvrez nos paniers</a></span>
+  <style>
+     .container_slider
+     {
+     	overflow: hidden;
+     	width: 100%;
+     }
+     .container_slider>.slider
+     {
+     	display: none;
+     }
+     .container_slider>.active
+     {
+     	display: block;
+     }
+     .container_slider>.active>.image>img
+     {
+     	height: 270px;
+    	width: 525px;
+     }
+  </style>
+  <div class="container_slider">
+		<div class="service slider content_right active" id="slider_1">
+			<div class="image"><img src="<%= image_path("slider/1.png") %>"></div>		
+			<div class="content">
+				<h3 class="title">Les paniers de printemps sont là !</h3>
+				<p class="description">
+				 Même si le temps ne le laissent pas penser, le Printemps est là ! <br/>
+				 Qui dit Printemps, dit nouveaux paniers, laissez vous tentez par notre panier de saison.
+				</p>
+				<span class="button"><a href="">Découvrez nos paniers</a></span>
+			</div>
 		</div>
-		<ul class="nav">
+	
+		<div class="service slider content_right" id="slider_2">
+			<div class="image"><img src="<%= image_path("slider/2.jpeg") %>"></div>		
+			<div class="content">
+				<h3 class="title"> Amapiens, Amapiennes ... </h3>
+				<p class="description">
+				 Ce mois, vos dévoués agriculteurs organisent des rencontres tous les samedis !
+				 Une seule obligation : la bonne humeur !
+				</p>
+				<span class="button"><a href=""> Je viens !</a></span>
+			</div>
+		</div>
+	  
+		<div class="service slider content_right" id="slider_3">
+			<div class="image"><img src="<%= image_path("slider/3.jpeg") %>"></div>		
+			<div class="content">
+				<h3 class="title"> La star d'avril : La pomme</h3>
+				<p class="description">
+				 En ce mois d'avril, la pomme fait son retour en grande pompe.
+				 Interview d'une star qui sait se faire attendre.
+				</p>
+				<span class="button"><a href=""> Croquer une pomme </a></span>
+			</div>
+		</div>
+  </div>
+<!--
+	<div>
+	<ul class="nav">
 			<li class="active"></li>
 			<li class="hover"></li>
 			<li></li>
 		</ul>
-	</div>
+  </div>
+-->
 	  
 	<div class="service process">
 		<h1>Paniers par abonnement <br> Comment ça marche ?</h1>
@@ -19,15 +72,15 @@
 		<ul class="content">
 			<li>
 				<h4><span>1</span> Choisissez votre panier</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis</p>
+				<p> Selectionnez votre panier selon vos besoins et votre apétit </p>
 			</li>
 			<li>
 				<h4><span>2</span> Abonnez-vous</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis</p>
+				<p> Un abonnement équivaut à un panier chaque semaine selon la durée que vous aurez choisi</p>
 			</li>
 			<li>
 				<h4><span>3</span> Récupérez-le pres de chez vous</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis</p>
+				<p> Choisissez votre point relai et récupérez votre panier </p>
 			</li>
 		</ul>
 	</div>
@@ -36,8 +89,8 @@
 		<div class="content">
 			<div class="wrapper">
 				<h4>Nous soutenons les agriculteurs locaux</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis facilisis, lectus nisi gravida diam, et sollicitudin ante ligula</p>
-				<span class="button"><a href="">joignez notre cause</a></span>
+				<p> Quoi de plus important que de soutenir les agiculteurs locaux. Mis à part le fait que leur produit sont de qualité, la dimension humaine est une partie très importante pour les Amaps.</p>
+				<span class="button"><a href="">Joignez notre cause</a></span>
 			</div>
 		</div>
 	</div>
@@ -46,7 +99,7 @@
 		<div class="image"></div>	
 		<div class="content">
 			<h3 class="title">Découvrez  notre  boutique !</h3>
-			<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis facilisis, lectus nisi gravida diam, et sollicitudin ante ligula</p>
+			<p class="description"> Vous avez besoin de produit en particulier ? Nous avons une boutique riche en fruits et légumes, fournis par nos agriculteusr locaux. </p>
 			<span class="button"><a href="">parcourir  nos  produits</a></span>
 		</div>
 	</div>
@@ -55,7 +108,10 @@
 		<div class="content">
 			<div class="wrapper">
 				<h4>Notre agriculture est raisonnée</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis facilisis, lectus nisi gravida diam, et sollicitudin ante ligula</p>
+				<p>
+				  Nous voulons faire de nos produits, des produits de qualités sans pour autant polluer nos champs.
+				  C'est pour ça que nous cultivons seulement des produits de saisons avec des techniques alternatives que l'épandage d'engrais et de produits toxiques quand cela nous est possible.
+				</p>
 				<span class="button"><a href="">en savoir plus</a></span>
 			</div>
 		</div>
@@ -65,7 +121,10 @@
 		<div class="image"></div>	
 		<div class="content">
 			<h3 class="title">Participez  à  nos  ceuillettes</h3>
-			<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam suscipit, dolor id convallis facilisis, lectus nisi gravida diam, et sollicitudin ante ligula</p>
+			<p class="description">
+			Au moins une fois par mois, nos agriculteurs organisent des cueillettes afin de récolter les fruits (et légumes) de leur récolte.
+			C'est un moment convivial, permettant d'échanger entre amapiens et amapiennes !
+			</p>
 			<span class="button"><a href="">rejoindre l'évènement</a></span>
 		</div>
 	</div>

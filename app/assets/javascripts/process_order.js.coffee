@@ -23,6 +23,28 @@ $(document).ready(->
         div_message += "</div>"  
         $("##{id}").after(div_message)
 
+  #________________________________________ METTRE LA DIV DE LINPUT AVEC ERREUR - WARNING __________________
+  div_state =
+      div_success:(element,message) ->
+          div_state.remove_class(element,'warning','error')
+          element.parent().parent().addClass('success')
+          div_state.write_message(element,message)   
+      div_warning: (element,message) ->
+          div_state.remove_class(element,'success','error')
+          element.parent().parent().addClass('warning')
+          div_state.write_message(element,message)   
+      div_error :(element,message) ->
+          div_state.remove_class(element,'success','warning')
+          element.parent().parent().addClass('error')
+          div_state.write_message(element,message)
+      remove_class:(element,class1,class2) ->
+          element.parent().parent().removeClass(class1)
+          element.parent().parent().removeClass(class2)
+      write_message:(element,message) ->
+          if element.next('.help-inline').length > 0
+            element.next('.help-inline').text(message)
+          else
+            element.after('<span class="help-inline">'+message+'</span>')   
   #____________________________________________ FUNCTION POUR FORM SE CONNECTER ________________________  
   form_se_connecter =
       display : ->
@@ -35,6 +57,7 @@ $(document).ready(->
             message_information.message_success("l_select_pr",response.message,"")
             form_se_connecter.hide()
             form_areyouinscrit.hide()
+            form_select_pr.add_submit()
           )
           $('#form_se_connecter').bind('ajax:error', (data,response) ->
             console.log(data)
@@ -60,6 +83,7 @@ $(document).ready(->
                  message_information.message_success("l_select_pr","Success","Inscription réussi! Vous êtes connecté!")
                  form_sinscrire.hide()
                  form_areyouinscrit.hide()
+                 form_select_pr.add_submit()
           )
           $('#form_sinscrire').bind('ajax:error', (data,response) ->
             message_information.message_error("form_sinscrire","Erreur",response.responseText)
@@ -111,8 +135,11 @@ $(document).ready(->
           	        message_info += "ce n'est pas une adresse mail."
           	      
           	      if message_info != ""
-          	         message_information.message_error("form_sinscrire #client_email","titre",message_info)
-          	         erreur = true  
+          	         div_state.div_error($('#form_sinscrire #client_email'),message_info)
+          	         #message_information.message_error("form_sinscrire #client_email","titre",message_info)
+          	         erreur = true
+          	      else
+          	         div_state.div_success($('#form_sinscrire #client_email'),message_info)
           	)             
           	erreur
       password_different : -> #RENVOI TRUE SI MDP  DIFFERENT
@@ -120,16 +147,20 @@ $(document).ready(->
           password_confirmation = $('#form_sinscrire input#client_password_confirmation').val()
           if password == password_confirmation
             if password == ""
-              message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe vide")
+              div_state.div_warning($('#form_sinscrire #client_password'),"Mot de passe vide")
+              #message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe vide")
               true
             else if password.length < 6
-              message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe trop court (plus de 6 caractere)")
+              div_state.div_warning($('#form_sinscrire #client_password'),"Mot de passe trop court (plus de 6 caractere)")
+              #message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe trop court (plus de 6 caractere)")
               true
             else
-              message_information.message_success("form_sinscrire #client_password","","Mot de passe identique")
+              div_state.div_success($('#form_sinscrire #client_password'),"Mot de passe identique")
+              #message_information.message_success("form_sinscrire #client_password","","Mot de passe identique")
               false
           else
-            message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe different")
+            div_state.div_warning($('#form_sinscrire #client_password'),"Mot de passe different")
+            #message_information.message_warning("form_sinscrire #client_password","Erreur","Mot de passe different")
             true
       verif_all_input : -> #RENVOI TRUE SI 1 CHAMP VIDE
          champ_vide = false
@@ -167,6 +198,16 @@ $(document).ready(->
          	else if val == "oui"
          	  form_sinscrire.hide()
          	  form_se_connecter.display()
+    
+    
+    form_select_pr = 
+        init: ->
+        
+        add_submit: ->
+           if $('#form_select_pr>.actions>input').length == 0
+              $('#form_select_pr>.actions').append('<input type="submit" value="Proceder au paiment" />')
+        remove_submit: ->
+           $('#form_select_pr>.actions').html('')
        
   #____________________________________________ AU CHARGEMENT DE LA PAGE ________________________
   form_se_connecter.ajax_formulaire()
