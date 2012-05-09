@@ -11,9 +11,30 @@
 			margin:20px;
 			padding:20px;
 			@include box;
+			.icon {
+				margin-top:-5px;
+			}
+			&.product {
+				.icon {
+					@include icon(product_hover);				
+					float:right;
+					margin-top:-10px;
+				}
+			}
+			&.basket {
+				.icon {
+					@include icon(basket_hover);				
+					float:right;
+				}
+			}
+			&.about_us {
+				.icon {
+					@include icon(logo_hover);				
+					float:right;
+				}
+			}												
 			.title {
 				@include title(2, 20px);
-
 			}
 			&:first-child {
 				margin-left:0;
