@@ -1,0 +1,278 @@
+body {
+  header {
+    height:220px;
+    background:url("/../images/header/ciel.png");
+    position:relative;
+    .l_header_wrapper {
+      .logo {
+        float:left;
+        width:356px;
+        height:137px;
+        @include nav-sprite(sign_logo);
+      }
+      width:960px;
+      margin:0 auto;
+      position:relative;
+      padding-top:83px;
+      z-index:2;
+      .l_nav {
+        float:right;
+        padding-top:34px;
+        .dropdown_menu {
+          top:95px;
+        }
+        .l_nav_element {
+          float:left;
+          height:103px;
+          margin-left:13px;
+          text-align:center;
+          .l_link {
+            display: block;
+            width:103px;
+            height: 33px;
+            @include title(1, 22px);
+            span {
+              display:block;
+              height:42px;              
+              margin:8px 0 -7px 0;  
+            }                     
+            &:hover {
+              color:$red; 
+            }                                                                                                                                                                                                 
+          }
+        }
+      }
+      .box {
+        width:200px;
+        position:absolute;
+        top:0;
+        right:0;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        .social {
+          ul {
+            padding:0;
+            margin:0;
+            li {
+              float:left;
+              width:40px;
+              height:48px;
+              @include nav-sprite(social_sign);
+              margin:-1px 5px 0 5px;
+              &:active {
+                margin-top:0;
+              }
+              &.facebook {
+                a {
+                  display:block;
+                  width:35px;
+                  height:35px;
+                  padding-top:10px;
+                  span {
+                    display:block;                  
+                    @include nav-sprite(facebook);
+                    width:15px;
+                    height:18px;     
+                    margin-top:11px;
+                    margin-left:11px;                                   
+                  }
+                }
+              }  
+              &.twitter {
+                a {
+                  display:block;
+                  width:35px;
+                  height:35px;
+                  padding-top:10px;                  
+                  span {
+                    display:block;
+                    @include nav-sprite(twitter);
+                    width:22px;
+                    height:18px; 
+                    margin-top:10px;
+                    margin-left:9px;                                                         
+                  }
+                }
+              }  
+              &.googleplus {
+                a {
+                  display:block;
+                  width:35px;
+                  height:35px;
+                  padding-top:10px;                  
+                  span {
+                    display:block;                  
+                    @include nav-sprite(googleplus);
+                    width:15px;
+                    height:22px;      
+                    margin-top:10px;
+                    margin-left:12px;                      
+                  }                              
+                }
+              }  
+              &.newsletter {
+                a {
+                  display:block;
+                  width:35px;
+                  height:35px;
+                  padding-top:10px;                  
+                  span {
+                    display:block;                  
+                    @include nav-sprite(newsletter);
+                    width:22px;
+                    height:22px;   
+                    margin-top:8px;
+                    margin-left:10px;                                                       
+                  }
+                }
+              }                            
+            }
+          }
+        } 
+        .login {
+          @include nav-sprite(user_sign);          
+          height:25px;
+          padding-top:6px;
+          text-align:center;
+          color:$brown;
+          .user {
+            width:16px;
+            height:16px;
+            display:inline-block;
+            margin-bottom:-4px;
+            @include nav-sprite(user);
+          }
+          a {
+            color:$brown;
+            &:hover {
+              color:$red;
+            }
+          }
+        }       
+      }
+    }
+    .grass {
+      width: 100%;
+      position:absolute;
+      bottom: 0;
+      height: 50px;
+      background:url("/../images/header/grass.png");
+    }
+    .clouds {
+      @include clouds; // utilisation de mxiin pour appeler en dernier les images lors du chargement
+    }
+  }
+  .ground_top{background:url("/../images/terre-haut.png");height:76px;width:100%;position:absolute;top:220px;z-index:-1;}
+  .l_wrapper {
+    width:960px;
+    margin:20px auto;
+    @include box;
+    .l_main_gutter {
+      padding:20px;
+      .l_content_left, .l_content_right {
+        float:left;
+        width:285px;
+        margin-left:20px;
+      }
+      .l_content_left {
+        margin-left:0;
+      }
+    }
+    .l_area_left {
+      width:590px;
+      margin:0;
+      float:left;
+    }
+    .l_area_right {
+      width:310px;
+      float:left;
+      margin-left:20px;
+    }
+  }
+
+}
+
+// Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu
+body header .l_header_wrapper .l_nav .l_nav_element {
+  &.l_dual_sign {
+    @include nav-sprite(sign_double);
+    width: 220px;
+    .dropdown.product {
+      .dropdown_menu {
+        left:103px;
+      }
+    }
+    .l_link {
+      float:left;
+      &.basket {
+        span {
+          @include icon(basket);
+          margin-left:32px;
+        }
+          &:hover {
+          color:$red;
+          span {
+            @include icon(basket_hover);     
+          }
+        }
+      }
+      &.product {
+        width:117px !important;
+        span {
+          @include icon(product);
+          margin:5px 0 -0 50px;
+        }
+        &:hover {
+          span {
+            @include icon(product_hover);     
+          }
+        }
+      }
+      &.blog {
+        span {
+          @include icon(blog);
+          margin:12px 0 -7px 42px;                      
+        }
+        &:hover {
+          span {
+            @include icon(blog_hover);      
+          }      
+        }
+      }
+      &.about_us {
+        width:117px !important;        
+        span {
+          margin:9px 0 -1px 45px;
+          @include icon(logo);
+          }
+        &:hover {
+          span {
+            @include icon(logo_hover);      
+          }      
+        }
+      }
+    }
+  }
+  &.l_single_sign {
+    @include nav-sprite(sign_single);
+    .l_link {
+      &.farmer {
+        width: 123px !important;
+        span {
+          margin:8px 0 1px -40px;
+          margin-left:40px;               
+          @include icon(farmer);               
+        }
+        &:hover {
+          span {
+            @include icon(farmer_hover);       
+          }
+        }
+      }
+    }
+  }
+}

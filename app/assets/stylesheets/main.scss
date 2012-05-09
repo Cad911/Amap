@@ -161,10 +161,67 @@ $ui-layout:smart;
   }
 }
 
+// Classes réutilisables
+@mixin icon($name) {
+  display:block;
+
+  @if $name == 'basket' {
+    width:40px;
+    height:42px;
+  }
+  @if $name == 'basket_hover' {
+    width:40px;
+    height:42px;
+  }
+
+  @if $name == 'product' {
+    width:28px;
+    height:38px;  
+  }
+  @if $name == 'product_hover'{
+    width:28px;
+    height:38px;  
+  }
+
+  @if $name == 'farmer' {
+    width:33px;
+    height:34px;
+  }
+  @if $name == 'farmer_hover'{
+    width:33px;
+    height:34px;  
+  }  
+
+  @if $name == 'blog' {
+    width:26px;
+    height:38px;
+  }
+  @if $name == 'blog_hover' {
+    width:26px;
+    height:38px;
+  }
+
+  @if $name == 'logo'  {
+    width:35px;
+    height:35px;  
+  }
+  @if $name == 'logo_hover' {
+    width:35px;
+    height:35px;  
+  }
+
+  @if $name == #{$name} + _hover {
+    @include nav-sprite(#{$name});     
+  }  
+  @else {
+    @include nav-sprite($name);    
+  }
+
+}
 
 // Inclusion de fichier .scss
 @import "base/normalize";
- @import "compass/utilities";
+@import "compass/utilities";
 @import "base/base";
 @import "layout/layout";
 @import "state/state";
