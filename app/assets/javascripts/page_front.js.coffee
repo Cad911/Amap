@@ -131,15 +131,120 @@ $(document).ready(->
                       slider.set_inactive()
                       slider.set_active()
                  })
-
-
+#____________________________________________________________________________________________________________________________
+#____________________________________________________________________________________________________________________________
+#________________________________ FONCTION POUR LE CAGEOT ___________________________________________________________________
+#____________________________________________________________________________________________________________________________
+#____________________________________________________________________________________________________________________________
+    cageot = 
+        init: ->
+            cageot.form_event()
+            cageot.ajax_formulaire()
+        form_event:()->
+            $('#form_add_product #add_product').bind('click',->
+                $('#form_add_product').submit()
+            )
+            cageot.event_form_generate(".l_dock_wrapper>ul>li")
+        event_form_generate:(class_id)->
+        	$(class_id+'>span.deleted_p_c').bind('click',->
+                console.log($(this).parent('li').attr('id'))
+                cageot.delete($(this).parent('li').attr('id'))
+            )
+            $(class_id+'>span.plus_quantite_p_c').bind('click', ->
+                cageot.plus_quantite($(this).parent('li').attr('id'))
+            )
+            $(class_id+'>span.moins_quantite_p_c').bind('click', ->
+                cageot.moins_quantite($(this).parent('li').attr('id'))
+            )
+        ajax_formulaire : -> 
+          $('#form_add_product').bind('ajax:success', (data,response) ->
+              if response.error
+                 all_error = form_sinscrire.extract_error(response.error,"")
+              else
+                console.log($('.dock').css('display'))
+                if $('.dock').css('display') == 'none'
+                   cageot.show_dock()
+                cageot.add(response)
+                cageot.update_html_price(response['total'])
+          )
+          $('#form_add_product').bind('ajax:error', (data,response) ->
+            console.log(data)
+            console.log(response)            
+            message_information.message_error("form_sinscrire","Erreur",response.responseText)
+          )
+        add:(response) ->
+             if response['statut'] == "add"
+                    cageot.add_html_product_in_cageot(response['produit']['id'],response['produit']['nombre_pack'])
+                    cageot.event_form_generate(".l_dock_wrapper>ul>li##{response['produit']['id']}")
+                 else
+                    cageot.update_html_quantite(response['produit']['id'],response['produit']['nombre_pack'])
+                    console.log('update')
+        plus_quantite:(id_product) ->
+            $.ajax(
+               type:"GET",
+               url:'/cageot/ajoutQuantite/'+id_product,
+               format:"json",
+               success : (data) ->
+                   if data['statut'] == true
+                     cageot.update_html_quantite(data['produit']['id'],data['produit']['nombre_pack'])
+                     cageot.update_html_price(data['total'])
+            )
+        moins_quantite:(id_product) ->
+            $.ajax(
+               type:"GET",
+               url:'/cageot/suppQuantite/'+id_product,
+               format:"json",
+               success : (data) ->
+                  if data['statut'] == "update"
+                     cageot.update_html_quantite(data['produit']['id'],data['produit']['nombre_pack'])
+                  else if data['statut'] == "delete"
+                      $('li#'+id_product).remove()
+                  else
+                  
+                  cageot.verif_if_product_present(data['total'])
+            )
+        delete:(id_product)->
+            $.ajax(
+               type:"DELETE",
+               url:'/cageot/suppProduit/'+id_product,
+               format:"json",
+               success : (data) ->
+                  if data['statut'] == true
+                      $('li#'+id_product).remove()
+                      cageot.verif_if_product_present(data['total'])
+                  else
+                      #alert(data[2])
+            )
+        verif_if_product_present : (total_price) ->
+            if $('.dock ul>li').length == 0
+                 cageot.hide_dock()
+                 cageot.update_html_price(0)
+             else
+                 cageot.update_html_price(total_price)
+        update_html_price: (price) ->
+            $('.checkout>.price').text(price+'€')
+        add_html_product_in_cageot: (id_product,nb_pack) ->
+            li_html =  '<li id="'+id_product+'"><img src="" class="has_corners_shadow is_small">'
+            li_html += '<span class="nombre_pack_p_c"> '+nb_pack+' </span> <span class="deleted_p_c"> deleted </span>'
+            li_html += '<span class="plus_quantite_p_c"> + </span><span class="moins_quantite_p_c"> - </span>'
+            li_html += '</li>'
+            $('.l_dock_wrapper>ul').prepend(li_html)
+        update_html_quantite:(id_product, nb_pack) ->
+            $('.l_dock_wrapper>ul>li#'+id_product+'>span.nombre_pack_p_c').text(nb_pack)
+        show_dock: ->
+            $('.dock').slideDown(400,"swing")
+        hide_dock: ->
+            $('.dock').slideUp(400,'swing')
+        
+            
            
          
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
     cloud.generate_big_cloud(2,120000,140000)
     cloud.generate_little_cloud(2, 150000,180000)
     #__VAR : DURATION_FADEOUT, DURATION FADE IN,DURATION BETWEEN TWO SLIDE
-    slider.init(1000,1000,5000) 
+    slider.init(1000,1000,5000)
+    cageot.init()
 
 )
 

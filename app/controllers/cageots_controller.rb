@@ -46,8 +46,14 @@ class CageotsController < InheritedResources::Base
 						@produit = RelCageotProduit.find(@produit_to_add[0].id)
 						@produit.nombre_pack += params[:produit_vente_libre][:nombre_pack].to_i
 						if @produit.save
-							flash[:notice] += "Produit updater"
-							redirect_to cageot_path(@cageot[0])
+							flash[:notice] += "Produit update"
+							@status_ajout = "update"
+						    respond_to do |format|
+						  		format.json { render :json => {:cageot => @cageot[0],:produit => @produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+						  		format.html { 
+									redirect_to cageot_path(@cageot[0]) 
+								}
+						  	end
 						end
 					else
 						if !params[:produit_vente_libre][:id].nil?
@@ -58,7 +64,13 @@ class CageotsController < InheritedResources::Base
 						
 							if @rel_cageot_produit.save
 								flash[:notice] += "Produit ajouter"
-								redirect_to cageot_path(@cageot[0])
+								@status_ajout = "add"
+							    respond_to do |format|
+							  		format.json { render :json => {:cageot => @cageot[0],:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+							  		format.html { 
+										redirect_to cageot_path(@cageot[0]) 
+									}
+							  	end
 							end
 						end
 					end
@@ -75,7 +87,13 @@ class CageotsController < InheritedResources::Base
 							@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack]
 							if @rel_cageot_produit.save
 								flash[:notice] += "Produit ajoute et panier creer (info)"
-								redirect_to cageot_path(@new_cageot)
+								@status_ajout = "add"
+								respond_to do |format|
+							  		format.json { render :json => {:cageot => @cageot[0],:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+							  		format.html { 
+										redirect_to cageot_path(@new_cageot) 
+									}
+							  	end
 							end
 						end
 					else
@@ -108,7 +126,13 @@ class CageotsController < InheritedResources::Base
 					@produit.nombre_pack += params[:produit_vente_libre][:nombre_pack].to_i
 					if @produit.save
 						flash[:notice] = "Produit updater"
-						redirect_to cageot_path(@cageot[0])
+						@status_ajout = "update"
+						respond_to do |format|
+					  		format.json { render :json => {:cageot => @cageot[0],:produit => @produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+					  		format.html { 
+								redirect_to cageot_path(@cageot[0]) 
+							}
+						end
 					end
 				else
 					@rel_cageot_produit = RelCageotProduit.new
@@ -117,7 +141,13 @@ class CageotsController < InheritedResources::Base
 					@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack].to_i
 					if @rel_cageot_produit.save
 						flash[:notice] = "Produit ajouter"
-						redirect_to cageot_path(@cageot[0])
+						@status_ajout = "add"
+						respond_to do |format|
+					  		format.json { render :json => {:cageot => @cageot[0],:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+					  		format.html { 
+								redirect_to cageot_path(@cageot[0]) 
+							}
+						end
 					end
 				end
 			#________ SI CAGEOT N'EXISTE PAS __________
@@ -130,7 +160,13 @@ class CageotsController < InheritedResources::Base
 					@rel_cageot_produit.nombre_pack = params[:produit_vente_libre][:nombre_pack].to_i
 					if @rel_cageot_produit.save
 								flash[:notice] = "Produit ajoute et panier creer (info)"
-								redirect_to cageot_path(@new_cageot)
+								@status_ajout = "add"
+								respond_to do |format|
+							  		format.json { render :json => {:cageot => @cageot[0],:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+							  		format.html { 
+										redirect_to cageot_path(@new_cageot) 
+									}
+								end
 							end
 				else
 					flash[:notice] = 'ERREUR'
@@ -141,14 +177,20 @@ class CageotsController < InheritedResources::Base
 	end
 	
 	
-	#_____________________________________________ AJOUTER QUANTITE DANS LE PANIER ____________________________________________
+	#__________________________________________________________ AJOUTER QUANTITE DANS LE PANIER ____________________________________________________________________
 	def ajouterQuantite
 		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
 		@cageot = Cageot.find(@produit_cageot.cageot_id)
 		if @cageot.session_id == session[:cageot_id] || @cageot.client_id == current_client.id
 			@produit_cageot.ajoutQuantite
 			flash[:notice] = "Quantite agrandit"
-			redirect_to cageot_path(@cageot)
+			@produit_ajouter = true
+			respond_to do |format|
+			  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_ajouter, :total => @cageot.total} }
+			  		format.html { 
+						redirect_to cageot_path(@cageot) 
+					}
+				end
 		end
 	end
 	#_____________________________________________ SUPPRIMER QUANTITE DANS LE PANIER _______________________________________
@@ -160,11 +202,24 @@ class CageotsController < InheritedResources::Base
 			if @produit_cageot.nombre_pack == 1
 				@produit_cageot.destroy
 				flash[:notice] = "Produit supprimer car il n en rester qu un"
+				@produit_supprimer = "delete"
+				respond_to do |format|
+			  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_supprimer, :total => @cageot.total} }
+			  		format.html { 
+						redirect_to cageot_path(@cageot) 
+					}
+				end
 			else
 				@produit_cageot.suppQuantite
 				flash[:notice] = "Quantite diminue"
+				@produit_supprimer = "update"
+				respond_to do |format|
+			  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_supprimer, :total => @cageot.total} }
+			  		format.html { 
+						redirect_to cageot_path(@cageot) 
+					}
+				end
 			end
-			redirect_to cageot_path(@cageot)
 		end
 	end
 	
@@ -174,9 +229,35 @@ class CageotsController < InheritedResources::Base
 		@produit_cageot = RelCageotProduit.find(params[:product_cageot_id])
 		@cageot = Cageot.find(@produit_cageot.cageot_id)
 		if @cageot.session_id == session[:cageot_id] || @cageot.client_id == current_client.id
-			@produit_cageot.destroy
-			flash[:notice] = "Produit supprimer"
-			redirect_to cageot_path(@cageot)
+			if @produit_cageot.destroy
+				flash[:notice] = "Produit supprimer"
+				@produit_supprimer = true
+				respond_to do |format|
+			  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_supprimer, :total => @cageot.total} }
+			  		format.html { 
+						redirect_to cageot_path(@new_cageot) 
+					}
+				end
+			else
+				flash[:notice] = "Une erreur est survenue"
+				@produit_supprimer = false
+				respond_to do |format|
+			  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_supprimer, :total => @cageot.total} }
+			  		format.html { 
+						redirect_to cageot_path(@new_cageot) 
+					}
+				end
+			end
+			
+		else
+		    flash[:notice] = "Ce produit ne vous appartient pas"
+		    @produit_supprimer = false
+			respond_to do |format|
+		  		format.json { render :json => {:cageot => @cageot,:produit => @produit_cageot,:message => flash[:notice],:statut => @produit_supprimer, :total => @cageot.total} }
+		  		format.html { 
+					redirect_to cageot_path(@new_cageot) 
+				}
+			end
 		end
 		
 	end
