@@ -1,0 +1,54 @@
+DEPRECATION WARNING: Passing a block to devise_for is deprecated. Please remove the block from devise_for (only the block, the call to devise_for must still exist) and call devise_scope :client do ... end with the block instead. (called from block in <top (required)> at /Users/thomasdelissen/Sites/Amap/config/routes.rb:34)
+DEPRECATION WARNING: Passing a block to devise_for is deprecated. Please remove the block from devise_for (only the block, the call to devise_for must still exist) and call devise_scope :user do ... end with the block instead. (called from block in <top (required)> at /Users/thomasdelissen/Sites/Amap/config/routes.rb:74)
+DEPRECATION WARNING: Passing a block to devise_for is deprecated. Please remove the block from devise_for (only the block, the call to devise_for must still exist) and call devise_scope :client do ... end with the block instead. (called from block in <top (required)> at /Users/thomasdelissen/Sites/Amap/config/routes.rb:34)
+DEPRECATION WARNING: Passing a block to devise_for is deprecated. Please remove the block from devise_for (only the block, the call to devise_for must still exist) and call devise_scope :user do ... end with the block instead. (called from block in <top (required)> at /Users/thomasdelissen/Sites/Amap/config/routes.rb:74)
+  [1m[36m (0.4ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+Migrating to CreateRegions (20120301083345)
+Migrating to DeviseCreateAdminUsers (20120301083531)
+Migrating to CreateAdminNotes (20120301093533)
+Migrating to MoveAdminNotesToComments (20120301093534)
+Migrating to CreateVilles (20120301093535)
+Migrating to CreateDroits (20120301093536)
+Migrating to CreateEntites (20120301093537)
+Migrating to AddNomToDroits (20120301125939)
+Migrating to CreateUniteMesures (20120301130936)
+Migrating to CreateCategories (20120301131716)
+Migrating to CreateUsers (20120301132923)
+Migrating to AddDeviseToUsers (20120301132949)
+Migrating to CreateProduitAutorises (20120306104626)
+Migrating to CreatePanierAutorises (20120306124834)
+Migrating to CreateStocks (20120306210055)
+Migrating to AddProduitAutoriseIdToStocks (20120307212253)
+Migrating to CreateProduitVenteLibres (20120310122628)
+Migrating to AddUserIdToProduitVenteLibres (20120310124740)
+Migrating to CreatePaniers (20120328121146)
+Migrating to AddCategorieIdToPaniers (20120328124310)
+Migrating to AddPanierAutoriseIdToPanier (20120328130118)
+Migrating to CreateProduitPaniers (20120328131959)
+Migrating to CreateClients (20120401205319)
+Migrating to AddDeviseToClients (20120401210413)
+Migrating to CreateCageots (20120407132856)
+Migrating to CreateRelCageotProduits (20120407133455)
+Migrating to AddIsConnectedToCageots (20120408100521)
+Migrating to CreateAbonnements (20120411081410)
+  [1m[35m (99.5ms)[0m  CREATE TABLE `abonnements` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `client_id` int(11), `panier_id` int(11), `date_debut` date, `date_fin` date, `duree` date, `deleted` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120411081410')[0m
+Migrating to AddSessionIdToAbonnements (20120413073929)
+  [1m[35m (294.1ms)[0m  ALTER TABLE `abonnements` ADD `session_id` varchar(255)
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120413073929')[0m
+Migrating to AddEtatToAbonnements (20120413080831)
+  [1m[35m (178.8ms)[0m  ALTER TABLE `abonnements` ADD `etat` varchar(255)
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120413080831')[0m
+Migrating to CreatePointRelais (20120413092925)
+  [1m[35m (172.7ms)[0m  CREATE TABLE `point_relais` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `ville_id` int(11), `adresse` varchar(255), `deleted` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120413092925')[0m
+Migrating to AddQuantiteToAbonnements (20120422084450)
+  [1m[35m (184.7ms)[0m  ALTER TABLE `abonnements` ADD `quantite` int(11)
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120422084450')[0m
+Migrating to CreateCommandes (20120425093258)
+  [1m[35m (145.2ms)[0m  CREATE TABLE `commandes` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `client_id` int(11), `cageot_id` int(11), `point_relai_id` int(11), `date_livraison` date, `total` float, `etat` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120425093258')[0m
+Migrating to CreateRelCommandeProduits (20120425093734)
+  [1m[35m (148.0ms)[0m  CREATE TABLE `rel_commande_produits` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `produit_vente_libre_id` int(11), `commande_id` int(11), `prix_unite_ht` float, `prix_unite_ttc` float, `nb_pack` int(11), `quantite` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120425093734')[0m
+  [1m[35m (0.5ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 
