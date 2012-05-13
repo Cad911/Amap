@@ -1,0 +1,178 @@
+body .l_main_gutter.farmer_show {
+	padding:0 !important;
+	.breadcrumb {
+		margin:20px !important;
+		padding-bottom:0px;
+	}	
+	.l_area_left {
+		padding:20px;
+		padding-left:40px;
+		height:185px;
+		width:570px; // taille de l_area_left - le paddint supplémentaire de cette zone
+		.title {
+			font-size:40px;
+			margin-top:5px;
+		}	
+		.location {
+			font-size:16px;
+		}
+		.description {
+
+		}
+	}
+	.l_area_right {
+		position:relative;
+		z-index:80;
+		width:270px;
+		margin-right:40px;
+		padding-top:20px;
+		.products {
+			@include margin;
+			width:195px;
+			float:right;
+			margin:0;
+		}
+		.product, .basket {
+			float:right;
+		}
+		.basket {
+			margin-right:10px;
+		}
+		.number {
+			display:block;
+			float:left;
+			width:50px;
+			text-align:right;
+			margin-right:8px;
+			@include title(1,35px);
+			color:$red;
+		}
+		.icon {
+			float:left;
+		}
+		.product {
+			.icon {							
+				@include icon(product_hover);
+			}
+		}
+		.basket {
+			.icon {
+				@include icon(basket_hover);
+				margin-top:5px;
+			}
+		}
+	}
+	.bar {
+		display:block;
+		width:880px;
+		height:41px;
+		padding:5px 45px 0 45px;
+		margin-left:-5px;
+		border:solid $light_brown 1px;
+		@include box-shadow(rgba(0,0,0, 0.5) 0px 3px 5px);
+		position:relative;
+		z-index:90;		
+		background-image:url(../images/bar.png);
+		span {
+			color:$brown;
+		}
+		.proposing {
+			display:inline-block;
+			margin-right:40px;
+			.title {
+				margin:9px 0 0 0;
+				@include title(1,15);
+			}			
+		}
+		.filter {
+			@include filter($light_brown);
+		}
+		.shadow_photo {
+			width:172px;
+			height:172px;
+			padding:8px 7px 0 7px;
+			margin-top:-153px;			
+			background-image:url(../images/photo_shadow.png);			
+			background-repeat:no-repeat;
+			float:right;
+			.photo {
+				display:block;
+				padding:10px;
+				width:150px;
+				height:150px;
+				background-color:#fcfcfc;
+				border:solid 1px #ffffff;
+				img {
+					width:150px;
+					height:150px;
+				}
+			}
+		}
+	}
+	ul.farmers_products {
+		position:relative;
+		z-index:89;
+		margin:0;
+		li {
+			height:109px;
+			border-top:solid 1px #ffffff;
+			border-bottom:solid 1px #C8C5BF;
+			@include bg-sprite(height_109);
+			background-repeat:repeat-x;
+			&:last-child {
+				border-bottom:none;
+			}
+			&:hover {
+				cursor:pointer;	
+			}
+			&:active {
+				background-image:none;
+				background:#e8e3db;
+				border-top:solid 1px #e8e3db;
+			}
+			.category {
+				margin:33px 10px 0 10px;
+				float:left;
+				opacity:0.5;
+				&.product {
+					@include icon(product_hover);	
+					margin:33px 16px 0 16px;	
+				}
+				&.basket {
+					@include icon(basket_hover);	
+					margin-top:40px;
+				}
+			}
+			.l_photo_description.is_horizontal {
+				.image {
+					margin-top:22px;
+				}
+				.content {
+					width:550px;
+					float:left;
+					.title {
+						@include title(2,18px);
+						margin-bottom:0;
+					}
+					.description {
+						margin-top:3px;
+					}
+				}	
+				.pursache {
+					width:185px;
+					padding-right:40px;
+					padding-top:20px;
+					float:right;
+					text-align:center;
+					.price {
+						font-size:18px;
+						padding-bottom:10px;
+					}
+					.call_to_action {
+						margin-top:8px;	
+					}
+				}			
+			}
+		}
+	}
+}

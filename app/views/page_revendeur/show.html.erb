@@ -1,12 +1,112 @@
-<h1>Pagerevendeur#show</h1>
-<p>Find me in app/views/page_revendeur/show.html.erb</p>
+<div class="l_main_gutter farmer_show ">
 
-<div class="well">
-	<h1> <%= @revendeur.nom %></h1>
-	
-	<p> Description :<%= @revendeur.description %> </p>
-	<p> Ville : <%= @revendeur.ville.nom %></p>
-	<p> Amap : <%= @revendeur.direction.nom %></p>
-	
+	<div class="breadcrumb">
+		<ul>
+			<li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
+			<li><a class="" style="z-index:3">Agriculteurs</a></li>
+			<li><a class="" style="z-index:2">François Dumont</a></li>
+		</ul>
+	</div>
+
+	<div class="l_area_left">
+		<h1 class="title"><!--<%= @revendeur.nom %>-->François Dumont</h1>
+		<p class="note is_italic location"><%= @revendeur.ville.nom %></p>
+		<p class="description"><% @revendeur.description %>Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+	</div>	
+
+	<div class="l_area_right">
+
+		<div class="products">
+			<div class="product">
+				<span class="number">13</span>
+				<span class="icon"></span>
+				<br class="clear">
+			</div>
+			<div class="basket">
+				<span class="number">13</span>
+				<span class="icon"></span>
+				<br class="clear">
+			</div>
+		</div>	
+
+	</div>
+
+	<br class="clear">
+
+	<div class="bar">		
+		
+		<div class="proposing">
+			<h3 class="title">Ses  17  produits</h3>
+		</div>
+		<span>Masquer:</span>
+		<span class="filter">cagettes</span>
+		<span class="filter">vente au détail</span>
+		<div class="shadow_photo">
+			<div class="photo">
+				<img src="">
+			</div>
+		</div>
+	</div>
+
+	<ul class="farmers_products">
+		<li>
+			<span class="category product"></span>
+			<div class="l_photo_description is_horizontal">
+        <div class="image">
+          <div class="has_corners_shadow is_small"></div>
+        </div>
+        <div class="content">
+          <p class="title">Pommes Golden</p>
+					<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+        </div>
+        <div class="pursache">
+        	<span class="price">4€ <span class="note is_italic">le kilo</span></span><br>
+        	<div class="call_to_action">
+        		<span class="button"><a href="">ajouter au panier</a></span>
+        	</div>
+        </div>
+      </div>
+		</li>
+
+		<li>
+			<span class="category basket"></span>
+			<div class="l_photo_description is_horizontal">
+        <div class="image">
+          <div class="has_corners_shadow is_small"></div>
+        </div>
+        <div class="content">
+          <p class="title">Tomates cerises</p>
+					<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+        </div>
+        <div class="pursache">
+        	<span class="price">7€ <span class="note is_italic">le 100gr</span></span><br>
+        	<div class="call_to_action">
+        		<span class="button"><a href="">ajouter au panier</a></span>
+        	</div>
+        </div>
+      </div>
+		</li>
+
+		<li>
+			<span class="category product"></span>
+			<div class="l_photo_description is_horizontal">
+        <div class="image">
+          <div class="has_corners_shadow is_small"></div>
+        </div>
+        <div class="content">
+          <p class="title">Carottes</p>
+					<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+        </div>
+        <div class="pursache">
+        	<span class="price">8€ <span class="note is_italic">le kilo</span></span><br>
+        	<div class="call_to_action">
+        		<span class="button"><a href="">ajouter au panier</a></span>
+        	</div>
+        </div>
+      </div>
+		</li>		
+
+    <!--<p class="note ">5€ <span class="is_italic">le kilo</span></p>-->
+	</ul>
 	
 </div>
