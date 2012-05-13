@@ -1,0 +1,5 @@
+<%= simple_form_for(@image, :as => "photo_stock", :url => administration_user_stock_update_image_path(current_user,@stock,@image), :html => {:class => 'form-horizontal well' }) do |u| %>
+				<%= u.label :first_image %>
+				<%= u.collection_radio_buttons :first_image, [['1', 'Oui'] ,['0', 'No']], :first, :last, :label => 'Image par defaut' %>
+				<%= u.button :submit, :value => "Update image" %>
+<% end %>

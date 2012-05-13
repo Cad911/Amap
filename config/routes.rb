@@ -85,8 +85,16 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
        	resources :produit_paniers
       end
       
+      #______ ROUTE POUR IMAGE USER ____
+      match 'add_image' => 'users#add_image', :via => :post
+      match 'update_image/:image_id' => 'users#update_image', :as => :user_update_image, :via => :put
+      
       resources :stocks
       match 'exist_stock/:produit_autorise_id' => "stocks#alreadyExistStock", :as => :exist_stock, :via => :get #VERIF AJAX SI PRODUIT DEJA EN STOCK
+      #______ ROUTE POUR IMAGE STOCK ____
+      match '/stocks/:stock_id/add_image' => 'stocks#add_image', :as => :stock_add_image, :via => :post
+      match '/stocks/:stock_id/update_image/:image_id' => 'stocks#update_image', :as => :stock_update_image, :via => :put
+      
       
       resources :produit_vente_libres
       match 'exist_vente/:stock_id' => "produit_vente_libres#dejaEnVente", :as => :exist_vente, :via => :get #VERIF AJAX SI PRODUIT DEJA EN VENTE

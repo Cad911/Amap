@@ -8,6 +8,7 @@ class Stock < ActiveRecord::Base
   
   has_many :produit_vente_libres
   has_many :produit_paniers
+  has_many :photo_stocks
   
   #_______________________ Quantite des produits en vente ________________
   def quantiteProduitVente
@@ -21,6 +22,26 @@ class Stock < ActiveRecord::Base
 	end
 
 	return quantite
+  end
+  
+  
+  def default_image
+  	@default_photo = PhotoStock.where('stock_id = ? AND first_image = "1"',self.id)
+  	if @default_photo.count > 0
+  		@mydefault_photo = PhotoStock.find(@default_photo[0].id)
+  		return @mydefault_photo
+  	else
+  		return nil
+  	end
+  end
+  
+  def other_image
+  	@other_image = PhotoStock.where('stock_id = ? AND first_image = "0"',self.id)
+  	if @other_image.count > 0
+  		return @other_image
+  	else
+  		return nil
+  	end
   end
   
 end

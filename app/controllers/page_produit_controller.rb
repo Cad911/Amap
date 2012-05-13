@@ -9,19 +9,24 @@ class PageProduitController < ApplicationController
   	@produit_middle_block = []
   	@produit_last_block = []
   	
+  	#___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
   	if @produits.count < 5
   		@produit_middle_block = @produits
+  	#___ SI 5 PRODUITS, SEULEMENT LE PREMIER BLOCK _________
   	elsif @produits.count == 5
   		@first_huge_product = @produits[0]
   		(1..4).each do |i|
   			@produits_first_block << @produits[i]
   		end
+  	#___________ SI PLUS DE 5 PRODUITS _____________________
   	elsif 5 < @produits.count
+  		#______ PREMIER BLOCK ___________
   		@first_huge_product = @produits[0]
   		(1..4).each do |i|
   			@produits_first_block << @produits[i]
   		end
   		
+  		#_______ SI ON A LE COMPTE PILE POUR AVOIR LE FIRST BLOCK, MIDDLE BLOCK AND LAST BLOCK
   		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
 	  		(5..@produits.count-6).each do |i|
 	  			@produit_middle_block << @produits[i]
@@ -30,7 +35,8 @@ class PageProduitController < ApplicationController
 	  		(@produits.count-5..@produits.count-2).each do |i|
 	  			@produit_last_block << @produits[i]
 	  		end
-	  		@last_huge_product = @produits[@produits.count-1] 
+	  		@last_huge_product = @produits[@produits.count-1]
+	  	#_____ PAS DE LAST BLOCK ___________
   		else
   			(5..@produits.count-1).each do |i|
 	  			@produit_middle_block << @produits[i]

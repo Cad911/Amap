@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -161,15 +162,26 @@
 
 </div>
 
-<div class="dock bg-height_70">
+ <% product_cageot %>
+<div class="dock bg-height_70" <% if @product_cageot.count == 0 %> style="display:none" <% end %>>
   <div class="l_dock_wrapper">
     <ul>
+      <% @product_cageot.each do |product_cageot| %>
+      	<li id="<%= product_cageot.id %>" >
+      		<img src="" class="has_corners_shadow is_small"> 
+      		<span class="nombre_pack_p_c"> <%= product_cageot.nombre_pack %> </span> 
+      		<span class="deleted_p_c"> deleted </span>
+      		<span class="plus_quantite_p_c"> + </span>
+      		<span class="moins_quantite_p_c"> - </span>
+      	</li>
+      <% end %>
+      
+      <!-- <li><img src="" class=has_corners_shadow is_small"></li>
       <li><img src="" class="has_corners_shadow is_small"></li>
-      <li><img src="" class="has_corners_shadow is_small"></li>
-      <li><img src="" class="has_corners_shadow is_small"></li>
+      <li><img src="" class="has_corners_shadow is_small"></li> -->
     </ul>
     <div class="checkout">
-      <span class="price">28€</span>
+      <span class="price"><%= @cageot.total %>€</span>
       <span class="button"><a>Acheter !</a></span>
     </div>
   </div>

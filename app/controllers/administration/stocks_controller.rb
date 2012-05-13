@@ -14,11 +14,70 @@ class Administration::StocksController < InheritedResources::Base
   	@stock.unite_mesure_info = @stock.unite_mesure.nom
   	#____
   	@unite_mesure = UniteMesure.find(@stock.unite_mesure_id)
+  	@photo_stock = PhotoStock.new
   	respond_to do |format|
   		format.json { render :json => [@stock,@unite_mesure] }
   		format.html { render :show }
   	end
   end
+  
+  
+  #_________________________________ ADD IMAGE _______________________________________
+  def add_image
+    @stock = Stock.find(params[:stock_id])
+    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+	if params[:photo_stock][:first_image] == "1"
+		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+		if @photo_first_image.count > 0
+			@photo_first_image[0].first_image = 0
+			@photo_first_image[0].save	
+		end
+	else
+		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
+		if @photo_first_image.count == 0
+			params[:photo_stock][:first_image] = "1"
+		end
+	end
+	@photo_stock = PhotoStock.new
+	@photo_stock.stock_id = @stock.id
+	@photo_stock.update_attributes(params[:photo_stock])
+	redirect_to [:administration,current_user,@stock]
+  end
+  
+  
+  #_________________________________ UPDATE  IMAGE _______________________________________
+  def update_image
+    @stock = Stock.find(params[:stock_id])
+    @image = PhotoStock.find(params[:image_id])
+    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+	if params[:photo_stock][:first_image] == "1"
+		#___ SI PAS DE CHANGEMENT ______
+		if @image.first_image == 1
+			flash[:notice] = "Aucun changement"
+		else
+			@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+			if @photo_first_image.count > 0
+				@photo_first_image[0].first_image = 0
+				@photo_first_image[0].save	
+			end
+			@image.first_image = params[:photo_stock][:first_image]
+			@image.save
+			flash[:notice] = "Modification photo stock effectuer"
+		end
+	else
+		#___ SI ON ENLEVE L IMAGE PAR DEFAUT ______
+		if @image.first_image == 1
+			flash[:notice] = "Il est obligatoire d avoir une image par defaut"
+		else
+			flash[:notice] = "Aucun changement"
+		end
+	end
+	redirect_to [:administration,current_user,@stock]
+  end
+
+
+
 
   #________________ NEW ____________________________________________
   def new
