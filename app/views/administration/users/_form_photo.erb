@@ -1,0 +1,7 @@
+<h2> Ajout image </h2>
+<%= simple_form_for(@photo_user, :as => "photo_user", :url => administration_user_add_image_path(@user,@photo_user), :html => {:class => 'form-horizontal well' }) do |u| %>
+					<%= u.input :image, :as => :file, :html => { :name => "photo_user[image]"} %>
+					<%= u.label :first_image %>
+					<%= u.collection_radio_buttons :first_image, [['1', 'Oui'] ,['0', 'No']], :first, :last, :label => 'Image par defaut' %>
+					<%= u.button :submit, :value => "Ajouter image" %>
+<% end %>

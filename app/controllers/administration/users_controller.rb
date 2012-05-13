@@ -12,6 +12,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	def show
 		@user = User.find(params[:id])
 		@title_user = ""
+		@photo_user = PhotoUser.new
 		if current_user.id == params[:id].to_i
 			@title_user = "Mes informations"
 		else
@@ -19,6 +20,60 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		end
 	end
 	
+	
+	#_________________________________ ADD IMAGE _______________________________________
+	def add_image
+	    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+		if params[:photo_user][:first_image] == "1"
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
+			if @photo_first_image.count > 0
+				@photo_first_image[0].first_image = 0
+				@photo_first_image[0].save	
+			end
+		else
+			@photo_first_image = PhotoStock.where('user_id = ? AND first_image = "1"', current_user.id)
+			#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
+			if @photo_first_image.count == 0
+				params[:photo_user][:first_image] = "1"
+			end	
+		end
+		@photo_user = PhotoUser.new
+		@photo_user.user_id = current_user.id
+		@photo_user.update_attributes(params[:photo_user])
+		redirect_to [:administration,current_user]
+	end
+
+
+
+  #_________________________________ UPDATE  IMAGE _______________________________________
+  def update_image
+    @image = PhotoUser.find(params[:image_id])
+    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+	if params[:photo_user][:first_image] == "1"
+		#___ SI PAS DE CHANGEMENT ______
+		if @image.first_image == 1
+			flash[:notice] = "Aucun changement"
+		else
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
+			if @photo_first_image.count > 0
+				@photo_first_image[0].first_image = 0
+				@photo_first_image[0].save	
+			end
+			@image.first_image = params[:photo_user][:first_image]
+			@image.save
+			flash[:notice] = "Modification photo user effectuer"
+		end
+	else
+		#___ SI ON ENLEVE L IMAGE PAR DEFAUT ______
+		if @image.first_image == 1
+			flash[:notice] = "Il est obligatoire d avoir une image par defaut"
+		else
+			flash[:notice] = "Aucun changement"
+		end
+	end
+	redirect_to [:administration,current_user]
+  end
+
 	
 	
 	

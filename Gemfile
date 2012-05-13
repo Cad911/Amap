@@ -13,6 +13,8 @@ gem 'thin'
 gem 'activeadmin'
 gem 'cancan'
 gem 'simple_form'
+gem 'carrierwave'
+gem "mini_magick", "~> 3.4"
 
 # Gems used only for assets and not required
 # in production environments by default.

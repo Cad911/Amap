@@ -47,3 +47,20 @@
 
 <%= link_to 'Modifier', edit_administration_user_stock_path(params[:user_id],@stock) %> |
 <%= link_to 'Retour', administration_user_stocks_path %>
+
+<div class="well">
+		<%= render 'form_photo' %>
+</div>
+<div class="well">
+	<ul>
+		<% (@stock.photo_stocks).each do |image| %>
+			<li>
+				<% @image = image %>
+				<%= image_tag image.image_url, :width => '100', :height => '100' %> 
+				<span> first_image = <% if image.first_image == 1 %> Oui <% else %> Non <% end %></span> 
+				<%= render 'update_form_photo' %>
+			</li>
+		<% end %>
+	</ul>
+
+</div>	

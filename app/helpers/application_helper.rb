@@ -14,6 +14,9 @@ module ApplicationHelper
 		else
 			@cageot = nil
 		end
-		
+    end
+    
+    def breadcrumb
+    	
     end
 end

@@ -13,22 +13,23 @@
 
     <div class="l_content_left pictures">
 
-      <div class="is_big has_corners_shadow"></div>
-
+      <div class="is_big has_corners_shadow">
+      	<% if !(@produit.stock.default_image).nil? %>
+			<%= image_tag (@produit.stock.default_image).image_url(), :width => "100" %>
+		<% end %>
+      </div>
+		
+	  <% if !(@produit.stock.other_image).nil? %>
       <ul>
-        <li>
-          <div class="is_small has_corners_shadow"></div>
-        </li>
-        <li>
-          <div class="is_small has_corners_shadow"></div>
-        </li>
-        <li>
-          <div class="is_small has_corners_shadow"></div>
-        </li>
-        <li>
-          <div class="is_small has_corners_shadow"></div>
-        </li>
+      	<% (@produit.stock.other_image).each do |image| %>
+	        <li>
+	          <div class="is_small has_corners_shadow">
+	          	<%= image_tag image.image_url(), :width => "100" %>
+	          </div>
+	        </li>
+        <% end %>
       </ul>
+      <% end %>
 
     </div>
 

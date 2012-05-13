@@ -25,7 +25,11 @@
 			 <li class="is_huge">
 			      <div class="l_photo_description is_huge is_vertical">
 			        <div class="image">
-			          <div class="has_corners_shadow is_huge"></div>
+			          <div class="has_corners_shadow is_huge">
+			          	<% if !(@first_huge_product.stock.default_image).nil? %>
+			          		<%= image_tag (@first_huge_product.stock.default_image).image_url(), :width => "440" %>
+			          	<% end %>
+			          </div>
 			        </div>
 			        <div class="content">
 			          <p class="title"> <%= link_to @first_huge_product.titre, page_produit_show_path(@first_huge_product.user_id,@first_huge_product), :class => "title" %></p>
@@ -38,7 +42,11 @@
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
-			          <div class="has_corners_shadow is_medium"></div>
+			          <div class="has_corners_shadow is_medium">
+			          	<% if !(p.stock.default_image).nil? %>
+			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          	<% end %>
+			          </div>
 			        </div>
 			        <div class="content">
 			          <p class="title"> <%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
@@ -59,7 +67,11 @@
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
-			          <div class="has_corners_shadow is_medium"></div>
+			          <div class="has_corners_shadow is_medium">
+			          	<% if !(p.stock.default_image).nil? %>
+			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          	<% end %>
+			          </div>
 			        </div>
 			        <div class="content">
 			          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
@@ -80,7 +92,11 @@
 			<li class="is_huge">
 		      <div class="l_photo_description is_huge is_vertical">
 		        <div class="image">
-		          <div class="has_corners_shadow is_huge"></div>
+		          <div class="has_corners_shadow is_huge">
+		          	<% if !(@last_huge_product.stock.default_image).nil? %>
+			          	<%= image_tag (@last_huge_product.stock.default_image).image_url(), :width => "440" %>
+			        <% end %>
+		          </div>
 		        </div>
 		        <div class="content">
 		          <p class="title"><%= link_to @last_huge_product.titre, page_produit_show_path(@last_huge_product.user_id,@last_huge_product), :class => "title" %></p>
@@ -94,7 +110,11 @@
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
-			          <div class="has_corners_shadow is_medium"></div>
+			          <div class="has_corners_shadow is_medium">
+			          	<% if !(p.stock.default_image).nil? %>
+			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          	<% end %>
+			          </div>
 			        </div>
 			        <div class="content">
 			          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>

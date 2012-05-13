@@ -13,7 +13,7 @@ class UserAbility
 	  		cannot :index, User
 	  		can :create, User
 	  		can :manage , User, :id => user.id
-	  		can [:show,:update,:destroy], User, :direction_id => user.id #PEUT MANAGER SEULEMENT SES REVENDEUR
+	  		can [:show,:update,:destroy,:add_image], User, :direction_id => user.id #PEUT MANAGER SEULEMENT SES REVENDEUR
 	  		
 	  		can :index, PointRelai
 	  		can :manage, PointRelai, :user_id => user.id
@@ -35,7 +35,7 @@ class UserAbility
 	  	# ______________________________________ VENDRE AVEC RESTRICTION ___________________________________
 	  	if user.can_stock_ar
 	  		can :index, User
-	  		can [:show,:update], User, :id => user.id
+	  		can [:show,:update,:add_image], User, :id => user.id
 	  		
 	  		can :manage, Stock, :user_id => user.id
 	  		can :create, Stock
@@ -53,12 +53,14 @@ class UserAbility
 	  		
 	  		can :indexForRevendeur,PointRelai
 	  		can :show, PointRelai, :user_id => user.direction_id
+	  		
+	  		can [:add_image,:update_image], User, :user_id => user.id 
 	  	end
 	  	
 	  	# ______________________________________ VENDRE AVEC RESTRICTION ___________________________________
 	  	if user.can_stock_sr
 	  		can :index, User
-	  		can [:show,:update], User, :id => user.id
+	  		can [:show,:update,:add_image], User, :id => user.id
 	  		
 	  		can :manage, Stock, :user_id => user.id
 	  		can :create, Stock
@@ -71,6 +73,8 @@ class UserAbility
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
 	  		can :create, ProduitPanier
+	  		
+	  		can [:add_image,:update_image], User, :user_id => user.id 
 	  	end
 	end
     # Define abilities for the passed in user here. For example:

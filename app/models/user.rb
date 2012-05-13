@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :produit_vente_libres
   has_many :paniers,:foreign_key => "revendeur_id"
   has_many :point_relais
+  has_many :photo_users
   
   belongs_to :entite
   belongs_to :ville

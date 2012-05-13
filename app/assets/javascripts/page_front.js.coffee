@@ -236,15 +236,114 @@ $(document).ready(->
         hide_dock: ->
             $('.dock').slideUp(400,'swing')
         
-            
+
+    
+    animation_display = 
+       init: (opacity_debut, margin_, au_chargement_page = true) ->
+           animation_display.init_style(opacity_debut,margin_)
+           if au_chargement_page
+               animation_display.show_all(margin_)
+           else
+               animation_display.verif_scroll(margin_)
+               animation_display.see_div(margin_)
+       see_div: (margin_) ->
+           $(document).scroll(->
+               animation_display.verif_scroll(margin_)
+           )
+       verif_scroll: (margin_) ->
+           $('.move_left,.move_right').each(->
+                   #POSITION MOVE LEFT PAR RAPPORT AU DOC
+                   offset = $(this).offset()
+                   #POSITION DU HAUT ET DU BAS DE LA DIV move
+                   position_haut_div = offset.top
+                   position_bas_div = offset.top +  $('.move_left').height() 
+                   #SCROLLTOP = position dans le document en haut de la fenetre, on y ajoute donc la taille de la fenetre pour avoir la position du document en bas de la fenetre
+                   position_document_max = $(document).scrollTop() + $(window).height()
+                   position_document_min = $(document).scrollTop()
+                   
+
+                   if position_document_max > position_bas_div && position_document_min < position_haut_div
+                     if $(this).hasClass('move_left')
+                         animation_display.move_to_left(margin_,this)
+                     if $(this).hasClass('move_right')
+                         animation_display.move_to_right(margin_,this)
+               )
+       init_style: (opacity_debut,margin_) ->
+           $('.move_left').each(->
+               if $(this).css('margin-right') == "" && $(this).css('margin') == ""
+                   $(this).css('margin-right','0px')
+               if $(this).css('margin-right') == "" && $(this).css('margin') != ""
+                   all_margin = $(this).css('margin').split(' ')
+                   $(this).css('margin-right',all_margin[1])
+               
+               actual_position = parseInt(($(this).css('margin-right')).replace('px'))
+               new_position = (actual_position - margin_)+'px'
+           
+               $(this).css('margin-right',new_position)
+               $(this).css('opacity',opacity_debut)
+           )
+           
+           $('.move_right').each(->
+               if $(this).css('margin-left') == "" && $(this).css('margin') == ""
+                   $(this).css('margin-left','0px')
+               if $(this).css('margin-left') == "" && $(this).css('margin') != ""
+                   all_margin = $(this).css('margin').split(' ')
+                   if all_margin[3]!= undefined
+                       $(this).css('margin-left', all_margin[3])
+                   else
+                       $(this).css('margin-left', all_margin[1])
+                   
+               actual_position = parseInt(($(this).css('margin-left')).replace('px'))
+               new_position = (actual_position-margin_)+'px'
+              
+               $(this).css('margin-left',new_position)
+               $(this).css('opacity',opacity_debut)
+           )
+       show_all: (margin_) ->
+           $('.move_left').each(->
+               animation_display.move_to_left(margin_, this)
+           )
+           $('.move_right').each(->
+               animation_display.move_to_right(margin_, this)
+           )
+       move_to_left: (margin_, element = '.move_left') ->
+           if !$(element).hasClass('move_done')           
+               $(element).addClass('move_done')
+               $(element).animate({
+                  marginRight: '+='+margin_+'px'
+                  opacity:1
+               },{
+                  duration : 1500,
+                  easing: 'swing'
+               })
+       move_to_right: (margin_, element = '.move_right') ->
+           if !$(element).hasClass('move_done')
+               
+               $(element).addClass('move_done')
+               $(element).animate({
+                   marginLeft: '+='+margin_+'px'
+                   opacity:1
+               },{
+                  duration : 1500,
+                  easing: 'swing'
+               })
+              
+     
            
          
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
     cloud.generate_big_cloud(2,120000,140000)
     cloud.generate_little_cloud(2, 150000,180000)
+    
     #__VAR : DURATION_FADEOUT, DURATION FADE IN,DURATION BETWEEN TWO SLIDE
     slider.init(1000,1000,5000)
     cageot.init()
+    
+    console.log($(document).scrollTop())
+    console.log($(document).height())
+    #___ OPACITY,MARGIN,AU CHARGEMENT DE LA PAGE ____
+    #animation_display.see_div()
+    animation_display.init(0.5,20,false)
 
 )
 
