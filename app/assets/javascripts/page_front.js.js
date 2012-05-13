@@ -280,23 +280,94 @@
       }
     };
     animation_display = {
+      margin_: 0,
+      opacity_debut: 1,
       init: function(opacity_debut, margin_, au_chargement_page) {
         if (au_chargement_page == null) au_chargement_page = true;
-        animation_display.init_style(opacity_debut, margin_);
+        animation_display.margin_ = margin_;
+        animation_display.opacity_debut = opacity_debut;
+        animation_display.init_style();
         if (au_chargement_page) {
-          return animation_display.show_all(margin_);
+          return animation_display.show_all();
         } else {
-          animation_display.verif_scroll(margin_);
-          return animation_display.see_div(margin_);
+          animation_display.verif_scroll();
+          return animation_display.see_div();
+        }
+      },
+      init_style: function() {
+        var actual_position, all_margin, new_position;
+        if ($('.move_left').length > 0) {
+          if ($('.move_left').css('margin-right') === "" && $('.move_left').css('margin') === "") {
+            $('.move_left').css('margin-right', '0px');
+          }
+          if ($('.move_left').css('margin-right') === "" && $('.move_left').css('margin') !== "") {
+            all_margin = $('.move_left').css('margin').split(' ');
+            $('.move_left').css('margin-right', all_margin[1]);
+          }
+          actual_position = parseInt(($('.move_left').css('margin-right')).replace('px'));
+          new_position = (actual_position - animation_display.margin_) + 'px';
+          $('.move_left').css('margin-right', new_position);
+          $('.move_left').css('opacity', animation_display.opacity_debut);
+        }
+        if ($('.move_right').length > 0) {
+          if ($('.move_right').css('margin-left') === "" && $('.move_right').css('margin') === "") {
+            $('.move_right').css('margin-left', '0px');
+          }
+          if ($('.move_right').css('margin-left') === "" && $('.move_right').css('margin') !== "") {
+            all_margin = $('.move_right').css('margin').split(' ');
+            if (all_margin[3] !== void 0) {
+              $('.move_right').css('margin-left', all_margin[3]);
+            } else {
+              $('.move_right').css('margin-left', all_margin[1]);
+            }
+          }
+          actual_position = parseInt(($('.move_right').css('margin-left')).replace('px'));
+          new_position = (actual_position - animation_display.margin_) + 'px';
+          $('.move_right').css('margin-left', new_position);
+          $('.move_right').css('opacity', animation_display.opacity_debut);
+        }
+        if ($('.move_bottom').length > 0) {
+          if ($('.move_bottom').css('margin-top') === "" && $('.move_bottom').css('margin') === "") {
+            $('.move_bottom').css('margin-top', '0px');
+          }
+          if ($('.move_bottom').css('margin-top') === "" && $('.move_bottom').css('margin') !== "") {
+            all_margin = $('.move_bottom').css('margin').split(' ');
+            if (all_margin[3] !== void 0) {
+              $('.move_bottom').css('margin-top', all_margin[3]);
+            } else {
+              $('.move_bottom').css('margin-top', all_margin[1]);
+            }
+          }
+          actual_position = parseInt(($('.move_bottom').css('margin-top')).replace('px'));
+          new_position = (actual_position - animation_display.margin_) + 'px';
+          $('.move_bottom').css('margin-top', new_position);
+          $('.move_bottom').css('opacity', animation_display.opacity_debut);
+        }
+        if ($('.move_top').length > 0) {
+          if ($('.move_top').css('margin-top') === "" && $('.move_top').css('margin') === "") {
+            $('.move_top').css('margin-top', '0px');
+          }
+          if ($('.move_top').css('margin-top') === "" && $('.move_top').css('margin') !== "") {
+            all_margin = $('.move_top').css('margin').split(' ');
+            if (all_margin[3] !== void 0) {
+              $('.move_top').css('margin-top', all_margin[3]);
+            } else {
+              $('.move_top').css('margin-top', all_margin[1]);
+            }
+          }
+          actual_position = parseInt(($('.move_top').css('margin-top')).replace('px'));
+          new_position = (actual_position + animation_display.margin_) + 'px';
+          $('.move_top').css('margin-top', new_position);
+          return $('.move_top').css('opacity', animation_display.opacity_debut);
         }
       },
       see_div: function(margin_) {
         return $(document).scroll(function() {
-          return animation_display.verif_scroll(margin_);
+          return animation_display.verif_scroll();
         });
       },
-      verif_scroll: function(margin_) {
-        return $('.move_left,.move_right').each(function() {
+      verif_scroll: function() {
+        return $('.move_left,.move_right,.move_top,.move_bottom').each(function() {
           var offset, position_bas_div, position_document_max, position_document_min, position_haut_div;
           offset = $(this).offset();
           position_haut_div = offset.top;
@@ -305,62 +376,40 @@
           position_document_min = $(document).scrollTop();
           if (position_document_max > position_bas_div && position_document_min < position_haut_div) {
             if ($(this).hasClass('move_left')) {
-              animation_display.move_to_left(margin_, this);
+              animation_display.move_to_left(this);
             }
             if ($(this).hasClass('move_right')) {
-              return animation_display.move_to_right(margin_, this);
+              animation_display.move_to_right(this);
+            }
+            if ($(this).hasClass('move_bottom')) {
+              animation_display.move_to_bottom(this);
+            }
+            if ($(this).hasClass('move_top')) {
+              return animation_display.move_to_top(this);
             }
           }
         });
       },
-      init_style: function(opacity_debut, margin_) {
+      show_all: function() {
         $('.move_left').each(function() {
-          var actual_position, all_margin, new_position;
-          if ($(this).css('margin-right') === "" && $(this).css('margin') === "") {
-            $(this).css('margin-right', '0px');
-          }
-          if ($(this).css('margin-right') === "" && $(this).css('margin') !== "") {
-            all_margin = $(this).css('margin').split(' ');
-            $(this).css('margin-right', all_margin[1]);
-          }
-          actual_position = parseInt(($(this).css('margin-right')).replace('px'));
-          new_position = (actual_position - margin_) + 'px';
-          $(this).css('margin-right', new_position);
-          return $(this).css('opacity', opacity_debut);
+          return animation_display.move_to_left(this);
         });
-        return $('.move_right').each(function() {
-          var actual_position, all_margin, new_position;
-          if ($(this).css('margin-left') === "" && $(this).css('margin') === "") {
-            $(this).css('margin-left', '0px');
-          }
-          if ($(this).css('margin-left') === "" && $(this).css('margin') !== "") {
-            all_margin = $(this).css('margin').split(' ');
-            if (all_margin[3] !== void 0) {
-              $(this).css('margin-left', all_margin[3]);
-            } else {
-              $(this).css('margin-left', all_margin[1]);
-            }
-          }
-          actual_position = parseInt(($(this).css('margin-left')).replace('px'));
-          new_position = (actual_position - margin_) + 'px';
-          $(this).css('margin-left', new_position);
-          return $(this).css('opacity', opacity_debut);
+        $('.move_right').each(function() {
+          return animation_display.move_to_right(this);
+        });
+        $('.move_bottom').each(function() {
+          return animation_display.move_to_bottom(this);
+        });
+        return $('.move_top').each(function() {
+          return animation_display.move_to_top(this);
         });
       },
-      show_all: function(margin_) {
-        $('.move_left').each(function() {
-          return animation_display.move_to_left(margin_, this);
-        });
-        return $('.move_right').each(function() {
-          return animation_display.move_to_right(margin_, this);
-        });
-      },
-      move_to_left: function(margin_, element) {
+      move_to_left: function(element) {
         if (element == null) element = '.move_left';
         if (!$(element).hasClass('move_done')) {
           $(element).addClass('move_done');
           return $(element).animate({
-            marginRight: '+=' + margin_ + 'px',
+            marginRight: '+=' + animation_display.margin_ + 'px',
             opacity: 1
           }, {
             duration: 1500,
@@ -368,12 +417,38 @@
           });
         }
       },
-      move_to_right: function(margin_, element) {
+      move_to_right: function(element) {
         if (element == null) element = '.move_right';
         if (!$(element).hasClass('move_done')) {
           $(element).addClass('move_done');
           return $(element).animate({
-            marginLeft: '+=' + margin_ + 'px',
+            marginLeft: '+=' + animation_display.margin_ + 'px',
+            opacity: 1
+          }, {
+            duration: 1500,
+            easing: 'swing'
+          });
+        }
+      },
+      move_to_bottom: function(element) {
+        if (element == null) element = '.move_bottom';
+        if (!$(element).hasClass('move_done')) {
+          $(element).addClass('move_done');
+          return $(element).animate({
+            marginTop: '+=' + animation_display.margin_ + 'px',
+            opacity: 1
+          }, {
+            duration: 1500,
+            easing: 'swing'
+          });
+        }
+      },
+      move_to_top: function(element) {
+        if (element == null) element = '.move_top';
+        if (!$(element).hasClass('move_done')) {
+          $(element).addClass('move_done');
+          return $(element).animate({
+            marginTop: '-=' + animation_display.margin_ + 'px',
             opacity: 1
           }, {
             duration: 1500,
@@ -386,8 +461,6 @@
     cloud.generate_little_cloud(2, 150000, 180000);
     slider.init(1000, 1000, 5000);
     cageot.init();
-    console.log($(document).scrollTop());
-    console.log($(document).height());
     return animation_display.init(0.5, 20, false);
   });
 

@@ -237,22 +237,95 @@ $(document).ready(->
             $('.dock').slideUp(400,'swing')
         
 
+
+
     
     animation_display = 
+       margin_: 0
+       opacity_debut: 1 
        init: (opacity_debut, margin_, au_chargement_page = true) ->
-           animation_display.init_style(opacity_debut,margin_)
+           animation_display.margin_ = margin_
+           animation_display.opacity_debut = opacity_debut
+           
+           animation_display.init_style()
            if au_chargement_page
-               animation_display.show_all(margin_)
+               animation_display.show_all()
            else
-               animation_display.verif_scroll(margin_)
-               animation_display.see_div(margin_)
+               animation_display.verif_scroll()
+               animation_display.see_div()
+       init_style: () ->
+           #__ MOVE LEFT ____
+           if $('.move_left').length > 0
+               if $('.move_left').css('margin-right') == "" && $('.move_left').css('margin') == ""
+                   $('.move_left').css('margin-right','0px')
+               if $('.move_left').css('margin-right') == "" && $('.move_left').css('margin') != ""
+                   all_margin = $('.move_left').css('margin').split(' ')
+                   $('.move_left').css('margin-right',all_margin[1])
+               
+               actual_position = parseInt(($('.move_left').css('margin-right')).replace('px'))
+               new_position = (actual_position - animation_display.margin_)+'px'
+           
+               $('.move_left').css('margin-right',new_position)
+               $('.move_left').css('opacity',animation_display.opacity_debut)
+               
+               
+           #__ MOVE RIGHT ____
+           if $('.move_right').length > 0
+               if $('.move_right').css('margin-left') == "" && $('.move_right').css('margin') == ""
+                   $('.move_right').css('margin-left','0px')
+               if $('.move_right').css('margin-left') == "" && $('.move_right').css('margin') != ""
+                   all_margin = $('.move_right').css('margin').split(' ')
+                   if all_margin[3]!= undefined
+                       $('.move_right').css('margin-left', all_margin[3])
+                   else
+                       $('.move_right').css('margin-left', all_margin[1])
+                   
+               actual_position = parseInt(($('.move_right').css('margin-left')).replace('px'))
+               new_position = (actual_position - animation_display.margin_)+'px'
+              
+               $('.move_right').css('margin-left',new_position)
+               $('.move_right').css('opacity',animation_display.opacity_debut)
+               
+           #__ MOVE BOTTOM ____
+           if $('.move_bottom').length > 0 
+               if $('.move_bottom').css('margin-top') == "" && $('.move_bottom').css('margin') == ""
+                   $('.move_bottom').css('margin-top','0px')
+               if $('.move_bottom').css('margin-top') == "" && $('.move_bottom').css('margin') != ""
+                   all_margin = $('.move_bottom').css('margin').split(' ')
+                   if all_margin[3]!= undefined
+                       $('.move_bottom').css('margin-top', all_margin[3])
+                   else
+                       $('.move_bottom').css('margin-top', all_margin[1])
+                   
+               actual_position = parseInt(($('.move_bottom').css('margin-top')).replace('px'))
+               new_position = (actual_position - animation_display.margin_)+'px'
+              
+               $('.move_bottom').css('margin-top',new_position)
+               $('.move_bottom').css('opacity',animation_display.opacity_debut)
+               
+           #__ MOVE TOP ____
+           if $('.move_top').length > 0 
+               if $('.move_top').css('margin-top') == "" && $('.move_top').css('margin') == ""
+                   $('.move_top').css('margin-top','0px')
+               if $('.move_top').css('margin-top') == "" && $('.move_top').css('margin') != ""
+                   all_margin = $('.move_top').css('margin').split(' ')
+                   if all_margin[3]!= undefined
+                       $('.move_top').css('margin-top', all_margin[3])
+                   else
+                       $('.move_top').css('margin-top', all_margin[1])
+                   
+               actual_position = parseInt(($('.move_top').css('margin-top')).replace('px'))
+               new_position = (actual_position + animation_display.margin_)+'px'
+              
+               $('.move_top').css('margin-top',new_position)
+               $('.move_top').css('opacity',animation_display.opacity_debut)
        see_div: (margin_) ->
            $(document).scroll(->
-               animation_display.verif_scroll(margin_)
+               animation_display.verif_scroll()
            )
-       verif_scroll: (margin_) ->
-           $('.move_left,.move_right').each(->
-                   #POSITION MOVE LEFT PAR RAPPORT AU DOC
+       verif_scroll: () ->
+           $('.move_left,.move_right,.move_top,.move_bottom').each(->
+                   #POSITION .MOVE PAR RAPPORT AU DOC
                    offset = $(this).offset()
                    #POSITION DU HAUT ET DU BAS DE LA DIV move
                    position_haut_div = offset.top
@@ -264,69 +337,67 @@ $(document).ready(->
 
                    if position_document_max > position_bas_div && position_document_min < position_haut_div
                      if $(this).hasClass('move_left')
-                         animation_display.move_to_left(margin_,this)
+                         animation_display.move_to_left(this)
                      if $(this).hasClass('move_right')
-                         animation_display.move_to_right(margin_,this)
+                         animation_display.move_to_right(this)
+                     if $(this).hasClass('move_bottom')
+                         animation_display.move_to_bottom(this)
+                     if $(this).hasClass('move_top')
+                         animation_display.move_to_top(this)
                )
-       init_style: (opacity_debut,margin_) ->
+       show_all: () ->
            $('.move_left').each(->
-               if $(this).css('margin-right') == "" && $(this).css('margin') == ""
-                   $(this).css('margin-right','0px')
-               if $(this).css('margin-right') == "" && $(this).css('margin') != ""
-                   all_margin = $(this).css('margin').split(' ')
-                   $(this).css('margin-right',all_margin[1])
-               
-               actual_position = parseInt(($(this).css('margin-right')).replace('px'))
-               new_position = (actual_position - margin_)+'px'
-           
-               $(this).css('margin-right',new_position)
-               $(this).css('opacity',opacity_debut)
-           )
-           
-           $('.move_right').each(->
-               if $(this).css('margin-left') == "" && $(this).css('margin') == ""
-                   $(this).css('margin-left','0px')
-               if $(this).css('margin-left') == "" && $(this).css('margin') != ""
-                   all_margin = $(this).css('margin').split(' ')
-                   if all_margin[3]!= undefined
-                       $(this).css('margin-left', all_margin[3])
-                   else
-                       $(this).css('margin-left', all_margin[1])
-                   
-               actual_position = parseInt(($(this).css('margin-left')).replace('px'))
-               new_position = (actual_position-margin_)+'px'
-              
-               $(this).css('margin-left',new_position)
-               $(this).css('opacity',opacity_debut)
-           )
-       show_all: (margin_) ->
-           $('.move_left').each(->
-               animation_display.move_to_left(margin_, this)
+               animation_display.move_to_left(this)
            )
            $('.move_right').each(->
-               animation_display.move_to_right(margin_, this)
+               animation_display.move_to_right(this)
            )
-       move_to_left: (margin_, element = '.move_left') ->
+           $('.move_bottom').each(->
+               animation_display.move_to_bottom(this)
+           )
+           $('.move_top').each(->
+               animation_display.move_to_top(this)
+           )
+       move_to_left: (element = '.move_left') ->
            if !$(element).hasClass('move_done')           
                $(element).addClass('move_done')
                $(element).animate({
-                  marginRight: '+='+margin_+'px'
+                  marginRight: '+='+animation_display.margin_+'px'
                   opacity:1
                },{
                   duration : 1500,
                   easing: 'swing'
                })
-       move_to_right: (margin_, element = '.move_right') ->
-           if !$(element).hasClass('move_done')
-               
+       move_to_right: (element = '.move_right') ->
+           if !$(element).hasClass('move_done') 
                $(element).addClass('move_done')
                $(element).animate({
-                   marginLeft: '+='+margin_+'px'
+                   marginLeft: '+='+animation_display.margin_+'px'
                    opacity:1
                },{
                   duration : 1500,
                   easing: 'swing'
-               })
+               })     
+       move_to_bottom:(element = '.move_bottom') ->
+           if !$(element).hasClass('move_done') 
+               $(element).addClass('move_done')
+               $(element).animate({
+                   marginTop: '+='+animation_display.margin_+'px'
+                   opacity:1
+               },{
+                  duration : 1500,
+                  easing: 'swing'
+               })    
+       move_to_top:(element = '.move_top') ->
+           if !$(element).hasClass('move_done') 
+               $(element).addClass('move_done')
+               $(element).animate({
+                   marginTop: '-='+animation_display.margin_+'px'
+                   opacity:1
+               },{
+                  duration : 1500,
+                  easing: 'swing'
+               })    
               
      
            
@@ -339,8 +410,6 @@ $(document).ready(->
     slider.init(1000,1000,5000)
     cageot.init()
     
-    console.log($(document).scrollTop())
-    console.log($(document).height())
     #___ OPACITY,MARGIN,AU CHARGEMENT DE LA PAGE ____
     #animation_display.see_div()
     animation_display.init(0.5,20,false)
