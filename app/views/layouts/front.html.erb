@@ -161,7 +161,7 @@
 </div>
 
  <% product_cageot %>
-<div class="dock bg-height_70" <% if @product_cageot.count == 0 %> style="display:none" <% end %>>
+<div class="dock bg-height_70" <% if @cageot != nil %> <% if @product_cageot.count == 0 %> style="display:none" <% end %><% end %>>
   <div class="l_dock_wrapper">
     <ul>
       <% @product_cageot.each do |product_cageot| %>
