@@ -328,14 +328,16 @@ $(document).ready(->
                    #POSITION .MOVE PAR RAPPORT AU DOC
                    offset = $(this).offset()
                    #POSITION DU HAUT ET DU BAS DE LA DIV move
-                   position_haut_div = offset.top
-                   position_bas_div = offset.top +  $('.move_left').height() 
+                   position_haut_div = offset.top #POSITION HAUT
+                   position_bas_div = offset.top +  $(this).height() #POSITION BAS
                    #SCROLLTOP = position dans le document en haut de la fenetre, on y ajoute donc la taille de la fenetre pour avoir la position du document en bas de la fenetre
-                   position_document_max = $(document).scrollTop() + $(window).height()
-                   position_document_min = $(document).scrollTop()
+                   position_document_bas = $(document).scrollTop() + $(window).height() #POSITION Bas DOC
+                   position_document_haut = $(document).scrollTop() #POSITION HAUT DOC
                    
-
-                   if position_document_max > position_bas_div && position_document_min < position_haut_div
+                   #position_document_min < position_haut_div < position_document_max
+                   # < position_bas_div < position_document_max
+                   
+                   if (position_document_bas > position_haut_div && position_haut_div > position_document_haut) && (position_document_bas > position_bas_div && position_bas_div > position_document_haut)
                      if $(this).hasClass('move_left')
                          animation_display.move_to_left(this)
                      if $(this).hasClass('move_right')
