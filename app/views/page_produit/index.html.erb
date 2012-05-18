@@ -1,5 +1,13 @@
 <div class="l_main_gutter product_list">
 
+    <div class="breadcrumb">
+    <ul>
+      <li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
+      <li><a class="" style="z-index:3">Produits</a></li>
+      <li><a class="" style="z-index:2">Fruits et légumes</a></li>
+    </ul>
+  </div>
+
 <h1><%= @titre %> <%= @produits.count %></h1>
 <p>
 	<%= @date = Date.current %>
@@ -128,7 +136,6 @@
 		</ul>
 	<% end %>
 
-  <span class="show_more">Voir plus de produits</span>
 
 
 

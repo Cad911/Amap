@@ -9,6 +9,16 @@ body {
         width:356px;
         height:137px;
         @include nav-sprite(sign_logo);
+        position:relative;
+        .link a {
+          display:block;
+          width:305px;
+          height:75px;
+          position:absolute;
+          right:0;
+          top:34px;
+          z-index:100;
+        }
       }
       width:960px;
       margin:0 auto;

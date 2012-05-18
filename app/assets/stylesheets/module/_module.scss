@@ -530,64 +530,6 @@ ul.dropdown_menu {
   background:$light_bg_color;
 }
 
-// Dock
-.dock {
-  width:100%;
-  height:60px;
-  background-repeat:repeat-x;
-  position:fixed;
-  bottom:0;
-  left:0;
-  z-index:1000;
-  border-top:1px solid $brown;
-  @include box-shadow(rgba(255,255,255, 1) 0px 0px 0px 1px inset, rgba(0,0,0, 1) 2px 2px 15px 0px);
-  .l_dock_wrapper {
-    width:920px;
-    height:60px;
-    margin-left:auto;
-    margin-right:auto;
-    padding-left:20px;    
-    padding-right:20px;    
-    ul {
-      width:750px;
-      padding:0;
-      margin:0;
-      float:left;
-      margin-top:-20px;
-      li {
-        float:left;
-        margin-left:20px;
-        position:relative;        
-        .deleted_p_c {
-          @extend .close_cross;
-        }
-        img {
-          @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 3px 0px);
-        }
-        &:first-child {
-          margin-left:0;
-        }
-      }
-    }
-    .checkout {
-      width:170px;
-      float:right;
-      margin-top:7px;
-      text-align:right;
-      .button {
-        font-size:16px;
-        padding:6px 0 4px 0;
-        a {
-          font-size:16px;        
-        }
-      }
-      .price {
-        @include title(1,30px);
-        margin:0px 20px -10px 0px;
-      }
-    }
-  }
-}
 
 // Classes réutilisables
 @mixin icon($name) {
@@ -667,5 +609,122 @@ ul.dropdown_menu {
     cursor:pointer;
   }
 }
+.minus {
+  display:block;
+  width:25px;
+  height:25px;
+  @include ui-sprite(minus);
+  &:hover {
+    cursor:pointer;
+  }
+}
+.plus {
+  display:block;
+  width:25px;
+  height:25px;
+  @include ui-sprite(plus);
+  &:hover {
+    cursor:pointer;
+  }
+}
 
-
+// Dock
+.dock {
+  width:100%;
+  height:60px;
+  background-repeat:repeat-x;
+  position:fixed;
+  bottom:0;
+  left:0;
+  z-index:1000;
+  border-top:1px solid $brown;
+  @include box-shadow(rgba(255,255,255, 1) 0px 0px 0px 1px inset, rgba(0,0,0, 1) 2px 2px 15px 0px);
+  .l_dock_wrapper {
+    width:920px;
+    height:60px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:20px;    
+    padding-right:20px;    
+    ul {
+      width:750px;
+      padding:0;
+      margin:0;
+      float:left;
+      margin-top:-20px;
+      li {
+        float:left;
+        margin-left:20px;
+        position:relative;   
+        &:hover {
+          .plus_btn, .minus_btn {
+            opacity:1;
+          }  
+        }     
+        .deleted_p_c {
+          @extend .close_cross;
+        }
+        .nombre_pack_p_c {
+          background:$light_brown;
+          @include borderradius(500px);
+          color:#ffffff;
+          text-shadow:none;
+          padding:0px 5px 0px 5px;
+          font-family:helveticaneue-bold;
+          font-size:12px;
+          position:absolute;
+          top:-5px;
+          left:-5px;          
+        }
+        .plus_btn, .minus_btn {
+          position:absolute;
+          top:39px;
+          left:33px;          
+          width:31px;
+          opacity:0.3;  
+          @include transition-property(opacity);
+          @include transition-duration(0.3s);
+          @include transition-timing-function(ease-out);       
+        }
+        .plus_btn {
+          .plus_quantite_p_c {
+            @extend .plus;
+            position:relative;
+            @include margin;
+          }          
+        }
+        .minus_btn {
+          left:1px;        
+          width:32px;          
+          .moins_quantite_p_c {
+            @extend .minus;  
+            @include margin;        
+          }          
+        }
+        img {
+          @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 3px 0px);
+        }
+        &:first-child {
+          margin-left:0;
+        }
+      }
+    }
+    .checkout {
+      width:170px;
+      float:right;
+      margin-top:7px;
+      text-align:right;
+      .button {
+        font-size:16px;
+        padding:6px 0 4px 0;
+        a {
+          font-size:16px;        
+        }
+      }
+      .price {
+        @include title(1,30px);
+        margin:0px 20px -10px 0px;
+      }
+    }
+  }
+}
