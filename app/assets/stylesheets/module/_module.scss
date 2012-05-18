@@ -559,10 +559,7 @@ ul.dropdown_menu {
         margin-left:20px;
         position:relative;        
         .deleted_p_c {
-          position:absolute;
-          top:-5px;
-          right:-5px;
-          @extend close_cross;
+          @extend .close_cross;
         }
         img {
           @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 3px 0px);
@@ -592,6 +589,83 @@ ul.dropdown_menu {
   }
 }
 
+// Classes réutilisables
+@mixin icon($name) {
+  display:block;
 
+  @if $name == 'basket' {
+    width:40px;
+    height:42px;
+  }
+  @if $name == 'basket_hover' {
+    width:40px;
+    height:42px;
+  }
+
+  @if $name == 'product' {
+    width:28px;
+    height:38px;  
+  }
+  @if $name == 'product_hover'{
+    width:28px;
+    height:38px;  
+  }
+
+  @if $name == 'farmer' {
+    width:33px;
+    height:34px;
+  }
+  @if $name == 'farmer_hover'{
+    width:33px;
+    height:34px;  
+  }  
+
+  @if $name == 'blog' {
+    width:26px;
+    height:38px;
+  }
+  @if $name == 'blog_hover' {
+    width:26px;
+    height:38px;
+  }
+
+  @if $name == 'logo'  {
+    width:35px;
+    height:35px;  
+  }
+  @if $name == 'logo_hover' {
+    width:35px;
+    height:35px;  
+  }
+  @if $name == 'close_cross' {
+    width:25px;
+    height:25px;  
+  }
+  @if $name == 'close_cross_hover' {
+    width:25px;
+    height:25px;  
+  }     
+
+
+  @if $name == #{$name} + _hover {
+    @include nav-sprite(#{$name});     
+  }  
+  @else {
+    @include nav-sprite($name);    
+  }
+
+}
+.close_cross {
+  display:block;
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  width:25px;
+  height:25px;
+  @include ui-sprite(close_cross);
+  &:hover {
+    cursor:pointer;
+  }
+}
 
 
