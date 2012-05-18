@@ -368,13 +368,13 @@
       },
       verif_scroll: function() {
         return $('.move_left,.move_right,.move_top,.move_bottom').each(function() {
-          var offset, position_bas_div, position_document_max, position_document_min, position_haut_div;
+          var offset, position_bas_div, position_document_bas, position_document_haut, position_haut_div;
           offset = $(this).offset();
           position_haut_div = offset.top;
-          position_bas_div = offset.top + $('.move_left').height();
-          position_document_max = $(document).scrollTop() + $(window).height();
-          position_document_min = $(document).scrollTop();
-          if (position_document_max > position_bas_div && position_document_min < position_haut_div) {
+          position_bas_div = offset.top + $(this).height();
+          position_document_bas = $(document).scrollTop() + $(window).height();
+          position_document_haut = $(document).scrollTop();
+          if ((position_document_bas > position_haut_div && position_haut_div > position_document_haut) && (position_document_bas > position_bas_div && position_bas_div > position_document_haut)) {
             if ($(this).hasClass('move_left')) {
               animation_display.move_to_left(this);
             }
