@@ -89,7 +89,7 @@ class CageotsController < InheritedResources::Base
 								flash[:notice] += "Produit ajoute et panier creer (info)"
 								@status_ajout = "add"
 								respond_to do |format|
-							  		format.json { render :json => {:cageot => @cageot[0],:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @cageot[0].total} }
+							  		format.json { render :json => {:cageot => @new_cageot,:produit => @rel_cageot_produit,:message => flash[:notice], :statut => @status_ajout, :total => @new_cageot.total} }
 							  		format.html { 
 										redirect_to cageot_path(@new_cageot) 
 									}

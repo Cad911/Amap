@@ -56,7 +56,8 @@
 		<% (@stock.photo_stocks).each do |image| %>
 			<li>
 				<% @image = image %>
-				<%= image_tag image.image_url, :width => '100', :height => '100' %> 
+				<%= image_tag image.image_url(:is_medium) %>
+				<%= link_to "delete", administration_user_stock_delete_image_path(current_user.id,@stock,image), :confirm => "Etes vous sur", :method => :delete %> 
 				<span> first_image = <% if image.first_image == 1 %> Oui <% else %> Non <% end %></span> 
 				<%= render 'update_form_photo' %>
 			</li>

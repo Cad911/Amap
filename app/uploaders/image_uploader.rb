@@ -3,7 +3,7 @@
 class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
@@ -36,10 +36,33 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  #version :thumb do
-  #   process  :resize_to_fill => [100, 100]
-  #end
-
+  
+  def who_is_bigger
+  	manipulate! do |img|
+  		image = MiniMagick::Image.open(img.path)
+  		if image[:heigth] > image[:width]
+  			return "h"
+  		else
+  			return "w"
+  		end
+  	end
+  end
+  
+  version :is_small do
+ 	  process  :resize_to_fill => [53, 53,"NorthEast"]
+  end
+  
+  version :is_medium do
+     process  :resize_to_fill => [188, 188,"NorthEast"]
+  end
+  
+  version :is_big do
+     process  :resize_to_fill => [273, 273,"NorthEast"]
+  end
+  
+  version :is_huge do
+     process  :resize_to_fill => [428, 428,"NorthEast"]
+  end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   # def extension_white_list

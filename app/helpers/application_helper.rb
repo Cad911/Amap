@@ -13,7 +13,7 @@ module ApplicationHelper
 			@product_cageot =  RelCageotProduit.where("cageot_id = ? ",@cageot.id).order('created_at DESC')
 		else
 			@cageot = nil
-			@product_cageot = 0
+			@product_cageot = []
 		end
     end
     
