@@ -15,7 +15,7 @@ gem 'cancan'
 gem 'simple_form'
 gem 'carrierwave'
 gem "mini_magick", "~> 3.4"
-
+gem "rmagick"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

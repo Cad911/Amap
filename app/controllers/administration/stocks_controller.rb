@@ -75,7 +75,12 @@ class Administration::StocksController < InheritedResources::Base
 	end
 	redirect_to [:administration,current_user,@stock]
   end
-
+  
+  #____________________________ DELETE IMAGE _________________________________________________
+  def delete_image
+  	@image_stock = PhotoStock.find(params[:image_id])
+  	@image_stock.destroy
+  end
 
 
 

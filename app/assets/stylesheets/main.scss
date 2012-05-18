@@ -230,6 +230,14 @@ $ui-layout:smart;
 		width:35px;
 		height:35px;  
 	}
+	@if $name == 'close_cross' {
+		width:25px;
+		height:25px;  
+	}
+	@if $name == 'close_cross_hover' {
+		width:25px;
+		height:25px;  
+	}			
 
 
 	@if $name == #{$name} + _hover {
@@ -239,6 +247,12 @@ $ui-layout:smart;
 		@include nav-sprite($name);    
 	}
 
+}
+.close_cross {
+	display:block;
+	width:25px;
+	height:25px;
+	@include ui-sprite(close_cross);
 }
 // Ajoute un fond pour créer une colonne "fictive" à la div l_main_gutter {
 .has_column {

@@ -31,7 +31,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 				@photo_first_image[0].save	
 			end
 		else
-			@photo_first_image = PhotoStock.where('user_id = ? AND first_image = "1"', current_user.id)
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
 			#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 			if @photo_first_image.count == 0
 				params[:photo_user][:first_image] = "1"

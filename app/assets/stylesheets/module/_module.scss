@@ -12,6 +12,7 @@
   padding:5px;
   background:#ffffff;
   border:solid 1px #dcdcdc;
+  overflow:hidden;
   &:after {
     content:"";
     position:absolute;
@@ -556,6 +557,13 @@ ul.dropdown_menu {
       li {
         float:left;
         margin-left:20px;
+        position:relative;        
+        .deleted_p_c {
+          position:absolute;
+          top:-5px;
+          right:-5px;
+          @extend close_cross;
+        }
         img {
           @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 3px 0px);
         }

@@ -94,6 +94,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       #______ ROUTE POUR IMAGE STOCK ____
       match '/stocks/:stock_id/add_image' => 'stocks#add_image', :as => :stock_add_image, :via => :post
       match '/stocks/:stock_id/update_image/:image_id' => 'stocks#update_image', :as => :stock_update_image, :via => :put
+      match '/stocks/:stock_id/delete_image/:image_id' => 'stocks#delete_image', :as => :stock_delete_image, :via => :delete
       
       
       resources :produit_vente_libres

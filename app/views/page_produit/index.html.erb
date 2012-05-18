@@ -27,7 +27,7 @@
 			        <div class="image">
 			          <div class="has_corners_shadow is_huge">
 			          	<% if !(@first_huge_product.stock.default_image).nil? %>
-			          		<%= image_tag (@first_huge_product.stock.default_image).image_url(), :width => "440" %>
+			          		<%= image_tag (@first_huge_product.stock.default_image).image_url(:is_huge) if !(@first_huge_product.stock.default_image).nil? %>
 			          	<% end %>
 			          </div>
 			        </div>
@@ -44,7 +44,7 @@
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
 			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
 			          	<% end %>
 			          </div>
 			        </div>
@@ -69,7 +69,7 @@
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
 			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
 			          	<% end %>
 			          </div>
 			        </div>
@@ -94,7 +94,7 @@
 		        <div class="image">
 		          <div class="has_corners_shadow is_huge">
 		          	<% if !(@last_huge_product.stock.default_image).nil? %>
-			          	<%= image_tag (@last_huge_product.stock.default_image).image_url(), :width => "440" %>
+			          	<%= image_tag (@last_huge_product.stock.default_image).image_url(:is_huge) if !(@last_huge_product.stock.default_image).nil? %>
 			        <% end %>
 		          </div>
 		        </div>
@@ -112,7 +112,7 @@
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
 			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(), :width => "200" %>
+			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
 			          	<% end %>
 			          </div>
 			        </div>
