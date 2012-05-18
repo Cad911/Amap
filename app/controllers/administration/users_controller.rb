@@ -21,8 +21,46 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	end
 	
 	
-	#_________________________________ ADD IMAGE _______________________________________
-	def add_image
+	
+	# _____________________________________ CREATE ____________________________________________________
+	def create
+		@user = User.new(params[:user])
+		@user.direction_id = current_user.id
+			if @user.save
+		  		flash[:notice] = 'Revendeur ajoute'
+			  	 		redirect_to [:administration,@user]
+		  	else
+		  		render 'new'
+		  	end
+	end
+	
+	def edit
+	
+	end
+	
+		
+	# _____________________________________ UPDATE ____________________________________________________
+	def update
+		@user = User.find(params[:id])
+		if @user.update_attributes(params[:user])
+	  		flash[:notice] = 'User mis a jour'
+	  		redirect_to administration_user_path(@user)
+	  	else
+	  		render 'edit'
+	  	end
+	end
+	
+	
+  
+  #____________________________________________________________________________________
+  #____________________________________________________________________________________
+  #__________________________________ IMAGE ___________________________________________
+  #____________________________________________________________________________________
+  #____________________________________________________________________________________
+  
+	
+  #_________________________________ ADD IMAGE _______________________________________
+  def add_image
 	    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
 		if params[:photo_user][:first_image] == "1"
 			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
@@ -41,7 +79,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		@photo_user.user_id = current_user.id
 		@photo_user.update_attributes(params[:photo_user])
 		redirect_to [:administration,current_user]
-	end
+  end
 
 
 
@@ -74,36 +112,11 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	redirect_to [:administration,current_user]
   end
 
-	
-	
-	
-	
-	# _____________________________________ CREATE ____________________________________________________
-	def create
-		@user = User.new(params[:user])
-		@user.direction_id = current_user.id
-			if @user.save
-		  		flash[:notice] = 'Revendeur ajoute'
-			  	 		redirect_to [:administration,@user]
-		  	else
-		  		render 'new'
-		  	end
-	end
-	
-	def edit
-	
-	end
-	
-		
-	# _____________________________________ UPDATE ____________________________________________________
-	def update
-		@user = User.find(params[:id])
-		if @user.update_attributes(params[:user])
-	  		flash[:notice] = 'User mis a jour'
-	  		redirect_to administration_user_path(@user)
-	  	else
-	  		render 'edit'
-	  	end
-	end
+  #____________________________ DELETE IMAGE _________________________________________________
+  def delete_image
+  	@image_user = PhotoUser.find(params[:image_id])
+  	@image_user.remove_image = true
+  	@image_user.destroy
+  end
 
 end

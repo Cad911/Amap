@@ -88,6 +88,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       #______ ROUTE POUR IMAGE USER ____
       match 'add_image' => 'users#add_image', :via => :post
       match 'update_image/:image_id' => 'users#update_image', :as => :user_update_image, :via => :put
+      match 'delete_image/:image_id' => 'users#delete_image', :as => :user_delete_image, :via => :delete
       
       resources :stocks
       match 'exist_stock/:produit_autorise_id' => "stocks#alreadyExistStock", :as => :exist_stock, :via => :get #VERIF AJAX SI PRODUIT DEJA EN STOCK
