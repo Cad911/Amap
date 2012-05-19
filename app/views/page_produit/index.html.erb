@@ -1,6 +1,6 @@
 <div class="l_main_gutter product_list">
 
-    <div class="breadcrumb">
+  <div class="breadcrumb">
     <ul>
       <li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
       <li><a class="" style="z-index:3">Produits</a></li>
@@ -9,10 +9,6 @@
   </div>
 
 <h1><%= @titre %> <%= @produits.count %></h1>
-<p>
-	<%= @date = Date.current %>
-	<%= @date_end = @date.months_since(24) %>
-</p>
 <% if @produits.count == 0 %>
   <p> Aucun produit</p>
 <% else %>
