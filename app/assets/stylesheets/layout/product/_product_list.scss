@@ -1,4 +1,29 @@
 .l_main_gutter.product_list, .basket_list {
+  .filters, .activation {
+    float:right;
+    span {
+      color:$brown;      
+    }
+    .filter {
+      @include embossed_button($light_brown);
+      padding: 5px 10px 2px 10px;
+      &:active {
+        @include box-shadow(rgba(0,0,0, 0.0) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+        background-color:$light_bg_color;
+        color:$brown;        
+      }
+      .vertical_devider {
+        height:21px !important;
+        position:relative;
+        top:6px;
+      }
+      .down_arrow {
+        position:relative;
+        top:2px;
+        left:5px;
+      }
+    }    
+  }
   ul.l_product_list {
     margin:0;
     padding:0;

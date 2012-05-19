@@ -27,7 +27,52 @@
   }
 }
 
+// applique un style de bouton inscrusté
+@mixin embossed_button($border-color) {
+  @include borderradius(50px);
+  border:solid 1px $border-color;
+  color:$brown;
+  padding:7px 10px 4px 10px;
+  margin-left:10px;
+  @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+  &:hover {
+    cursor:pointer;
+    background-color:rgba(255,255,255, 0.3);
+    @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+  }
+  &:active {
+    color:#ffffff;
+    text-shadow:none;
+    background-color: transparentize($border-color, 0.7);
+    border:solid 1px darken($border-color, 5%);
+    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+  }
+}
 
+// applique une style bouton-switch
+.toggle {
+  @include borderradius(50px);
+  @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+  border:solid 1px $light_brown;
+  color:#ffffff !important; 
+  text-shadow:none;
+  padding: 2px 8px 0px 20px;
+  background-color:$red; 
+  position:relative;
+  .switch {
+    position:absolute;
+    top:-4px;
+    left:-4px;
+  }
+  &.off {
+    padding: 2px 20px 0px 8px;
+    background-color:$light_bg_color;
+    color:$brown !important;
+    .switch {
+      left:30px;      
+    }
+  }
+}
 
 // Bouton basique
 span.button {
@@ -626,6 +671,35 @@ ul.dropdown_menu {
   &:hover {
     cursor:pointer;
   }
+}
+.switch {
+  display:inline-block;
+  width:22px;
+  height:25px;
+  @include ui-sprite(switch);
+  &:hover {
+    cursor:pointer;
+  }  
+}
+.down_arrow {
+  display:inline-block;
+  width:9px;
+  height:11px;
+  @include ui-sprite(down_arrow);
+  &:hover {
+    cursor:pointer;
+  }  
+}
+
+@mixin vertical_devider($height) {
+  display:inline-block;
+  width:2px;
+  height:$height;
+  background-image:url(/../images/vertical_devider.png);
+}
+
+.vertical_devider {
+  @include vertical_devider(15px);
 }
 
 // Dock

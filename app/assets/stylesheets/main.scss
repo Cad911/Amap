@@ -102,27 +102,6 @@ $ui-layout:smart;
 @import "ui/*.png";
 @include all-ui-sprites;
 
-// applique un style de bouton inscrusté
-@mixin filter($border-color) {
-	@include borderradius(50px);
-	border:solid 1px $border-color;
-	color:$brown;
-	padding:7px 10px 4px 10px;
-	margin-left:10px;
-	@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	&:hover {
-		cursor:pointer;
-		background-color:rgba(255,255,255, 0.3);
-		@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	}
-	&:active {
-		color:#ffffff;
-		text-shadow:none;
-		background-color: transparentize($border-color, 0.7);
-		border:solid 1px darken($border-color, 5%);
-		@include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	}
-}
 
 // fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
 @mixin sunshine {
