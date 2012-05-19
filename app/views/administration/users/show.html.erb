@@ -94,7 +94,7 @@
 						<li>
 							<% @image = image %>
 							<%= image_tag image.image_url(:is_medium) %> 
-							<%= link_to "delete", administration_user_user_delete_image_path(image), :confirm => "Etes vous sur", :method => :delete %> 
+							<%= link_to "delete", administration_user_user_delete_image_path(current_user.id,image), :confirm => "Etes vous sur", :method => :delete %> 
 							<span> first_image = <% if image.first_image == 1 %> Oui <% else %> Non <% end %></span> 
 							<%= render 'update_form_photo' %>
 						</li>

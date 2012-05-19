@@ -157,8 +157,37 @@
     };
     cageot = {
       init: function() {
-        cageot.form_event();
-        return cageot.ajax_formulaire();
+        cageot.ajax_formulaire();
+        if ($('#form_add_product').length > 0) cageot.form_event();
+        if ($('.add_product_link').length > 0) return cageot.event_button_add();
+      },
+      event_button_add: function() {
+        return $('.add_product_link').bind('click', function() {
+          var id_button, id_produit;
+          id_button = $(this).attr('id');
+          id_produit = id_button.replace('product_', '');
+          return cageot.add_product_ajax(id_produit);
+        });
+      },
+      add_product_ajax: function(id_produit) {
+        var data_;
+        data_ = {
+          produit_vente_libre: {
+            id: id_produit,
+            nombre_pack: 1
+          }
+        };
+        return $.ajax({
+          type: "POST",
+          data: data_,
+          url: '/cageot/ajoutProduit',
+          format: "json",
+          success: function(data) {
+            if ($('.dock').css('display') === 'none') cageot.show_dock();
+            cageot.add(data);
+            return cageot.update_html_price(data['total']);
+          }
+        });
       },
       form_event: function() {
         $('#form_add_product #add_product').bind('click', function() {
@@ -171,11 +200,11 @@
           console.log($(this).parent('li').attr('id'));
           return cageot["delete"]($(this).parent('li').attr('id'));
         });
-        $(class_id + '>span.plus_quantite_p_c').bind('click', function() {
-          return cageot.plus_quantite($(this).parent('li').attr('id'));
+        $(class_id + '>div>span.plus_quantite_p_c').bind('click', function() {
+          return cageot.plus_quantite($(this).parent('div').parent('li').attr('id'));
         });
-        return $(class_id + '>span.moins_quantite_p_c').bind('click', function() {
-          return cageot.moins_quantite($(this).parent('li').attr('id'));
+        return $(class_id + '>div>span.moins_quantite_p_c').bind('click', function() {
+          return cageot.moins_quantite($(this).parent('div').parent('li').attr('id'));
         });
       },
       ajax_formulaire: function() {
@@ -262,14 +291,41 @@
         return $('.checkout>.price').text(price + '€');
       },
       add_html_product_in_cageot: function(id_product, nb_pack, url_image) {
-        var li_html;
-        li_html = '<li id="' + id_product + '"><img src="' + url_image['image']['is_small']['url'] + '" class="has_corners_shadow is_small">';
-        li_html += '<span class="nombre_pack_p_c"> ' + nb_pack + ' </span> <span class="deleted_p_c"> deleted </span>';
-        li_html += '<span class="plus_quantite_p_c"> + </span><span class="moins_quantite_p_c"> - </span>';
-        li_html += '</li>';
-        return $('.l_dock_wrapper>ul').prepend(li_html);
+        var new_delete, new_div_minus_quantite, new_div_plus_quantite, new_image, new_li, new_nombre_pack, new_span_minus_quantite, new_span_plus_quantite, src_image;
+        new_li = $(document.createElement('li'));
+        new_li.attr('id', id_product);
+        if (url_image !== null) {
+          src_image = url_image['image']['is_small']['url'];
+        } else {
+          src_image = '';
+        }
+        new_image = $(document.createElement('img'));
+        new_image.addClass('has_corners_shadow is_small');
+        new_image.attr('src', src_image);
+        new_nombre_pack = $(document.createElement('span'));
+        new_nombre_pack.addClass("nombre_pack_p_c");
+        new_nombre_pack.text(nb_pack);
+        new_delete = $(document.createElement('span'));
+        new_delete.addClass("deleted_p_c");
+        new_div_plus_quantite = $(document.createElement('div'));
+        new_div_plus_quantite.addClass('plus_btn');
+        new_span_plus_quantite = $(document.createElement('span'));
+        new_span_plus_quantite.addClass('plus_quantite_p_c');
+        new_div_plus_quantite.append(new_span_plus_quantite);
+        new_div_minus_quantite = $(document.createElement('div'));
+        new_div_minus_quantite.addClass('minus_btn');
+        new_span_minus_quantite = $(document.createElement('span'));
+        new_span_minus_quantite.addClass('moins_quantite_p_c');
+        new_div_minus_quantite.append(new_span_minus_quantite);
+        new_li.append(new_image);
+        new_li.append(new_nombre_pack);
+        new_li.append(new_delete);
+        new_li.append(new_div_plus_quantite);
+        new_li.append(new_div_minus_quantite);
+        return $('.l_dock_wrapper>ul').prepend(new_li);
       },
       update_html_quantite: function(id_product, nb_pack) {
+        console.log('quantite_ :' + id_product);
         return $('.l_dock_wrapper>ul>li#' + id_product + '>span.nombre_pack_p_c').text(nb_pack);
       },
       show_dock: function() {
