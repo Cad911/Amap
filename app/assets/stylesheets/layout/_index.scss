@@ -37,13 +37,16 @@ body .l_wrapper .l_main_gutter.home_page {
 			}
 		}
 		&.slider {
-			height:360px;
+			height:280px;
 			border-bottom:#C8C5BF 1px solid;
 			padding:20px;
 			.image {
 				width:525px;				
 				height:270px;				
-				border:solid 1px #ffffff;
+				border-top:solid 1px #C8C5BF;
+				border-left:solid 1px #C8C5BF;
+				border-bottom:solid 1px #ffffff;
+				border-right:solid 1px #ffffff;
 			}
 			ul.nav {
 				li {
@@ -131,7 +134,7 @@ body .l_wrapper .l_main_gutter.home_page {
 		border-bottom:solid 1px #ffffff;
 		position:relative;
 		overflow:hidden;
-		@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
+  	@include box-shadow(rgba(0,0,0,0.7) 0px 0px 10px 3px inset);	
 		&.agriculteurs {
 			@include home_page-sprite(agriculteurs);
 			.content {
@@ -157,9 +160,9 @@ body .l_wrapper .l_main_gutter.home_page {
 			left:0;
 			top:322px;
 			text-align:center;
-			@include transition-property(all);
-			@include transition-duration(0.8s);
-			@include transition-timing-function(ease-out);
+		  @include transition-property(all);
+  		@include transition-duration(0.8s);
+  		@include transition-timing-function(ease-out);
 			.wrapper {
 				width:500px;
 				margin:0 auto;

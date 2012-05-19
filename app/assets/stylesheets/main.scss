@@ -1,5 +1,6 @@
 // Définition des couleurs principales
 $brown:#69513b;
+$light_brown:#c3aa86;
 $lightbrown:#c0a782;
 
 $red:#d1534a;
@@ -14,74 +15,73 @@ $dark_bg_color:#f0ede6;
 
 // Définition des polices en CSS3
 @font-face {
-  font-family: bellopro;
-  src: url('/../fonts/bellopro.otf');
-  font-weight:lighter !important;
+	font-family: bellopro;
+	src: url('/../fonts/bellopro.otf');
+	font-weight:normal !important;
 }
 @font-face {
-  font-family: helveticaneue;
-  src: url('/../fonts/HelveticaNeueLTStd-Roman.otf');
+	font-family: helveticaneue;
+	src: url('/../fonts/HelveticaNeueLTStd-Roman.otf');
 }
 @font-face {
-  font-family: helveticaneue-italic;
-  src: url('/../fonts/HelveticaNeueLTStd-It.otf');
+	font-family: helveticaneue-italic;
+	src: url('/../fonts/HelveticaNeueLTStd-It.otf');
 }
 @font-face {
-  font-family: helveticaneue-bold;
-  src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
+	font-family: helveticaneue-bold;
+	src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
 }
 
 // Style de titre
 @mixin title($style, $taille) {
-  @if $style == 1 {
-    font-family: bellopro, Lobster;
-    color:$brown;
-    font-weight:normal;
-  }
-  @else if $style == 2 {
-    font-family: helveticaneue, helvetica;
-    color: $red;
-  }
-  text-shadow:1px 1px 1px #ffffff;
-  font-size: $taille;
+	@if $style == 1 {
+		font-family: bellopro, Lobster;
+		color:$brown;
+		font-weight:normal !important
+		;
+	}
+	@else if $style == 2 {
+		font-family: helveticaneue, helvetica;
+		color: $red;
+	}
+	text-shadow:1px 1px 1px #ffffff;
+	font-size: $taille;
 }
 
 // Coins arrondis
 @mixin borderradius($arrdondis) {
-  -webkit-border-radius: $arrdondis;
-  -moz-border-radius: $arrdondis;
-  border-radius: $arrdondis;
+	-webkit-border-radius: $arrdondis;
+	-moz-border-radius: $arrdondis;
+	border-radius: $arrdondis;
 }
 @mixin box {
-    @include borderradius(5px); 
-    -webkit-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
-    -moz-box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
-    box-shadow: rgba(0,0,0,0.3) 0px 0px 10px 2px;
-    border: solid 1px #ffffff;
-    background:#fafafa url(/../images/patterns/paper.png) repeat;
+	@include borderradius(5px); 
+	@include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
+	border: solid 1px #ffffff;
+	background:#fafafa url(/../images/patterns/paper.png) repeat;
 }
 
 @mixin margin {
-  margin-left:auto;
-  margin-right:auto;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 
 // Box shadow
 @mixin boxshadow($x, $y, $blur, $spread, $color) {
-  -webkit-box-shadow: $x $y $blur $spread $color;
-  -moz-box-shadow: $x $y $blur $spread $color;
-  box-shadow: $x $y $blur $spread $color;
+	-webkit-box-shadow: $x $y $blur $spread $color;
+	-moz-box-shadow: $x $y $blur $spread $color;
+	box-shadow: $x $y $blur $spread $color;
 }
 
 
 @-webkit-keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
+		from {
+				-webkit-transform: rotate(0deg);
+		}
+		to {
+				-webkit-transform: rotate(360deg);
+		}
 }
 
 //Définitions des Sprites
@@ -102,121 +102,143 @@ $ui-layout:smart;
 @import "ui/*.png";
 @include all-ui-sprites;
 
+// applique un style de bouton inscrusté
+@mixin filter($border-color) {
+	@include borderradius(50px);
+	border:solid 1px $border-color;
+	color:$brown;
+	padding:7px 10px 4px 10px;
+	margin-left:10px;
+	@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+	&:hover {
+		cursor:pointer;
+		background-color:rgba(255,255,255, 0.3);
+		@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+	}
+	&:active {
+		color:#ffffff;
+		text-shadow:none;
+		background-color: transparentize($border-color, 0.7);
+		border:solid 1px darken($border-color, 5%);
+		@include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+	}
+}
 
 // fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
 @mixin sunshine {
-  position:absolute;
-  display:block;
-  width:257px;
-  height:257px;
-  top:-40px;
-  left:0;
-  .round_of_sunshine {
-    display:block;
-    width: 115px;
-    height: 115px;
-    background-image:url('/../images/sunshine_sprite_small.png');
-    background-position: center top;
-    z-index:100;
-    top:0;
-    left:0;
-  }
-  .ray_of_sunshine {
-    position:absolute;
-    top:-71px;
-    left:-71px;
-    display:block;
-    width: 257px;
-    height: 257px;
-    background-image:url('/../images/sunshine_sprite_small.png');
-    background-position: center bottom;
-    z-index:-1;
-    -webkit-animation-name:             rotate;
-    -webkit-animation-duration:         100s;
-    -webkit-animation-iteration-count:  infinite;
-    -webkit-transition-timing-function: linear;
-  }
+	position:absolute;
+	display:block;
+	width:257px;
+	height:257px;
+	top:-40px;
+	left:0;
+	.round_of_sunshine {
+		display:block;
+		width: 115px;
+		height: 115px;
+		background-image:url('/../images/sunshine_sprite_small.png');
+		background-position: center top;
+		z-index:100;
+		top:0;
+		left:0;
+	}
+	.ray_of_sunshine {
+		position:absolute;
+		top:-71px;
+		left:-71px;
+		display:block;
+		width: 257px;
+		height: 257px;
+		background-image:url('/../images/sunshine_sprite_small.png');
+		background-position: center bottom;
+		z-index:-1;
+		-webkit-animation-name:             rotate;
+		-webkit-animation-duration:         100s;
+		-webkit-animation-iteration-count:  infinite;
+		-webkit-transition-timing-function: linear;
+	}
 }
 
 // Nuages
 @mixin clouds {
-  width:100%;
-  position:absolute;
-  top:0;
-  .big_clouds {
-    .cloud {
-      display:block;
-      width:133px;
-      height:41px;       
-      @include nav-sprite(cloud);
-    }
-  }
-  .little_clouds {
-    .cloud{
-       display:block;    
-       width:100px;
-       height:32px;      
-       @include nav-sprite(cloud_little);
-    } 
-  }
+	width:100%;
+	position:absolute;
+	top:0;
+	.big_clouds {
+		.cloud {
+			display:block;
+			width:133px;
+			height:41px;       
+			@include nav-sprite(cloud);
+		}
+	}
+	.little_clouds {
+		.cloud{
+			 display:block;    
+			 width:100px;
+			 height:32px;      
+			 @include nav-sprite(cloud_little);
+		} 
+	}
 }
 
-// Classes réutilisables
-@mixin icon($name) {
-  display:block;
+// Ajoute un fond pour créer une colonne "fictive" à la div l_main_gutter {
+.has_column {
+	background: url(/../images/bg_column.png) repeat;
+}
+.has_dark_bg {
+	background: url(/../images/bg_darkener.png) repeat;  
+}
 
-  @if $name == 'basket' {
-    width:40px;
-    height:42px;
-  }
-  @if $name == 'basket_hover' {
-    width:40px;
-    height:42px;
-  }
-
-  @if $name == 'product' {
-    width:28px;
-    height:38px;  
-  }
-  @if $name == 'product_hover'{
-    width:28px;
-    height:38px;  
-  }
-
-  @if $name == 'farmer' {
-    width:33px;
-    height:34px;
-  }
-  @if $name == 'farmer_hover'{
-    width:33px;
-    height:34px;  
-  }  
-
-  @if $name == 'blog' {
-    width:26px;
-    height:38px;
-  }
-  @if $name == 'blog_hover' {
-    width:26px;
-    height:38px;
-  }
-
-  @if $name == 'logo'  {
-    width:35px;
-    height:35px;  
-  }
-  @if $name == 'logo_hover' {
-    width:35px;
-    height:35px;  
-  }
-
-  @if $name == #{$name} + _hover {
-    @include nav-sprite(#{$name});     
-  }  
-  @else {
-    @include nav-sprite($name);    
-  }
-
+// Design de la Lighbox
+.lightbox {
+	width:  500px;
+	position:fixed;
+	z-index:10000;
+	top:50%;
+	left:50%;
+	border:solid 1px $light_brown;
+	background:#fafafa url(/../images/patterns/paper.png) repeat;
+	@include borderradius(5px);
+	@include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
+	@include margin;
+	overflow:hidden;
+	.header {
+		background-image:url(../images/bar.png);    
+		text-align:center;   
+		-webkit-border-top-left-radius: 5px;
+		-webkit-border-top-right-radius: 5px;
+		-moz-border-radius-topleft: 5px;
+		-moz-border-radius-topright: 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;  
+		@include box-shadow(rgba(0,0,0, 0.3) 0px 1px 1px);   
+		.title {
+			margin:0;
+			padding:8px 0 2px 0;
+			height:30px;
+			@include title(1,25px);
+		}
+	}
+	.content {
+		padding:20px 40px 20px 40px;
+		border-bottom:solid 1px #C8C5BF;
+		.title {
+			@include title(2,16px);
+		}
+	}
+	.footer {
+		border-top:solid 1px #ffffff;
+		padding:5px 40px;
+		text-align:right;
+		.button {    
+			padding:0;
+			&::before {
+				background-image:none !important;  
+				border:none;
+			}
+		}
+	}
 }
 
 // Inclusion de fichier .scss
@@ -230,5 +252,5 @@ $ui-layout:smart;
 
 
 .sunshine {
-  @include sunshine;
+	@include sunshine;
 }

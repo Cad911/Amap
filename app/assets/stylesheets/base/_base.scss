@@ -17,6 +17,10 @@ h3 { @include title(2, 22px);}
 h4 { @include title(2, 18px);}
 h5 { @include title(2, 16px);}
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight:normal !important;
+}
+
 ul {
   padding:0;
   li {
