@@ -38,7 +38,7 @@
   <div class="l_header_wrapper">
 
 	
-    <div class="logo"><%= link_to "",root_path %></div>
+    <div class="logo"><div class="link"><%= link_to "",root_path %></div></div>
 	
     
     <div class="l_nav">
@@ -177,8 +177,12 @@
 	      	<% end %>
 	      		<span class="nombre_pack_p_c"> <%= product_cageot.nombre_pack %> </span> 
 	      		<span class="deleted_p_c"></span>
-	      		<span class="plus_quantite_p_c"> + </span>
-	      		<span class="moins_quantite_p_c"> - </span>
+	      		<div class="plus_btn">
+              <span class="plus_quantite_p_c"></span>
+            </div>
+	      		<div class="minus_btn">
+              <span class="moins_quantite_p_c"></span>
+            </div>
 	      	</li>
 	      <% end %>
 		<% end %>

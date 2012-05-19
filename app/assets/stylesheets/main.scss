@@ -245,10 +245,10 @@ $ui-layout:smart;
 @import "base/normalize";
 @import "compass/utilities";
 @import "base/base";
+@import "module/module";
 @import "layout/layout";
 @import "state/state";
 @import url(http://fonts.googleapis.com/css?family=Lobster);     // police google web-fond alternative de Bello Pro
-@import "module/module";
 
 
 .sunshine {
