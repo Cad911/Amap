@@ -64,4 +64,25 @@ class User < ActiveRecord::Base
     def panier_en_vente
     	return Panier.where(:revendeur_id => self.id).count
     end
+    
+    
+    #_____ IMAGE USER ________________________________
+    def default_image
+  	  @default_photo = PhotoUser.where('user_id = ? AND first_image = "1"',self.id)
+  	  if @default_photo.count > 0
+  		@mydefault_photo = PhotoUser.find(@default_photo[0].id)
+  		return @mydefault_photo
+  	  else
+  		return nil
+  	  end
+    end
+  
+    def other_image
+  	  @other_image = PhotoUser.where('user_id = ? AND first_image = "0"',self.id)
+  	  if @other_image.count > 0
+  		return @other_image
+  	  else
+  		return nil
+  	  end
+    end
 end

@@ -20,7 +20,9 @@
         <li class="l_vcard has_corners_shadow is_vcard">
           <div class="l_head_vcard l_photo_description is_horizontal ">
 
-            <div class="image has_corners_shadow is_small"></div>
+            <div class="image has_corners_shadow is_small">
+			    <%= image_tag (revendeur.default_image).image_url(:is_small) if !(revendeur.default_image).nil? %>
+            </div>
 
             <div class="content">
               <p class="title">

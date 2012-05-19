@@ -174,7 +174,7 @@ $(document).ready(->
           )
         add:(response) ->
              if response['statut'] == "add"
-                    cageot.add_html_product_in_cageot(response['produit']['id'],response['produit']['nombre_pack'])
+                    cageot.add_html_product_in_cageot(response['produit']['id'],response['produit']['nombre_pack'],response['url_image'])
                     cageot.event_form_generate(".l_dock_wrapper>ul>li##{response['produit']['id']}")
                  else
                     cageot.update_html_quantite(response['produit']['id'],response['produit']['nombre_pack'])
@@ -223,8 +223,8 @@ $(document).ready(->
                  cageot.update_html_price(total_price)
         update_html_price: (price) ->
             $('.checkout>.price').text(price+'€')
-        add_html_product_in_cageot: (id_product,nb_pack) ->
-            li_html =  '<li id="'+id_product+'"><img src="" class="has_corners_shadow is_small">'
+        add_html_product_in_cageot: (id_product,nb_pack,url_image) ->
+            li_html =  '<li id="'+id_product+'"><img src="'+url_image['image']['is_small']['url']+'" class="has_corners_shadow is_small">'
             li_html += '<span class="nombre_pack_p_c"> '+nb_pack+' </span> <span class="deleted_p_c"> deleted </span>'
             li_html += '<span class="plus_quantite_p_c"> + </span><span class="moins_quantite_p_c"> - </span>'
             li_html += '</li>'
