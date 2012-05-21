@@ -1,77 +1,77 @@
-<h1><%= @titre %> </h1>
-<p>Find me in app/views/page_produit/index.html.erb</p>
-<p id="notice"><%= notice %></p>
-<% if !@abonnement_panier.nil? %>
-	<table class="table table-striped">
-			<tr>
-				<th>Titre</th>
-				<th>Agriculteur</th>
-				<th> Quantite </th>
-				<th> Date debut </th>
-				<th> Date fin </th>
-				<th> Prix(unitaire)</th>
-				<th> Action</th>
-				
-			</tr>
-			
-			<tr>
-				<td> <%= @abonnement_panier.panier.titre %> </td>
-				<td> <%= @abonnement_panier.panier.user.nom %> </td>
-				<td> <%= @abonnement_panier.quantite %>  (voir dans la table)</td>
-				<td> <%= @abonnement_panier.date_debut %> </td>
-				<td> <%= @abonnement_panier.date_fin %> </td>
-				<td> <%= @abonnement_panier.panier.prix_unite_ttc %> € </td>
-				<td> 
-					<span class="btn btn-info"> <%= link_to "+",add_quantite_abo_path(@abonnement_panier.id) %> </span> 
-					<span class="btn btn-info"> <%= link_to "-",supp_quantite_abo_path(@abonnement_panier.id) %> </span> 
-					<span class="btn btn-info"> <%= link_to "SUPP",supp_abonnement_path(@abonnement_panier.id) %> </span> 
-				
-				</td>
-			
-			</tr>
-	</table>
-<% elsif !@listing_produit.nil? %>
-	
+<div class="l_main_gutter l_process_order first_step">
+	<h1><%= @titre %> </h1>
+	<p id="notice"><%= notice %></p>
+	<% if !@abonnement_panier.nil? %>
 		<table class="table table-striped">
-			<tr>
-				<th>Titre</th>
-				<th>Agriculteur</th>
-				<th> Quantite </th>
-				<th> Poids(Unitaire) </th>
-				<th>Prix(unitaire)</th>
-				<th> Action</th>
+				<tr>
+					<th>Titre</th>
+					<th>Agriculteur</th>
+					<th> Quantite </th>
+					<th> Date debut </th>
+					<th> Date fin </th>
+					<th> Prix(unitaire)</th>
+					<th> Action</th>
+					
+				</tr>
 				
-			</tr>
+				<tr>
+					<td> <%= @abonnement_panier.panier.titre %> </td>
+					<td> <%= @abonnement_panier.panier.user.nom %> </td>
+					<td> <%= @abonnement_panier.quantite %>  (voir dans la table)</td>
+					<td> <%= @abonnement_panier.date_debut %> </td>
+					<td> <%= @abonnement_panier.date_fin %> </td>
+					<td> <%= @abonnement_panier.panier.prix_unite_ttc %> € </td>
+					<td> 
+						<span class="btn btn-info"> <%= link_to "+",add_quantite_abo_path(@abonnement_panier.id) %> </span> 
+						<span class="btn btn-info"> <%= link_to "-",supp_quantite_abo_path(@abonnement_panier.id) %> </span> 
+						<span class="btn btn-info"> <%= link_to "SUPP",supp_abonnement_path(@abonnement_panier.id) %> </span>				
+					</td>
+				
+				</tr>
+		</table>
+	<% elsif !@listing_produit.nil? %>
 		
-		
-		<% @listing_produit.each do |panier| %>
-		<tr>
-			<td> <%= panier.produit_vente_libre.titre %> </td>
-			<td> <%= panier.produit_vente_libre.user.nom %> </td>
-			<td> <%= panier.nombre_pack %> </td>
-			<td> <%= panier.produit_vente_libre.quantite %> <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
-			<td> <%= panier.produit_vente_libre.prix_unite_ttc %> </td>
-			<td> 
-				<span class="btn btn-info"> <%= link_to "+", ajout_quantite_cageot_path(panier.id) %> </span>
-				<span class="btn btn-info"> <%= link_to "-", supp_quantite_cageot_path(panier.id) %> </span>
-				<span class="btn btn-info"> <%= link_to "SUPP", supp_produit_cageot_path(panier.id), :method => :delete  %> </span>
-			</td>
+			<table class="table table-striped">
+				<tr>
+					<th>Titre</th>
+					<th>Agriculteur</th>
+					<th> Quantite </th>
+					<th> Poids(Unitaire) </th>
+					<th>Prix(unitaire)</th>
+					<th> Action</th>
+					
+				</tr>
 			
-		
-		</tr>
-		<% end %>
-		
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>Total</td>
-			<td> <%= @total %> €</td>
-		</tr>
-		
-<% else %>
-	<p> Aucun produit</p>
-<% end %>
-
-</table>
-<p> <%= link_to "Etape suivante", process_order_confirmation_path, :class => "btn btn-primary"%> </p>
+			
+			<% @listing_produit.each do |panier| %>
+			<tr>
+				<td> <%= panier.produit_vente_libre.titre %> </td>
+				<td> <%= panier.produit_vente_libre.user.nom %> </td>
+				<td> <%= panier.nombre_pack %> </td>
+				<td> <%= panier.produit_vente_libre.quantite %> <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
+				<td> <%= panier.produit_vente_libre.prix_unite_ttc %> </td>
+				<td> 
+					<span class="btn btn-info"> <%= link_to "+", ajout_quantite_cageot_path(panier.id) %> </span>
+					<span class="btn btn-info"> <%= link_to "-", supp_quantite_cageot_path(panier.id) %> </span>
+					<span class="btn btn-info"> <%= link_to "SUPP", supp_produit_cageot_path(panier.id), :method => :delete  %> </span>
+				</td>
+				
+			
+			</tr>
+			<% end %>
+			
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Total</td>
+				<td> <%= @total %> €</td>
+			</tr>
+			
+	<% else %>
+		<p> Aucun produit</p>
+	<% end %>
+	
+	</table>
+	<p> <%= link_to "Etape suivante", process_order_confirmation_path, :class => "btn btn-primary"%> </p>
+</div>
