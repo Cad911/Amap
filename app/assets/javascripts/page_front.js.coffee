@@ -138,8 +138,37 @@ $(document).ready(->
 #____________________________________________________________________________________________________________________________
     cageot = 
         init: ->
-            cageot.form_event()
             cageot.ajax_formulaire()
+            if $('#form_add_product').length > 0
+              cageot.form_event()
+            if $('.add_product_link').length > 0
+              cageot.event_button_add()
+        #__POUR LES LIENS AUTRE QUE DANS LA PAGE SHOW PRODUCT
+        event_button_add:->
+            $('.add_product_link').bind('click', ->
+                id_button = $(this).attr('id')
+                id_produit = id_button.replace('product_','')
+                cageot.add_product_ajax(id_produit)
+            )
+        #__POUR LES LIENS AUTRE QUE DANS LA PAGE SHOW, BASE VENANT DE LA PAGE SHOW AGRICULTEUR, GARDER LE MEME FORMAT
+        add_product_ajax: (id_produit) ->
+            data_ = {
+              produit_vente_libre : {
+                 id:id_produit,
+                 nombre_pack:1
+              }
+            }
+            $.ajax(
+               type:"POST",
+               data:data_,
+               url:'/cageot/ajoutProduit',
+               format:"json",
+               success : (data) ->
+                 if $('.dock').css('display') == 'none'
+                   cageot.show_dock()
+                 cageot.add(data)
+                 cageot.update_html_price(data['total'])
+            )
         form_event:()->
             $('#form_add_product #add_product').bind('click',->
                 $('#form_add_product').submit()
@@ -150,11 +179,11 @@ $(document).ready(->
                 console.log($(this).parent('li').attr('id'))
                 cageot.delete($(this).parent('li').attr('id'))
             )
-            $(class_id+'>span.plus_quantite_p_c').bind('click', ->
-                cageot.plus_quantite($(this).parent('li').attr('id'))
+            $(class_id+'>div>span.plus_quantite_p_c').bind('click', ->
+                cageot.plus_quantite($(this).parent('div').parent('li').attr('id'))
             )
-            $(class_id+'>span.moins_quantite_p_c').bind('click', ->
-                cageot.moins_quantite($(this).parent('li').attr('id'))
+            $(class_id+'>div>span.moins_quantite_p_c').bind('click', ->
+                cageot.moins_quantite($(this).parent('div').parent('li').attr('id'))
             )
         ajax_formulaire : -> 
           $('#form_add_product').bind('ajax:success', (data,response) ->
@@ -224,12 +253,49 @@ $(document).ready(->
         update_html_price: (price) ->
             $('.checkout>.price').text(price+'€')
         add_html_product_in_cageot: (id_product,nb_pack,url_image) ->
-            li_html =  '<li id="'+id_product+'"><img src="'+url_image['image']['is_small']['url']+'" class="has_corners_shadow is_small">'
-            li_html += '<span class="nombre_pack_p_c"> '+nb_pack+' </span> <span class="deleted_p_c"> deleted </span>'
-            li_html += '<span class="plus_quantite_p_c"> + </span><span class="moins_quantite_p_c"> - </span>'
-            li_html += '</li>'
-            $('.l_dock_wrapper>ul').prepend(li_html)
+            new_li = $(document.createElement('li'))
+            new_li.attr('id',id_product)
+            
+            if url_image != null
+              src_image = url_image['image']['is_small']['url']
+            else
+              src_image = ''
+            new_image = $(document.createElement('img'))
+            new_image.addClass('has_corners_shadow is_small')
+            new_image.attr('src',src_image)
+            
+            new_nombre_pack = $(document.createElement('span'))
+            new_nombre_pack.addClass("nombre_pack_p_c")
+            new_nombre_pack.text(nb_pack)
+            
+            new_delete = $(document.createElement('span'))
+            new_delete.addClass("deleted_p_c")
+            
+            new_div_plus_quantite = $(document.createElement('div'))
+            new_div_plus_quantite.addClass('plus_btn')
+            new_span_plus_quantite = $(document.createElement('span'))
+            new_span_plus_quantite.addClass('plus_quantite_p_c')
+            new_div_plus_quantite.append(new_span_plus_quantite)
+            
+            new_div_minus_quantite = $(document.createElement('div'))
+            new_div_minus_quantite.addClass('minus_btn')
+            new_span_minus_quantite = $(document.createElement('span'))
+            new_span_minus_quantite.addClass('moins_quantite_p_c')
+            new_div_minus_quantite.append(new_span_minus_quantite)
+            
+            new_li.append(new_image)
+            new_li.append(new_nombre_pack)
+            new_li.append(new_delete)
+            new_li.append(new_div_plus_quantite)
+            new_li.append(new_div_minus_quantite)
+            
+            #li_html =  '<li id="'+id_product+'"><img src="'+url_image['image']['is_small']['url']+'" class="has_corners_shadow is_small">'
+            #li_html += '<span class="nombre_pack_p_c"> '+nb_pack+' </span> <span class="deleted_p_c"> deleted </span>'
+            #li_html += '<span class="plus_quantite_p_c"> + </span><span class="moins_quantite_p_c"> - </span>'
+            #li_html += '</li>'
+            $('.l_dock_wrapper>ul').prepend(new_li)
         update_html_quantite:(id_product, nb_pack) ->
+            console.log('quantite_ :'+id_product)
             $('.l_dock_wrapper>ul>li#'+id_product+'>span.nombre_pack_p_c').text(nb_pack)
         show_dock: ->
             $('.dock').slideDown(400,"swing")

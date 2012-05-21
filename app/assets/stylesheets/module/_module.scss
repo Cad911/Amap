@@ -12,9 +12,9 @@
   padding:5px;
   background:#ffffff;
   border:solid 1px #dcdcdc;
-  overflow:hidden;
   &:after {
     content:"";
+    display:block;
     position:absolute;
     left:0;
     bottom: -11px;
@@ -67,7 +67,8 @@
   &.off {
     padding: 2px 20px 0px 8px;
     background-color:$light_bg_color;
-    color:$brown !important;
+    color:$brown !important
+    ;
     .switch {
       left:30px;      
     }
@@ -176,6 +177,69 @@ span.button {
   }
 }
 
+// Design de la Lighbox
+.lightbox_wrapper {
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  .lightbox {
+    width:  500px;
+    position:relative;
+    z-index:99;
+    top:0;
+    margin:90px auto 40px auto;
+    border:solid 1px $light_brown;
+    background:#fafafa url(/../images/patterns/paper.png) repeat;
+    @include borderradius(5px);
+    @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
+    @include margin;
+    overflow:hidden;
+    .header {
+      background-image:url(../images/bar.png);    
+      text-align:center;   
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;  
+      @include box-shadow(rgba(0,0,0, 0.3) 0px 1px 1px);   
+      .title {
+        margin:0;
+        padding:8px 0 2px 0;
+        height:30px;
+        @include title(1,25px);
+      }
+    }
+    .content {
+      padding:20px 40px 20px 40px;
+      border-bottom:solid 1px #C8C5BF;
+      h2.title{
+        @include title(2,16px);
+        font-family:helveticaneue-bold;
+      }
+    }
+    .footer {
+      border-top:solid 1px #ffffff;
+      padding:5px 40px;
+      text-align:right;
+      background:url(/../images/bg_darkener.png);
+      .button {    
+        margin-left:20px;
+        a:before {
+          background-image:none;
+          border:none;
+        }
+        &::before {
+          background-image:none !important;  
+          border:none;
+        }
+      }
+    }
+  }
+}
 
 // Menu dropdown
 ul.dropdown_menu {
@@ -270,8 +334,6 @@ ul.dropdown_menu {
   .image {
     margin-right:20px;
     float:left;
-    position:relative;
-    z-index: 2;
   }
   .content {
     width:auto;
@@ -307,38 +369,13 @@ ul.dropdown_menu {
   background:$light_bg_color;
 }
 
-// Dock
-.dock {
-  position:absolute;
-  width:100%;
-  height:50px;
-}// Texte alternatif, a 2 états
+
+// Texte alternatif, a 2 états
 .note {
   font-size: 13px;
   color:#B2B2B2;
 }
 
-
-// Ombre 2 coins pliés, a 2 états
-.has_corners_shadow {
-  display: block;
-  position: relative;
-  padding:5px;
-  background:#ffffff;
-  border:solid 1px #dcdcdc;
-  &:after {
-    content:"";
-    position:absolute;
-    left:0;
-    bottom: -11px;
-    background: transparent;
-    background-image: url("/../images/shadows.png");
-    background-repeat:no-repeat;
-    width: 285px;
-    height:11px;
-    margin:0 auto;
-  }
-}
 
 
 
@@ -538,8 +575,6 @@ ul.dropdown_menu {
   .image {
     margin-right:20px;
     float:left;
-    position:relative;
-    z-index: 2;
   }
   .content {
     width:auto;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510115142) do
+ActiveRecord::Schema.define(:version => 20120519123215) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20120510115142) do
     t.datetime "updated_at",         :null => false
     t.integer  "categorie_id"
     t.integer  "panier_autorise_id"
+    t.integer  "nombre_personne"
   end
 
   create_table "photo_stocks", :force => true do |t|

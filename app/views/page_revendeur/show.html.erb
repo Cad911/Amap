@@ -9,21 +9,21 @@
 	</div>
 
 	<div class="l_area_left">
-		<h1 class="title"><!--<%= @revendeur.nom %>-->François Dumont</h1>
+		<h1 class="title"><%= @revendeur.nom %></h1>
 		<p class="note is_italic location"><%= @revendeur.ville.nom %></p>
-		<p class="description"><% @revendeur.description %>Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+		<p class="description"><% @revendeur.description %></p>
 	</div>	
 
 	<div class="l_area_right">
 
 		<div class="products">
 			<div class="product">
-				<span class="number">13</span>
+				<span class="number"><%= @revendeur.produit_en_vente %> </span>
 				<span class="icon"></span>
 				<br class="clear">
 			</div>
 			<div class="basket">
-				<span class="number">13</span>
+				<span class="number"><%= @revendeur.panier_en_vente %> </span>
 				<span class="icon"></span>
 				<br class="clear">
 			</div>
@@ -36,55 +36,102 @@
 	<div class="bar">		
 		
 		<div class="proposing">
-			<h3 class="title">Ses  17  produits</h3>
+			<h3 class="title">Ses  <%= @revendeur.nb_all_product %>  produits</h3>
 		</div>
 		<span>Masquer:</span>
-		<span class="filter">cagettes</span>
-		<span class="filter">vente au détail</span>
+		<span class="filter show_basket"> panier </span>
+		<span class="filter show_product">vente au détail</span>
 		<div class="shadow_photo">
 			<div class="photo">
-				<img src="">
+				<%= image_tag (@revendeur.default_image).image_url(:is_medium) if !(@revendeur.default_image).nil? %>
+				<!-- <img src=""> -->
 			</div>
 		</div>
 	</div>
 
 	<ul class="farmers_products">
-		<li>
+	<% (@revendeur.list_produit_en_vente).each do |produit| %>
+		<li class="li_product">
 			<span class="category product"></span>
 			<div class="l_photo_description is_horizontal">
-        <div class="image">
-          <div class="has_corners_shadow is_small"></div>
-        </div>
-        <div class="content">
-          <p class="title">Pommes Golden</p>
-					<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
-        </div>
-        <div class="pursache">
-        	<span class="price">4€ <span class="note is_italic">le kilo</span></span><br>
-        	<div class="call_to_action">
-        		<span class="button"><a href="">ajouter au panier</a></span>
-        	</div>
-        </div>
-      </div>
+		        <div class="image">
+		          <div class="has_corners_shadow is_small">
+		          	<%= image_tag (produit.stock.default_image).image_url(:is_small) if !(produit.stock.default_image).nil? %>
+		          </div>
+		        </div>
+		        <div class="content">
+		          <p class="title"> <%= produit.titre %> </p>
+							<p class="description"><%= produit.description %></p>
+		        </div>
+		        <div class="pursache">
+		        	<span class="price"><%= produit.prix_unite_ttc %> € <span class="note is_italic">le <%= produit.stock.unite_mesure.nom %></span></span><br>
+		        	<div class="call_to_action">
+		        		<span class="button add_product_link" id="product_<%= produit.id %>"><a>ajouter au panier</a></span>
+		        	</div>
+		        </div>
+      		</div>
+		</li>
+	<% end %>
+	
+	<% (@revendeur.list_panier_en_vente).each do |panier| %>
+	  <li class="li_basket">
+			<span class="category basket"></span>
+			<div class="l_photo_description is_horizontal">
+	        	<div class="image">
+	          		<div class="has_corners_shadow is_small">
+	          		   <% #image_tag (panier.default_image).image_url(:is_small) if !(panier.default_image).nil? %>
+	          		</div>
+	        	</div>
+		        <div class="content">
+		          <p class="title"> <%= panier.titre %> </p>
+							<p class="description"><%= panier.description %></p>
+		        </div>
+		        <div class="pursache">
+		        	<span class="price"> <%= panier.prix_unite_ttc %> € <span class="note is_italic">pour <%= panier.nombre_personne %> personnes</span></span><br>
+		        	<div class="call_to_action">
+		        		<span class="button"><a href="">ajouter au panier</a></span>
+		        	</div>
+		        </div>
+	      </div>
+		</li>
+	
+	<% end %>
+		<!-- <li>
+			<span class="category product"></span>
+			<div class="l_photo_description is_horizontal">
+		        <div class="image">
+		          <div class="has_corners_shadow is_small"></div>
+		        </div>
+		        <div class="content">
+		          <p class="title">Pommes Golden</p>
+							<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+		        </div>
+		        <div class="pursache">
+		        	<span class="price">4€ <span class="note is_italic">le kilo</span></span><br>
+		        	<div class="call_to_action">
+		        		<span class="button"><a href="">ajouter au panier</a></span>
+		        	</div>
+		        </div>
+      		</div>
 		</li>
 
 		<li>
 			<span class="category basket"></span>
 			<div class="l_photo_description is_horizontal">
-        <div class="image">
-          <div class="has_corners_shadow is_small"></div>
-        </div>
-        <div class="content">
-          <p class="title">Tomates cerises</p>
-					<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
-        </div>
-        <div class="pursache">
-        	<span class="price">7€ <span class="note is_italic">le 100gr</span></span><br>
-        	<div class="call_to_action">
-        		<span class="button"><a href="">ajouter au panier</a></span>
-        	</div>
-        </div>
-      </div>
+	        	<div class="image">
+	          		<div class="has_corners_shadow is_small"></div>
+	        	</div>
+		        <div class="content">
+		          <p class="title">Tomates cerises</p>
+							<p class="description">Description lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet lorem ipsum dolor et sit amet</p>
+		        </div>
+		        <div class="pursache">
+		        	<span class="price">7€ <span class="note is_italic">le 100gr</span></span><br>
+		        	<div class="call_to_action">
+		        		<span class="button"><a href="">ajouter au panier</a></span>
+		        	</div>
+		        </div>
+	      </div>
 		</li>
 
 		<li>
@@ -104,7 +151,7 @@
         	</div>
         </div>
       </div>
-		</li>		
+		</li> -->		
 
     <!--<p class="note ">5€ <span class="is_italic">le kilo</span></p>-->
 	</ul>

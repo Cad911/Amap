@@ -57,7 +57,8 @@ class User < ActiveRecord::Base
     
     #____________ RECUPERATION PRODUIT EN VENTE ________
     def produit_en_vente
-    	return ProduitVenteLibre.where(:user_id => self.id).count
+        my_product_online = ProduitVenteLibre.where(:user_id => self.id)
+    	return my_product_online.count
     end
     
     #___________ RECUPERATION PANIER EN VENTE ______
@@ -65,6 +66,23 @@ class User < ActiveRecord::Base
     	return Panier.where(:revendeur_id => self.id).count
     end
     
+    #NB_ALL_PRODUCT
+    def nb_all_product
+    	nb = self.produit_en_vente + self.panier_en_vente
+    	return nb
+    end
+    
+    #LISTING_ALL_produit_en_vente
+    def list_produit_en_vente
+       all_product = ProduitVenteLibre.where(:user_id => self.id)
+       return all_product
+    end
+    
+    #LISTING_ALL_paniert_en_vente
+    def list_panier_en_vente
+    	all_panier = Panier.where(:revendeur_id => self.id)
+    	return all_panier
+    end
     
     #_____ IMAGE USER ________________________________
     def default_image

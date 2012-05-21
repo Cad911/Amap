@@ -1,8 +1,14 @@
 .l_main_gutter.product_list, .basket_list {
+  .filters {
+    margin:-8px 20px 0 0;
+  }
   .filters, .activation {
     float:right;
     span {
       color:$brown;      
+    }
+    .toggle {
+      margin-left:10px;
     }
     .filter {
       @include embossed_button($light_brown);
