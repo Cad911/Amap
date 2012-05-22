@@ -1,0 +1,28 @@
+.l_process_order {
+	&.first_step {
+		.process_sign {
+			width:960px;
+			@include margin;
+			text-align:center;
+			span {
+				font-size:16px;
+				margin:10px 40px 0 40px;				
+			}
+			.picture {
+				width:552px;
+				height:81px;
+				@include margin;
+				margin-bottom:10px;
+				@include process_order-sprite(process_level_2);
+			}
+			.resume {
+				@include title(2,16px);
+				font-family:helveticaneue-bold;
+
+			}
+			.point_choice {
+				margin-left:55px;
+			}
+		}
+	}
+}

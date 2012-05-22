@@ -177,6 +177,15 @@ span.button {
   }
 }
 
+// Icon HP utilisée dans le fil d'arianne
+.home_icon {
+  background:url('/../images/ultime_sprite.png') left center no-repeat;
+  width:11px;
+  height:13px;
+  display: inline-block;
+}
+
+
 // Design de la Lighbox
 .lightbox_wrapper {
   position:fixed;
@@ -320,15 +329,6 @@ ul.dropdown_menu {
   }
 }
 
-// Icon HP utilisée dans le fil d'arianne
-.home_icon {
-  background:url('/../images/ultime_sprite.png') left center no-repeat;
-  width:11px;
-  height:13px;
-  display: inline-block;
-}
-
-
 // Structure photo + description
 .l_photo_description {
   width:auto;
@@ -356,259 +356,6 @@ ul.dropdown_menu {
       margin-bottom:10px;
     }
   }
-}
-
-
-// Bouton voir plus pour infinite scrolling
-.show_more {
-  width:300px;
-  height:30px;
-  display:block;
-  margin:0 auto;
-  border:$brown solid 1px;
-  text-align: center;
-  background:$light_bg_color;
-}
-
-
-// Texte alternatif, a 2 états
-.note {
-  font-size: 13px;
-  color:#B2B2B2;
-}
-
-
-
-
-// Bouton basique
-span.button {
-  border:solid 1px #518c3a;
-  padding:6px 0 5px  0;
-  @include borderradius(20px);
-  font-size: 22px;
-  &:active {
-    border:solid 1px rgba(139, 230,104, 0);
-  }
-  a {
-    border:solid 1px #8be668; // pour IE
-    border:solid 1px rgba(139, 230,104, 1);
-    font-family: bellopro, Lobster;
-    font-size: 22px;
-    @include borderradius(20px);
-    text-shadow: 2px 2px 2px rgba(0,0,0, 0.5);
-    color:#ffffff;
-    padding:4px 10px 4px 10px;
-    background:url("/../images/cta/bg.png") repeat-x top;
-    position:relative;
-    z-index:1000;
-    &:hover {
-      background-position:33px;
-      text-decoration: none;
-      border:none;
-      border:solid 1px #78d355; // pour IE
-      border:solid 1px rgba(120, 211,85, 1);
-    }
-    &:active {
-      background-position:66px;
-      border:solid 1px #78d355; // pour IE
-      border:solid 1px rgba(120, 211,85, 0);
-      -moz-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
-      -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
-      -o-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
-      box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
-    }
-    &::before {
-      content: "";
-      display:block;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top:-7px;
-      left:-7px;
-      padding:5px;
-      @include borderradius(20px);
-      z-index:-1;
-      padding:6px 2px 6px 10px;
-      border:solid 1px rgba(255,255,255, 0.8);
-      background: url("/../images/cta/bg_ombre_1.png") repeat top;
-    }
-  }
-}
-
-// Fil d'arianne
-.breadcrumb {
-  padding:0;
-  margin:0 0 0 10px !important;
-  height:20px;
-  padding-bottom:20px;
-  ul {
-    margin:0;
-    li {
-      display: block;
-      float: left;
-      text-decoration: none;
-      a {
-        font-size: 12px !important;
-        color:$brown;
-        padding: 5px 20px 2px 20px;
-        position: relative;
-        background-image: url("/../images/breadcrumb.png");
-        background-position: right top;
-        margin-left: -10px;
-      }
-      a:hover {
-        background-position: right -21px;
-        cursor: pointer;
-      }
-      a:active {
-        background-position: right -42px;
-        text-shadow: none;
-      }
-      &:first-child {
-        a {
-          border-left:1px solid #bea47d;
-        }
-      }
-      &:first-child {
-        a {
-          padding-left:7px;
-          .home_icon {
-            margin-bottom: -3px;
-            padding-right: 4px;
-          }
-        }
-      }
-    }
-  }
-}
-
-
-// Menu dropdown
-ul.dropdown_menu {
-  @include borderradius(5px);
-  border:solid 2px $brown;
-  margin:0;
-  padding:0;
-  position:absolute;
-  background:$bg_color;
-  -webkit-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
-  box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
-  li.dropdown_arrow {
-    .inner_arrow {
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-bottom-color: $brown;
-      position: absolute;
-      top: -10px;
-      left: 15px;
-      display: inline-block;
-      margin-left: -2px;
-    }
-    .outer_arrow {
-      border-left: 9px solid transparent;
-      border-right: 9px solid transparent;
-      border-bottom: 9px solid $light_bg_color;
-      border-bottom-color: $light_bg_color;
-      position: absolute;
-      top: -7px;
-      left: 16px;
-      display: inline-block;
-      margin-left: -2px;
-    }
-  }
-  li {
-    margin:0;
-    text-align:left;
-    a {
-      background:$bg_color;
-      color: $brown;
-      border-bottom: solid 1px #e5e2da;
-      border-top:solid 1px #ffffff;
-      text-shadow:1px 1px 1px #ffffff;
-      padding:8px 20px;
-      &:active {
-        background:$dark_bg_color;
-      }
-      &:hover {
-        background:$light_bg_color;
-        color:$red;
-      }
-    }
-    &:first-child {
-      a {
-        border-top:none;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-      }
-    }
-    &:last-child {
-      a {
-        border-bottom: none;
-        -webkit-border-bottom-right-radius: 5px;
-        -webkit-border-bottom-left-radius: 5px;
-        -moz-border-radius-bottomright: 5px;
-        -moz-border-radius-bottomleft: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-    }
-  }
-}
-
-// Icon HP utilisée dans le fil d'arianne
-.home_icon {
-  background:url('/../images/ultime_sprite.png') left center no-repeat;
-  width:11px;
-  height:13px;
-  display: inline-block;
-}
-
-
-// Structure photo + description
-.l_photo_description {
-  width:auto;
-  .image {
-    margin-right:20px;
-    float:left;
-  }
-  .content {
-    width:auto;
-    padding-bottom:5px;
-    z-index:1;
-    h2 {
-      margin:0;
-    }
-    p.location {
-      font-size: 14px;
-      margin-top:5px;
-    }
-    .note {
-      color:$grey;
-      margin-bottom: 0;
-    }
-    .title {
-      font-size:16px;
-      margin-bottom:10px;
-    }
-  }
-}
-
-
-// Bouton voir plus pour infinite scrolling
-.show_more {
-  width:300px;
-  height:30px;
-  display:block;
-  margin:0 auto;
-  border:$brown solid 1px;
-  text-align: center;
-  background:$light_bg_color;
 }
 
 
@@ -678,6 +425,9 @@ ul.dropdown_menu {
   }
 
 }
+
+// BOUTONS
+
 .close_cross {
   display:block;
   position:absolute;
@@ -690,6 +440,21 @@ ul.dropdown_menu {
     cursor:pointer;
   }
 }
+
+.close_square {
+  display:inline-block;
+  height:29px;
+  width:32px;
+  @include ui-sprite(close_square);
+  &:hover {
+    cursor:pointer;
+  }
+  &:active {
+    @include ui-sprite(close_square_active);  
+    cursor:pointer;
+  }
+}
+
 .minus {
   display:block;
   width:25px;
@@ -699,6 +464,7 @@ ul.dropdown_menu {
     cursor:pointer;
   }
 }
+
 .plus {
   display:block;
   width:25px;
@@ -708,6 +474,7 @@ ul.dropdown_menu {
     cursor:pointer;
   }
 }
+
 .switch {
   display:inline-block;
   width:22px;
@@ -717,6 +484,7 @@ ul.dropdown_menu {
     cursor:pointer;
   }  
 }
+
 .down_arrow {
   display:inline-block;
   width:9px;
