@@ -56,6 +56,8 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   match "page_produit/index/categorie/:categorie_id" => 'page_produit#index_by_categorie', :as => :page_produit_index_by_categorie #PAR CATEGORIE______
   #SHOW
   match "page_produit/show/:user_id/:product_id" => 'page_produit#show', :as => :page_produit_show
+  #FILTER
+  match 'product_filter' => "page_produit#product_filter", :as => :product_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
 
 
 #___________ PAGE PANIER _________________________________________________________________________________________________________
@@ -65,6 +67,8 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   match "page_panier/index/categorie/:categorie_id" => 'page_panier#index_by_categorie', :as => :page_panier_index_by_categorie #PAR CATEGORIE______
   #SHOW
   match "page_panier/show/:user_id/:panier_id" => 'page_panier#show', :as => :page_panier_show 
+  #FILTER
+  match 'basket_filter' => "page_panier#basket_filter", :as => :basket_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
 
 
 
@@ -84,6 +88,11 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       resources :paniers do
        	resources :produit_paniers
       end
+      
+      #_____ ROUTE POUR IMAGE PANIER _____
+      match '/paniers/:panier_id/add_image' => 'paniers#add_image', :as => :panier_add_image, :via => :post
+      match '/paniers/:panier_id/update_image/:image_id' => 'paniers#update_image', :as => :panier_update_image, :via => :put
+      match '/paniers/:panier_id/delete_image/:image_id' => 'paniers#delete_image', :as => :panier_delete_image, :via => :delete
       
       #______ ROUTE POUR IMAGE USER ____
       match 'add_image' => 'users#add_image', :via => :post

@@ -10,6 +10,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	def show
 		#___ On affiche les produits se trouvant dans le panier ___
 		@produit_paniers = ProduitPanier.where(:panier_id => params[:id])
+		@photo_panier = PhotoPanier.new
 	end
 	
 	
@@ -87,4 +88,75 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	# def delete
 # 	
 # 	end
+
+
+
+   #____________________________________________________________________________________
+  #____________________________________________________________________________________
+  #__________________________________ IMAGE ___________________________________________
+  #____________________________________________________________________________________
+  #____________________________________________________________________________________
+  
+  #_________________________________ ADD IMAGE _______________________________________
+  def add_image
+    @panier = Panier.find(params[:panier_id])
+    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+	if params[:photo_panier][:first_image] == "1"
+		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+		if @photo_first_image.count > 0
+			@photo_first_image[0].first_image = 0
+			@photo_first_image[0].save	
+		end
+	else
+		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
+		if @photo_first_image.count == 0
+			params[:photo_panier][:first_image] = "1"
+		end
+	end
+	@photo_panier = PhotoPanier.new
+	@photo_panier.panier_id = @panier.id
+	@photo_panier.update_attributes(params[:photo_panier])
+	redirect_to [:administration,current_user,@panier]
+  end
+  
+  
+  #_________________________________ UPDATE  IMAGE _______________________________________
+  def update_image
+    @panier = Panier.find(params[:panier_id])
+    @image = PhotoPanier.find(params[:image_id])
+    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+	if params[:photo_panier][:first_image] == "1"
+		#___ SI PAS DE CHANGEMENT ______
+		if @image.first_image == 1
+			flash[:notice] = "Aucun changement"
+		else
+			@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+			if @photo_first_image.count > 0
+				@photo_first_image[0].first_image = 0
+				@photo_first_image[0].save	
+			end
+			@image.first_image = params[:photo_panier][:first_image]
+			@image.save
+			flash[:notice] = "Modification photo stock effectuer"
+		end
+	else
+		#___ SI ON ENLEVE L IMAGE PAR DEFAUT ______
+		if @image.first_image == 1
+			flash[:notice] = "Il est obligatoire d avoir une image par defaut"
+		else
+			flash[:notice] = "Aucun changement"
+		end
+	end
+	redirect_to [:administration,current_user,@panier]
+  end
+  
+  #____________________________ DELETE IMAGE _________________________________________________
+  def delete_image
+  	@image_panier = PhotoPanier.find(params[:image_id])
+  	@image_panier.remove_image = true
+  	@image_panier.destroy
+  end
+
+
 end

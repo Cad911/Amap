@@ -1,5 +1,8 @@
 .l_process_order.l_main_gutter {
 	padding:20px 90px 40px 90px !important;	
+	h2 {
+		@include title(1,30px);
+	}
 	// Panneau 
 	.process_sign {
 		width:800px;
@@ -181,5 +184,44 @@
 				margin-top:20px;
 			}
 		}	
+	}
+	.choice_registered {
+		h2 {
+			padding-top:40px;
+		}
+		.choice {
+			float:left;
+			@include embossed_button($embossed_dark);	
+			@include borderradius(5px);		
+			width:210px;
+			height:115px;
+			padding:10px;
+			&.yes {
+				margin:0;	
+			}
+			.radio_area {
+				width:30px;
+				margin-top:15px;
+				margin-left:10px;
+				float:left;
+				.radio {
+					padding:0;
+				}
+			}
+			.content {
+				width:170px;
+				float:left;
+				.title {
+					@include title(1,30px);
+				}
+				.sub_title {
+					@include title(2,18px);
+				}
+				p {
+					margin:0;
+					padding:0;
+				}				
+			}
+		}
 	}
 }

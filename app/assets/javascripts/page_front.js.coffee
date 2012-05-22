@@ -139,6 +139,7 @@ $(document).ready(->
     cageot = 
         init: ->
             cageot.ajax_formulaire()
+            cageot.event_form_generate(".l_dock_wrapper>ul>li")
             if $('#form_add_product').length > 0
               cageot.form_event()
             if $('.add_product_link').length > 0
@@ -173,7 +174,6 @@ $(document).ready(->
             $('#form_add_product #add_product').bind('click',->
                 $('#form_add_product').submit()
             )
-            cageot.event_form_generate(".l_dock_wrapper>ul>li")
         event_form_generate:(class_id)->
         	$(class_id+'>span.deleted_p_c').bind('click',->
                 console.log($(this).parent('li').attr('id'))
@@ -251,6 +251,10 @@ $(document).ready(->
              else
                  cageot.update_html_price(total_price)
         update_html_price: (price) ->
+            tab_price = (price+'').split('.')
+            if tab_price[1]
+                if parseInt(tab_price[1]) == 0
+                    price = tab_price[0]
             $('.checkout>.price').text(price+'€')
         add_html_product_in_cageot: (id_product,nb_pack,url_image) ->
             new_li = $(document.createElement('li'))

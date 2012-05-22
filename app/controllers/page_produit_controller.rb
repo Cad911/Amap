@@ -136,4 +136,42 @@ class PageProduitController < ApplicationController
     render :index
   end
   
+  
+  
+  #____________________ PRODUIT VENTE LIBRE WHERE PARAMS FILTER _________________________________
+  def product_filter
+      produit_vente = ProduitVenteLibre.all
+      product_return = []
+      
+      
+      
+      produit_vente.each do |produit|
+          condition_respect = true
+          if params[:user_id] != nil and params[:user_id].to_i != produit.stock.user_id
+              condition_respect = false
+          end
+          
+          if condition_respect == true
+              tab_produit = {
+              			:id => produit.id,
+                        :user_id => produit.stock.user_id,
+              			:titre => produit.titre, 
+              			:description => produit.description, 
+              			:default_image => produit.stock.default_image, 
+              			:prix_unite_ttc => produit.prix_unite_ttc,
+              			:unite_mesure => produit.stock.unite_mesure.nom,
+              }
+              product_return << tab_produit 
+          end
+      end
+      
+      respond_to do |format|
+	  	format.js do 
+	  	     render :json => product_return.to_json
+	  	end
+	  	format.html {flash[:notice] = "Produit ajoute et Stock mis a jour en consequence"
+	  		redirect_to [:administration,User.find(params[:user_id]),@produit_vente_libre] }
+	  end
+  end
+  
 end

@@ -7,7 +7,7 @@ class ProduitVenteLibre < ActiveRecord::Base
 	
 	
 	#POUR AJAX, ON A BESOIN DE L'ID USER
-	attr_accessor :id_user_input
+	attr_accessor :id_user_input,:default_image_s
 	attr_accessible :id_user_input,:stock_id,:titre,:description,:quantite,:nombre_pack,:prix_unite_ht,:prix_unite_ttc,:alaune
 	
 	validates :quantite, :presence => true , :numericality => true

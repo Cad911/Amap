@@ -11,38 +11,36 @@
 	<h1><%= @titre %></h1>
 	
 	<!-- _______________________ first block ________________________________________-->
-	<% if @produits_first_block.count > 0 %>
+	<% if @paniers_first_block.count > 0 %>
 		<ul class="l_product_list huge_left">
 			 <li class="is_huge">
 			      <div class="l_photo_description is_huge is_vertical">
 			        <div class="image">
 			          <div class="has_corners_shadow is_huge">
-			          	<% if !(@first_huge_product.stock.default_image).nil? %>
-			          		<%= image_tag (@first_huge_product.stock.default_image).image_url(:is_huge) if !(@first_huge_product.stock.default_image).nil? %>
-			          	<% end %>
+			          		<%= image_tag (@first_huge_panier.default_image).image_url(:is_huge) if !(@first_huge_panier.default_image).nil? 
+			          		%>
 			          </div>
 			        </div>
 			        <div class="content">
-			          <p class="title"> <%= link_to @first_huge_product.titre, page_produit_show_path(@first_huge_product.user_id,@first_huge_product), :class => "title" %></p>
-			          <p class="description"><%= @first_huge_product.description %></p>
-			          <span class="price "><%= @first_huge_product.prix_unite_ttc %> € <span class="is_italic">les <%= "#{@first_huge_product.quantite} #{@first_huge_product.stock.unite_mesure.nom}"  %></span></span>
+			          <p class="title"> <%= link_to @first_huge_panier.titre, page_panier_show_path(@first_huge_panier.revendeur_id,@first_huge_panier), :class => "title" %></p>
+			          <p class="description"><%= @first_huge_panier.description %></p>
+			          <span class="price "><%= @first_huge_panier.prix_unite_ttc %> € <span class="is_italic">pour  <%= "#{@first_huge_panier.nombre_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
     		</li>
-			<% @produits_first_block.each do |p| %>
+			<% @paniers_first_block.each do |p| %>
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
-			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
-			          	<% end %>
+			          		<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? 
+			          		%>
 			          </div>
 			        </div>
 			        <div class="content">
-			          <p class="title"> <%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
+			          <p class="title"> <%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
 			          <p class="description"><%= p.description %></p>
-			          <span class="price "><%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.quantite} #{p.stock.unite_mesure.nom}"  %></span></span>
+			          <span class="price "><%= p.prix_unite_ttc %>€ <span class="is_italic"> pour <%= "#{p.nombre_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
 			    </li>
@@ -52,22 +50,21 @@
 	<% end %>
 
 <!-- _______________________ middle block ________________________________________-->
-	<% if @produit_middle_block.count > 0 %>
+	<% if @paniers_middle_block.count > 0 %>
 		<ul class="l_product_list" style=" min-height: 310px;">
-			<% @produit_middle_block.each do |p| %>
+			<% @paniers_middle_block.each do |p| %>
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
-			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
-			          	<% end %>
+			          		<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil?
+			          		 %>
 			          </div>
 			        </div>
 			        <div class="content">
-			          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
+			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
 			          <p class="description"><%= p.description %></p>
-			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.quantite} #{p.stock.unite_mesure.nom}"  %></span></span>
+			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.nombre_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
 			    </li>
@@ -78,39 +75,37 @@
 
 
 <!-- _______________________ last block ________________________________________-->
-	<% if @produit_last_block.count > 0 %>
+	<% if @paniers_last_block.count > 0 %>
 		<ul class="l_product_list huge_right">
 			<li class="is_huge">
 		      <div class="l_photo_description is_huge is_vertical">
 		        <div class="image">
 		          <div class="has_corners_shadow is_huge">
-		          	<% if !(@last_huge_product.stock.default_image).nil? %>
-			          	<%= image_tag (@last_huge_product.stock.default_image).image_url(:is_huge) if !(@last_huge_product.stock.default_image).nil? %>
-			        <% end %>
+			          	<%= image_tag (@last_huge_panier.default_image).image_url(:is_huge) if !(@last_huge_panier.default_image).nil? 
+			          	%>
 		          </div>
 		        </div>
 		        <div class="content">
-		          <p class="title"><%= link_to @last_huge_product.titre, page_produit_show_path(@last_huge_product.user_id,@last_huge_product), :class => "title" %></p>
-		          <p class="description"><%= @last_huge_product.description %></p>
-		          <span class="price "><%= @last_huge_product.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@first_huge_product.quantite} #{@first_huge_product.stock.unite_mesure.nom}"  %></span></span>
+		          <p class="title"><%= link_to @last_huge_panier.titre, page_panier_show_path(@last_huge_panier.revendeur_id,@last_huge_panier), :class => "title" %></p>
+		          <p class="description"><%= @last_huge_panier.description %></p>
+		          <span class="price "><%= @last_huge_panier.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@last_huge_panier.nombre_personne} personnes"  %></span></span>
 		        </div>
 		      </div>
 		    </li>
 		    
-		    <% @produit_last_block.each do |p| %>
+		    <% @paniers_last_block.each do |p| %>
 				<li>
 			      <div class="l_photo_description is_medium is_vertical">
 			        <div class="image">
 			          <div class="has_corners_shadow is_medium">
-			          	<% if !(p.stock.default_image).nil? %>
-			          		<%= image_tag (p.stock.default_image).image_url(:is_medium) if !(p.stock.default_image).nil? %>
-			          	<% end %>
+			          		<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? 
+			          		%>
 			          </div>
 			        </div>
 			        <div class="content">
-			          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
+			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
 			          <p class="description"><%= p.description %></p>
-			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@last_huge_product.quantite} #{@last_huge_product.stock.unite_mesure.nom}"  %></span></span>
+			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@last_huge_product.nombre_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
 			    </li>

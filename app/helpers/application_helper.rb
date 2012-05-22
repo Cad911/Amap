@@ -10,6 +10,14 @@ module ApplicationHelper
 		
 		if @select_cageot.count > 0
 			@cageot = Cageot.find(@select_cageot[0].id)
+			tab_total = ((@cageot.total).to_s).split('.')
+			@total_cageot = @cageot.total
+			#VERIF SI APRES LA VIRGULE, C'EST UN 0 OU PAS
+			if tab_total[1]
+			   if tab_total[1].to_i == 0
+			       @total_cageot = tab_total[0]
+			   end
+			end
 			@product_cageot =  RelCageotProduit.where("cageot_id = ? ",@cageot.id).order('created_at DESC')
 		else
 			@cageot = nil

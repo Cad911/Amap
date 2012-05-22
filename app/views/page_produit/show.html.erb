@@ -65,15 +65,17 @@
       <div class="l_photo_description is_horizontal">
 
         <div class="image">
-          <div class="is_small has_corners_shadow"></div>
+          <div class="is_small has_corners_shadow">
+          	<%= image_tag (@produit.user.default_image).image_url(:is_small) if !(@produit.user.default_image).nil? %>
+          </div>
         </div>
 
         <div class="content">
-          <h2>François Dumont</h2>
-          <p class="note is_italic location">Lys les Lannoy - relais du bourg</p>
+          <h2><%= @produit.user.nom %> <%= @produit.user.prenom %></h2>
+          <p class="note is_italic location"><%= @produit.user.ville.nom %></p>
         </div>
 
-        <p>Les fruits et légumes que je cultive sont grais et capable de neutraliser les radicaux loyaliste de l'empereur palpatine lorem ipsum</p>
+        <p><%= @produit.user.description %></p>
       </div>
     </div>
 
@@ -81,45 +83,21 @@
       <% if @other_produits.count != 0 %>
         <h3>Ses autres produits </h3>
         <ul>
-          <%	@other_produits.each do |other_produit| %>
-          <%	end %>
-
-          <li>
+          <% @other_produits.each do |other_produit| %>
+          	<li>
             <div class="l_photo_description is_horizontal">
               <div class="image">
-                <div class="has_corners_shadow is_small"></div>
+                <div class="has_corners_shadow is_small">
+                	<%= image_tag (other_produit.stock.default_image).image_url(:is_small) if !(other_produit.stock.default_image).nil? %>
+                </div>
               </div>
               <div class="content">
-                <p class="note is_bold title">Carottes</p>
-                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
+                <p class="note is_bold title"><%= other_produit.titre %></p>
+                <p class="note "><%= other_produit.prix_unite_ttc %> € <span class="is_italic">le <%= other_produit.stock.unite_mesure.nom %></span></p>
               </div>
             </div>
           </li>
-
-          <li>
-            <div class="l_photo_description is_horizontal">
-              <div class="image">
-                <div class="has_corners_shadow is_small"></div>
-              </div>
-              <div class="content">
-                <p class="note is_bold title">Citrons verts</p>
-                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div class="l_photo_description is_horizontal">
-              <div class="image">
-                <div class="has_corners_shadow is_small"></div>
-              </div>
-              <div class="content">
-                <p class="note is_bold title">Choux de Burxelles</p>
-                <p class="note ">5€ <span class="is_italic">le kilo</span></p>
-              </div>
-            </div>
-          </li>
-
+          <% end %>
         </ul>
       <%	else %>
         <p> Aucun autre produit</p>
@@ -127,7 +105,7 @@
     </div>
 
       <div class="about_the_farmer">
-        <span class="button"><a>découvrez François </a></span>
+        <span class="button"><a>découvrez <%= @produit.user.prenom %> </a></span>
       </div>
 
   </div>
