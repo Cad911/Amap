@@ -489,6 +489,13 @@ ul.dropdown_menu {
   }
 }
 
+.right_arrow {
+  display:inline-block;
+  width:28px;
+  height:152px;
+  @include ui-sprite(right_arrow);
+}
+
 .switch {
   display:inline-block;
   width:22px;

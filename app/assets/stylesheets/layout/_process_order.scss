@@ -145,6 +145,9 @@
 	}
 	.footer {
 		text-align:right;
+		.back {
+			margin-right:20px;
+		}
 		.total {
 			p {
 				margin:10px 0 10px 0;
@@ -190,8 +193,10 @@
 			padding-top:40px;
 		}
 		.choice {
-			float:left;
 			@include embossed_button($embossed_dark);	
+		}
+		.choice, .loggin {
+			float:left;			
 			@include borderradius(5px);		
 			width:210px;
 			height:115px;
@@ -221,6 +226,32 @@
 					margin:0;
 					padding:0;
 				}				
+			}
+		}
+		.right_arrow {
+			display:block;
+			float:left;
+			margin:0 15px 0 21px;
+		}
+		.loggin {
+			width:200px;
+			padding:20px;
+			height:inherit;
+			border:solid 1px $embossed_dark;
+			background:url(/../images/bg_darkener.png);
+			margin-bottom:25px;
+			input {
+				width:190px;
+			}
+			.content {
+				width:150px;
+			}
+			.footer {
+				width:200px;
+				padding-top:20px;
+				.button {
+					text-align:right;
+				}
 			}
 		}
 	}

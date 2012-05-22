@@ -33,3 +33,10 @@ header {
 a:hover {
   text-decoration:none !important;
 }
+input, textarea {
+  margin:5px 0;
+  &:focus {
+    @include box-shadow($light_brown 0px 0px 6px );
+    border-color:$brown;
+  }
+}
