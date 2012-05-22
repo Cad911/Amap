@@ -586,6 +586,7 @@ ul.dropdown_menu {
           @include transition-timing-function(ease-out);       
         }
         .plus_btn {
+          background-color:#ffffff;
           .plus_quantite_p_c {
             @extend .plus;
             position:relative;
@@ -593,6 +594,7 @@ ul.dropdown_menu {
           }          
         }
         .minus_btn {
+          background-color:#ffffff;
           left:1px;        
           width:32px;          
           .moins_quantite_p_c {

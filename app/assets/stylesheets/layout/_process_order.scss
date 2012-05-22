@@ -255,4 +255,37 @@
 			}
 		}
 	}
+	&.step_3 {
+		.process_sign {
+			.picture {
+				@include process_order-sprite(process_level_3);					
+			}
+			.resume {
+				margin-right:10px;
+			}
+			.point_choice {
+				margin-left:85px;
+			}
+		}
+		.resume, .paiement {
+			.left_part {
+				width:300px;
+				.title {
+					@include title(1,30px);
+				}
+			}
+		}
+		.resume {
+			table {
+				@include embossed_button($embossed_dark);
+				.first_column {
+					background:url(/../images/bg_darkener.png);
+					td {
+						padding:15px;
+						width:130px;
+					}
+				}
+			}
+		}			
+	}
 }

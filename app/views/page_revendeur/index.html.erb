@@ -1,9 +1,25 @@
 <div class="l_main_gutter l_farmer_list">
 
-    <div class="breadcrumb">
+ <div class="breadcrumb">
     <ul>
-      <li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
-      <li><a class="" style="z-index:3">Agriculteurs</a></li>
+      <% 
+      @var = @tab_breadcrumb.count + 1
+      @tab_breadcrumb.each do |breadcrumb| %>
+      	<% if @var == (@tab_breadcrumb.count + 1) %>
+  		  	<li><a class="/" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><i class="home_icon"></i><%= breadcrumb[:title] %></a></li>
+  		<% else %>
+  			<li><a class="" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><%= breadcrumb[:title] %></a></li>
+  		<% end %>
+  	  
+  	  	<%  @var = @var -1 %>
+  	  <% end %>
+  	  
+  	  
+   <!--
+   <li><a class="/" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
+      <li><a class="" style="z-index:3">Produits</a></li>
+      <li><a class="" style="z-index:2">Fruits et légumes</a></li>
+-->
     </ul>
   </div>
 
@@ -16,33 +32,34 @@
     <ul class="l_farmer_list">
 
       <% @revendeurs.each do |revendeur| %>
-
+		
         <li class="l_vcard has_corners_shadow is_vcard">
-          <div class="l_head_vcard l_photo_description is_horizontal ">
-
-            <div class="image has_corners_shadow is_small">
-			    <%= image_tag (revendeur.default_image).image_url(:is_small) if !(revendeur.default_image).nil? %>
-            </div>
-
-            <div class="content">
-              <p class="title">
-                <%= revendeur.nom %>
-                <%= revendeur.prenom %>
-              </p>
-              <p class="location">
-                <span class="note is_italic"><%= revendeur.direction.nom %></span>
-                <span class="note is_italic"><%= revendeur.ville.nom %></span>
-              </p>
-              <%#= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %>
-              <%#= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %>
-              <%#= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %>
-
-            </div>
-
-          </div>
-
-          <p class="description"><span><%= revendeur.description %></span></p>
-
+          <a href="/page_revendeur/show/<%= revendeur.id %>">
+	          <div class="l_head_vcard l_photo_description is_horizontal ">
+	
+	            <div class="image has_corners_shadow is_small">
+				    <%= image_tag (revendeur.default_image).image_url(:is_small) if !(revendeur.default_image).nil? %>
+	            </div>
+	
+	            <div class="content">
+	              <p class="title">
+	                <%= revendeur.nom %>
+	                <%= revendeur.prenom %>
+	              </p>
+	              <p class="location">
+	                <span class="note is_italic"><%= revendeur.direction.nom %></span>
+	                <span class="note is_italic"><%= revendeur.ville.nom %></span>
+	              </p>
+	              <%#= link_to "Ficher agriculteur", page_revendeur_show_path(revendeur.id), :class => "btn btn-primary" %>
+	              <%#= link_to revendeur.produit_en_vente,page_produit_index_by_revendeur_path(revendeur.id),:class => "btn btn-info" %>
+	              <%#= link_to revendeur.panier_en_vente, page_panier_index_by_revendeur_path(revendeur.id), :class => "btn btn-info" %>
+	
+	            </div>
+	
+	          </div>
+	
+	          <p class="description"><span><%= revendeur.description %></span></p>
+		  </a>
         </li>
 
       <% end %>

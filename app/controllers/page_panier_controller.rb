@@ -1,13 +1,10 @@
 class PagePanierController < ApplicationController
    layout "front"
   
-  #____ LISTING TOUS LES PANIERS ________
-  def index
-  	@titre = "Tous les paniers"
-  	@paniers = Panier.all
+  def breadcrumb
+  	super
+  	@tab_breadcrumb.push({:path => page_panier_index_path, :title => 'Panier'})
   end
-  
-  
   
   
   
@@ -103,6 +100,10 @@ class PagePanierController < ApplicationController
 	  		end
 	  	end
 	end
+	
+	#__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_panier_index_by_categorie_path(params[:categorie_id]), :title => @categorie.nom})
+    #_________________
     
     render :index
   end
@@ -130,6 +131,11 @@ class PagePanierController < ApplicationController
    @panier = Panier.find(params[:panier_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
    @other_paniers = Panier.where("revendeur_id=? AND id != ?",@panier.revendeur_id, @panier.id)
+   
+   #__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_panier_show_path(@panier.revendeur_id,params[:panier_id]), :title => @panier.titre})
+   #_________________
+    
   end
   
   #_____ LISTING PAR REVENDEUR / AGRICULTEUR ________
@@ -137,6 +143,12 @@ class PagePanierController < ApplicationController
   	@user = User.find(params[:user_id])
   	@titre = "Panier de l'agriculteur #{@user.nom}"
   	@paniers = Panier.where(:revendeur_id => params[:user_id])
+  	
+    #__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_panier_index_by_revendeur_path(params[:user_id]), :title => @user.prenom})
+    #_________________
+   
+   
   	render :index
   end
   
@@ -152,6 +164,12 @@ class PagePanierController < ApplicationController
   			@paniers << produit
   		end
   	end
+  	
+  	 #__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_panier_index_by_directeur_path(params[:direction_id]), :title => 'Amap '+@direction.nom})
+    #_________________
+    
+    
   	render :index
   end
   
