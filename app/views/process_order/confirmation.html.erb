@@ -1,9 +1,32 @@
-<div class="l_main_gutter">
-	<h1>ProcessOrder#confirmation</h1>
-	<p>Find me in app/views/process_order/confirmation.html.erb</p>
+<div class="l_main_gutter l_process_order step_2">
+
+	<div class="process_sign">
+		<div class="picture"></div>
+		<span class="done resume">Résumé cagette</span>
+		<span class="current point_choice">Choix du point relais</span>
+		<span class="payment">Validation et paiement</span>
+	</div>
 	
-	<p> Choisissez votre point relais </p>
-	<div id="l_select_pr">
+	<h1> Choisissez votre point relais </h1>
+
+	<ul class="products">			
+		<li>
+			<div class="raw">
+				<div class="l_photo_description is_horizontal">
+					<div class="image">
+						<span class="radio"></span>
+					</div>
+					<div class="content">
+						<p class="is_bold title">Ferme d'en haut</p>						
+						<p class="descritpion">166 rue Léon gambetta - Saint-Omer - 59870</p>
+						<p class="number">03-20-27-97-57</p>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+<!--	<div id="l_select_pr">
 		<form id="form_select_pr" method="get" action="/process_order/select_pr">
 		<ul class="l_farmer_list">
 			<% @point_relais.each do |pr| %>
@@ -11,7 +34,7 @@
 			<% end %>
 		</ul>
 		<div class="actions">
-		    <!-- <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span> -->
+		    <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span>
 		    <% if !current_client.nil? %>
 		    <input type="submit" value="Proceder au paiment" />
 		    <% end %>
@@ -21,8 +44,8 @@
 	<% if current_client.nil? %>
 		
 		
-		<!-- ______________ SE CONNECTER _________________ -->
-		<div id="l_se_connecter" style="display:none;float:right;margin:0 0px 0">
+	<!-- ______________ SE CONNECTER _________________ -->
+		<!--<div id="l_se_connecter" style="display:none;float:right;margin:0 0px 0">
 			<h2>Se connecter</h2>
 			
 			<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
@@ -40,7 +63,7 @@
 		
 		
 		<!-- ______________ S'INSCRIRE _________________ -->
-		<div id="l_sinscrire" style="display:none;float:right;margin:0 0px 0">	
+		<!--<div id="l_sinscrire" style="display:none;float:right;margin:0 0px 0">	
 			<h2>Sign up</h2>
 		
 			<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
@@ -62,7 +85,7 @@
 		</div>
 		
 		<!-- ARE YOU INSCRIT -------- -->
-		<div id="l_areyouinscrit">
+		<!--<div id="l_areyouinscrit">
 			<h2> Etes vous inscrit ?</h2>
 			<form>
 				<ul class="l_farmer_list">
@@ -73,5 +96,5 @@
 		</div>
 		<br class="clear">
 		
-	<% end %>
-</div>
+		<% end %> -->
+	</div>

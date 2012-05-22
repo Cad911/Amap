@@ -1,50 +1,103 @@
-<div class="l_main_gutter l_process_order first_step">
+<div class="l_main_gutter l_process_order step_1">
 
 	<div class="process_sign">
 		<div class="picture"></div>
-		<span class="is_bold resume">Résumé cagette</span>
+		<span class="current resume">Résumé cagette</span>
 		<span class="point_choice">Choix du point relais</span>
 		<span class="payment">Validation et paiement</span>
 	</div>
 
 	<h1>Votre cagette</h1>
 	<p id="notice"><%= notice %></p>
-	<% if !@abonnement_panier.nil? %>				
-		<!--			<%= @abonnement_panier.panier.titre %> 
+	<!--<% if !@abonnement_panier.nil? %>				
+					<%= @abonnement_panier.panier.titre %> 
 					<%= @abonnement_panier.panier.user.nom %> 
 					<%= @abonnement_panier.quantite %>  (voir dans la table)
 					<%= @abonnement_panier.date_debut %> 
 					<%= @abonnement_panier.date_fin %> 
 					<%= @abonnement_panier.panier.prix_unite_ttc %> € 
-				-->
+				
+				<% elsif !@listing_produit.nil? %>
 
-	<span class="btn btn-info"> <%= link_to "+",add_quantite_abo_path(@abonnement_panier.id) %> </span> 
-	<span class="btn btn-info"> <%= link_to "-",supp_quantite_abo_path(@abonnement_panier.id) %> </span> 
-	<span class="close_square"> <%= link_to "SUPP",supp_abonnement_path(@abonnement_panier.id) %> </span>	
 
-	<% elsif !@listing_produit.nil? %>
-		
-			
-			
-			<% @listing_produit.each do |panier| %>
+
+				<% @listing_produit.each do |panier| %>
 				<%= panier.produit_vente_libre.titre %> 
 				<%= panier.produit_vente_libre.user.nom %> 
 				<%= panier.nombre_pack %> 
 				<%= panier.produit_vente_libre.quantite %> <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %>
 				<%= panier.produit_vente_libre.prix_unite_ttc %> 
-					<%= link_to "", ajout_quantite_cageot_path(panier.id), :class => "plus" %>
-					<%= link_to "", supp_quantite_cageot_path(panier.id), :class => "minus" %>
-			 	<%= link_to "", supp_produit_cageot_path(panier.id), :class => "close_square", :method => :delete  %> 
+				<%= link_to "", ajout_quantite_cageot_path(panier.id), :class => "plus" %>
+				<%= link_to "", supp_quantite_cageot_path(panier.id), :class => "minus" %>
+				<%= link_to "", supp_produit_cageot_path(panier.id), :class => "close_square", :method => :delete  %> 
 				
-			
-			<% end %>
-		
+
+				<% end %>
+
 				Total
-				 <%= @total %> €
-			
-	<% else %>
-		<p> Aucun produit</p>
-	<% end %>
-	
-	<p> <%= link_to "Etape suivante", process_order_confirmation_path, :class => "btn btn-primary"%> </p>
-</div>
+				<%= @total %> €
+
+				<% else %>
+				<p> Aucun produit</p>
+				<% end %>
+
+			</div>
+		-->
+		<div class="labels">
+			<span class="label_description">Description</span>
+			<span class="label_quantity">Quantité</span>
+			<span class="label_price">Prix</span>	
+			<br class="clear">		
+		</div>
+		<ul class="products">			
+			<li>
+				<div class="raw">
+					<div class="l_photo_description is_horizontal">
+						<div class="image">
+							<div class="has_corners_shadow is_small"></div>
+						</div>
+						<div class="content">
+							<p class="is_bold title">Carottes <span class="note is_italic">le kilo</span></p>						
+							<p class="descritpion">Lorem ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet</p>
+						</div>
+						<div class="quantity">
+							<span class="minus"></span>
+							<span class="sum">5</span>
+							<span class="plus"></span>
+						</div>						
+						<div class="price">
+							<span class="sum">5€</span>
+							<div class="close_square"></div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="raw">
+					<div class="l_photo_description is_horizontal">
+						<div class="image">
+							<div class="has_corners_shadow is_small"></div>
+						</div>
+						<div class="content">
+							<p class="is_bold title">Carottes <span class="note is_italic">le kilo</span></p>						
+							<p class="descritpion">Lorem ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet</p>
+						</div>
+						<div class="quantity">
+							<span class="minus"></span>
+							<span class="sum">5</span>
+							<span class="plus"></span>
+						</div>						
+						<div class="price">
+							<span class="sum">5€</span>
+							<div class="close_square"></div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="footer">
+			<div class="total">
+				<p>Total &nbsp;<%= @total %> €</p>
+			</div>
+			<span class="button next_step"><%= link_to "Etape suivante", process_order_confirmation_path %></span>
+		</div>
