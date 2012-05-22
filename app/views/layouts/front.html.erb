@@ -23,9 +23,9 @@
 
   <%= javascript_include_tag 'produit_vente_libres' %>
   <%= javascript_include_tag 'stocks' %>
-  <%= javascript_include_tag 'process_order' %>
   <%= javascript_include_tag 'page_front' %>
   <%= javascript_include_tag 'page_revendeur' %>
+  <%= javascript_include_tag 'process_order' %>
   <%= javascript_include_tag 'jmpress/jmpress' %>
   
   <%= javascript_include_tag :defaults%>
@@ -208,7 +208,7 @@
     </ul>
     <div class="checkout">
       <span class="price"> <% if @product_cageot.count != 0 %> <%= @total_cageot %> <% else %> 0 <% end %> €</span>
-      <span class="button"><a>Acheter !</a></span>
+      <span class="button"><%= link_to "Acheter !",process_order_resume_path %></span>
     </div>
   </div>
 </div>

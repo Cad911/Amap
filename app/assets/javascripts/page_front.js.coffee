@@ -137,9 +137,15 @@ $(document).ready(->
 #____________________________________________________________________________________________________________________________
 #____________________________________________________________________________________________________________________________
     cageot = 
+        in_process_order: false
         init: ->
             cageot.ajax_formulaire()
             cageot.event_form_generate(".l_dock_wrapper>ul>li")
+            #__ SI ON EST DANS LE PROCESS ORDER ___
+            if $('.l_process_order ').length > 0
+                cageot.in_process_order = true
+                cageot.hide_dock()
+            #______________________________________
             if $('#form_add_product').length > 0
               cageot.form_event()
             if $('.add_product_link').length > 0
@@ -217,6 +223,11 @@ $(document).ready(->
                    if data['statut'] == true
                      cageot.update_html_quantite(data['produit']['id'],data['produit']['nombre_pack'])
                      cageot.update_html_price(data['total'])
+                     #____ RESUME PROCESS ORDER _______
+                     if cageot.in_process_order
+                         event_resume_p.update_html_quantite(data)
+                         event_resume_p.update_html_price(data)
+                     #__________________________________
             )
         moins_quantite:(id_product) ->
             $.ajax(
@@ -226,8 +237,18 @@ $(document).ready(->
                success : (data) ->
                   if data['statut'] == "update"
                      cageot.update_html_quantite(data['produit']['id'],data['produit']['nombre_pack'])
+                     #____ RESUME PROCESS ORDER _______
+                     if cageot.in_process_order
+                         event_resume_p.update_html_quantite(data)
+                         event_resume_p.update_html_price(data)
+                     #_________________________________
                   else if data['statut'] == "delete"
                       $('li#'+id_product).remove()
+                      #____ RESUME PROCESS ORDER _______
+                      if cageot.in_process_order
+                         event_resume_p.delete_quantity(data)
+                         event_resume_p.update_html_price(0)
+                      #_________________________________
                   else
                   
                   cageot.verif_if_product_present(data['total'])
@@ -307,9 +328,11 @@ $(document).ready(->
             $('.dock').slideUp(400,'swing')
         
 
-
-
-    
+    #______________________________________________________________________________________________________________________________
+    #______________________________________________________________________________________________________________________________
+    #_____________________ ANIMATION MOVE RIGHT , MOVE LEFT .. ____________________________________________________
+    #______________________________________________________________________________________________________________________________
+    #______________________________________________________________________________________________________________________________
     animation_display = 
        margin_: 0
        opacity_debut: 1 
@@ -475,8 +498,52 @@ $(document).ready(->
                })    
               
      
-           
-         
+    #_____ EVENT PROCESS ORDER PAGE RESUME _________________________________________________________________       
+    event_resume_p = 
+      event : () ->
+          
+          $('.price>div.close_square').bind('click',->
+              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')
+              event_resume_p.delete_quantity(produit_id)
+          )
+          $('.quantity>span.plus').bind('click', ->
+              produit_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
+              event_resume_p.plus_quantity(produit_id)
+          )
+          $('.quantity>span.minus').bind('click', ->
+              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')              
+              event_resume_p.minus_quantity(produit_id)
+          )
+      plus_quantity: (produit_id) ->
+          cageot.plus_quantite(produit_id)
+      minus_quantity: (produit_id) ->
+          cageot.moins_quantite(produit_id)
+      delete_quantity: (produit_id) ->
+          cageot.delete(produit_id)
+          $('#raw_'+produit_id).animate({
+              marginLeft : '-1000px'
+          },{
+              duration:1000,
+              complete: ->
+                  $(this).remove()
+                  event_resume_p.verif_si_product()
+          })
+      verif_si_product: () ->
+          if $('.raw').length == 0
+              $('.products').append('<li class="raw"> Aucun produit </li>')
+      update_html_quantite: (data) ->
+          $('#raw_'+data['produit']['id']+'>.l_photo_description>.quantity>.sum').text(data['produit']['nombre_pack'])
+      update_html_price : (data) ->
+          $('.total>p').text('Total '+data['total']+' €')
+       
+       
+       
+       
+       
+       
+       
+       
+    #______ INIT ALL ____________________________________________________
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
     cloud.generate_big_cloud(2,120000,140000)
     cloud.generate_little_cloud(2, 150000,180000)
@@ -488,6 +555,7 @@ $(document).ready(->
     #___ OPACITY,MARGIN,AU CHARGEMENT DE LA PAGE ____
     #animation_display.see_div()
     animation_display.init(0.7,20,false)
+    event_resume_p.event() 
 
 )
 
