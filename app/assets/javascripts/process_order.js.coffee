@@ -4,6 +4,9 @@
 
 
 $(document).ready(->
+  #________ PAGE RESUME _______________
+  #__DANS PAGE FRONT CAR EN RELATION AVECE LE CAGEOT ___
+    
   #____________________________________________ FUNCTION POUR AFFICHAGE DES MESSAGE D'INFORMATION ________________________
   message_information =
       message_success: (id,titre,message) ->

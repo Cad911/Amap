@@ -8,49 +8,107 @@
 	</div>
 
 	<h2>Votre cagette</h2>
+	
+	
 	<p id="notice"><%= notice %></p>
-	<!--<% if !@abonnement_panier.nil? %>				
-					<%= @abonnement_panier.panier.titre %> 
-					<%= @abonnement_panier.panier.user.nom %> 
-					<%= @abonnement_panier.quantite %>  (voir dans la table)
-					<%= @abonnement_panier.date_debut %> 
-					<%= @abonnement_panier.date_fin %> 
-					<%= @abonnement_panier.panier.prix_unite_ttc %> € 
+	<div class="labels">
+			<span class="label_description">Description</span>
+			<span class="label_quantity">Quantité</span>
+			<span class="label_price">Prix</span>	
+			<br class="clear">		
+		</div>
+		<ul class="products">
+	
+	<% if !@abonnement_panier.nil? %>	
 				
-				<% elsif !@listing_produit.nil? %>
+				<li>
+				<div class="raw">
+					<div class="l_photo_description is_horizontal">
+						<div class="image">
+							<div class="has_corners_shadow is_small"></div>
+						</div>
+						<div class="content">
+							<p class="is_bold title"> <%= @abonnement_panier.panier.titre %>  <span class="note is_italic"> pour <%= @abonnement_panier.panier.nombre_personne %> personne(s)</span></p>						
+							<p class="descritpion">Lorem ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet</p>
+						</div>
+						<div class="quantity">
+							<span class="minus"></span>
+							<span class="sum"><%= @abonnement_panier.quantite %></span>
+							<span class="plus"></span>
+						</div>						
+						<div class="price">
+							<span class="sum"> <%= @abonnement_panier.panier.prix_unite_ttc %> €</span>
+							<div class="close_square"></div>
+						</div>
+					</div>
+				</div>
+			</li>			
+			</ul>	
+					 
+				
+	<% elsif !@listing_produit.nil? %>
 
 
 
 				<% @listing_produit.each do |panier| %>
-				<%= panier.produit_vente_libre.titre %> 
-				<%= panier.produit_vente_libre.user.nom %> 
-				<%= panier.nombre_pack %> 
-				<%= panier.produit_vente_libre.quantite %> <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %>
-				<%= panier.produit_vente_libre.prix_unite_ttc %> 
-				<%= link_to "", ajout_quantite_cageot_path(panier.id), :class => "plus" %>
-				<%= link_to "", supp_quantite_cageot_path(panier.id), :class => "minus" %>
-				<%= link_to "", supp_produit_cageot_path(panier.id), :class => "close_square", :method => :delete  %> 
-				
-
+					
+						<li>
+							<div class="raw" id="raw_<%= panier.id %>">
+								<div class="l_photo_description is_horizontal">
+									<div class="image">
+										<div class="has_corners_shadow is_small"></div>
+									</div>
+									<div class="content">
+										<p class="is_bold title"> <%= panier.produit_vente_libre.titre %>  <span class="note is_italic">les <%= panier.produit_vente_libre.quantite %>  <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %> </span></p>						
+										<p class="descritpion"> <%= panier.produit_vente_libre.description %> </p>
+									</div>
+									<div class="quantity">
+										<span class="minus"> </span><%= #link_to "", supp_quantite_cageot_path(panier.id), :class => "minus" 
+										%> 
+										<span class="sum"><%= panier.nombre_pack %> </span>
+										<span class="plus"> </span>
+										<%= #link_to "", ajout_quantite_cageot_path(panier.id),:class => "plus" 
+										%>
+									</div>						
+									<div class="price">
+										<span class="sum"> <%= panier.produit_vente_libre.prix_unite_ttc %> €</span>
+										<div class="close_square"></div>
+									</div>
+								</div>
+							</div>
+						</li>
 				<% end %>
-
-				Total
-				<%= @total %> €
+				</ul>
+				<div class="footer">
+					<div class="total">
+						<p>Total &nbsp;<%= @total %> €</p>
+					</div>
+					<span class="button next_step"><%= link_to "Etape suivante", process_order_confirmation_path %></span>
+				</div>
 
 				<% else %>
-				<p> Aucun produit</p>
+					<p> Aucun produit</p>
 				<% end %>
 
 			</div>
-		-->
+		
+		
+		
+		
+		
+		
+<!--		
 		<div class="labels">
 			<span class="label_description">Description</span>
 			<span class="label_quantity">Quantité</span>
 			<span class="label_price">Prix</span>	
 			<br class="clear">		
 		</div>
-		<ul class="products">			
-			<li>
+		<ul class="products">	
+		
+				
+			
+<li>
 				<div class="raw">
 					<div class="l_photo_description is_horizontal">
 						<div class="image">
@@ -94,6 +152,7 @@
 					</div>
 				</div>
 			</li>
+
 		</ul>
 		<div class="footer">
 			<div class="total">
@@ -101,3 +160,4 @@
 			</div>
 			<span class="button next_step"><%= link_to "Etape suivante", process_order_confirmation_path %></span>
 		</div>
+-->
