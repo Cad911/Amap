@@ -1,5 +1,7 @@
 <div class="l_main_gutter farmer_show ">
 
+	<input type="hidden" value="<%= @revendeur.id %>" id="user_id" />
+	
 	<div class="breadcrumb">
 		<ul>
 			<li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
@@ -89,7 +91,7 @@
 		        <div class="pursache">
 		        	<span class="price"> <%= panier.prix_unite_ttc %> € <span class="note is_italic">pour <%= panier.nombre_personne %> personnes</span></span><br>
 		        	<div class="call_to_action">
-		        		<span class="button"><a href="">ajouter au panier</a></span>
+		        		<span class="button add_basket_link" id="basket_<%= panier.id %>"><a href="">ajouter au panier</a></span>
 		        	</div>
 		        </div>
 	      </div>

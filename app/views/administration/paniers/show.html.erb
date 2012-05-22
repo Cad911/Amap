@@ -56,7 +56,23 @@
 	<%= link_to 'Back', administration_user_paniers_path(current_user) %>
 	
 </div>
+<div class="well">
+		<%= render 'form_photo' %>
+</div>
+<div class="well">
+	<ul>
+		<% (@panier.photo_paniers).each do |image| %>
+			<li>
+				<% @image = image %>
+				<%= image_tag image.image_url(:is_medium) %>
+				<%= link_to "delete", administration_user_panier_delete_image_path(current_user.id, @panier, image), :confirm => "Etes vous sur", :method => :delete %> 
+				<span> first_image = <% if image.first_image == 1 %> Oui <% else %> Non <% end %></span> 
+				<%= render 'update_form_photo' %>
+			</li>
+		<% end %>
+	</ul>
 
+</div>	
 <div class="well">
 
 	<%= render :partial => "/administration/produit_paniers/index", :locals => {:produit_paniers => @produit_paniers} %>

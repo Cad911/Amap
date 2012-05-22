@@ -162,8 +162,8 @@
   <%= yield %>
 
 </div>
-
- <% product_cageot %>
+<% #---- MODULE AJOUTE --- %> 
+<% product_cageot %>
 <div class="dock bg-height_70" <% if @product_cageot.count == 0 %> style="display:none" <% end %>">
   <div class="l_dock_wrapper">
     <ul>
@@ -193,7 +193,7 @@
       <li><img src="" class="has_corners_shadow is_small"></li> -->
     </ul>
     <div class="checkout">
-      <span class="price"> <% if @product_cageot.count != 0 %> <%= @cageot.total %> <% else %> 0 <% end %> €</span>
+      <span class="price"> <% if @product_cageot.count != 0 %> <%= @total_cageot %> <% else %> 0 <% end %> €</span>
       <span class="button"><a>Acheter !</a></span>
     </div>
   </div>

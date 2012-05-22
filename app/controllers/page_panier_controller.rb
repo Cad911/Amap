@@ -6,6 +6,124 @@ class PagePanierController < ApplicationController
   	@titre = "Tous les paniers"
   	@paniers = Panier.all
   end
+  
+  
+  
+  
+  
+  
+  #__________________________________________________________ LISTING TOUS LES PANIERS ____________________________________________
+  def index
+  	@titre = "Tous les paniers"
+  	@paniers = Panier.all
+  	@paniers_first_block = []
+  	@paniers_middle_block = []
+  	@paniers_last_block = []
+  	
+  	#___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
+  	if @paniers.count < 5
+  		@paniers_middle_block = @paniers
+  	#___ SI 5 PRODUITS, SEULEMENT LE PREMIER BLOCK _________
+  	elsif @paniers.count == 5
+  		@first_huge_panier = @paniers[0]
+  		(1..4).each do |i|
+  			@paniers_first_block << @paniers[i]
+  		end
+  	#___________ SI PLUS DE 5 PRODUITS _____________________
+  	elsif 5 < @paniers.count
+  		#______ PREMIER BLOCK ___________
+  		@first_huge_panier = @paniers[0]
+  		(1..4).each do |i|
+  			@paniers_first_block << @paniers[i]
+  		end
+  		
+  		#_______ SI ON A LE COMPTE PILE POUR AVOIR LE FIRST BLOCK, MIDDLE BLOCK AND LAST BLOCK
+  		if (@paniers.count - 10) % 4 == 0 && @paniers.count - 10 >= 0
+	  		(5..@paniers.count-6).each do |i|
+	  			@paniers_middle_block << @paniers[i]
+	  		end
+		 
+	  		(@paniers.count-5..@paniers.count-2).each do |i|
+	  			@paniers_last_block << @paniers[i]
+	  		end
+	  		@last_huge_panier = @paniers[@paniers.count-1]
+	  	#_____ PAS DE LAST BLOCK ___________
+  		else
+  			(5..@paniers.count-1).each do |i|
+	  			@panier_middle_block << @paniers[i]
+	  		end
+  		end
+  	end
+  end
+
+  
+  #_________________________________________________________ LISTING BY CATEGORIE _______________________________________________
+  def index_by_categorie
+  	@categorie = Categorie.find(params[:categorie_id])
+  	if @categorie.nil?
+  		@titre = "Cette categorie n'existe pas"
+  	else
+  	
+	  	@titre = "Produit de la categorie : #{@categorie.nom}"
+	    @paniers = Panier.where(:categorie_id => params[:categorie_id])
+	    @produits = []
+	    
+	    #___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
+	  	if @paniers.count < 5
+	  		@paniers_middle_block = @paniers
+	  	#___ SI 5 PRODUITS, SEULEMENT LE PREMIER BLOCK _________
+	  	elsif @paniers.count == 5
+	  		@first_huge_panier = @paniers[0]
+	  		(1..4).each do |i|
+	  			@paniers_first_block << @paniers[i]
+	  		end
+	  	#___________ SI PLUS DE 5 PRODUITS _____________________
+	  	elsif 5 < @paniers.count
+	  		#______ PREMIER BLOCK ___________
+	  		@first_huge_panier = @paniers[0]
+	  		(1..4).each do |i|
+	  			@paniers_first_block << @paniers[i]
+	  		end
+	  		
+	  		#_______ SI ON A LE COMPTE PILE POUR AVOIR LE FIRST BLOCK, MIDDLE BLOCK AND LAST BLOCK
+	  		if (@paniers.count - 10) % 4 == 0 && @paniers.count - 10 >= 0
+		  		(5..@paniers.count-6).each do |i|
+		  			@paniers_middle_block << @paniers[i]
+		  		end
+			 
+		  		(@paniers.count-5..@paniers.count-2).each do |i|
+		  			@paniers_last_block << @paniers[i]
+		  		end
+		  		@last_huge_panier = @paniers[@paniers.count-1]
+		  	#_____ PAS DE LAST BLOCK ___________
+	  		else
+	  			(5..@paniers.count-1).each do |i|
+		  			@panier_middle_block << @paniers[i]
+		  		end
+	  		end
+	  	end
+	end
+    
+    render :index
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   #____ AFFICHAGE PAGE PRODUIT _______
   def show
@@ -37,18 +155,39 @@ class PagePanierController < ApplicationController
   	render :index
   end
   
-  #___ LISTING BY CATEGORIE __
-  def index_by_categorie
-  	@categorie = Categorie.find(params[:categorie_id])
-  	if @categorie.nil?
-  		@titre = "Cette categorie n'existe pas"
-  	else
-  	
-	  	@titre = "Panier de la categorie : #{@categorie.nom}"
-	    @paniers = Panier.where(:categorie_id => params[:categorie_id])
-	end
-    
-    render :index
+  
+  #____________________PANIER EN VENTE WHERE PARAMS FILTER _________________________________
+  def basket_filter
+      panier_vente = Panier.all
+      panier_return = []
+      
+      
+      
+      panier_vente.each do |panier|
+          condition_respect = true
+          if params[:user_id] != nil and params[:user_id].to_i != panier.revendeur_id
+              condition_respect = false
+          end
+          
+          if condition_respect
+              tab_panier = {
+              			:id => panier.id,
+                        :user_id => panier.revendeur_id,
+              			:titre => panier.titre, 
+              			:description => panier.description, 
+              			:default_image => '', 
+              			:prix_unite_ttc => panier.prix_unite_ttc,
+              			:nb_personne => panier.nombre_personne,
+              }
+              panier_return << tab_panier 
+          end
+      end
+      
+      respond_to do |format|
+	  	format.js do 
+	  	     render :json => panier_return.to_json
+	  	end
+	  end
   end
 
 end

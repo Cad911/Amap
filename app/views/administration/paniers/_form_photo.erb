@@ -1,0 +1,7 @@
+<h2> Ajout image Panier</h2>
+<%= simple_form_for(@photo_panier, :as => "photo_panier", :url => administration_user_panier_add_image_path(current_user,@panier,@photo_panier), :html => {:class => 'form-horizontal well' }) do |u| %>
+				<%= u.input :image, :as => :file %>
+				<%= u.label :first_image %>
+				<%= u.collection_radio_buttons :first_image, [['1', 'Oui'] ,['0', 'No']], :first, :last, :label => 'Image par defaut' %>
+				<%= u.button :submit, :value => "Ajouter image" %>
+<% end %>
