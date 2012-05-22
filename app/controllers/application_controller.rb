@@ -1,6 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include ApplicationHelper
+  before_filter :breadcrumb
+  #add_breadcrumb('home', :root_path)
   
+  def breadcrumb
+  	@tab_breadcrumb = []
+  	@tab_breadcrumb.push({:path => root_path, :title => 'Accueil'})
+  end
+  
+    
    #POUR CANCAN ________________________________________
   def current_ability
   	@current_ability ||= case

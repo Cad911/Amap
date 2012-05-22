@@ -1,5 +1,11 @@
 class PageProduitController < ApplicationController
   layout "front"
+  #add_breadcrumb('Produits','/page_produit/index')
+  
+  def breadcrumb
+  	super
+  	@tab_breadcrumb.push({:path => page_produit_index_path, :title => 'Produit'})
+  end
   
   #__________________________________________________________ LISTING TOUS LES PRODUITS ____________________________________________
   def index
@@ -50,6 +56,9 @@ class PageProduitController < ApplicationController
    @produit = ProduitVenteLibre.find(params[:product_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
    @other_produits = ProduitVenteLibre.where("user_id=? AND id != ?",@produit.user_id, @produit.id)
+   
+   #__FIL D'ARIANNE__
+   @tab_breadcrumb.push({:path => page_produit_show_path(@produit.user_id,params[:product_id]), :title => @produit.titre})
   end
   
   #________________________________ LISTING PAR REVENDEUR / AGRICULTEUR _____________________________________________________
@@ -57,6 +66,11 @@ class PageProduitController < ApplicationController
   	@user = User.find(params[:user_id])
   	@titre = "Produit de l'agriculteur #{@user.nom}"
   	@produits = ProduitVenteLibre.where(:user_id => params[:user_id])
+  	
+  	#__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_produit_index_by_revendeur_path(params[:user_id]), :title => 'Produits de '+@user.prenom})
+    #_________________
+    
   	render :index
   end
   
@@ -72,6 +86,12 @@ class PageProduitController < ApplicationController
   			@produits << produit
   		end
   	end
+  	
+  	#__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_produit_index_by_directeur_path(params[:direction_id]), :title => 'Produits de l\'amap '+@direction.nom})
+    #_________________
+    
+    
   	render :index
   end
   
@@ -132,6 +152,11 @@ class PageProduitController < ApplicationController
 	    	end
 	    end
 	end
+    
+    #__FIL D'ARIANNE__
+   	@tab_breadcrumb.push({:path => page_produit_index_by_directeur_path(params[:categorie_id]), :title => @categorie.nom})
+    #_________________
+    
     
     render :index
   end

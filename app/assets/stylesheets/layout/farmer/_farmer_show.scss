@@ -85,7 +85,7 @@ body .l_main_gutter.farmer_show {
 			}			
 		}
 		.filter {
-			@include filter($light_brown);
+			@include embossed_button($light_brown);
 		}
 		//MY MODIF
 		.filter_active{

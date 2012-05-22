@@ -1,5 +1,27 @@
 <h1>PageProduit#show</h1>
 <p>Find me in app/views/page_produit/show.html.erb</p>
+  <div class="breadcrumb">
+    <ul>
+      <% 
+      @var = @tab_breadcrumb.count + 1
+      @tab_breadcrumb.each do |breadcrumb| %>
+      	<% if @var == (@tab_breadcrumb.count + 1) %>
+  		  	<li><a class="/" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><i class="home_icon"></i><%= breadcrumb[:title] %></a></li>
+  		<% else %>
+  			<li><a class="" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><%= breadcrumb[:title] %></a></li>
+  		<% end %>
+  	  
+  	  	<%  @var = @var -1 %>
+  	  <% end %>
+  	  
+  	  
+   <!--
+   <li><a class="/" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
+      <li><a class="" style="z-index:3">Produits</a></li>
+      <li><a class="" style="z-index:2">Fruits et légumes</a></li>
+-->
+    </ul>
+   </div>
 
 <div class="well">
 	<h1> <%= @panier.titre %></h1>

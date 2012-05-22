@@ -341,20 +341,23 @@ $(document).ready(->
                
            #__ MOVE RIGHT ____
            if $('.move_right').length > 0
-               if $('.move_right').css('margin-left') == "" && $('.move_right').css('margin') == ""
-                   $('.move_right').css('margin-left','0px')
-               if $('.move_right').css('margin-left') == "" && $('.move_right').css('margin') != ""
-                   all_margin = $('.move_right').css('margin').split(' ')
+             $('.move_right').each(->
+               if $(this).css('margin-left') == "" && $(this).css('margin') == ""
+                   $(this).css('margin-left','0px')
+               if $(this).css('margin-left') == "" && $(this).css('margin') != ""
+                   all_margin = $(this).css('margin').split(' ')
                    if all_margin[3]!= undefined
-                       $('.move_right').css('margin-left', all_margin[3])
+                       $(this).css('margin-left', all_margin[3])
                    else
-                       $('.move_right').css('margin-left', all_margin[1])
+                       $(this).css('margin-left', all_margin[1])
                    
-               actual_position = parseInt(($('.move_right').css('margin-left')).replace('px'))
+               actual_position = parseInt(($(this).css('margin-left')).replace('px'))
                new_position = (actual_position - animation_display.margin_)+'px'
+               console.log(new_position)
               
-               $('.move_right').css('margin-left',new_position)
-               $('.move_right').css('opacity',animation_display.opacity_debut)
+               $(this).css('margin-left',new_position)
+               $(this).css('opacity',animation_display.opacity_debut)
+             )
                
            #__ MOVE BOTTOM ____
            if $('.move_bottom').length > 0 
@@ -484,7 +487,7 @@ $(document).ready(->
     
     #___ OPACITY,MARGIN,AU CHARGEMENT DE LA PAGE ____
     #animation_display.see_div()
-    animation_display.init(0.5,20,false)
+    animation_display.init(0.7,20,false)
 
 )
 

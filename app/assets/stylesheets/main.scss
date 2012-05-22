@@ -102,27 +102,10 @@ $ui-layout:smart;
 @import "ui/*.png";
 @include all-ui-sprites;
 
-// applique un style de bouton inscrusté
-@mixin filter($border-color) {
-	@include borderradius(50px);
-	border:solid 1px $border-color;
-	color:$brown;
-	padding:7px 10px 4px 10px;
-	margin-left:10px;
-	@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	&:hover {
-		cursor:pointer;
-		background-color:rgba(255,255,255, 0.3);
-		@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	}
-	&:active {
-		color:#ffffff;
-		text-shadow:none;
-		background-color: transparentize($border-color, 0.7);
-		border:solid 1px darken($border-color, 5%);
-		@include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-	}
-}
+$ui-layout:smart;
+@import "process_order/*.png";
+@include all-process_order-sprites;
+
 
 // fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
 @mixin sunshine {
@@ -190,56 +173,6 @@ $ui-layout:smart;
 	background: url(/../images/bg_darkener.png) repeat;  
 }
 
-// Design de la Lighbox
-.lightbox {
-	width:  500px;
-	position:fixed;
-	z-index:10000;
-	top:50%;
-	left:50%;
-	border:solid 1px $light_brown;
-	background:#fafafa url(/../images/patterns/paper.png) repeat;
-	@include borderradius(5px);
-	@include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
-	@include margin;
-	overflow:hidden;
-	.header {
-		background-image:url(../images/bar.png);    
-		text-align:center;   
-		-webkit-border-top-left-radius: 5px;
-		-webkit-border-top-right-radius: 5px;
-		-moz-border-radius-topleft: 5px;
-		-moz-border-radius-topright: 5px;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;  
-		@include box-shadow(rgba(0,0,0, 0.3) 0px 1px 1px);   
-		.title {
-			margin:0;
-			padding:8px 0 2px 0;
-			height:30px;
-			@include title(1,25px);
-		}
-	}
-	.content {
-		padding:20px 40px 20px 40px;
-		border-bottom:solid 1px #C8C5BF;
-		.title {
-			@include title(2,16px);
-		}
-	}
-	.footer {
-		border-top:solid 1px #ffffff;
-		padding:5px 40px;
-		text-align:right;
-		.button {    
-			padding:0;
-			&::before {
-				background-image:none !important;  
-				border:none;
-			}
-		}
-	}
-}
 
 // Inclusion de fichier .scss
 @import "base/normalize";

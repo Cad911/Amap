@@ -2,13 +2,28 @@
 
 	<input type="hidden" value="<%= @revendeur.id %>" id="user_id" />
 	
-	<div class="breadcrumb">
-		<ul>
-			<li><a class="" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
-			<li><a class="" style="z-index:3">Agriculteurs</a></li>
-			<li><a class="" style="z-index:2">François Dumont</a></li>
-		</ul>
-	</div>
+ <div class="breadcrumb">
+    <ul>
+      <% 
+      @var = @tab_breadcrumb.count + 1
+      @tab_breadcrumb.each do |breadcrumb| %>
+      	<% if @var == (@tab_breadcrumb.count + 1) %>
+  		  	<li><a class="/" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><i class="home_icon"></i><%= breadcrumb[:title] %></a></li>
+  		<% else %>
+  			<li><a class="" style="z-index:<%= @var %>" href="<%= breadcrumb[:path] %>"><%= breadcrumb[:title] %></a></li>
+  		<% end %>
+  	  
+  	  	<%  @var = @var -1 %>
+  	  <% end %>
+  	  
+  	  
+   <!--
+   <li><a class="/" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
+      <li><a class="" style="z-index:3">Produits</a></li>
+      <li><a class="" style="z-index:2">Fruits et légumes</a></li>
+-->
+    </ul>
+  </div>
 
 	<div class="l_area_left">
 		<h1 class="title"><%= @revendeur.nom %></h1>

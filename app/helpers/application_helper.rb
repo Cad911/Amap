@@ -25,7 +25,5 @@ module ApplicationHelper
 		end
     end
     
-    def breadcrumb
-    	
-    end
+   
 end
