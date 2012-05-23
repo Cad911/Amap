@@ -9,21 +9,24 @@
 	
 	<h2> Choisissez votre point relais </h2>
 
-	<ul class="products">			
-		<li>
-			<div class="raw">
-				<div class="l_photo_description is_horizontal">
-					<div class="image">
-						<span class="radio"></span>
-					</div>
-					<div class="content">
-						<p class="is_bold title">Ferme d'en haut</p>						
-						<p class="descritpion">166 rue Léon gambetta - Saint-Omer - 59870</p>
-						<p class="number">03-20-27-97-57</p>
+	<ul class="products">
+	    <% @point_relais.each do |pr| %>
+			<li>
+				<div class="raw" id="pr_<%= pr.id %>">
+					<div class="l_photo_description is_horizontal">
+						<div class="image">
+							<span class="radio"></span>
+						</div>
+						<div class="content">
+							<p class="is_bold title">Ferme d'en haut</p>						
+							<p class="descritpion"> <%= pr.adresse %> <%= pr.ville.nom %> </p>
+							<p class="number">03-20-27-97-57</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</li>
+			</li>
+		<% end %>		
+		<!--
 		<li>
 			<div class="raw">
 				<div class="l_photo_description is_horizontal">
@@ -37,28 +40,28 @@
 					</div>
 				</div>
 			</div>
-		</li>		
+		</li>
+		-->	
 	</ul>
 
-	<div id="l_select_pr">
+	<div id="l_select_pr" style="display:none;">
 		<form id="form_select_pr" method="get" action="/process_order/select_pr">
 		<ul class="l_farmer_list">
-			<% @point_relais.each do |pr| %>
-				<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input type="radio" value="<%= pr.id %>" name="point_relai[id]" /><%= pr.adresse %> <%= pr.ville.nom %> </p></li>
-			<% end %>
+			<% @point_relais.each do |pr_| %>
+				<li class="l_vcard has_corners_shadow is_vcard"> <p class="description"> <input type="radio" value="<%= pr_.id %>" name="point_relai[id]" /> </p></li>
+			<% end %>	
 		</ul>
 		<div class="actions">
-		    <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span>
 		    <% if !current_client.nil? %>
-		    <input type="submit" value="Proceder au paiment" />
+		    <span class="button" id="b_next_step"><a href="#">Proceder au paiement</a></span>
 		    <% end %>
 		</div>
 		</form>
 	</div>
+	
 	<% if current_client.nil? %>
 		
--->		
-	<div class="choice_registered">
+	<div class="choice_registered" id="l_areyouinscrit">
 	<h2>Êtes-vous déjà inscrits ?</h2>
 		<div class="choice yes">
 			<div class="radio_area"><span class="radio"></span></div>
@@ -68,7 +71,7 @@
 				<p>via mes identifiants et termine ma commande</p>
 			</div>
 		</div>
-		<div class="choice">
+		<div class="choice no">
 			<div class="radio_area"><span class="radio"></span></div>
 			<div class="content">
 				<p class="title">Non</p>
@@ -79,23 +82,39 @@
 
 		<div class="right_arrow"></div>
 
-		<div class="loggin">
+		<div class="loggin" id="l_se_connecter" style="display:none;">
 			<div class="content">
 				<p class="title">Connexion</p>
-				<input type="text">
-				<input type="text">
+				<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter' }, :remote => true) do |f| %>
+					<%= f.input :email, :required => false, :autofocus => true %>
+			   		<%= f.input :password, :required => false %>
 				<div class="footer">
-					<span class="button"><a href="">connexion</a></span>
+					<%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
 				</div>
+				<% end %>
+			</div>
+		</div>
+		
+		<div class="loggin" id="l_sinscrire" style="display:none;">
+			<div class="content">
+				<p class="title">Connexion</p>
+				<%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire' } ,:remote => true) do |f| %>
+					<%= f.error_notification %>
+					
+					 <%= f.input :email, :required => true, :autofocus => true, :wrap_with => {:tag => 'span',:class => 'help-inline'} %>
+			    	<%= f.error :email %>
+			    	<%= f.input :nom, :required => true, :autofocus => true %> 
+			    	<%= f.input :password, :required => true %>
+			    	<%= f.input :password_confirmation, :required => true %>
+				<div class="footer">
+					<span class="button" id="b_sign_up"><a href="#">S'inscrire</a></span>
+				</div>
+				<% end %>
 			</div>
 		</div>
 		<br class="clear">
 	</div>
 	
-	<div class="footer">
-		<a href="" class="back">précédent</a>
-		<span class="button next_step"><a href="">paiement</a></span>
-	</div>
 
 	<!-- ______________ SE CONNECTER _________________ -->
 		<!--<div id="l_se_connecter" style="display:none;float:right;margin:0 0px 0">
@@ -148,6 +167,13 @@
 			</form>
 		</div>
 		<br class="clear">
+		-->
+		<% end %> 
 		
-		<% end %> -->
+		<div class="footer">
+			<a href="" class="back">précédent</a>
+			<% if !current_client.nil? %>
+			    <span class="button next_step" id="b_next_step"><a> Procéder paiement</a></span>
+			<% end %>
+		</div>
 	</div>
