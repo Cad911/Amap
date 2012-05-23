@@ -106,7 +106,7 @@
     <div class="box">
       <div class="login">
         <span class="user"></span>
-       <span class="sign_in"><a href="">connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a href="">inscription</a></span>
+       <span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a href="">inscription</a></span>
       </div>
 
       <div class="social">
@@ -164,8 +164,32 @@
       <p>Lorem ispum dolor et sit ame Lorem ispum dolor et sit ame Lorem ispum dolor et sit ame </p>
     </div>
     <div class="footer">
-      <span>annuler</span>
+      <span class="annuler">annuler</span>
       <span class="button"><a href="">valider</a></span>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox_wrapper lightbox_connexion">
+  <div class="lightbox">
+    <div class="header">
+      <h1 class="title">Inscription</h1>
+    </div>
+    <div class="content">
+      <div class="loggin" id="lightbox_se_connecter">
+			<div class="content">
+			    <h2 class="title">Connexion</h2>
+				<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter_lightbox' }, :remote => true) do |f| %>
+					<%= f.input :email, :required => false, :autofocus => true %>
+			   		<%= f.input :password, :required => false %>
+			</div>
+				
+			<div class="footer">
+			    <span class="annuler">annuler</span>
+				<span class="button" id="b_sign_in"><a>Se connecter</a></span>
+			</div>
+				<% end %>
+		</div>
     </div>
   </div>
 </div>

@@ -538,9 +538,41 @@ $(document).ready(->
        
        
        
+     
+     
+     
+    light_box_connection = 
+        init: () ->
+        
+        event: () ->
+           $('.sign_in>a').bind('click', ->
+              light_box_connection.show()
+           )
+           
+           $('.annuler').bind('click', ->
+              light_box_connection.hide()
+           )
+        hide:() ->
+             $('.lightbox_connexion').css('display', 'none')
+        show:() ->
+             $('.lightbox_connexion').css('display', 'block')
+        ajax_formulaire: ->
+          $('#form_se_connecter_lightbox').bind('ajax:success', (data,response) ->
+            console.log(response)
+            message_information.message_success("l_select_pr",response.message,"")
+            light_box_connection.hide()
+
+          )
+          $('#form_se_connecter_lightbox').bind('ajax:error', (data,response) ->
+            message_information.message_error("form_se_connecter","Erreur",response.responseText)
+          )
        
-       
-       
+     
+    light_box_connection.event()     
+    
+    light_box_information = 
+        init: () ->
+          
        
        
     #______ INIT ALL ____________________________________________________
