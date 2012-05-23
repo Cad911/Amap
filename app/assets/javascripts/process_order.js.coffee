@@ -59,7 +59,7 @@ $(document).ready(->
             console.log(response)
             message_information.message_success("l_select_pr",response.message,"")
             form_se_connecter.hide()
-            form_areyouinscrit.hide()
+            select_connection.hide()
             form_select_pr.add_submit()
           )
           $('#form_se_connecter').bind('ajax:error', (data,response) ->
@@ -85,7 +85,7 @@ $(document).ready(->
               else
                  message_information.message_success("l_select_pr","Success","Inscription réussi! Vous êtes connecté!")
                  form_sinscrire.hide()
-                 form_areyouinscrit.hide()
+                 select_connection.hide()
                  form_select_pr.add_submit()
           )
           $('#form_sinscrire').bind('ajax:error', (data,response) ->
@@ -182,40 +182,109 @@ $(document).ready(->
            $(id_input).css('border','1px solid #CCCCCC')
            false
   
-  #__________________________ FUNCTION POUR FORM CHOIX SI INSCRIT OU PAS ________________________________________    
-  form_areyouinscrit =
-      init: ->
-        form_areyouinscrit.change()
-        if $('.is_inscrit:checked').val() != undefined
-          form_areyouinscrit.event($('.is_inscrit:checked').val())
-      change: ->
-           $('.is_inscrit').bind('change', ->
-               form_areyouinscrit.event($(this).val())
-           )
-      hide: ->
-          $("#l_areyouinscrit").css('display','none')
-      event: (val) ->
-         	if val == "non"
-         	  form_se_connecter.hide() 
-         	  form_sinscrire.display() 
-         	else if val == "oui"
-         	  form_sinscrire.hide()
-         	  form_se_connecter.display()
+
+
     
     
     form_select_pr = 
         init: ->
-        
+        event: ->
+            $('#b_next_step>a').bind('click', ->
+                console.log('test')
+                if $('input[type=radio]:checked').length > 0
+                    $('#form_select_pr').submit()
+                else
+                    alert('Veuillez choisir un point relai')
+            )
         add_submit: ->
-           if $('#form_select_pr>.actions>input').length == 0
-              $('#form_select_pr>.actions').append('<input type="submit" value="Proceder au paiment" />')
+           if $('.footer>span').length == 0
+              $('.footer>span').append('<span class="button next_step" id="b_next_step"><a href=""> Procéder paiement</a></span>')
+              form_select_pr.event()
         remove_submit: ->
            $('#form_select_pr>.actions').html('')
-       
+    
+
+    #_________ SELECT POINT RELAI ____________________________________     
+    select_pr =
+        event : ->
+            $('li .radio').bind('click', ->
+                select_pr.is_checked(this)
+            )
+        is_checked: (element) ->
+            one_element_check = false
+            $('li .radio').each(->
+                if $(this).css('background-position') == '-16px -26px' #ONE CHECK
+                    one_element_check = true
+                    if this == element
+                        select_pr.decheck(this)
+                    else
+                        select_pr.decheck(this)
+                        select_pr.check(element)
+                        return false
+            )
+            
+            if !one_element_check
+                select_pr.check(element)
+        check: (element) ->
+            $(element).css('background-position','-16px -26px')
+            pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
+            $('input[name="point_relai[id]"]').val([pr_id]);
+      
+        decheck: (element) ->
+            $(element).css('background-position','0 -26px')
+
+
+    #_________ BOX SELECTION INSCRIT OU PAS _______________
+    select_connection =
+        event : ->
+            $('.choice_registered .radio').bind('click', ->
+                select_connection.is_checked(this)
+            )
+            $('#b_next_step').bind('click', ->
+                if $('input[type=radio]:checked').length > 0
+                    $('.l_select_pr').submit()
+                else
+                    alert('Veuillez choisir un point relai')
+            )
+        is_checked: (element) ->
+            one_element_check = false
+            $('.choice_registered .radio').each(->
+                if $(this).css('background-position') == '-16px -26px' #ONE CHECK
+                    one_element_check = true
+                    if this == element
+                        select_connection.decheck(this)
+                    else
+                        select_connection.decheck(this)
+                        select_connection.check(element)
+                        return false
+            )
+            
+            if !one_element_check
+                select_connection.check(element)
+        check: (element) ->
+            $(element).css('background-position','-16px -26px')
+            if $(element).parent('div').parent('div').hasClass('yes')
+                form_sinscrire.hide()
+                form_se_connecter.display()
+            else
+                form_se_connecter.hide()
+                form_sinscrire.display()
+               
+            #pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
+            #$('input[name="point_relai[id]"]').val([pr_id]);
+      
+        decheck: (element) ->
+            $(element).css('background-position','0 -26px')
+        hide: ->
+            $("#l_areyouinscrit").css('display','none')
+            
+            
   #____________________________________________ AU CHARGEMENT DE LA PAGE ________________________
   form_se_connecter.ajax_formulaire()
   form_sinscrire.init()
-  form_areyouinscrit.init()
+  select_pr.event()
+  select_connection.event()
+  form_select_pr.event()
   
 
 )
