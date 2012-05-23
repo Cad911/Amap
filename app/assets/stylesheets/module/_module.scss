@@ -82,6 +82,9 @@ span.button {
   padding:6px 0 5px  0;
   @include borderradius(20px);
   font-size: 22px;
+   &:hover, &:hover a {
+      cursor:pointer;
+    }
   &:active {
     border:solid 1px rgba(139, 230,104, 0);
   }

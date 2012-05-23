@@ -156,6 +156,9 @@
 		}		
 	}
 	&.step_2 {
+		li:hover, #b_sign_up:hover, #b_sign_in:hover {
+			cursor:pointer;
+		}
 		.process_sign {
 			.picture {
 				@include process_order-sprite(process_level_2);					
