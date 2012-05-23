@@ -89,7 +89,7 @@
 					<%= f.input :email, :required => false, :autofocus => true %>
 			   		<%= f.input :password, :required => false %>
 				<div class="footer">
-					<%= f.button :submit, "Sign in", :class => "btn btn-primary" %>
+					<span class="button" id="b_sign_in"><a>Se connecter</a></span>
 				</div>
 				<% end %>
 			</div>
@@ -107,7 +107,7 @@
 			    	<%= f.input :password, :required => true %>
 			    	<%= f.input :password_confirmation, :required => true %>
 				<div class="footer">
-					<span class="button" id="b_sign_up"><a href="#">S'inscrire</a></span>
+					<span class="button" id="b_sign_up"><a>S'inscrire</a></span>
 				</div>
 				<% end %>
 			</div>
@@ -170,8 +170,8 @@
 		-->
 		<% end %> 
 		
-		<div class="footer">
-			<a href="" class="back">précédent</a>
+		<div class="footer" id="footer_confirmation">
+			<span class="button back" id=""><a href="/process_order/resume" class="">précédent</a></span>
 			<% if !current_client.nil? %>
 			    <span class="button next_step" id="b_next_step"><a> Procéder paiement</a></span>
 			<% end %>

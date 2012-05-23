@@ -50,6 +50,10 @@ $(document).ready(->
             element.after('<span class="help-inline">'+message+'</span>')   
   #____________________________________________ FUNCTION POUR FORM SE CONNECTER ________________________  
   form_se_connecter =
+      event: ()->
+          $('#b_sign_in>a').bind('click', ->
+          	    $('#form_se_connecter').submit()
+          )
       display : ->
           $('#l_se_connecter').fadeIn(1000)
       hide: ->
@@ -60,7 +64,7 @@ $(document).ready(->
             message_information.message_success("l_select_pr",response.message,"")
             form_se_connecter.hide()
             select_connection.hide()
-            form_select_pr.add_submit()
+            submit_next_step.add_submit()
           )
           $('#form_se_connecter').bind('ajax:error', (data,response) ->
             console.log(data)
@@ -86,7 +90,7 @@ $(document).ready(->
                  message_information.message_success("l_select_pr","Success","Inscription réussi! Vous êtes connecté!")
                  form_sinscrire.hide()
                  select_connection.hide()
-                 form_select_pr.add_submit()
+                 submit_next_step.add_submit()
           )
           $('#form_sinscrire').bind('ajax:error', (data,response) ->
             message_information.message_error("form_sinscrire","Erreur",response.responseText)
@@ -186,7 +190,7 @@ $(document).ready(->
 
     
     
-    form_select_pr = 
+    submit_next_step = 
         init: ->
         event: ->
             $('#b_next_step>a').bind('click', ->
@@ -197,15 +201,18 @@ $(document).ready(->
                     alert('Veuillez choisir un point relai')
             )
         add_submit: ->
-           if $('.footer>span').length == 0
-              $('.footer>span').append('<span class="button next_step" id="b_next_step"><a href=""> Procéder paiement</a></span>')
-              form_select_pr.event()
+           if $('#footer_confirmation>span.next_step').length == 0
+              $('#footer_confirmation').append('<span class="button next_step" id="b_next_step"><a> Procéder paiement</a></span>')
+              submit_next_step.event()
         remove_submit: ->
            $('#form_select_pr>.actions').html('')
     
 
     #_________ SELECT POINT RELAI ____________________________________     
     select_pr =
+        init: () ->
+            select_pr.radio_box_checked()
+            select_pr.event()
         event : ->
             $('li .radio').bind('click', ->
                 select_pr.is_checked(this)
@@ -232,10 +239,16 @@ $(document).ready(->
       
         decheck: (element) ->
             $(element).css('background-position','0 -26px')
+        radio_box_checked : () ->
+           if $('input[type=radio]:checked').length > 0
+               id_pr = $('input[type=radio]:checked').val()
+               select_connection.check($('#pr_'+id_pr+'>div>.image>.radio'))
 
 
     #_________ BOX SELECTION INSCRIT OU PAS _______________
     select_connection =
+        init : ->
+            select_connection.event()
         event : ->
             $('.choice_registered .radio').bind('click', ->
                 select_connection.is_checked(this)
@@ -258,7 +271,6 @@ $(document).ready(->
                         select_connection.check(element)
                         return false
             )
-            
             if !one_element_check
                 select_connection.check(element)
         check: (element) ->
@@ -272,7 +284,6 @@ $(document).ready(->
                
             #pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
             #$('input[name="point_relai[id]"]').val([pr_id]);
-      
         decheck: (element) ->
             $(element).css('background-position','0 -26px')
         hide: ->
@@ -282,9 +293,9 @@ $(document).ready(->
   #____________________________________________ AU CHARGEMENT DE LA PAGE ________________________
   form_se_connecter.ajax_formulaire()
   form_sinscrire.init()
-  select_pr.event()
-  select_connection.event()
-  form_select_pr.event()
-  
+  select_pr.init()
+  select_connection.init()
+  submit_next_step.event()
+  form_se_connecter.event()
 
 )
