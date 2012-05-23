@@ -40,7 +40,6 @@
   display: inline-block;
   *display: inline;
   /* IE7 inline-block hack */
-
   *zoom: 1;
   padding: 4px 10px 4px;
   margin-bottom: 0;

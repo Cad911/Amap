@@ -577,9 +577,11 @@ ul.dropdown_menu {
         }
         .plus_btn, .minus_btn {
           position:absolute;
-          top:39px;
+          top:43px;
           left:33px;          
           width:31px;
+          height:22px;
+          text-align:center;
           opacity:0.3;  
           @include transition-property(opacity);
           @include transition-duration(0.3s);
@@ -589,6 +591,7 @@ ul.dropdown_menu {
           background-color:#ffffff;
           .plus_quantite_p_c {
             @extend .plus;
+            height:22px;
             position:relative;
             @include margin;
           }          
@@ -598,7 +601,8 @@ ul.dropdown_menu {
           left:1px;        
           width:32px;          
           .moins_quantite_p_c {
-            @extend .minus;  
+            @extend .minus; 
+            height:22px; 
             @include margin;        
           }          
         }

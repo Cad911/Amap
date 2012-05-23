@@ -16,97 +16,101 @@
 		</ul>
 	</div>
 
-	<h1> <%= @panier.titre %></h1>
-	
-	
-	<p> Description :<%= @panier.description %> </p>
-	<p> Prix HT : <%= @panier.prix_unite_ht %></p>
-	<p>Agriculteur : <%= @panier.user.nom %></p>
-	
-	<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
-	<%= f.input :id, :as => :hidden %>
-	<%= f.input :duree, :collection => (1..12).map, :include_blank => false %>
-	
-	<p> <input type="submit" value="S'abonner" class="btn btn-info"/></p>
-	<% end %>
-	
-	
-	
-	<!-- PARTIE INFO AGRICULTEUR -->
-	<div class="thumbnail">
-		<p> Produit par</p>
-		<img src="">
-		<div class="caption">
-			<h5><%= @panier.user.nom %></h5>
-			<p><%= @panier.user.description %></p>
+	<div class="l_area_left">
+
+		<div class="l_content_left pictures">
+
+			<div class="is_big has_corners_shadow">
+
+			</div>
+			
+			<ul>
+				<li>
+					<div class="is_small has_corners_shadow">
+					</div>
+				</li>
+			</ul>
+
+		</div>	
+
+		<div class="l_content_right details">
+			<h1> <%= @panier.titre %></h1>	 
+			<p class="note is_italic">Fruits et légumes</p>
+			<p> Description :<%= @panier.description %> </p>
+
+			<div class="price_button">
+				<p class="price  is_bold"><%= @panier.prix_unite_ht %> € <span class="note is_italic">le kilo</span></p>
+				<br class="clear">
+				<span id="add_product" class="button"><a>ajouter à ma cagette</a></span>
+			</div>
+		<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
+		<%= f.input :id, :as => :hidden %>
+		<%= f.input :duree, :collection => (1..12).map, :include_blank => false %>
+		
+		<p> <input type="submit" value="S'abonner" class="btn btn-info"/></p>
+		<% end %>
 		</div>
 		
 		
-		<% if @other_paniers.count != 0 %>
-		<h6> Autre produit en vente par ces agriculteurs </h6>
-		<ul>
-			<%	@other_paniers.each do |other_panier| %>
-			<li> <%= link_to other_panier.titre, page_panier_show_path(other_panier.revendeur_id,other_panier), :class => "btn" %></li>
-			
-			<%	end %>
-		</ul>
-		<%	else %>
-		<p> Aucun autre panier</p>
-		<% end %>
-		<p> <%= link_to "Voir la fiche de l'agriculteur ",page_revendeur_show_path(@panier.revendeur_id), :class => "btn btn-info" %> </p>
 	</div>
 
-	  <div class="l_area_right">
-    <div class="product_by">
-      <h3> Produit par</h3>
-      <p class="note is_italic">En France, dans le Nord-pas-de-Calais</p>
-      <div class="l_photo_description is_horizontal">
+	
+	
 
-        <div class="image">
-          <div class="is_small has_corners_shadow">
-          	<%= image_tag (@produit.user.default_image).image_url(:is_small) if !(@produit.user.default_image).nil? %>
-          </div>
-        </div>
+	<!-- PARTIE INFO AGRICULTEUR -->
 
-        <div class="content">
-          <h2><%= @produit.user.nom %> <%= @produit.user.prenom %></h2>
-          <p class="note is_italic location"><%= @produit.user.ville.nom %></p>
-        </div>
 
-        <p><%= @produit.user.description %></p>
-      </div>
-    </div>
+	<div class="l_area_right">
+		<div class="product_by">
+			<h3> Produit par</h3>
+			<p class="note is_italic">En France, dans le Nord-pas-de-Calais</p>
+			<div class="l_photo_description is_horizontal">
 
-    <div class="other_products">
-      <% if @other_produits.count != 0 %>
-        <h3>Ses autres produits </h3>
-        <ul>
-          <% @other_produits.each do |other_produit| %>
-          	<li>
-            <div class="l_photo_description is_horizontal">
-              <div class="image">
-                <div class="has_corners_shadow is_small">
-                	<%= image_tag (other_produit.stock.default_image).image_url(:is_small) if !(other_produit.stock.default_image).nil? %>
-                </div>
-              </div>
-              <div class="content">
-                <p class="note is_bold title"><%= other_produit.titre %></p>
-                <p class="note "><%= other_produit.prix_unite_ttc %> € <span class="is_italic">le <%= other_produit.stock.unite_mesure.nom %></span></p>
-              </div>
-            </div>
-          </li>
-          <% end %>
-        </ul>
-      <%	else %>
-        <p> Aucun autre produit</p>
-      <% end %>
-    </div>
+				<div class="image">
+					<div class="is_small has_corners_shadow">
+						<%= image_tag (@panier.user.default_image).image_url(:is_small) if !(@panier.user.default_image).nil? %>
+					</div>
+				</div>
 
-      <div class="about_the_farmer">
-        <span class="button"><a>découvrez <%= @produit.user.prenom %> </a></span>
-      </div>
+				<div class="content">
+					<h2><%= @panier.user.nom %> <%= @panier.user.prenom %></h2>
+					<p class="note is_italic location"><%= @panier.user.ville.nom %></p>
+				</div>
 
-  </div>
+				<p><%= @panier.user.description %></p>
+			</div>
+		</div>
 
-  <br class="clear">
+		<div class="other_products">
+			<% if @other_paniers.count != 0 %>
+			<h3>Ses autres produits </h3>
+			<ul>
+				<% @other_paniers.each do |other_panier| %>
+				<li>
+					<div class="l_photo_description is_horizontal">
+						<div class="image">
+							<div class="has_corners_shadow is_small">
+								<%= image_tag (other_panier.default_image).image_url(:is_small) if !(other_panier.default_image).nil? %>
+							</div>
+						</div>
+						<div class="content">
+							<p class="note is_bold title"><%= other_panier.titre %></p>
+							<p class="note "><%= other_panier.prix_unite_ttc %> € <span class="is_italic">le <%= other_panier.nombre_personne %></span></p>
+						</div>
+					</div>
+				</li>
+				<% end %>
+			</ul>
+			<%	else %>
+			<p> Aucun autre panier</p>
+			<% end %>
+		</div>
+
+		<div class="about_the_farmer">
+			<span class="button"><a>découvrez <%= @panier.user.prenom %> </a></span>
+		</div>
+
+	</div>
+
+	<br class="clear">
 </div>
