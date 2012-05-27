@@ -28,7 +28,17 @@
   }
 }
 
-// applique un style de bouton inscrusté
+// applique un style de inscrusté
+@mixin embossed($border-color) {
+  @include borderradius(50px);
+  border:solid 1px $border-color;
+  color:$brown;
+  padding:7px 10px 4px 10px;
+  margin-left:10px;
+  @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+}
+
+// applique un style de bouton inscrusté// applique un style de bouton inscrusté
 @mixin embossed_button($border-color) {
   @include borderradius(50px);
   border:solid 1px $border-color;
@@ -49,6 +59,7 @@
     @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
   }
 }
+
 
 // applique une style bouton-switch
 .toggle {

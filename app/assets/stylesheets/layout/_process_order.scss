@@ -1,5 +1,6 @@
 .l_process_order.l_main_gutter {
 	padding:20px 90px 40px 90px !important;	
+	overflow:hidden;
 	h2 {
 		@include title(1,30px);
 	}
@@ -55,6 +56,8 @@
 			width:780px;
 			border:solid 1px $embossed_dark;
 			@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
+			@include bg-sprite(height_109);
+			background-repeat:repeat !important;
 			margin-top:0px;
 			li {
 				&:last-child .raw {
@@ -279,13 +282,24 @@
 			}
 		}
 		.resume {
-			table {
-				@include embossed_button($embossed_dark);
-				.first_column {
-					background:url(/../images/bg_darkener.png);
-					td {
+			.table {
+				width:400px;
+				@include embossed($embossed_dark);
+				@include borderradius(5px);
+				margin:0;
+				padding:0;
+				.row {
+					margin:0;
+					.info_column, .first_column {
+						float:left;
 						padding:15px;
+					}
+					.first_column {
+						background:url(/../images/bg_darkener.png);
 						width:130px;
+					}
+					.info_column {
+						width:210px;
 					}
 				}
 			}

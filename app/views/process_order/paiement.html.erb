@@ -9,27 +9,29 @@
 
 <div class="resume">
 	<div class="left_part">
-		<p class="title">Résumé de votre achat</p>
+		<p class="title">Résumé de vodive achat</p>
 	</div>
-	<table>
-		<tr>
-			<td class="firs_column">Point relais</td>
-			<td><%= @mon_point_relai.adresse %> <%= @mon_point_relai.ville.nom %></td>
-		</tr>
-		<tr>
-			<td class="firs_column">Articles</td>
-			<td>
+	<div class="table">
+		<div class="row">
+			<div class="first_column">Point relais</div>
+			<div class="info_column">
+				<%= @mon_point_relai.adresse %> <%= @mon_point_relai.ville.nom %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="first_column">Articles</div>
+			<div class="info_column">
 				<% @mes_produit_commande.each do |produit_c| %>
 				<p> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </p>
 				<% end %>
-			</td>
-		</tr>
-		<tr>
-			<td class="firs_column">Montant</td>
-			<td>
+			</div>
+		</div>
+		<div class="row">
+			<div class="first_column">Montant</div>
+			<div class="info_column">
 				<p><%= @ma_commande.total %></p>
-			</td>
-		</tr>
+			</div>
+		</div>
 	</table>
 </div>
 
