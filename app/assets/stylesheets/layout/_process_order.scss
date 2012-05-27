@@ -52,7 +52,7 @@
 				}
 			}
 		}
-		ul {
+		ul.products {
 			width:780px;
 			border:solid 1px $embossed_dark;
 			@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
@@ -268,41 +268,114 @@
 			}
 			.resume {
 				margin-right:10px;
+				border:none;
 			}
 			.point_choice {
 				margin-left:85px;
 			}
 		}
 		.resume, .paiement {
+			padding-top:50px;
 			.left_part {
 				width:300px;
+				float:left;
 				.title {
 					@include title(1,30px);
+					padding-top:0;
+					margin-top:0;
 				}
 			}
 		}
 		.resume {
+			border-bottom:solid 1px $embossed_dark;
+			padding-bottom:50px;
 			.table {
-				width:400px;
+				float:right;
 				@include embossed($embossed_dark);
 				@include borderradius(5px);
 				margin:0;
 				padding:0;
+				width:470px !important;
+				table {
+					width:470px !important;
+					border-collapse:separate;
+				}
 				.row {
 					margin:0;
 					.info_column, .first_column {
-						float:left;
 						padding:15px;
+					}
+					ul {
+						padding:0;
+						margin:0;
+						padding-left:15px;
+						li {
+							list-style-image:url(/../images/circle.png);
+						}
+					}
+					td {
+						border-top:1px solid #ffffff;
+						border-top:1px solid rgba(255,255,255, 0.8);
+						border-bottom:1px solid $embossed_dark;
+						&:hover {
+							background-image:none;
+						}
+					}
+					&:first-child {
+						td {
+							border-top:none;							
+						}
+					}
+					&:last-child {
+						td {
+							border-bottom:none;							
+						}
 					}
 					.first_column {
 						background:url(/../images/bg_darkener.png);
-						width:130px;
+						width:200px;
+						border-right:solid 1px #ffffff;
+						font-family:Helveticaneue-bold;
 					}
 					.info_column {
-						width:210px;
+						width:308px;
+						border-left:1px solid $embossed_dark;
 					}
 				}
 			}
-		}			
+		}		
+		.paiement {
+			border-top:solid 1px #ffffff;	
+			form {
+				ul {
+					margin:0;
+					li {
+						list-style-image:none !important;
+					}
+				}
+				width:470px;
+				float:left;
+				p {
+					margin-bottom:0px;
+				}		
+				.date {
+					.month {
+						width:80px;
+						margin-right:20px;
+					}
+					.year {
+						width:100px;
+					}
+				}	
+				.crypto {
+					input {
+						width:80px;
+					}
+				}	
+				.footer {
+					padding-top:50px;
+				}
+			}
+		}	
 	}
 }

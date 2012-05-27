@@ -7,46 +7,75 @@
 		<span class="current payment">Validation et paiement</span>
 	</div>	
 
-<div class="resume">
-	<div class="left_part">
-		<p class="title">Résumé de vodive achat</p>
+	<div class="resume">
+		<div class="left_part">
+			<p class="title">Résumé de votre achat</p>
+		</div>
+		<div class="table">
+			<table>
+				<tr class="row">
+					<td class="first_column">Point relais</td>
+					<td class="info_column">
+						<%= @mon_point_relai.adresse %> <%= @mon_point_relai.ville.nom %>
+					</td>
+				</tr>
+				<tr class="row">
+					<td class="first_column">Article(s)</td>
+					<td class="info_column">
+						<ul>
+							<li>
+								<% @mes_produit_commande.each do |produit_c| %>
+								<span> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </span>
+								<% end %>							
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr class="row">
+					<td class="first_column">Montant</td>
+					<td class="info_column">
+						<span><%= @ma_commande.total %></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<br class="clear">	
 	</div>
-	<div class="table">
-		<div class="row">
-			<div class="first_column">Point relais</div>
-			<div class="info_column">
-				<%= @mon_point_relai.adresse %> <%= @mon_point_relai.ville.nom %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="first_column">Articles</div>
-			<div class="info_column">
-				<% @mes_produit_commande.each do |produit_c| %>
-				<p> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </p>
-				<% end %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="first_column">Montant</div>
-			<div class="info_column">
-				<p><%= @ma_commande.total %></p>
-			</div>
-		</div>
-	</table>
-</div>
-
-	
 
 	<div class="paiement">
+
 		<div class="left_part">
 			<p class="title">Paiement</p>
 		</div>
+
 		<div id="l_paiement">
+
 			<form class="form-horizontal" method="get" action="/process_order/payer_commande">
-				<p> Numero de la carte <input type="text"/></p>
-				<p> Date d'expiration <input type="text"/><input type="text"/></p>
-				<p> Crypto <input type="text"/></p>
-				<p> <input type="submit" value="Payer" class="btn btn-primary"/></p>
+
+				<ul>
+
+					<li class="card_number">
+						<p> Numero de la carte</p>
+						<input type="text"/>
+					</li>
+
+					<li class="date">
+						<p> Date d'expiration </p>
+						<input class="month" type="text"/><input class="year" type="text"/>
+					</li>
+
+					<li class="crypto">
+						<p> Crypto </p>
+						<input type="text"/>
+					</li>
+
+				<li class="footer">
+					<span class="button"> <input type="submit" value="Payer"/></span>
+				</li>
+				
+				</ul>
+
+
 			</form>
 		</div>
 	</div>
