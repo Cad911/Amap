@@ -20,7 +20,12 @@
   <%= javascript_include_tag "jquery-1.7.1.min" %>
   <%= javascript_include_tag "bootstrap" %>
   <%= javascript_include_tag 'jquery_ujs' %>
-
+  
+  <%= javascript_include_tag 'affichage_infos' %>
+  <%= javascript_include_tag 'lightbox' %>
+  <%= javascript_include_tag 'formulaire_seconnecter' %>
+  <%= javascript_include_tag 'formulaire_sinscrire' %>
+  
   <%= javascript_include_tag 'produit_vente_libres' %>
   <%= javascript_include_tag 'stocks' %>
   <%= javascript_include_tag 'page_front' %>
@@ -106,7 +111,13 @@
     <div class="box">
       <div class="login">
         <span class="user"></span>
-       <span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a href="">inscription</a></span>
+        <% if current_client.nil? %>
+        	<span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a>inscription</a></span>
+        <% else %>
+        	<span class="sign_in connected"><%= link_to "Mes infos" , espace_client_client_path(current_client.id) %></span>&nbsp;/&nbsp;
+        	<span class="sign_up connected"><%= link_to "deconnexion", client_logout_path() , :method => 'delete' %></span>
+        <% end %>
+       
       </div>
 
       <div class="social">
@@ -154,7 +165,7 @@
 </header>
 <div class="ground_top"></div>
 
-<div class="lightbox_wrapper">
+<div class="lightbox_wrapper lightbox_information">
   <div class="lightbox">
     <div class="header">
       <h1 class="title">Inscription</h1>
@@ -164,16 +175,19 @@
       <p>Lorem ispum dolor et sit ame Lorem ispum dolor et sit ame Lorem ispum dolor et sit ame </p>
     </div>
     <div class="footer">
-      <span class="annuler">annuler</span>
-      <span class="button"><a href="">valider</a></span>
+      <!-- <span class="annuler">annuler</span> -->
+      <span class="button close_lightbox"><a> Merci pour l'infos</a></span>
     </div>
   </div>
 </div>
 
-<div class="lightbox_wrapper lightbox_connexion">
-  <div class="lightbox">
+
+
+<div class="lightbox_wrapper lightbox_connexion_inscription">
+  <!-- _______________ form for connexion ____________ -->
+  <div class="lightbox lightbox_form_connexion">
     <div class="header">
-      <h1 class="title">Inscription</h1>
+      <h1 class="title">Connexion</h1>
     </div>
     <div class="content">
       <div class="loggin" id="lightbox_se_connecter">
@@ -186,11 +200,40 @@
 				
 			<div class="footer">
 			    <span class="annuler">annuler</span>
-				<span class="button" id="b_sign_in"><a>Se connecter</a></span>
+				<span class="button" id="lightbox_sign_in"><a>Se connecter</a></span>
 			</div>
 				<% end %>
 		</div>
     </div>
+  </div>
+  
+  <!-- _______________ form for inscription ____________ -->
+  <div class="lightbox lightbox_form_inscription">
+    <div class="header">
+      <h1 class="title">Inscription</h1>
+    </div>
+    <div class="content">
+      <div class="loggin" id="lightbox_se_connecter">
+			<div class="content">
+			    <h2 class="title">Connexion</h2>
+				 <%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire_lightbox' } ,:remote => true) do |f| %>
+					<%= f.error_notification %>
+					
+					<%= f.input :email, :required => true, :autofocus => true, :wrap_with => {:tag => 'span',:class => 'help-inline'} %>
+			    	<%= f.error :email %>
+			    	<%= f.input :nom, :required => true, :autofocus => true %> 
+			    	<%= f.input :password, :required => true %>
+			    	<%= f.input :password_confirmation, :required => true %>
+			</div>
+				
+			<div class="footer">
+			    <span class="annuler">annuler</span>
+				<span class="button" id="lightbox_sign_up"><a>S'inscrire</a></span>
+			</div>
+				<% end %>
+		</div>
+    </div>
+    
   </div>
 </div>
 

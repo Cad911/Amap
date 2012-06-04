@@ -22,8 +22,17 @@ class EspaceClient::ClientsController < InheritedResources::Base
 		    end
 		    #__________________________________________________________________________________________
 			respond_to do |format|
-  				format.json { render :json => [@client] }
-  				format.js { render :json => [@client] }
+  				format.json { render :json => {
+    											:success => true, 
+							    				:message => "Bien le bonjour #{@client.nom}" ,
+							    				:user => @client,
+							    				:link => {
+							    					:mes_infos => espace_client_client_path(@client.id),
+							    					:deconnexion => client_logout_path(),
+							    				}
+							    		}
+				}  				
+				
   				format.html { redirect_to espace_client_client_path(@client) }
   			end
 		else

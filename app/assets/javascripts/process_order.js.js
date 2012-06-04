@@ -2,255 +2,152 @@
 (function() {
 
   $(document).ready(function() {
-    var div_state, form_areyouinscrit, form_se_connecter, form_select_pr, form_sinscrire, message_information;
-    message_information = {
-      message_success: function(id, titre, message) {
-        var div_message;
-        div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        return message_information.content_message(id, titre, message, div_message);
-      },
-      message_warning: function(id, titre, message) {
-        var div_message;
-        div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        return message_information.content_message(id, titre, message, div_message);
-      },
-      message_error: function(id, titre, message) {
-        var div_message;
-        div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-        return message_information.content_message(id, titre, message, div_message);
-      },
-      content_message: function(id, titre, message, div_message) {
-        if (titre !== "") div_message += "<strong> " + titre + " </strong>";
-        if (message !== "") div_message += "" + message;
-        div_message += "</div>";
-        return $("#" + id).after(div_message);
-      }
-    };
-    div_state = {
-      div_success: function(element, message) {
-        div_state.remove_class(element, 'warning', 'error');
-        element.parent().parent().addClass('success');
-        return div_state.write_message(element, message);
-      },
-      div_warning: function(element, message) {
-        div_state.remove_class(element, 'success', 'error');
-        element.parent().parent().addClass('warning');
-        return div_state.write_message(element, message);
-      },
-      div_error: function(element, message) {
-        div_state.remove_class(element, 'success', 'warning');
-        element.parent().parent().addClass('error');
-        return div_state.write_message(element, message);
-      },
-      remove_class: function(element, class1, class2) {
-        element.parent().parent().removeClass(class1);
-        return element.parent().parent().removeClass(class2);
-      },
-      write_message: function(element, message) {
-        if (element.next('.help-inline').length > 0) {
-          return element.next('.help-inline').text(message);
-        } else {
-          return element.after('<span class="help-inline">' + message + '</span>');
-        }
-      }
-    };
+    var form_se_connecter, form_sinscrire, formulaire_inscription, formulaire_seconnecter, select_connection, select_pr, submit_next_step;
     form_se_connecter = {
       display: function() {
         return $('#l_se_connecter').fadeIn(1000);
       },
       hide: function() {
         return $('#l_se_connecter').css('display', 'none');
-      },
-      ajax_formulaire: function() {
-        $('#form_se_connecter').bind('ajax:success', function(data, response) {
-          console.log(response);
-          message_information.message_success("l_select_pr", response.message, "");
-          form_se_connecter.hide();
-          form_areyouinscrit.hide();
-          return form_select_pr.add_submit();
-        });
-        return $('#form_se_connecter').bind('ajax:error', function(data, response) {
-          console.log(data);
-          console.log(response);
-          return message_information.message_error("form_se_connecter", "Erreur", response.responseText);
-        });
       }
     };
+    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire', '#form_sinscrire #b_sign_up');
+    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter', '#b_sign_in>a');
     form_sinscrire = {
-      init: function() {
-        form_sinscrire.ajax_formulaire();
-        return form_sinscrire.form_event();
-      },
+      init: function() {},
       display: function() {
         return $('#l_sinscrire').fadeIn(1000);
       },
       hide: function() {
         return $('#l_sinscrire').css('display', 'none');
-      },
-      ajax_formulaire: function() {
-        $('#form_sinscrire').bind('ajax:success', function(data, response) {
-          var all_error;
-          if (response.error) {
-            all_error = form_sinscrire.extract_error(response.error, "");
-            return message_information.message_error("form_sinscrire", "Erreur", all_error);
-          } else {
-            message_information.message_success("l_select_pr", "Success", "Inscription réussi! Vous êtes connecté!");
-            form_sinscrire.hide();
-            form_areyouinscrit.hide();
-            return form_select_pr.add_submit();
-          }
-        });
-        return $('#form_sinscrire').bind('ajax:error', function(data, response) {
-          return message_information.message_error("form_sinscrire", "Erreur", response.responseText);
-        });
-      },
-      extract_error: function(error, text_error) {
-        var champ, type_erreur;
-        for (champ in error) {
-          type_erreur = error[champ];
-          if (typeof type_erreur === "array") {
-            form_sinscrire.extract_error(type_erreur, text_error);
-          } else {
-            text_error += "<br/><strong> " + champ + "</strong> " + type_erreur;
-          }
-        }
-        return text_error;
-      },
-      form_event: function() {
-        $('#form_sinscrire input#client_password_confirmation').bind('keyup', function() {
-          return form_sinscrire.password_different();
-        });
-        $('#form_sinscrire input#client_email').bind('change', function() {
-          return form_sinscrire.email_existant($(this).val());
-        });
-        $('#form_sinscrire input').bind('change', function() {
-          return form_sinscrire.input_is_empty("#" + ($(this).attr('id')));
-        });
-        return $('#form_sinscrire #b_sign_up').bind('click', function() {
-          var erreur;
-          erreur = false;
-          if (form_sinscrire.verif_all_input()) {
-            alert('Certain champ sont vide');
-            erreur = true;
-          }
-          if (form_sinscrire.email_existant($('#form_sinscrire input#client_email').val())) {
-            erreur = true;
-          }
-          if (form_sinscrire.password_different()) erreur = true;
-          if (erreur === false) {
-            console.log('tout est ok');
-            return $('#form_sinscrire').submit();
-          }
-        });
-      },
-      email_existant: function(email_adresse) {
-        var erreur;
-        erreur = false;
-        $.ajax({
-          type: "POST",
-          async: false,
-          url: "/clients/emailExist",
-          data: {
-            email: email_adresse
-          },
-          success: function(data) {
-            var message_info;
-            message_info = "";
-            if (data.exist === true) message_info += "existe deja. <br/>";
-            if (data.good_format === false) {
-              message_info += "ce n'est pas une adresse mail.";
-            }
-            if (message_info !== "") {
-              div_state.div_error($('#form_sinscrire #client_email'), message_info);
-              return erreur = true;
-            } else {
-              return div_state.div_success($('#form_sinscrire #client_email'), message_info);
-            }
-          }
-        });
-        return erreur;
-      },
-      password_different: function() {
-        var password, password_confirmation;
-        password = $('#form_sinscrire input#client_password').val();
-        password_confirmation = $('#form_sinscrire input#client_password_confirmation').val();
-        if (password === password_confirmation) {
-          if (password === "") {
-            div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe vide");
-            return true;
-          } else if (password.length < 6) {
-            div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe trop court (plus de 6 caractere)");
-            return true;
-          } else {
-            div_state.div_success($('#form_sinscrire #client_password'), "Mot de passe identique");
-            return false;
-          }
-        } else {
-          div_state.div_warning($('#form_sinscrire #client_password'), "Mot de passe different");
-          return true;
-        }
-      },
-      verif_all_input: function() {
-        var champ_vide;
-        champ_vide = false;
-        $('#form_sinscrire input').each(function() {
-          if ($(this).val() === "") {
-            $(this).css('border', '1px solid red');
-            champ_vide = true;
-            return console.log("1");
-          }
-        });
-        return champ_vide;
-      },
-      input_is_empty: function(id_input) {
-        if ($(id_input).val() === "") {
-          $(id_input).css('border', '1px solid red');
-          return true;
-        } else {
-          $(id_input).css('border', '1px solid #CCCCCC');
-          return false;
-        }
       }
     };
-    form_areyouinscrit = {
-      init: function() {
-        form_areyouinscrit.change();
-        if ($('.is_inscrit:checked').val() !== void 0) {
-          return form_areyouinscrit.event($('.is_inscrit:checked').val());
-        }
-      },
-      change: function() {
-        return $('.is_inscrit').bind('change', function() {
-          return form_areyouinscrit.event($(this).val());
-        });
-      },
-      hide: function() {
-        return $("#l_areyouinscrit").css('display', 'none');
-      },
-      event: function(val) {
-        if (val === "non") {
-          form_se_connecter.hide();
-          return form_sinscrire.display();
-        } else if (val === "oui") {
-          form_sinscrire.hide();
-          return form_se_connecter.display();
-        }
-      }
-    };
-    form_select_pr = {
+    submit_next_step = {
       init: function() {},
+      event: function() {
+        $('#b_next_step>a').bind('click', function() {
+          console.log('test');
+          if ($('input[type=radio]:checked').length > 0) {
+            return $('#form_select_pr').submit();
+          } else {
+            return alert('Veuillez choisir un point relai');
+          }
+        });
+        return $('#form_sinscrire, #form_se_connecter').bind('ajax:success', function(data, response) {
+          if ($('#l_areyouinscrit').length > 0) {
+            select_connection.hide();
+            return submit_next_step.add_submit();
+          }
+        });
+      },
       add_submit: function() {
-        if ($('#form_select_pr>.actions>input').length === 0) {
-          return $('#form_select_pr>.actions').append('<input type="submit" value="Proceder au paiment" />');
+        if ($('#footer_confirmation>span.next_step').length === 0) {
+          $('#footer_confirmation').append('<span class="button next_step" id="b_next_step"><a> Procéder paiement</a></span>');
+          return submit_next_step.event();
         }
       },
       remove_submit: function() {
         return $('#form_select_pr>.actions').html('');
       }
     };
-    form_se_connecter.ajax_formulaire();
-    form_sinscrire.init();
-    return form_areyouinscrit.init();
+    select_pr = {
+      init: function() {
+        select_pr.radio_box_checked();
+        return select_pr.event();
+      },
+      event: function() {
+        return $('li .radio').bind('click', function() {
+          return select_pr.is_checked(this);
+        });
+      },
+      is_checked: function(element) {
+        var one_element_check;
+        one_element_check = false;
+        $('.products>li .radio').each(function() {
+          if ($(this).css('background-position') === '-16px -26px') {
+            one_element_check = true;
+            if (this === element) {
+              return select_pr.decheck(this);
+            } else {
+              select_pr.decheck(this);
+              select_pr.check(element);
+              return false;
+            }
+          }
+        });
+        if (!one_element_check) return select_pr.check(element);
+      },
+      check: function(element) {
+        var pr_id;
+        $(element).css('background-position', '-16px -26px');
+        pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_', '');
+        return $('input[name="point_relai[id]"]').val([pr_id]);
+      },
+      decheck: function(element) {
+        return $(element).css('background-position', '0 -26px');
+      },
+      radio_box_checked: function() {
+        var id_pr;
+        if ($('input[type=radio]:checked').length > 0) {
+          id_pr = $('input[type=radio]:checked').val();
+          return select_connection.check($('#pr_' + id_pr + '>div>.image>.radio'));
+        }
+      }
+    };
+    select_connection = {
+      init: function() {
+        return select_connection.event_();
+      },
+      event_: function() {
+        console.log('rere1');
+        $('.choice>.radio_area>.radio').bind('click', function() {
+          return select_connection.is_checked(this);
+        });
+        return $('#b_next_step').bind('click', function() {
+          if ($('input[type=radio]:checked').length > 0) {
+            return $('.l_select_pr').submit();
+          } else {
+            return alert('Veuillez choisir un point relai');
+          }
+        });
+      },
+      is_checked: function(element) {
+        var one_element_check;
+        one_element_check = false;
+        $('.choice_registered .radio').each(function() {
+          if ($(this).css('background-position') === '-16px -26px') {
+            one_element_check = true;
+            if (this === element) {
+              return select_connection.decheck(this);
+            } else {
+              select_connection.decheck(this);
+              select_connection.check(element);
+              return false;
+            }
+          }
+        });
+        if (!one_element_check) return select_connection.check(element);
+      },
+      check: function(element) {
+        $(element).css('background-position', '-16px -26px');
+        if ($(element).parent('div').parent('div').hasClass('yes')) {
+          form_sinscrire.hide();
+          return form_se_connecter.display();
+        } else {
+          form_se_connecter.hide();
+          return form_sinscrire.display();
+        }
+      },
+      decheck: function(element) {
+        return $(element).css('background-position', '0 -26px');
+      },
+      hide: function() {
+        return $("#l_areyouinscrit").css('display', 'none');
+      }
+    };
+    select_pr.init();
+    select_connection.init();
+    return submit_next_step.event();
   });
 
 }).call(this);

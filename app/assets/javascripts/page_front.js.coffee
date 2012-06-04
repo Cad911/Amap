@@ -537,43 +537,95 @@ $(document).ready(->
           $('.total>p').text('Total '+data['total']+' €')
        
        
-       
-     
-     
-     
-    light_box_connection = 
-        init: () ->
-        
-        event: () ->
-           $('.sign_in>a').bind('click', ->
-              light_box_connection.show()
-           )
-           
-           $('.annuler').bind('click', ->
-              light_box_connection.hide()
-           )
-        hide:() ->
-             $('.lightbox_connexion').css('display', 'none')
-        show:() ->
-             $('.lightbox_connexion').css('display', 'block')
-        ajax_formulaire: ->
-          $('#form_se_connecter_lightbox').bind('ajax:success', (data,response) ->
-            console.log(response)
-            message_information.message_success("l_select_pr",response.message,"")
-            light_box_connection.hide()
+   
+   #  #________________________________________ METTRE LA DIV DE LINPUT AVEC ERREUR - WARNING ______________________________
+#     div_state =
+#       div_success:(element,message) ->
+#           div_state.remove_class(element,'warning','error')
+#           element.parent().parent().addClass('success')
+#           div_state.write_message(element,message)   
+#       div_warning: (element,message) ->
+#           div_state.remove_class(element,'success','error')
+#           element.parent().parent().addClass('warning')
+#           div_state.write_message(element,message)   
+#       div_error :(element,message) ->
+#           div_state.remove_class(element,'success','warning')
+#           element.parent().parent().addClass('error')
+#           div_state.write_message(element,message)
+#       remove_class:(element,class1,class2) ->
+#           element.parent().parent().removeClass(class1)
+#           element.parent().parent().removeClass(class2)
+#       write_message:(element,message) ->
+#           if element.next('.help-inline').length > 0
+#             element.next('.help-inline').text(message)
+#           else
+#             element.after('<span class="help-inline">'+message+'</span>')
+#     #____________________________________________ FUNCTION POUR AFFICHAGE DES MESSAGE D'INFORMATION ________________________
+#     message_information =
+#       message_success: (id,titre,message) ->
+#         div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
+#         message_information.content_message(id,titre,message,div_message)
+#       message_warning: (id,titre,message) ->
+#         div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
+#         message_information.content_message(id,titre,message,div_message)
+#       message_error: (id,titre,message) ->
+#         div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
+#         message_information.content_message(id,titre,message,div_message)
+#       content_message: (id,titre,message,div_message) ->
+#         if titre != ""
+#            div_message += "<strong> #{titre} </strong>"
+#         if message != ""
+#           div_message += "#{message}"
+#         div_message += "</div>"  
+#         $("##{id}").after(div_message)
 
-          )
-          $('#form_se_connecter_lightbox').bind('ajax:error', (data,response) ->
-            message_information.message_error("form_se_connecter","Erreur",response.responseText)
-          )
-       
-     
-    light_box_connection.event()     
+   
+    #____________________________ EVENT SIGN_IN SIGN_UP BUTTON ______________________________
     
-    light_box_information = 
-        init: () ->
-          
+    #lightbox_connexion = new Lightbox('.lightbox_connexion_inscription','.lightbox_form_connexion')
+    #lightbox_inscription = new Lightbox('.lightbox_connexion_inscription','.lightbox_form_inscription')
+    #light_box_information = new Lightbox('.lightbox_information')
+    
+    $('.sign_up,.sign_in').bind 'click',  ->
+               if !$(this).hasClass('connected') and $(this).hasClass('sign_up') #SI PAS CONNECTER ET BOUTON SIGN UP
+                   lightbox_connexion.hide_sous_div()
+                   lightbox_inscription.show()
+                   lightbox_inscription.show_sous_div()
+               if !$(this).hasClass('connected') and $(this).hasClass('sign_in')
+                   lightbox_inscription.hide_sous_div()
+                   lightbox_connexion.show()
+                   lightbox_connexion.show_sous_div()
+    
+    #____________________________________________________________________________________________
+   
+    #___________________________ EVENT FORM INSCRIPTION/CONNEXION LIGHTBOX __________________________
+    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire_lightbox','#lightbox_sign_up')
+    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter_lightbox','#lightbox_sign_in')
+    #_______________________________________________________   
+      
        
+    
+    
+    #______________________ LIGHTBOX INFOS ______________
+    
+    #     init: () ->
+#         
+#         event: () ->
+#             $('.close_lightbox>a').bind('click', ->
+#                 light_box_information.hide($(this).parent('span').parent('div').parent('div').parent('div'))
+#             )
+#         show: (element) ->
+#             $(element).css('display','block')
+#         hide: (element) ->
+#             $(element).css('display','none')
+#         title_header: (texte) ->
+#             $('.lightbox_information>.lightbox>.header>.title').text(texte)
+#         title_content: (texte) ->
+#             $('.lightbox_information>.lightbox>.content>.title').text(texte)
+#         text_content:(texte) ->
+#             $('.lightbox_information>.lightbox>.content>p').text(texte)
+    
+    #light_box_information.event()  
        
     #______ INIT ALL ____________________________________________________
     #__ NOMBRE NUAGE , TEMPS MINIMUM VOULU, TEMPS MAXIMUM VOULU
