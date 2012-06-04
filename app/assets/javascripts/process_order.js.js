@@ -99,8 +99,7 @@
         return select_connection.event_();
       },
       event_: function() {
-        console.log('rere1');
-        $('.choice>.radio_area>.radio').bind('click', function() {
+        $('.choice').bind('click', function() {
           return select_connection.is_checked(this);
         });
         return $('#b_next_step').bind('click', function() {
@@ -114,8 +113,8 @@
       is_checked: function(element) {
         var one_element_check;
         one_element_check = false;
-        $('.choice_registered .radio').each(function() {
-          if ($(this).css('background-position') === '-16px -26px') {
+        $('.choice').each(function() {
+          if ($(this).hasClass('is_choose')) {
             one_element_check = true;
             if (this === element) {
               return select_connection.decheck(this);
@@ -129,8 +128,9 @@
         if (!one_element_check) return select_connection.check(element);
       },
       check: function(element) {
-        $(element).css('background-position', '-16px -26px');
-        if ($(element).parent('div').parent('div').hasClass('yes')) {
+        $(element).children('.radio_area').children('.radio').css('background-position', '0px -26px');
+        $(element).addClass('is_choose');
+        if ($(element).hasClass('yes')) {
           form_sinscrire.hide();
           return form_se_connecter.display();
         } else {
@@ -139,7 +139,13 @@
         }
       },
       decheck: function(element) {
-        return $(element).css('background-position', '0 -26px');
+        $(element).children('.radio_area').children('.radio').css('background-position', '-16px -26px');
+        $(element).removeClass('is_choose');
+        if ($(element).hasClass('yes')) {
+          return form_se_connecter.hide();
+        } else {
+          return form_sinscrire.hide();
+        }
       },
       hide: function() {
         return $("#l_areyouinscrit").css('display', 'none');

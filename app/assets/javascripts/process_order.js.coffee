@@ -262,8 +262,7 @@ $(document).ready(->
         init : ->
             select_connection.event_()
         event_ : () ->
-            console.log('rere1')
-            $('.choice>.radio_area>.radio').bind('click', () ->
+            $('.choice').bind('click', () ->
                 select_connection.is_checked(this)
             )
             $('#b_next_step').bind('click', ->
@@ -274,8 +273,8 @@ $(document).ready(->
             )
         is_checked: (element) ->
             one_element_check = false
-            $('.choice_registered .radio').each(->
-                if $(this).css('background-position') == '-16px -26px' #ONE CHECK
+            $('.choice').each(->
+                if $(this).hasClass('is_choose') #ONE CHECK
                     one_element_check = true
                     
                     if this == element
@@ -288,8 +287,10 @@ $(document).ready(->
             if !one_element_check
                 select_connection.check(element)
         check: (element) ->
-            $(element).css('background-position','-16px -26px')
-            if $(element).parent('div').parent('div').hasClass('yes')
+            $(element).children('.radio_area').children('.radio').css('background-position','0px -26px')
+            $(element).addClass('is_choose')
+            
+            if $(element).hasClass('yes')
                 form_sinscrire.hide()
                 form_se_connecter.display()
             else
@@ -299,7 +300,13 @@ $(document).ready(->
             #pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
             #$('input[name="point_relai[id]"]').val([pr_id]);
         decheck: (element) ->
-            $(element).css('background-position','0 -26px')
+            $(element).children('.radio_area').children('.radio').css('background-position','-16px -26px')
+            $(element).removeClass('is_choose')
+            
+            if $(element).hasClass('yes')
+                form_se_connecter.hide()
+            else
+                form_sinscrire.hide()
         hide: ->
             $("#l_areyouinscrit").css('display','none')
             
