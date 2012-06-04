@@ -28,7 +28,17 @@
   }
 }
 
-// applique un style de bouton inscrusté
+// applique un style de inscrusté
+@mixin embossed($border-color) {
+  @include borderradius(50px);
+  border:solid 1px $border-color;
+  color:$brown;
+  padding:7px 10px 4px 10px;
+  margin-left:10px;
+  @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+}
+
+// applique un style de bouton inscrusté// applique un style de bouton inscrusté
 @mixin embossed_button($border-color) {
   @include borderradius(50px);
   border:solid 1px $border-color;
@@ -49,6 +59,7 @@
     @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
   }
 }
+
 
 // applique une style bouton-switch
 .toggle {
@@ -82,6 +93,9 @@ span.button {
   padding:6px 0 5px  0;
   @include borderradius(20px);
   font-size: 22px;
+   &:hover, &:hover a {
+      cursor:pointer;
+    }
   &:active {
     border:solid 1px rgba(139, 230,104, 0);
   }
@@ -546,7 +560,7 @@ ul.dropdown_menu {
     padding-left:20px;    
     padding-right:20px;    
     ul {
-      width:750px;
+      width:730px;
       padding:0;
       margin:0;
       float:left;
@@ -577,9 +591,11 @@ ul.dropdown_menu {
         }
         .plus_btn, .minus_btn {
           position:absolute;
-          top:39px;
+          top:43px;
           left:33px;          
           width:31px;
+          height:22px;
+          text-align:center;
           opacity:0.3;  
           @include transition-property(opacity);
           @include transition-duration(0.3s);
@@ -589,6 +605,7 @@ ul.dropdown_menu {
           background-color:#ffffff;
           .plus_quantite_p_c {
             @extend .plus;
+            height:22px;
             position:relative;
             @include margin;
           }          
@@ -598,7 +615,8 @@ ul.dropdown_menu {
           left:1px;        
           width:32px;          
           .moins_quantite_p_c {
-            @extend .minus;  
+            @extend .minus; 
+            height:22px; 
             @include margin;        
           }          
         }
@@ -611,7 +629,7 @@ ul.dropdown_menu {
       }
     }
     .checkout {
-      width:170px;
+      width:190px;
       float:right;
       margin-top:7px;
       text-align:right;
