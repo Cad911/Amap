@@ -287,7 +287,7 @@ $(document).ready(->
             if !one_element_check
                 select_connection.check(element)
         check: (element) ->
-            $(element).children('.radio_area').children('.radio').css('background-position','0px -26px')
+            #$(element).children('.radio_area').children('.radio').css('background-position','0px -26px')
             $(element).addClass('is_choose')
             
             if $(element).hasClass('yes')
@@ -300,7 +300,7 @@ $(document).ready(->
             #pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
             #$('input[name="point_relai[id]"]').val([pr_id]);
         decheck: (element) ->
-            $(element).children('.radio_area').children('.radio').css('background-position','-16px -26px')
+            #$(element).children('.radio_area').children('.radio').css('background-position','-16px -26px')
             $(element).removeClass('is_choose')
             
             if $(element).hasClass('yes')

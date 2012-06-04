@@ -128,7 +128,6 @@
         if (!one_element_check) return select_connection.check(element);
       },
       check: function(element) {
-        $(element).children('.radio_area').children('.radio').css('background-position', '0px -26px');
         $(element).addClass('is_choose');
         if ($(element).hasClass('yes')) {
           form_sinscrire.hide();
@@ -139,7 +138,6 @@
         }
       },
       decheck: function(element) {
-        $(element).children('.radio_area').children('.radio').css('background-position', '-16px -26px');
         $(element).removeClass('is_choose');
         if ($(element).hasClass('yes')) {
           return form_se_connecter.hide();

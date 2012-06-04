@@ -201,12 +201,18 @@
 		.choice {
 			@include embossed_button($embossed_dark);	
 		}
+		//__ ME
 		.is_choose {
 				color:#ffffff;
 			    text-shadow:none;
 			    background-color: transparentize($embossed_dark, 0.7);
 			    border:solid 1px darken($embossed_dark, 5%);
 			    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+			    .radio_area {
+					.radio {
+						background-position:0px -26px;
+					}
+				}
 		}
 		.choice, .loggin {
 			float:left;			
