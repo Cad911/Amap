@@ -59,25 +59,42 @@
     @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
   }
 }
-
-.filter_zone {
-  .title {
-    @include title(1, 30px);
-  }
-  p {
-    color:$brown;
-    &.label {
-      background:transparent;
-      @include borderradius(0);
-      font-size:16px;
+.filter_bg {
+  background:url(/../images/body_bg.png);
+  width:922px;
+  padding:0px 40px 0px 40px;
+  margin-left:-41px;
+  .filter_zone {
+    @include box-shadow(rgba(0,0,0, 0.8) 0px 0 5px inset);
+    width:842px;
+    padding:20px 40px 20px 40px;
+    background:url(/../images/patterns/bois.960.130.png);
+    .title {
+      @include title(1, 30px);
+      margin:0 0 15px 0;
     }
-  }
-  ul {
-    li {
-      @include embossed_button($light_brown);
-      padding: 5px 10px 2px 10px;
-      
-      display:inline-block;
+    p {
+      color:$brown;
+      &.label {
+        background:transparent;
+        @include borderradius(0);
+        font-size:16px;
+        text-shadow:1px 1px 1px rgba(255,255,255, 0.85);
+        display:block;
+        width:150px;
+        float:left;
+        margin:0;
+      }
+    }
+    ul {
+      width:600px;
+      float:left;
+      margin:-7px 0 0 0;
+      li {
+        @include embossed_button($light_brown);
+        padding: 3px 12px 0px 12px;
+        display:inline-block;
+      }
     }
   }
 }
