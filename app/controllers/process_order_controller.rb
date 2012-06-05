@@ -218,6 +218,7 @@ class ProcessOrderController < ApplicationController
   		#__UPDATE CAGEOT
   		@cageot_valide = Cageot.find(@ma_commande_payer.cageot_id)
   		@cageot_valide.etat = "confirme"
+  		@cageot_valide.save()
   		@produit_de_commande = RelCommandeProduit.where('commande_id = ?', @ma_commande_payer.id)
   		render "end_process"
   	else

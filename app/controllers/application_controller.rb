@@ -72,11 +72,20 @@ class ApplicationController < ActionController::Base
      if resource_or.is_a?(User) || resource_or == :user
     	new_user_session_path
      elsif resource_or.is_a?(Client) || resource_or == :client
+     	#__UPDATE CAGEOT ____
      	@cageot = Cageot.where(:session_id => session[:panier_id])
      	if @cageot.count > 0
 	     	@cageot_modif = Cageot.find(@cageot[0].id)
 	     	@cageot_modif.etat = 'annule'
 	     	@cageot_modif.save
+     	end
+     	
+     	#___UPDATE COMMANDE EN COURS EN COMMANDE ANNULE
+     	@commande_encours = Commande.where('etat = "en_cours" AND client_id', current_client.id)
+     	if @commande_encours.count > 0
+     	    @commande_encours[0].etat = 'annule'
+     	    @commande_encours[0].save()
+     	    
      	end
      	new_client_session_path
      else

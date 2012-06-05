@@ -22,7 +22,7 @@
 	<% if !@abonnement_panier.nil? %>	
 				
 				<li>
-				<div class="raw">
+				<div class="raw raw_panier" id="raw_<%= @abonnement_panier.id %>">
 					<div class="l_photo_description is_horizontal">
 						<div class="image">
 							<div class="has_corners_shadow is_small"></div>
@@ -50,28 +50,28 @@
 
 
 
-				<% @listing_produit.each do |panier| %>
+				<% @listing_produit.each do |cageot| %>
 					
 						<li>
-							<div class="raw" id="raw_<%= panier.id %>">
+							<div class="raw raw_produit" id="raw_<%= cageot.id %>">
 								<div class="l_photo_description is_horizontal">
 									<div class="image">
 										<div class="has_corners_shadow is_small"></div>
 									</div>
 									<div class="content">
-										<p class="is_bold title"> <%= panier.produit_vente_libre.titre %>  <span class="note is_italic">les <%= panier.produit_vente_libre.quantite %>  <%= panier.produit_vente_libre.stock.unite_mesure.abbreviation %> </span></p>						
-										<p class="descritpion"> <%= panier.produit_vente_libre.description %> </p>
+										<p class="is_bold title"> <%= cageot.produit_vente_libre.titre %>  <span class="note is_italic">les <%= cageot.produit_vente_libre.quantite %>  <%= cageot.produit_vente_libre.stock.unite_mesure.abbreviation %> </span></p>						
+										<p class="descritpion"> <%= cageot.produit_vente_libre.description %> </p>
 									</div>
 									<div class="quantity">
 										<span class="minus"> </span><%= #link_to "", supp_quantite_cageot_path(panier.id), :class => "minus" 
 										%> 
-										<span class="sum"><%= panier.nombre_pack %> </span>
+										<span class="sum"><%= cageot.nombre_pack %> </span>
 										<span class="plus"> </span>
 										<%= #link_to "", ajout_quantite_cageot_path(panier.id),:class => "plus" 
 										%>
 									</div>						
 									<div class="price">
-										<span class="sum"> <%= panier.produit_vente_libre.prix_unite_ttc %> €</span>
+										<span class="sum"> <%= cageot.produit_vente_libre.prix_unite_ttc %> €</span>
 										<div class="close_square"></div>
 									</div>
 								</div>

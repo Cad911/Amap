@@ -502,18 +502,20 @@ $(document).ready(->
     event_resume_p = 
       event : () ->
           
-          $('.price>div.close_square').bind('click',->
-              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')
-              event_resume_p.delete_quantity(produit_id)
-          )
-          $('.quantity>span.plus').bind('click', ->
-              produit_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
-              event_resume_p.plus_quantity(produit_id)
-          )
-          $('.quantity>span.minus').bind('click', ->
-              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')              
-              event_resume_p.minus_quantity(produit_id)
-          )
+          if $('.raw_produit').length > 0
+	          $('.price>div.close_square').bind('click',->
+	              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')
+	              event_resume_p.delete_quantity(produit_id)
+	          )
+	          
+	          $('.quantity>span.plus').bind('click', ->
+	              produit_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
+	              event_resume_p.plus_quantity(produit_id)
+	          )
+	          $('.quantity>span.minus').bind('click', ->
+	              produit_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')              
+	              event_resume_p.minus_quantity(produit_id)
+	          )
       plus_quantity: (produit_id) ->
           cageot.plus_quantite(produit_id)
       minus_quantity: (produit_id) ->

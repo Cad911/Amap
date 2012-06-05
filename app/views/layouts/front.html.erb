@@ -30,6 +30,7 @@
   <%= javascript_include_tag 'stocks' %>
   <%= javascript_include_tag 'page_front' %>
   <%= javascript_include_tag 'page_revendeur' %>
+  <%= javascript_include_tag 'page_panier' %>
   <%= javascript_include_tag 'process_order' %>
   <%= javascript_include_tag 'jmpress/jmpress' %>
   
@@ -251,7 +252,9 @@
 	      <% @product_cageot.each do |product_cageot| %>
 	      	<li id="<%= product_cageot.id %>" >
 	      	<% if !product_cageot.produit_vente_libre.stock.default_image.nil? %>
-	      	    <%= image_tag (product_cageot.produit_vente_libre.stock.default_image).image_url(:is_small), :class => "has_corners_shadow is_small" %>
+	      		<%= link_to page_produit_show_path(product_cageot.produit_vente_libre.user,product_cageot.produit_vente_libre) do %>
+	      	    	<%= image_tag (product_cageot.produit_vente_libre.stock.default_image).image_url(:is_small), :class => "has_corners_shadow is_small" %>
+	      	    <% end %>
 	      	<% else %>
 	      		<img src="<%= product_cageot.produit_vente_libre.stock.default_image %>" class="has_corners_shadow is_small"> 
 	      	<% end %>

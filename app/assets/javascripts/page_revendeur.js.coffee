@@ -156,17 +156,26 @@ $(document).ready(->
               
     link_li =
         event: (li)->
-            $(li).bind('click', () ->
-                if $(this).hasClass('li_product')
-                    id_product = ($(this).find('.add_product_link').attr('id')).replace('product_','')
-                    user_id = $('#user_id').val()
-                    $(location).attr('href','/page_produit/show/'+user_id+'/'+id_product) 
-                    console.log('/page_produit/show/'+user_id+'/'+id_product)
-                if $(this).hasClass('li_basket')
-                    id_bakset = ($(this).find('.add_basket_link').attr('id')).replace('basket_','')
-                    user_id = $('#user_id').val()
-                    console.log('/page_panier/show/'+user_id+'/'+id_bakset)
-                    $(location).attr('href','/page_panier/show/'+user_id+'/'+id_bakset) 
+            $(li).find('*').each ( () ->
+                $(this).on('click', (event) ->
+                    if $(this).hasClass('pursache')
+                        event.stopImmediatePropagation()
+                                 
+                    if $(this).hasClass('pursache') or ($(this).parents('.pursache')).length > 0
+                        true
+                    else
+                        if $(this).parents('.li_product').length > 0
+                            id_product = ($(this).parents('.li_product').find('.add_product_link').attr('id')).replace('product_','')
+                            user_id = $('#user_id').val()
+                            $(location).attr('href','/page_produit/show/'+user_id+'/'+id_product) 
+                            console.log('/page_produit/show/'+user_id+'/'+id_product)
+                        if $(this).parents('.li_basket').length > 0
+                            id_bakset = ($(this).parents('.li_basket').find('.add_basket_link_revendeur').attr('id')).replace('basket_','')
+                            user_id = $('#user_id').val()
+                            console.log('/page_panier/show/'+user_id+'/'+id_bakset)
+                            $(location).attr('href','/page_panier/show/'+user_id+'/'+id_bakset)
+               
+                )
             )
         test:->
     

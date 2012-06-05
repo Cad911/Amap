@@ -5,8 +5,27 @@
 
 $(document).ready(->
   #________ PAGE RESUME _______________
-  #__DANS PAGE FRONT CAR EN RELATION AVECE LE CAGEOT ___
-    
+  #__DANS PAGE FRONT CAR EN RELATION AVECE LE CAGEOT  POUR LE CAGEOT ___
+  #___ ICI POUR LE PANIER _______
+    event_panier_resume = 
+        event: () ->
+            #___ SI EVENT POUR PANIER ___
+            if $('.raw_panier').length > 0
+	            $('.price>div.close_square').bind('click',->
+	                abonnement_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')
+	                event_resume_p.delete_quantity(abonnement_id)
+	            )
+	          
+	            $('.quantity>span.plus').bind('click', ->
+	                abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
+	                event_panier_resume.change_duree(abonnement_id)
+	            )
+        change_duree: (abonnement_id) ->
+        
+        delete_panier: (abonnement_id) ->
+  
+  
+  
   #____________________________________________ FUNCTION POUR AFFICHAGE DES MESSAGE D'INFORMATION ________________________
  #  message_information =
 #       message_success: (id,titre,message) ->
@@ -73,8 +92,8 @@ $(document).ready(->
 #             message_information.message_error("form_se_connecter","Erreur",response.responseText)
 #           )
 #    
-    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire','#form_sinscrire #b_sign_up')
-    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter','#b_sign_in>a')
+    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire','#form_sinscrire #b_sign_up',false)
+    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter','#b_sign_in>a',false)
   #____________________________________________ FUNCTION POUR FORM S'INSCRIRE ________________________ 
     form_sinscrire =
       init: ->
@@ -209,7 +228,10 @@ $(document).ready(->
                 if $('#l_areyouinscrit').length > 0
                     select_connection.hide()
                     submit_next_step.add_submit()
-                
+                    if $(this).attr('id') == 'form_sinscrire'
+                        message_information.message_success(".products","Success","Inscription réussi! Vous êtes connecté!")
+                    if $(this).attr('id') == 'form_se_connecter'
+                        message_information.message_success(".products","Success","Connexion réussi! Vous êtes connecté!")
             )
              #________
         add_submit: ->
@@ -226,14 +248,15 @@ $(document).ready(->
             select_pr.radio_box_checked()
             select_pr.event()
         event : ->
-            $('li .radio').bind('click', ->
+            $('li>.raw').bind('click', ->
                 select_pr.is_checked(this)
             )
         is_checked: (element) ->
             one_element_check = false
-            $('.products>li .radio').each(->
-                if $(this).css('background-position') == '-16px -26px' #ONE CHECK
+            $('.products>li>.raw').each(->
+                if $(this).hasClass('raw_select') #ONE CHECK
                     one_element_check = true
+                    
                     if this == element
                         select_pr.decheck(this)
                     else
@@ -245,16 +268,16 @@ $(document).ready(->
             if !one_element_check
                 select_pr.check(element)
         check: (element) ->
-            $(element).css('background-position','-16px -26px')
-            pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
-            $('input[name="point_relai[id]"]').val([pr_id]);
+            $(element).addClass('raw_select')
+            pr_id = $(element).attr('id').replace('pr_','')
+            $('input:radio[name="point_relai[id]"][value="'+pr_id+'"]').attr('checked','checked')
       
         decheck: (element) ->
-            $(element).css('background-position','0 -26px')
+            $(element).removeClass('raw_select')
         radio_box_checked : () ->
            if $('input[type=radio]:checked').length > 0
-               id_pr = $('input[type=radio]:checked').val()
-               select_connection.check($('#pr_'+id_pr+'>div>.image>.radio'))
+               id_pr = $('input:radio[name="point_relai[id]"]:checked').val()
+               select_pr.check($('#pr_'+id_pr))
 
 
     #_________ BOX SELECTION INSCRIT OU PAS _______________
@@ -287,7 +310,6 @@ $(document).ready(->
             if !one_element_check
                 select_connection.check(element)
         check: (element) ->
-            #$(element).children('.radio_area').children('.radio').css('background-position','0px -26px')
             $(element).addClass('is_choose')
             
             if $(element).hasClass('yes')
@@ -300,7 +322,6 @@ $(document).ready(->
             #pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_','')
             #$('input[name="point_relai[id]"]').val([pr_id]);
         decheck: (element) ->
-            #$(element).children('.radio_area').children('.radio').css('background-position','-16px -26px')
             $(element).removeClass('is_choose')
             
             if $(element).hasClass('yes')

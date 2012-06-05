@@ -1,7 +1,7 @@
 #_________________________________________ FORMULAIRE SE CONNECTER _______________________________
 $(document).ready(->
     class window.FormulaireSeConnecter
-        constructor: (@id_form,@id_button_submit) ->
+        constructor: (@id_form,@id_button_submit,@info_by_lightbox = true ) ->
             @ajax_formulaire()
             @event_form()
             
@@ -11,11 +11,12 @@ $(document).ready(->
                 #console.log(response)
                 lightbox_connexion.link_top(response)
                 lightbox_connexion.hide()
-                                    
-                light_box_information.title_header('Success')
-                light_box_information.title_content('Connexion reussi')
-                light_box_information.text_content('Bonjour '+response['user']['prenom'])
-                light_box_information.show()
+                
+                if @info_by_lightbox     
+                    light_box_information.title_header('Success')
+                    light_box_information.title_content('Connexion reussi')
+                    light_box_information.text_content('Bonjour '+response['user']['prenom'])
+                    light_box_information.show()
                 
             )
           

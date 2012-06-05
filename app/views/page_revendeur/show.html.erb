@@ -105,8 +105,25 @@
 		        </div>
 		        <div class="pursache">
 		        	<span class="price"> <%= panier.prix_unite_ttc %> € <span class="note is_italic">pour <%= panier.nombre_personne %> personnes</span></span><br>
-		        	<div class="call_to_action">
-		        		<span class="button add_basket_link" id="basket_<%= panier.id %>"><a href="">ajouter au panier</a></span>
+		        	<div class="call_to_action" style="position:relative;">
+		        	    <p style="display:block;position:absolute;top:-60px;left:0;"> 
+			        	    <select name="panier[duree]" id="panier_duree" class="select optional">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+		        	    </p>
+		        	   
+		        		<span class="button add_basket_link_revendeur" id="basket_<%= panier.id %>"><a> S'abonner</a></span>
 		        	</div>
 		        </div>
 	      </div>
