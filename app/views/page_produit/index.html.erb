@@ -15,7 +15,6 @@
   	  	<%  @var = @var -1 %>
   	  <% end %>
   	  
-  	  
    <!--
    <li><a class="/" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
       <li><a class="" style="z-index:3">Produits</a></li>
@@ -29,6 +28,21 @@
     <div class="filters">
       <span>trier par</span><span class="filter">date d'ajout <i class="vertical_devider"></i><i class="down_arrow"></i>&nbsp;</span>
     </div>
+  </div>
+
+  <div class="filter_bg">
+      <div class="filter_zone">
+        <p class="title">Filtres</p>
+        <p class="label">N'afficher que:</p>
+        <ul>
+          <li>boeuf</li>
+          <li>fruits et légumes</li>
+          <li>canard</li>
+          <li>poisson</li>
+          <li>oeufs</li>
+        </ul>
+        <br class="clear">
+      </div>
   </div>
 
 <h1><%= @titre %> <%= @produits.count %></h1>
