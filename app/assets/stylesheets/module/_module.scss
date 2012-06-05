@@ -60,6 +60,27 @@
   }
 }
 
+.filter_zone {
+  .title {
+    @include title(1, 30px);
+  }
+  p {
+    color:$brown;
+    &.label {
+      background:transparent;
+      @include borderradius(0);
+      font-size:16px;
+    }
+  }
+  ul {
+    li {
+      @include embossed_button($light_brown);
+      padding: 5px 10px 2px 10px;
+      
+      display:inline-block;
+    }
+  }
+}
 
 // applique une style bouton-switch
 .toggle {
