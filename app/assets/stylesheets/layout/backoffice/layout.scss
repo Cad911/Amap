@@ -142,7 +142,7 @@ body .backoffice {
 						}
 						&.basket {
 							span.picture {
-								margin:10px 15px 0 0;
+								margin:16px 15px 0 0;
 								@include backoffice-sprite(basket);
 								display: inline-block;
 								width: 19px;
@@ -150,7 +150,7 @@ body .backoffice {
 							}
 							span.link {
 								position:relative;
-								top:-5px;
+								top:-2px;
 								color:$brown;
 							}
 							&:hover {
@@ -174,15 +174,102 @@ body .backoffice {
 		.page-header {
 			width:737px;
 			text-align:center;
+			height:51px;
 			padding:0;
 			margin:-20px 0 20px -20px;
 			border-bottom:solid 1px #ffffff;
 			background:url(/../images/bg_darkener.png);
 			h1 {
-				background:url(/../images/bg_darkener.png);
+				width:480px;
 				border-bottom:solid 1px $embossed_dark;
-				padding:10px 0;
+				padding:10px 20px;
 				margin:0;
+				text-align:left;
+				float:left;
+			}
+			.buttons {
+				border-bottom:solid 1px $embossed_dark;
+				width:197px;
+				height:40px;
+				float:left;
+				padding:10px 20px 0 0;
+				margin:0;
+				li.button {
+					width:30px;
+					height:30px;
+					text-align:center;
+					float:right;
+					@include embossed_button($lightbrown);
+					@include borderradius(5px);
+					text-align:center;
+					padding:0;
+					span {
+						display:inline-block;
+						margin-top:7px;
+					}
+					&:active {
+						background:$red;
+					    @include box-shadow(rgba(0,0,0, 0.4) 0px 1px 3px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
+
+					}
+				}
+				.stats {
+					&:hover {
+						span {
+							@include ui-sprite(stats_hover);							
+						}
+					}	
+					&:active {
+						span {
+							@include ui-sprite(stats_active);							
+						}
+					}										
+					span {
+						@include ui-sprite(stats);
+						display:block;
+						width:16px;
+						height:16px;						
+					}
+				}
+				.tables {
+					&:hover {
+						span {
+							@include ui-sprite(list_hover);							
+						}
+					}
+					span {
+						@include ui-sprite(list);
+						display:block;
+						width:16px;
+						height:16px;						
+					}
+				}
+				.cards {
+					&:hover {
+						span {
+							@include ui-sprite(card_hover);							
+						}
+					}					
+					span {
+						@include ui-sprite(card);
+						display:block;
+						width:16px;
+						height:16px;
+					}
+				}	
+				.add {
+					&:hover {
+						span {
+							@include ui-sprite(add_hover);							
+						}
+					}					
+					span {
+						@include ui-sprite(add);
+						display:block;
+						width:16px;
+						height:16px;
+					}
+				}												
 			}
 		}
 	}

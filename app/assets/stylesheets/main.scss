@@ -109,7 +109,7 @@ $process_order-layout:smart;
 @import "process_order/*.png";
 @include all-process_order-sprites;
 
-$backoffice-layout:smart;
+$ui-layout:smart;
 @import "backoffice/*.png";
 @include all-ui-sprites;
 

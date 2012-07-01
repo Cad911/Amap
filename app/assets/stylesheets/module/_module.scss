@@ -38,7 +38,7 @@
   @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
 }
 
-// applique un style de bouton inscrusté// applique un style de bouton inscrusté
+// applique un style de bouton inscrusté
 @mixin embossed_button($border-color) {
   @include borderradius(50px);
   border:solid 1px $border-color;
@@ -55,8 +55,8 @@
     color:#ffffff;
     text-shadow:none;
     background-color: transparentize($border-color, 0.7);
-    border:solid 1px darken($border-color, 5%);
-    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+    border-top:solid 1px rgba(0,0,0, 0.4);
+    @include box-shadow(rgba(0,0,0, 0.4) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
   }
 }
 .filter_bg {
@@ -681,6 +681,71 @@ ul.dropdown_menu {
       .price {
         @include title(1,30px);
         margin:0px 20px -10px 0px;
+      }
+    }
+  }
+}
+.card {
+  min-height:190px;
+  border:solid 1px #ffffff;
+  background-color:#FCFCFC;
+  background-image:url(/../images/bg_darkener_106.png);
+  background-repeat:repeat-y;
+  @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
+  @include borderradius(5px);
+  .left_area {
+    height:100%;
+    margin-bottom:20px;
+    width: 67px;
+    padding:0 20px;
+    float: left;
+    .is_small.has_corners_shadow {
+      margin-top:20px;
+    }
+    .has_corners_shadow:last-child {
+      margin-bottom:20px;
+    }
+  }
+  .right_area {
+    width:530px;
+    height:100%;
+    padding:20px;
+    float: left;
+    h2 {
+      margin:0;
+      padding:0;
+      border-bottom: solid 1px #ebebeb;
+      font-size:30px;
+      padding-bottom:10px;
+      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+    }
+    p {
+      border-top: solid 1px #ffffff;
+      font-size:16px;
+      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+    }
+  }
+  .footer {
+    ul {
+      padding: 0;
+      margin: 0;
+      li.details {
+        width: 250px;
+        float:left;
+        &:first-child {
+          margin-right:20px;
+        }
+        .label {
+          background-color:transparent;
+          color: $brown;
+          font-weight: bold;
+          font-size:14px;
+          text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+        }
+        .value {
+          color:$grey;
+          text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+        }
       }
     }
   }
