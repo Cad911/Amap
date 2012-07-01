@@ -177,9 +177,7 @@ body {
     }
   }
   .ground_top{background:url("/../images/terre-haut.png");height:76px;width:100%;position:absolute;top:220px;z-index:-1;}
-  .l_wrapper {
-    width:960px;
-    margin:20px auto;
+  .frontoffice.l_wrapper {
     @include box;
     .l_main_gutter {
       padding:20px;

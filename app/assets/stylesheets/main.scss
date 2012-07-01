@@ -104,10 +104,14 @@ $ui-layout:smart;
 @import "ui/*.png";
 @include all-ui-sprites;
 
-$ui-layout:smart;
+
+$process_order-layout:smart;
 @import "process_order/*.png";
 @include all-process_order-sprites;
 
+$backoffice-layout:smart;
+@import "backoffice/*.png";
+@include all-ui-sprites;
 
 // fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
 @mixin sunshine {

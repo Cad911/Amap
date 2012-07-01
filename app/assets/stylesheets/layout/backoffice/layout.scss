@@ -1,0 +1,189 @@
+body .backoffice {
+	margin-top:50px;
+	.l_wrapper {
+		.side_navigation {
+			ul.pannels {
+				padding:0;
+				margin:48px 0 0 0;
+				float:left;
+				.link {
+					@include title(1, 30px);
+					position:relative;
+					top:-10px;
+				}
+				li {
+					display:block;
+					width:221px;
+					height:102px;
+					margin-top:-1px;
+					@include backoffice-sprite(bg_sidebar_middle);
+					&:hover {
+						cursor:pointer;
+						.link {
+							color:$red;	
+						}
+					}
+					span.picture {
+						display:inline-block;
+						margin:20px 20px 0 20px;
+					}
+					&.top {
+						margin-top:0;
+						height:105px;
+						@include backoffice-sprite(bg_sidebar_top);
+					}
+					&.bottom {
+						height:104px;
+						@include backoffice-sprite(bg_sidebar_bottom);
+					}
+					&.stock {
+						span.picture {
+							width:45px;
+							height:45px;
+							margin-top: 25px + 0px; // marge générale plus différence due à la hauteur spécifique de l'image																					
+							@include backoffice-sprite(stock);
+						}	
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(stock_hover);
+							}
+						}
+					}
+					&.archive {
+						span.picture {
+							width:45px;
+							height:38px;
+							margin-top: 25px + 4px; // marge générale plus différence due à la hauteur spécifique de l'image							
+							@include backoffice-sprite(archive);
+						}	
+						.link {
+							top:-10 + 4 !important; // marge générale plus différence due à la hauteur spécifique de l'image							
+						}
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(archive_hover);
+							}
+						}						
+					}
+					&.blog {
+						span.picture {
+							width:45px;
+							height:44px;
+							margin-top: 25px + 1px; // marge générale plus différence due à la hauteur spécifique de l'image							
+							@include backoffice-sprite(blog);
+						}	
+						.link {
+							top:-10 + 1 !important; // marge générale plus différence due à la hauteur spécifique de l'image							
+						}						
+						&:hover {
+							span.picture {							
+								@include backoffice-sprite(blog_hover);
+							}
+						}						
+					}
+					&.farmer {
+						span.picture {
+							width:43px;
+							height:47px;
+							margin-top: 25px + 1px; // marge générale plus différence due à la hauteur spécifique de l'image
+							@include backoffice-sprite(farmer);
+						}	
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(farmer_hover);
+							}
+						}						
+					}															
+				}
+				ul.subnav {
+					padding:0;
+					margin-top:0;
+					li {
+						height:50px;
+						width:160px;
+						padding:0 20px 0 20px;
+						margin:0 0 0 21px;
+						@include bg-sprite(height_109);
+						background-repeat:repeat-x;
+						border-top:solid 1px #ffffff;
+						border-bottom:solid 1px #d7d0c4;
+						.link {
+							font-family:helveticaneue;
+							color:$grey;
+							font-size:16px;
+							padding-top:10px;
+							display:inline-block;
+							margin:0 0 0 0px;
+						}
+						&:hover {
+							color:$red;
+						}
+						&.product {
+							span.picture {
+								margin:10px 15px 0 0;
+								@include backoffice-sprite(product);
+								display: inline-block;
+								width: 18px;
+								height: 26px;								
+							}
+							span.link {
+								position:relative;
+								top:-5px;
+								color:$brown;
+							}
+							&:hover {
+								span.link {
+									color:$red;									
+								}
+								span.picture {
+									@include backoffice-sprite(product_hover);
+								}
+							}
+						}
+						&.basket {
+							span.picture {
+								margin:10px 15px 0 0;
+								@include backoffice-sprite(basket);
+								display: inline-block;
+								width: 19px;
+								height: 16px;								
+							}
+							span.link {
+								position:relative;
+								top:-5px;
+								color:$brown;
+							}
+							&:hover {
+								span.link {
+									color:$red;									
+								}
+								span.picture {
+									@include backoffice-sprite(basket_hover);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.container.l_main_gutter {
+			width:697px; // + 40px de marge
+			float:right;
+			@include box;
+		}
+		.page-header {
+			width:737px;
+			text-align:center;
+			padding:0;
+			margin:-20px 0 20px -20px;
+			border-bottom:solid 1px #ffffff;
+			background:url(/../images/bg_darkener.png);
+			h1 {
+				background:url(/../images/bg_darkener.png);
+				border-bottom:solid 1px $embossed_dark;
+				padding:10px 0;
+				margin:0;
+			}
+		}
+	}
+}
