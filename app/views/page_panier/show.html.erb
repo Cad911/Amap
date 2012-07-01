@@ -41,7 +41,7 @@
 			<div class="price_button">
 				<p class="price  is_bold"><%= @panier.prix_unite_ht %> € <span class="note is_italic">le kilo</span></p>
 				<br class="clear">
-				<span id="add_product" class="button"><a>ajouter à ma cagette</a></span>
+				<span id="add_product" class="button add_basket_link"><a>ajouter à ma cagette</a></span>
 			</div>
 		<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
 		<%= f.input :id, :as => :hidden %>
@@ -75,7 +75,7 @@
 				</div>
 
 				<div class="content">
-					<h2><%= @panier.user.nom %> <%= @panier.user.prenom %></h2>
+					<h2><%= link_to @panier.user.nom+@panier.user.prenom,page_revendeur_show_path(@panier.user), :class => 'title' %></h2>
 					<p class="note is_italic location"><%= @panier.user.ville.nom %></p>
 				</div>
 
@@ -98,7 +98,7 @@
 							</div>
 						</div>
 						<div class="content">
-							<p class="note is_bold title"><%= other_panier.titre %></p>
+							<p class="note is_bold title"> <%= link_to other_panier.titre, page_panier_show_path(@panier.user,other_panier) %></p>
 							<p class="note "><%= other_panier.prix_unite_ttc %> € <span class="is_italic">le <%= other_panier.nombre_personne %></span></p>
 						</div>
 					</div>
@@ -111,7 +111,7 @@
 		</div>
 
 		<div class="about_the_farmer">
-			<span class="button"><a>découvrez <%= @panier.user.prenom %> </a></span>
+			<span class="button"><%= link_to "Découvrez #{@panier.user.prenom}" ,page_revendeur_show_path(@panier.user) %></span>
 		</div>
 
 	</div>

@@ -1,7 +1,7 @@
 #____________________________________________ FORMULAIRE S INSCRIRE _______________________________
 $(document).ready(->
     class window.FormulaireSinscrire
-        constructor: (@id_form,@id_button_submit) ->
+        constructor: (@id_form,@id_button_submit, @info_by_lightbox = true) ->
             @erreur = false
             @ajax_formulaire()
             @event_form()
@@ -12,10 +12,11 @@ $(document).ready(->
                 lightbox_inscription.link_top(response)
                 lightbox_inscription.hide()
                
-                light_box_information.title_header('Success')
-                light_box_information.title_content('Connexion reussi')
-                light_box_information.text_content('Bonjour '+response['user']['prenom'])
-                light_box_information.show('.lightbox_information')
+                if @info_by_lightbox
+                    light_box_information.title_header('Success')
+                    light_box_information.title_content('Connexion reussi')
+                    light_box_information.text_content('Bonjour '+response['user']['prenom'])
+                    light_box_information.show('.lightbox_information')
             )
           
             $(@id_form).bind('ajax:error', (data,response) ->

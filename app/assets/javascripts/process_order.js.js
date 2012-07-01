@@ -2,7 +2,25 @@
 (function() {
 
   $(document).ready(function() {
-    var form_se_connecter, form_sinscrire, formulaire_inscription, formulaire_seconnecter, select_connection, select_pr, submit_next_step;
+    var event_panier_resume, form_se_connecter, form_sinscrire, formulaire_inscription, formulaire_seconnecter, select_connection, select_pr, submit_next_step;
+    event_panier_resume = {
+      event: function() {
+        if ($('.raw_panier').length > 0) {
+          $('.price>div.close_square').bind('click', function() {
+            var abonnement_id;
+            abonnement_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_', '');
+            return event_resume_p.delete_quantity(abonnement_id);
+          });
+          return $('.quantity>span.plus').bind('click', function() {
+            var abonnement_id;
+            abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_', ''));
+            return event_panier_resume.change_duree(abonnement_id);
+          });
+        }
+      },
+      change_duree: function(abonnement_id) {},
+      delete_panier: function(abonnement_id) {}
+    };
     form_se_connecter = {
       display: function() {
         return $('#l_se_connecter').fadeIn(1000);
@@ -11,8 +29,8 @@
         return $('#l_se_connecter').css('display', 'none');
       }
     };
-    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire', '#form_sinscrire #b_sign_up');
-    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter', '#b_sign_in>a');
+    formulaire_inscription = new FormulaireSinscrire('#form_sinscrire', '#form_sinscrire #b_sign_up', false);
+    formulaire_seconnecter = new FormulaireSeConnecter('#form_se_connecter', '#b_sign_in>a', false);
     form_sinscrire = {
       init: function() {},
       display: function() {
@@ -36,7 +54,13 @@
         return $('#form_sinscrire, #form_se_connecter').bind('ajax:success', function(data, response) {
           if ($('#l_areyouinscrit').length > 0) {
             select_connection.hide();
-            return submit_next_step.add_submit();
+            submit_next_step.add_submit();
+            if ($(this).attr('id') === 'form_sinscrire') {
+              message_information.message_success(".products", "Success", "Inscription réussi! Vous êtes connecté!");
+            }
+            if ($(this).attr('id') === 'form_se_connecter') {
+              return message_information.message_success(".products", "Success", "Connexion réussi! Vous êtes connecté!");
+            }
           }
         });
       },
@@ -56,15 +80,15 @@
         return select_pr.event();
       },
       event: function() {
-        return $('li .radio').bind('click', function() {
+        return $('li>.raw').bind('click', function() {
           return select_pr.is_checked(this);
         });
       },
       is_checked: function(element) {
         var one_element_check;
         one_element_check = false;
-        $('.products>li .radio').each(function() {
-          if ($(this).css('background-position') === '-16px -26px') {
+        $('.products>li>.raw').each(function() {
+          if ($(this).hasClass('raw_select')) {
             one_element_check = true;
             if (this === element) {
               return select_pr.decheck(this);
@@ -79,18 +103,18 @@
       },
       check: function(element) {
         var pr_id;
-        $(element).css('background-position', '-16px -26px');
-        pr_id = (($(element).parent('div').parent('div').parent('div')).attr('id')).replace('pr_', '');
-        return $('input[name="point_relai[id]"]').val([pr_id]);
+        $(element).addClass('raw_select');
+        pr_id = $(element).attr('id').replace('pr_', '');
+        return $('input:radio[name="point_relai[id]"][value="' + pr_id + '"]').attr('checked', 'checked');
       },
       decheck: function(element) {
-        return $(element).css('background-position', '0 -26px');
+        return $(element).removeClass('raw_select');
       },
       radio_box_checked: function() {
         var id_pr;
         if ($('input[type=radio]:checked').length > 0) {
-          id_pr = $('input[type=radio]:checked').val();
-          return select_connection.check($('#pr_' + id_pr + '>div>.image>.radio'));
+          id_pr = $('input:radio[name="point_relai[id]"]:checked').val();
+          return select_pr.check($('#pr_' + id_pr));
         }
       }
     };

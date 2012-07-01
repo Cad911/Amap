@@ -81,7 +81,7 @@
         </div>
 
         <div class="content">
-          <h2><%= @produit.user.nom %> <%= @produit.user.prenom %></h2>
+          <h2> <%= link_to @produit.user.nom+' '+@produit.user.prenom, page_revendeur_show_path(@produit.user) %> </h2>
           <p class="note is_italic location"><%= @produit.user.ville.nom %></p>
         </div>
 
@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="content">
-                <p class="note is_bold title"><%= other_produit.titre %></p>
+                <p class="note is_bold title"> <%= link_to other_produit.titre, page_produit_show_path(@produit.user,other_produit) %> </p>
                 <p class="note "><%= other_produit.prix_unite_ttc %> € <span class="is_italic">le <%= other_produit.stock.unite_mesure.nom %></span></p>
               </div>
             </div>
@@ -117,7 +117,7 @@
     </div>
 
       <div class="about_the_farmer">
-        <span class="button"><a>découvrez <%= @produit.user.prenom %> </a></span>
+        <span class="button"> <%= link_to 'Découvrez '+@produit.user.prenom, page_revendeur_show_path(@produit.user) %>  </span>
       </div>
 
   </div>

@@ -56,6 +56,18 @@ class AbonnementsController < InheritedResources::Base
 			@abonnement_exist1.etat = "annule"
 			@abonnement_exist1.save
 		end
+		
+		#__ SUPPRESSION CAGEOT SI IL EXISTE
+  		if !session[:cageot_id].nil?
+  			@cageot_exist = Cageot.where('etat = "en_cours" AND client_id = ?',current_client.id)
+  			#____ SI ABONNEMENT EXIST __
+  			if @cageot_exist.count > 0
+  				@cageot =  Cageot.find(@cageot_exist[0].id)
+  				@cageot.etat = "annule"
+  				@cageot.save
+  			end
+  		end
+
 		@date_debut = Date.current
 	
   		@abonnement = Abonnement.new
@@ -73,6 +85,44 @@ class AbonnementsController < InheritedResources::Base
   
   end
   
+  #____ CHANGE DUREE __________________________________
+  def changeDuree
+      @abonnement = Abonnement.find(params[:id_abonnement])
+      @isnt_yours = false
+      if Abonnement.exists?(@abonnement)
+      
+      		#______ VERIF SI CLIENT CONNECTED OR NOT AND SI ABONNEMENT ASSOCIE AU CLIENT OU A LA SESSION ______
+	  		if current_client.nil?
+		  		if @abonnement.session_id != session[:abonnement_id]
+		  			flash[:notice] = "Cet abonnement n'est pas a vous"
+		  			@isnt_yours = true
+		  		end
+		  	else
+		  		if @abonnement.client_id != current_client.id
+		  			flash[:notice] = "Cet abonnement n'est pas a vous"
+		  			@isnt_yours = true
+		  		end
+		  	end
+	  		
+	  		if @isnt_yours == false
+		  		@abonnement.duree == params[:duree]
+		  		if @abonnement.save
+		  			flash[:notice] = "Duree panier/abonnmement updater"
+		  			#redirect_to process_order_resume_path
+		  		else
+		  			flash[:notice] = "ERREUR"
+		  			#redirect_to process_order_resume_path
+		  		end
+		  	else
+		  		#redirect_to process_order_resume_path
+		  	end
+
+      
+      else
+  		flash[:notice] = "Abonnement n'existe pas"
+  		#redirect_to process_order_resume_path
+      end
+  end
   #_________________________________________________ AJOUT QUANTITE ___________________________________________________
   def ajouterQuantite
   	#_____ PARAMS ENVOYER ID Abonnement ____
