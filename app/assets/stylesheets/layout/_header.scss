@@ -149,6 +149,9 @@ body {
           padding-top:6px;
           text-align:center;
           color:$brown;
+          span:hover {
+            cursor:pointer;
+          }
           .user {
             width:16px;
             height:16px;
@@ -201,7 +204,6 @@ body {
       margin-left:20px;
     }
   }
-
 }
 
 // Dans le menu, définie si le panneaux est double ou simple, et raoujoute aussi l'image associé au menu

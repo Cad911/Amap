@@ -46,10 +46,12 @@
   padding:7px 10px 4px 10px;
   margin-left:10px;
   @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+  @include background-image(linear-gradient(rgba(255, 255, 255, 0.1), rgba(000, 000, 000, 0.1)));
   &:hover {
     cursor:pointer;
     background-color:rgba(255,255,255, 0.3);
     @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+    @include background-image(linear-gradient(rgba(255, 255, 255, 0.2), rgba(000, 000, 000, 0.05)));
   }
   &:active {
     color:#ffffff;
@@ -250,7 +252,7 @@ span.button {
   .lightbox {
     width:  500px;
     position:relative;
-    z-index:99;
+    z-index:1050;
     top:0;
     margin:90px auto 40px auto;
     border:solid 1px $light_brown;
@@ -289,6 +291,10 @@ span.button {
       padding:5px 40px;
       text-align:right;
       background:url(/../images/bg_darkener.png);
+      span.annuler:hover {
+        cursor:pointer;
+        color:$red;
+      }
       .button {    
         margin-left:20px;
         a:before {
@@ -695,19 +701,31 @@ ul.dropdown_menu {
   @include borderradius(5px);
   .left_area {
     height:100%;
-    margin-bottom:20px;
     width: 67px;
     padding:0 20px;
     float: left;
     .is_small.has_corners_shadow {
       margin-top:20px;
+      margin-bottom:10px;
     }
-    .has_corners_shadow:last-child {
+    .picture:last-child {
       margin-bottom:20px;
+    }
+    .picture {
+      width:24px;
+      height:24px;
+      border:solid #ffffff 3px;
+      float:left;
+      margin-left:7px;
+      margin-bottom:10px;
+      background-color:#ffffff;
+      &.first_cloumn {
+        margin-left:0;
+      }
     }
   }
   .right_area {
-    width:530px;
+    width:548px;
     height:100%;
     padding:20px;
     float: left;
@@ -738,7 +756,7 @@ ul.dropdown_menu {
         .label {
           background-color:transparent;
           color: $brown;
-          font-weight: bold;
+          font-family:'helveticaneue-bold';
           font-size:14px;
           text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
         }
@@ -749,4 +767,19 @@ ul.dropdown_menu {
       }
     }
   }
+}
+.overall_shadow {
+ // display:block;
+  opacity:1;
+  width:100%;
+  height:100%;
+  background-color:rgba(0,0,0,0.3);
+  //position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  z-index:1040;
+  @include transition-property(all);
+  @include transition-duration(400ms);
 }

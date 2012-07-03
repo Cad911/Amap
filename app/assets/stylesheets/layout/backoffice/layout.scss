@@ -103,6 +103,7 @@ body .backoffice {
 						width:160px;
 						padding:0 20px 0 20px;
 						margin:0 0 0 21px;
+						background-color:$dark_bg_color;
 						@include bg-sprite(height_109);
 						background-repeat:repeat-x;
 						border-top:solid 1px #ffffff;
@@ -117,6 +118,10 @@ body .backoffice {
 						}
 						&:hover {
 							color:$red;
+						}
+						&.subnav_element:active {
+							color:$red;
+							background-image:none;						
 						}
 						&.product {
 							span.picture {
@@ -199,8 +204,8 @@ body .backoffice {
 					height:30px;
 					text-align:center;
 					float:right;
-					@include embossed_button($lightbrown);
-					@include borderradius(5px);
+					@include embossed_button(#c2bdb1);
+					@include border-radius(5px);
 					text-align:center;
 					padding:0;
 					span {
@@ -220,7 +225,7 @@ body .backoffice {
 						}
 					}	
 					&:active {
-						span {
+						span.picture {
 							@include ui-sprite(stats_active);							
 						}
 					}										
@@ -237,6 +242,11 @@ body .backoffice {
 							@include ui-sprite(list_hover);							
 						}
 					}
+					&:active {
+						span.picture {
+							@include ui-sprite(list_active);							
+						}
+					}					
 					span {
 						@include ui-sprite(list);
 						display:block;
@@ -249,7 +259,12 @@ body .backoffice {
 						span {
 							@include ui-sprite(card_hover);							
 						}
-					}					
+					}		
+					&:active {
+						span.picture {
+							@include ui-sprite(card_active);							
+						}
+					}								
 					span {
 						@include ui-sprite(card);
 						display:block;
@@ -262,7 +277,12 @@ body .backoffice {
 						span {
 							@include ui-sprite(add_hover);							
 						}
-					}					
+					}	
+					&:active {
+						span.picture {
+							@include ui-sprite(add_active);							
+						}
+					}									
 					span {
 						@include ui-sprite(add);
 						display:block;
