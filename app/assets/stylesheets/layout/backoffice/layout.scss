@@ -187,35 +187,59 @@ body .backoffice {
 			h1 {
 				width:480px;
 				border-bottom:solid 1px $embossed_dark;
-				padding:10px 20px;
+				padding:14px 20px 6px 20px;
 				margin:0;
 				text-align:left;
 				float:left;
 			}
 			.buttons {
 				border-bottom:solid 1px $embossed_dark;
-				width:197px;
+				width:146px;
 				height:40px;
 				float:left;
-				padding:10px 20px 0 0;
+				padding:10px 20px 0 51px;
 				margin:0;
-				li.button {
+				.group_button {
+					.button {
+						margin:0 -1px 0 0;
+				    @include borderradius(0);
+				    &:first-child {
+				      -webkit-border-top-left-radius: 5px;
+				      -webkit-border-bottom-left-radius: 5px;
+				      -moz-border-radius-topleft: 5px;
+				      -moz-border-radius-bottomleft: 5px;
+				      border-top-left-radius: 5px;
+				      border-bottom-left-radius: 5px;
+				    }
+				    &:last-child {
+				      -webkit-border-top-right-radius: 5px;
+				      -webkit-border-bottom-right-radius: 5px;
+				      -moz-border-radius-topright: 5px;
+				      -moz-border-radius-bottomright: 5px;
+				      border-top-right-radius: 5px;
+				      border-bottom-right-radius: 5px;      
+				    }						
+					}
+				}
+				.button {
 					width:30px;
 					height:30px;
+					display:block;
 					text-align:center;
-					float:right;
+					float:left;
+					margin-left: 0 !important;
+					margin-right:10px;
 					@include embossed_button(#c2bdb1);
 					@include border-radius(5px);
 					text-align:center;
 					padding:0;
 					span {
-						display:inline-block;
+						display:inline-block !important;
 						margin-top:7px;
 					}
 					&:active {
 						background:$red;
-					    @include box-shadow(rgba(0,0,0, 0.4) 0px 1px 3px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
-
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
 					}
 				}
 				.stats {

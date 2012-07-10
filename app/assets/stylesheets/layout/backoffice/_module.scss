@@ -1,0 +1,16 @@
+.backoffice {
+	table {
+		tr {
+			td, th {
+				@include bg-sprite(height_50);
+				background-repeat:repeat-x;
+				height:34px;
+			}
+			td {
+				.type {
+					color:$lightgrey;
+				}
+			}
+		}
+	}
+}

@@ -100,7 +100,28 @@
     }
   }
 }
-
+.group_button {
+  .button {
+    @include borderradius(0);
+    margin:0;
+    &:first-child {
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &:last-child {
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -moz-border-radius-bottomright: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;      
+    }
+  }
+}
 // applique une style bouton-switch
 .toggle {
   @include borderradius(50px);
@@ -691,6 +712,19 @@ ul.dropdown_menu {
     }
   }
 }
+.fade {
+  @include transition-property(all);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-out);     
+  margin-top:-50px;
+  opacity:0;
+  position:relative;
+  z-index:1000;
+}
+.fade.in {
+  margin-top:0px;
+  opacity:1;  
+}
 .card {
   min-height:190px;
   border:solid 1px #ffffff;
@@ -698,7 +732,12 @@ ul.dropdown_menu {
   background-image:url(/../images/bg_darkener_106.png);
   background-repeat:repeat-y;
   @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
-  @include borderradius(5px);
+  @include borderradius(5px); 
+  &:hover {
+    .buttons {
+      opacity: 1 !important;
+    }
+  }
   .left_area {
     height:100%;
     width: 67px;
@@ -729,7 +768,10 @@ ul.dropdown_menu {
     height:100%;
     padding:20px;
     float: left;
+    height:46px;
     h2 {
+      float:left;
+      width:428px;
       margin:0;
       padding:0;
       border-bottom: solid 1px #ebebeb;
@@ -737,11 +779,93 @@ ul.dropdown_menu {
       padding-bottom:10px;
       text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
     }
+    .buttons {
+      float:left;
+      width:120px;
+      opacity:0.7;
+      border-bottom: solid 1px #ebebeb;
+      margin:0;
+      padding-bottom:14px;
+      @include transition-property(all);
+      @include transition-duration(0.2s);
+      @include transition-timing-function(ease-out);          
+        .button {
+          width:30px;
+          height:30px;
+          display:block;
+          text-align:center;
+          float:left;
+          margin-left: 0 !important;
+          margin-right:10px;
+          @include embossed_button(#cacaca);
+          @include border-radius(5px);
+          background-image:none;
+          background-color:#F2F2F2;
+          text-align:center;
+          padding:0;
+          &:hover {
+            background-image:none;
+            background-color:#F7F7F7;
+          }
+          &:last-child {
+            margin:0;
+          }
+          span {
+            display:inline-block !important;
+            margin-top:6px;
+          }
+          &:active {
+            background:#E5E5E5;
+            @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
+          }
+        } 
+        .historique {
+          &:hover {
+            span {
+              @include ui-sprite(archive_hover);              
+            }
+          } 
+          span {
+            @include ui-sprite(archive);
+            display:block;
+            width:18px;
+            height:18px;            
+          }
+        }         
+        .delete {
+          @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+          background:$red;
+          span {
+            @include ui-sprite(delete);
+            display:block;
+            width:18px;
+            height:18px;            
+          }
+        }         
+        .edit {
+          &:hover {
+            span {
+              @include ui-sprite(edit_hover);              
+            }
+          } 
+          span {
+            @include ui-sprite(edit);
+            display:block;
+            width:18px;
+            height:18px;            
+          }
+        }                
+    }
     p {
       border-top: solid 1px #ffffff;
       font-size:16px;
       text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
     }
+  }
+  .description {
+    clear:both;
+    margin-top:0;
+    padding-top:20px;
   }
   .footer {
     ul {
@@ -766,6 +890,23 @@ ul.dropdown_menu {
         }
       }
     }
+  }
+}
+.basket_of_fiches {
+  position:relative;  
+  .card {
+    position:absolute;
+    top:0;
+    left:0
+  }
+  .one {
+    top:0px;
+  }
+  .two {
+    top:-7px;
+  }
+  .three {
+    top:-14px;
   }
 }
 .overall_shadow {
