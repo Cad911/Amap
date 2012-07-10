@@ -20,7 +20,8 @@
    
    <%= javascript_include_tag 'affichage_infos' %>
    <%= javascript_include_tag 'lightbox' %>
-  
+   
+   <%= javascript_include_tag 'administration/administration' %>  
    <%= javascript_include_tag 'produit_vente_libres' %>
    <%= javascript_include_tag 'stocks' %>
    
@@ -91,15 +92,15 @@
 		<div class="l_wrapper">
 			<div class="side_navigation">
 				<ul class="pannels">
-					<%= link_to administration_user_stocks_path(current_user) do %> <li class="top stock"> <span class="picture"></span><span class="link">Stock</span> </li> <% end %>
-					<ul class="subnav">
+					<li class="top stock"> <span class="picture"></span><span class="link">Stock</span> </li>
+					<ul class="subnav <%= 'subnav_isopen' if @admin_produit || @admin_basket %>">
 						<%= link_to administration_user_produit_vente_libres_path(current_user) do %>
-							<li class="product subnav_element" > 
+							<li class="product subnav_element <%= 'subnav_product_active' if @admin_produit %>" > 
 								<span class="picture"></span><span class="link">Produits</span>
 							</li>
 						<% end %>
 						<%= link_to administration_user_paniers_path(current_user) do %>
-							<li class="basket subnav_element">
+							<li class="basket subnav_element <%= 'subnav_basket_active' if @admin_basket %>">
 								<span class="picture"></span><span class="link">Paniers</span>
 							</li>
 						<% end %>
@@ -114,6 +115,7 @@
 				
 
 				<%= yield %>	
+<!--
 				<ul>
 					<li class="card fade in">
 						<div class="left_area">
@@ -149,6 +151,7 @@
 						<div class="clear"></div>
 					</li>
 				</ul>
+-->
 					
 
 					<div class="basket_of_fiches">

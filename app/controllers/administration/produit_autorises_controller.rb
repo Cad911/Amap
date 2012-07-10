@@ -1,6 +1,6 @@
 class Administration::ProduitAutorisesController < InheritedResources::Base
-load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-
+  load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
+  
   #________________ INDEX ____________________________________________
   def index
   	@produit_autorises = ProduitAutorise.where(:user_id => params[:user_id])
