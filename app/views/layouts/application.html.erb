@@ -91,7 +91,7 @@
 		<div class="l_wrapper">
 			<div class="side_navigation">
 				<ul class="pannels">
-					<li class="top stock"><span class="picture"></span><span class="link">Stock</span></li>
+					<li class="top stock"><span class="picture"></span><span class="link"><%= link_to "Stock" , administration_user_stocks_path(current_user), :class => "link" %></span></li>
 					<ul class="subnav">
 						<li class="product subnav_element" ><span class="picture"></span><span class="link">Produits</span></li>
 						<li class="basket subnav_element"><span class="picture"></span><span class="link">Paniers</span></li>
