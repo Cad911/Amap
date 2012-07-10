@@ -91,10 +91,18 @@
 		<div class="l_wrapper">
 			<div class="side_navigation">
 				<ul class="pannels">
-					<li class="top stock"><span class="picture"></span><span class="link"><%= link_to "Stock" , administration_user_stocks_path(current_user), :class => "link" %></span></li>
+					<li class="top stock"> <%= link_to administration_user_stocks_path(current_user) do %> <span class="picture"></span><span class="link">Stock</span> <% end %></li>
 					<ul class="subnav">
-						<li class="product subnav_element" ><span class="picture"></span><span class="link">Produits</span></li>
-						<li class="basket subnav_element"><span class="picture"></span><span class="link">Paniers</span></li>
+						<li class="product subnav_element" > 
+							<%= link_to administration_user_produit_vente_libres_path(current_user) do %>
+								<span class="picture"></span><span class="link">Produits</span>
+							<% end %> 
+						</li>
+						<li class="basket subnav_element">
+							<%= link_to administration_user_paniers_path(current_user) do %>
+								<span class="picture"></span><span class="link">Paniers</span>
+							<% end %>
+						</li>
 					</ul>
 					<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
 					<li class="blog"><span class="picture"></span><span class="link">Blog</span></li>
