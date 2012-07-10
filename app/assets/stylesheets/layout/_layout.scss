@@ -9,9 +9,17 @@
 @import "layout/index.scss";
 @import "layout/footer.scss";
 @import "layout/header.scss";
+@import "layout/backoffice/layout.scss";
 
 // Squelette général du site
 body {
-  position:relative;
-  background:url("/../images/body_bg.png");
+	position:relative;
+	background:url("/../images/body_bg.png");
+	.l_wrapper {
+		width:960px;
+		margin:20px auto;			
+	}
+	.l_main_gutter {
+		padding:20px;
+	}
 }

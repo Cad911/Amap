@@ -8,6 +8,7 @@
   <%= stylesheet_link_tag    "scaffolds", :media => "all" %>
   <%= stylesheet_link_tag    "users", :media => "all" %>
   <%= stylesheet_link_tag    "produit_vente_libres", :media => "all" %>
+  <%= stylesheet_link_tag    "main", :media => "all" %>
 
 
 
@@ -37,7 +38,6 @@
 
 </head>
 <body>
-
 
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -78,17 +78,70 @@
 					</ul>
 				</div>
 				<% end %>
-				
-				
 			</div>
 		</div>
 	
 	</div>
 	
 	
-	<div class="container">
+
+
+
+	<div class="backoffice">
+		<div class="l_wrapper">
+			<div class="side_navigation">
+				<ul class="pannels">
+					<li class="top stock"><span class="picture"></span><span class="link">Stock</span></li>
+					<ul class="subnav">
+						<li class="product subnav_element" ><span class="picture"></span><span class="link">Produits</span></li>
+						<li class="basket subnav_element"><span class="picture"></span><span class="link">Paniers</span></li>
+					</ul>
+					<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
+					<li class="blog"><span class="picture"></span><span class="link">Blog</span></li>
+					<li class="farmer bottom"><span class="picture"></span><span class="link">Profil</span></li>
+				</ul>
+				
+			</div>
+			<div class="container l_main_gutter">
+				
+
+				<%= yield %>	
+				<ul>
+					<li class="card">
+						<div class="left_area">
+							<div class="is_small has_corners_shadow"></div>
+							<div class="picture first_cloumn"></div> 
+							<div class="picture"></div>
+							<div class="picture first_cloumn"></div>
+							<div class="picture"></div>
+						</div>
+						<div class="right_area">
+							<div class="header">
+								<h2 class="title">Lorem ipsum dolor et sit amet</h2>
+								<div class="buttons">
+
+								</div>
+							</div>
+							<p class="description">Lorem ipsum dolor et sit amet lorem ipsum dolor et sit ametlorem ipsum dolor et sit amet</p>
+							<div class="footer">
+								<ul>
+									<li class="details">
+										<span class="label">Prix</span>
+										<span class="value"> 5€</span>
+									</li>
+									<li class="details">
+										<span class="label">Mis en Rayon</span>
+										<span class="value"> 28 sur 45</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
 	
-		<%= yield %>
 	
 	</div>
 </body>
