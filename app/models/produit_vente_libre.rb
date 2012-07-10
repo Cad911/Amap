@@ -25,5 +25,14 @@ class ProduitVenteLibre < ActiveRecord::Base
   	  return quantite_total_online
   end
   
+  def lotPossibleMax
+  	quantite_stock = self.stock.quantite
+  	quantite_one_lot = self.quantite
+  	
+  	nb_lot_possible = (quantite_stock / quantite_one_lot).floor
+  	
+  	return nb_lot_possible
+  end
+  
   
 end

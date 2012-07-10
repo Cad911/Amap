@@ -6,7 +6,7 @@ class Stock < ActiveRecord::Base
   belongs_to :unite_mesure
   belongs_to :produit_autorise
   
-  has_many :produit_vente_libres
+  has_one :produit_vente_libre
   has_many :produit_paniers
   has_many :photo_stocks
   

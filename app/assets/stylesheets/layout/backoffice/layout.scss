@@ -170,6 +170,7 @@ body .backoffice {
 						//ELEMENT ACTIF QUAND ON EST DANS LA PAGE
 						&.subnav_product_active
 						{
+							background-image:none;
 							.link {
 								color:$red;									
 							}
@@ -179,6 +180,7 @@ body .backoffice {
 						}
 						&.subnav_basket_active
 						{
+							background-image:none;
 							.link {
 								color:$red;									
 							}

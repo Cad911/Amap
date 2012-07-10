@@ -25,13 +25,13 @@ $(document).ready( () ->
             	if $('.subnav').hasClass('subnav_isopen')
             		$('.subnav').animate({
             	        'marginTop':'-105px',
-            	        'opacity':0
+            	        'opacity':0,
             	    },1000)
             	    $('.subnav').removeClass('subnav_isopen')
             	else
             	    $('.subnav').animate({
             	        'marginTop':'0px',
-            	        'opacity':1
+            	        'opacity':1,
             	    },1000)
             	    $('.subnav').addClass('subnav_isopen')
             )
