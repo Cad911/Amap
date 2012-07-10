@@ -28,6 +28,33 @@
   }
 }
 
+//TOOLTIP
+.my_tooltip{
+	display: inline-block;
+	position: absolute;
+	opacity: 0.8;
+	z-index:1001;
+
+	.tooltip_body{
+		background: rgba(105,81,59,1);
+		border:1px solid white;
+		border-radius: 5px;
+		text-align: center;
+		padding: 5px 10px 5px;
+		color: white
+	}
+	.tooltip_fleche
+	{
+		margin: -6px auto 0;
+		width: 10px;
+		height: 10px;
+		background: rgba(105,81,59,1);
+		border-left:1px solid white;
+		border-bottom:1px solid white;
+		-moz-transform: rotate(-45deg);
+	}
+}
+
 // applique un style de inscrusté
 @mixin embossed($border-color) {
   @include borderradius(50px);

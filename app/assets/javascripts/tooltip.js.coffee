@@ -6,39 +6,40 @@ jQuery.fn.tool_tip = (parametres) ->
         else
             $(this).attr('title', 'titre')
         
-        offset = $(this).offset()
+        
         
         $(this).bind('mouseover', () ->
             #create tooltip
-            div_tooltip = $(document.createElement('div'))
-            div_tooltip.attr('id','tool_tip')
-            div_tooltip.css({
-                'background':'#78624e'
-                'padding':'5px'
-                'position':'absolute'
-                'display':'block'
-                'border': '2px solid white'
-                'border-radius':'10px'
-                'width':'150px'
-                'opacity':0.9
-                'text-align':'center'
-                'color':'white'
-            })
-            div_tooltip.text($(this).attr('title'))
+            my_tooltip = $(document.createElement('div'))
+            my_tooltip.addClass('my_tooltip')
             
-            position_left = offset.left - (parseInt(div_tooltip.css('width')) / 2)
-            position_top = offset.top - 40
-            div_tooltip.css({
+            tooltip_body = $(document.createElement('div'))
+            tooltip_body.addClass('tooltip_body')
+            
+            tooltip_fleche = $(document.createElement('div'))
+            tooltip_fleche.addClass('tooltip_fleche')
+            
+            my_tooltip.append(tooltip_body)
+            my_tooltip.append(tooltip_fleche)
+            
+            tooltip_body.text($(this).attr('title'))
+            $('body').append(my_tooltip)
+            
+            offset = $(this).offset()
+            console.log(my_tooltip.outerWidth(true))
+            position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + $(this).outerWidth() / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
+            position_top = offset.top - 90
+            my_tooltip.css({
                 'left':position_left
                 'top':position_top
             })
             
             
-            $('body').append(div_tooltip)
+            
         )
         
         $(this).bind('mouseout', () ->
-            $('#tool_tip').remove()
+            $('.my_tooltip').remove()
         )
         
         

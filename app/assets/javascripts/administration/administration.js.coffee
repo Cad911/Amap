@@ -36,5 +36,9 @@ $(document).ready( () ->
             	    $('.subnav').addClass('subnav_isopen')
             )
     menu.hover_action()
-
+    
+    listing_tooltip = 
+        listing:()->
+            $('.historique,.edit,.delete').tool_tip()
+    listing_tooltip.listing()
 )

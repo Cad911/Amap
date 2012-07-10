@@ -2,7 +2,7 @@
 (function() {
 
   $(document).ready(function() {
-    var menu;
+    var listing_tooltip, menu;
     menu = {
       hover_action: function() {
         $('.subnav').each(function() {
@@ -36,7 +36,13 @@
         });
       }
     };
-    return menu.hover_action();
+    menu.hover_action();
+    listing_tooltip = {
+      listing: function() {
+        return $('.historique,.edit,.delete').tool_tip();
+      }
+    };
+    return listing_tooltip.listing();
   });
 
 }).call(this);
