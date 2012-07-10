@@ -183,6 +183,7 @@ $backoffice-layout:smart;
 // Inclusion de fichier .scss
 @import "base/normalize";
 @import "compass/utilities";
+@import "compass/css3/transform";
 @import "base/base";
 @import "module/module";
 @import "layout/layout";
