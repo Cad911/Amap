@@ -39,7 +39,7 @@
     menu.hover_action();
     listing_tooltip = {
       listing: function() {
-        return $('.historique,.edit,.delete').tool_tip();
+        return $('.historique,.edit,.delete').tool_tip(1000);
       }
     };
     return listing_tooltip.listing();

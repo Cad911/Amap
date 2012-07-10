@@ -39,6 +39,6 @@ $(document).ready( () ->
     
     listing_tooltip = 
         listing:()->
-            $('.historique,.edit,.delete').tool_tip()
+            $('.historique,.edit,.delete').tool_tip(1000)
     listing_tooltip.listing()
 )
