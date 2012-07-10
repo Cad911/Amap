@@ -712,6 +712,8 @@ ul.dropdown_menu {
     }
   }
 }
+
+
 .fade {
   @include transition-property(all);
   @include transition-duration(0.3s);
@@ -721,10 +723,103 @@ ul.dropdown_menu {
   position:relative;
   z-index:1000;
 }
+
+
 .fade.in {
   margin-top:0px;
   opacity:1;  
 }
+
+
+// bouton archive, éditer, supprimer
+.buttons_card {
+  float:left;
+  width:120px;
+  opacity:0.7;
+  border-bottom: solid 1px #ebebeb;
+  margin:0;
+  padding-bottom:14px;
+  @include transition-property(all);
+  @include transition-duration(0.2s);
+  @include transition-timing-function(ease-out);          
+    .button {
+      width:30px;
+      height:30px;
+      display:block;
+      text-align:center;
+      float:left;
+      margin-left: 0 !important;
+      margin-right:10px;
+      @include embossed_button(#cacaca);
+      @include border-radius(5px);
+      background-image:none;
+      background-color:#F2F2F2;
+      text-align:center;
+      padding:0;
+      &:hover {
+        background-image:none;
+        background-color:#F7F7F7;
+      }
+      &:last-child {
+        margin:0;
+      }
+      span {
+        display:inline-block !important;
+        margin-top:6px;
+      }
+      &:active {
+        background:#E5E5E5;
+        @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
+      }
+    } 
+    .historique {
+      &:hover {
+        span {
+          @include ui-sprite(archive_hover);              
+        }
+      } 
+      span {
+        @include ui-sprite(archive);
+        display:block;
+        width:18px;
+        height:18px;            
+      }
+    }         
+    .delete {
+      @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+      background:$red;
+      border:#A44235 solid 1px;
+      &:hover {
+        background-color:lighten($red, 5%);
+        @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);            
+      }
+      &:active {
+        background-color:darken($red, 5%);   
+        @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);                
+      }
+      span {
+        @include ui-sprite(delete);
+        display:block;
+        width:18px;
+        height:18px;            
+      }
+    }         
+    .edit {
+      &:hover {
+        span {
+          @include ui-sprite(edit_hover);              
+        }
+      } 
+      span {
+        @include ui-sprite(edit);
+        display:block;
+        width:18px;
+        height:18px;            
+      }
+    }                
+}
+
+
 .card {
   min-height:190px;
   border:solid 1px #ffffff;
@@ -768,7 +863,6 @@ ul.dropdown_menu {
     height:100%;
     padding:20px;
     float: left;
-    height:46px;
     h2 {
       float:left;
       width:428px;
@@ -778,89 +872,7 @@ ul.dropdown_menu {
       font-size:30px;
       padding-bottom:10px;
       text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
-    }
-    .buttons {
-      float:left;
-      width:120px;
-      opacity:0.7;
-      border-bottom: solid 1px #ebebeb;
-      margin:0;
-      padding-bottom:14px;
-      @include transition-property(all);
-      @include transition-duration(0.2s);
-      @include transition-timing-function(ease-out);          
-        .button {
-          width:30px;
-          height:30px;
-          display:block;
-          text-align:center;
-          float:left;
-          margin-left: 0 !important;
-          margin-right:10px;
-          @include embossed_button(#cacaca);
-          @include border-radius(5px);
-          background-image:none;
-          background-color:#F2F2F2;
-          text-align:center;
-          padding:0;
-          &:hover {
-            background-image:none;
-            background-color:#F7F7F7;
-          }
-          &:last-child {
-            margin:0;
-          }
-          span {
-            display:inline-block !important;
-            margin-top:6px;
-          }
-          &:active {
-            background:#E5E5E5;
-            @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
-          }
-        } 
-        .historique {
-          &:hover {
-            span {
-              @include ui-sprite(archive_hover);              
-            }
-          } 
-          span {
-            @include ui-sprite(archive);
-            display:block;
-            width:18px;
-            height:18px;            
-          }
-        }         
-        .delete {
-          @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-          background:$red;
-          border:#A44235 solid 1px;
-          &:hover {
-            background-color:lighten($red, 5%);
-            @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);            
-          }
-          span {
-            @include ui-sprite(delete);
-            display:block;
-            width:18px;
-            height:18px;            
-          }
-        }         
-        .edit {
-          &:hover {
-            span {
-              @include ui-sprite(edit_hover);              
-            }
-          } 
-          span {
-            @include ui-sprite(edit);
-            display:block;
-            width:18px;
-            height:18px;            
-          }
-        }                
-    }
+    }       
     p {
       border-top: solid 1px #ffffff;
       font-size:16px;
@@ -879,9 +891,8 @@ ul.dropdown_menu {
       li.details {
         width: 250px;
         float:left;
-        &:first-child {
-          margin-right:20px;
-        }
+        margin-left:-5px;
+        padding:5px 20px 5px 5px;
         .label {
           background-color:transparent;
           color: $brown;
@@ -914,6 +925,8 @@ ul.dropdown_menu {
     top:-14px;
   }
 }
+
+
 .overall_shadow {
  // display:block;
   opacity:1;
@@ -928,4 +941,111 @@ ul.dropdown_menu {
   z-index:1040;
   @include transition-property(all);
   @include transition-duration(400ms);
+}
+
+
+.table {
+  @include embossed($embossed_dark);
+  @include borderradius(5px);
+  margin:0;
+  padding:0;
+  table {
+    border-collapse:separate;
+    width: 100%;    
+    @include border-radius(5px);    
+    tr {
+      &:hover {
+        td {
+          .buttons_card {
+            opacity: 1;
+          }
+        }
+      }
+      td {
+        color:$grey;
+      }
+      td.action {
+        height:20px !important;
+        vertical-align:middle;
+        .buttons_card {
+          float:none;
+        }
+      }
+      th, tr:first-child td {
+        color:$brown;
+        &:first-child {
+          -webkit-border-top-left-radius: 5px;
+          -moz-border-radius-topleft: 5px;
+          border-top-left-radius: 5px;
+        }
+        &:last-child {
+          -webkit-border-top-right-radius: 5px;
+          -moz-border-radius-topright: 5px;
+          border-top-right-radius: 5px;
+        }       
+      }
+      &:last-child {
+        td {
+          border-bottom:none;
+          &:first-child {
+            -webkit-border-bottom-left-radius: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-bottom-left-radius: 5px;
+          }
+          &:last-child {
+            -webkit-border-bottom-right-radius: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-bottom-right-radius: 5px;
+          }       
+        }
+      }     
+      td, th {
+        border-bottom: solid 1px #D7D0C4;
+        border-top: solid 1px white;    
+        vertical-align:middle;
+      }
+    }
+  }
+  .row {
+    margin:0;
+    .info_column, .first_column {
+      padding:15px;
+    }
+    ul {
+      padding:0;
+      margin:0;
+      padding-left:15px;
+      li {
+        list-style-image:url(/../images/circle.png);
+      }
+    }
+    td {
+      border-top:1px solid #ffffff;
+      border-top:1px solid rgba(255,255,255, 0.8);
+      border-bottom:1px solid $embossed_dark;
+      &:hover {
+        background-image:none;
+      }
+    }
+    &:first-child {
+      td, th {
+        border-top:none;              
+      }
+    }
+    &:last-child {
+      td, th {
+        border-bottom:none;             
+      }
+    }
+    .first_column {
+      background:url(/../images/bg_darkener.png);
+      width:200px;
+      border-right:solid 1px #ffffff;
+      font-family:Helveticaneue-bold;
+    }
+    .info_column {
+      width:308px;
+      border-left:1px solid $embossed_dark;
+    }
+  }
 }

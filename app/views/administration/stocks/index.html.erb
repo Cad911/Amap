@@ -35,6 +35,13 @@
         <td> <%= stock.quantiteProduitVente %> / <%= stock.quantite %> </td>
         <td><%= stock.description %></td>
         <!-- <td><%= stock.deleted %></td> -->
+        <td class="action">
+          <ul class="buttons_card">
+            <li class="historique button"><span class="picture"></span></li>
+            <li class="edit button"><span class="picture"></span></li>
+            <li class="delete button"><span class="picture"></span></li>
+          </ul>          
+        </td>
         <td><%= link_to 'Plus d\'info', administration_user_stock_path(params[:user_id],stock) %></td>
         <td><%= link_to 'Modifier', edit_administration_user_stock_path(params[:user_id],stock) %></td>
         <td><%= link_to 'Supprimer', administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete %></td>
