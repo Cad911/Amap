@@ -1,0 +1,2 @@
+module Administration::StatistiquesHelper
+end

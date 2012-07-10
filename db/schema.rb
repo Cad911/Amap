@@ -11,20 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521162354) do
+ActiveRecord::Schema.define(:version => 20120617172307) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
     t.integer  "panier_id"
     t.date     "date_debut"
     t.date     "date_fin"
-    t.date     "duree"
+    t.integer  "duree"
     t.integer  "deleted"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "session_id"
     t.string   "etat"
     t.integer  "quantite"
+    t.integer  "point_relai_id"
   end
 
   create_table "active_admin_comments", :force => true do |t|
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20120521162354) do
     t.integer  "quantite"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.integer  "user_id"
   end
 
   create_table "stocks", :force => true do |t|

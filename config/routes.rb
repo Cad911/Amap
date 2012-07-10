@@ -1,5 +1,9 @@
 ECommerce::Application.routes.draw do
  
+  #get "commandes/index"
+
+  #get "abonnements/index"
+
   resources :rel_commande_produits
 
   resources :commandes
@@ -107,12 +111,24 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       match '/stocks/:stock_id/update_image/:image_id' => 'stocks#update_image', :as => :stock_update_image, :via => :put
       match '/stocks/:stock_id/delete_image/:image_id' => 'stocks#delete_image', :as => :stock_delete_image, :via => :delete
       
-      
+      #__ PRODUIT VENTE LIBRE __________
       resources :produit_vente_libres
-      match 'exist_vente/:stock_id' => "produit_vente_libres#dejaEnVente", :as => :exist_vente, :via => :get #VERIF AJAX SI PRODUIT DEJA EN VENTE
+      match 'one_exist_vente/:stock_id' => "produit_vente_libres#oneDejaEnVente", :as => :exist_vente, :via => :get #VERIF AJAX SI PRODUIT DEJA EN VENTE
+      match 'all_exist_vente' => "produit_vente_libres#allDejaEnVente", :as => :exist_vente, :via => :get #VERIF AJAX SI PRODUIT DEJA EN VENTE
     
+      #__ POINT RELAI __________
       resources :point_relais
       match "mespointrelais" => "point_relais#indexForRevendeur", :as => :index_point_relais_for_revendeur, :via => :get
+      
+      #__ ABONNEMENT __________
+      match '/abonnements' => 'abonnements#index', :as => :abonnement_index, :via => :get
+      
+      #__ COMMANDES __________
+      match '/commandes' => 'commandes#index', :as => :commande_index, :via => :get
+      
+      #___ STATISTIQUES _________
+      match '/ca_by_month' => 'statistiques#CAProductSellThisMonth', :as => :ca_by_month, :via => :post
+      match '/ca_by_year' => 'statistiques#CAProductSellThisYear', :as => :ca_by_year, :via => :post
     end
   end
 	

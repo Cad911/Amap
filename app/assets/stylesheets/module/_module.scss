@@ -835,6 +835,7 @@ ul.dropdown_menu {
         .delete {
           @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
           background:$red;
+          border:#A44235 !important;
           span {
             @include ui-sprite(delete);
             display:block;

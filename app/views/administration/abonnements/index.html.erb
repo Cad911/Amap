@@ -1,0 +1,142 @@
+<h1>Administration::Abonnements#index</h1>
+<p>Find me in app/views/administration/abonnements/index.html.erb</p>
+
+
+
+
+<div class="page-header">
+   	<h1> Abonnement paye, souscrit</h1>
+</div>
+
+<% if @mes_abonnements_paye.count > 0 %>
+	<table class="table table-striped">
+	  <tr>
+	    <th>panier</th>
+	    <th>Client</th>
+	    <th>Duree</th>
+	    <th>Debut</th>
+	    <th>Fin</th>
+	  </tr>
+	
+	<% @mes_abonnements_paye.each do |abonnement| %>
+	  <tr>
+	  
+	    <td><%= abonnement.panier.titre %></td>
+	    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
+	    <td><%= abonnement.duree %> mois</td>
+	    <td><%= abonnement.date_debut %></td>
+	    <td><%= abonnement.date_fin %></td>
+	    
+	  </tr>
+	<% end %>
+	</table>
+<% else %>
+	<p> Aucun abonnement de souscrit </p>
+<% end %>
+
+<br />
+
+
+<!-- ABONNEMENT PAYE EN COURS -->
+<div class="page-header">
+   	<h1> Abonnement paye, en cours</h1>
+</div>
+
+<% if @mes_abonnements_encours.count > 0 %>
+	<table class="table table-striped">
+	  <tr>
+	    <th>panier</th>
+	    <th>Client</th>
+	    <th>Duree</th>
+	    <th>Debut</th>
+	    <th>Fin</th>
+	  </tr>
+	
+	<% @mes_abonnements_encours.each do |abonnement| %>
+	  <tr>
+	  
+	    <td><%= abonnement.panier.titre %></td>
+	    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
+	    <td><%= abonnement.duree %> mois</td>
+	    <td><%= abonnement.date_debut %></td>
+	    <td><%= abonnement.date_fin %></td>
+	    
+	  </tr>
+	<% end %>
+	</table>
+<% else %>
+	<p> Aucun abonnement en cours </p>
+<% end %>
+
+<br />
+
+
+
+<!-- ABONNEMENT PAYE TERMINE -->
+<div class="page-header">
+   	<h1> Abonnement paye, termine </h1>
+</div>
+
+<% if @mes_abonnements_termine.count > 0 %>
+	<table class="table table-striped">
+	  <tr>
+	    <th>panier</th>
+	    <th>Client</th>
+	    <th>Duree</th>
+	    <th>Debut</th>
+	    <th>Fin</th>
+	  </tr>
+	
+	<% @mes_abonnements_termine.each do |abonnement| %>
+	  <tr>
+	  
+	    <td><%= abonnement.panier.titre %></td>
+	    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
+	    <td><%= abonnement.duree %> mois</td>
+	    <td><%= abonnement.date_debut %></td>
+	    <td><%= abonnement.date_fin %></td>
+	    
+	  </tr>
+	<% end %>
+	</table>
+<% else %>
+	<p> Aucun abonnement de termine </p>
+<% end %>
+
+<br />
+
+
+
+
+<!-- ABONNEMENT ANNULE AVANT PAIEMENT -->
+<div class="page-header">
+   	<h1> Abonnement annule avant paiement </h1>
+</div>
+
+<% if @mes_abonnements_annule.count > 0 %>
+	<table class="table table-striped">
+	  <tr>
+	    <th>panier</th>
+	    <th>Client</th>
+	    <th>Duree</th>
+	    <th>Debut</th>
+	    <th>Fin</th>
+	  </tr>
+	
+	<% @mes_abonnements_annule.each do |abonnement| %>
+	  <tr>
+	  
+	    <td><%= abonnement.panier.titre %></td>
+	    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
+	    <td><%= abonnement.duree %> mois</td>
+	    <td><%= abonnement.date_debut %></td>
+	    <td><%= abonnement.date_fin %></td>
+	    
+	  </tr>
+	<% end %>
+	</table>
+<% else %>
+	<p> Aucun abonnement annule </p>
+<% end %>
+
+<br />

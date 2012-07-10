@@ -31,26 +31,48 @@
   };
 
   window.message_information = {
-    message_success: function(id, titre, message) {
-      var div_message;
-      div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-      return message_information.content_message(id, titre, message, div_message);
+    content_message: function(id, titre, message, time, type) {
+      var a, div, strong;
+      div = $(document.createElement('div'));
+      div.addClass('alert alert-' + type);
+      div.css('display', 'block');
+      a = $(document.createElement('a'));
+      a.addClass('close');
+      a.attr('data-dismiss', 'alert');
+      a.text('x');
+      div.append(a);
+      if (titre !== "") {
+        strong = $(document.createElement('strong'));
+        strong.text(titre);
+        div.append(strong);
+      }
+      if (message !== "") div.append(message);
+      $("" + id).after(div);
+      if (time !== 0) {
+        return setTimeout(message_information.hide_message, time, div);
+      }
     },
-    message_warning: function(id, titre, message) {
-      var div_message;
-      div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-      return message_information.content_message(id, titre, message, div_message);
+    hide_message: function(div) {
+      return div.animate({
+        opacity: 0
+      }, {
+        duration: 1000,
+        complete: function() {
+          return $(this).remove();
+        }
+      });
     },
-    message_error: function(id, titre, message) {
-      var div_message;
-      div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>';
-      return message_information.content_message(id, titre, message, div_message);
+    message_success: function(id, titre, message, time) {
+      if (time == null) time = 0;
+      return message_information.content_message(id, titre, message, time, 'success');
     },
-    content_message: function(id, titre, message, div_message) {
-      if (titre !== "") div_message += "<strong> " + titre + " </strong>";
-      if (message !== "") div_message += "" + message;
-      div_message += "</div>";
-      return $("" + id).after(div_message);
+    message_warning: function(id, titre, message, time) {
+      if (time == null) time = 0;
+      return message_information.content_message(id, titre, message, time, 'warning');
+    },
+    message_error: function(id, titre, message, time) {
+      if (time == null) time = 0;
+      return message_information.content_message(id, titre, message, time, 'error');
     }
   };
 

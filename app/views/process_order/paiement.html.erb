@@ -24,9 +24,14 @@
 					<td class="info_column">
 						<ul>
 							<li>
-								<% @mes_produit_commande.each do |produit_c| %>
-								<span> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </span>
-								<% end %>							
+								<% if !@mon_abonnement.nil? %>
+									<span> Abonnement : <%= @mon_abonnement.panier.titre %> </span>
+								<% else %>
+									<% @mes_produit_commande.each do |produit_c| %>
+										<span> <%= produit_c.nb_pack %><%= produit_c.produit_vente_libre.titre %> </span>
+									<% end %>	
+								<% end %>
+														
 							</li>
 						</ul>
 					</td>
@@ -34,7 +39,7 @@
 				<tr class="row">
 					<td class="first_column">Montant</td>
 					<td class="info_column">
-						<span><%= @ma_commande.total %></span>
+						<span><%= @ma_commande.total if !@ma_commande.nil? %> <%= @mon_abonnement.panier.prix_unite_ttc if !@mon_abonnement.nil? %></span>
 					</td>
 				</tr>
 			</table>
