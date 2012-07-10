@@ -131,13 +131,13 @@ body .backoffice {
 								width: 18px;
 								height: 26px;								
 							}
-							span.link {
+							.link {
 								position:relative;
 								top:-5px;
 								color:$brown;
 							}
 							&:hover {
-								span.link {
+								.link {
 									color:$red;									
 								}
 								span.picture {
@@ -153,13 +153,13 @@ body .backoffice {
 								width: 19px;
 								height: 16px;								
 							}
-							span.link {
+							.link {
 								position:relative;
 								top:-2px;
 								color:$brown;
 							}
 							&:hover {
-								span.link {
+								.link {
 									color:$red;									
 								}
 								span.picture {
