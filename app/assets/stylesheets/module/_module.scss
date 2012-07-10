@@ -829,7 +829,7 @@ ul.dropdown_menu {
   @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
   @include borderradius(5px); 
   &:hover {
-    .buttons {
+    .buttons_card {
       opacity: 1 !important;
     }
   }
