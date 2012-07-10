@@ -34,9 +34,6 @@
 	position: absolute;
 	z-index:1001;
   opacity:0.8;
-  @include transition-property(top);
-  @include transition-duration(400ms);
-  @include transition-timing-function(ease-out);  
 	.tooltip_body {
 		background: rgba(105,81,59, 1);
 		border:1px solid white;
