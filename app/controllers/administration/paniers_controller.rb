@@ -2,6 +2,7 @@ class Administration::PaniersController < InheritedResources::Base
 load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID	
 	#_______ INDEX _________
 	def index
+	    @admin_basket = true
 		@panier = Panier.where(:revendeur_id => params[:user_id])
 		authorize! :update, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
 	end

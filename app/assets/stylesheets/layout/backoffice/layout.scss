@@ -167,6 +167,26 @@ body .backoffice {
 								}
 							}
 						}
+						//ELEMENT ACTIF QUAND ON EST DANS LA PAGE
+						&.subnav_product_active
+						{
+							.link {
+								color:$red;									
+							}
+							span.picture {
+								@include backoffice-sprite(product_hover);
+							}
+						}
+						&.subnav_basket_active
+						{
+							.link {
+								color:$red;									
+							}
+							span.picture {
+								@include backoffice-sprite(basket_hover);
+							}
+						}
+						//BY GG
 					}
 				}
 			}

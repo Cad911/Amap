@@ -1,6 +1,6 @@
 class Administration::ProduitVenteLibresController < InheritedResources::Base
   load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-
+  
   #_________________________________________________________________
   #_________________________________________________________________
   #_________________________________________________________________
@@ -9,6 +9,9 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   #_________________________________________________________________
   #_________________________________________________________________
   def index
+    #TO DEFINE THE PAGE WHERE I AM
+    @admin_produit = true
+    
   	@produit_vente_libres = ProduitVenteLibre.where(:user_id => params[:user_id])
   	authorize! :update, User.find(params[:user_id])
   end
