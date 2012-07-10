@@ -1,4 +1,19 @@
 <div class="page-header">
+   	<h1> Statistiques </h1>
+   	<input type="hidden" name="id_user_stats" id="id_user_stats" value="<%= current_user.id %>"/>
+</div>
+
+<div id="statistiques" style="background: none repeat scroll 0 0 #F6F1EA;">
+	<div id="camembert" >
+	</div>
+	<div id="graph">
+	</div>
+</div>
+
+
+
+
+<div class="page-header">
    	<h1> Liste de mes produits en vente </h1>
 </div>
 
@@ -31,7 +46,7 @@
     <td><%= produit_vente_libre.alaune %></td>
     <td><%= produit_vente_libre.deleted %></td>
     <td><%= link_to 'Plus d\'info', administration_user_produit_vente_libre_path(params[:user_id],produit_vente_libre) %></td>
-    <td><%= link_to 'Modifier', edit_administration_user_produit_vente_libre_path(params[:user_id],produit_vente_libre) %></td>
+    <td><%= link_to 'Modifier', edit_administration_user_produit_vente_libre_path(params[:user_id],produit_vente_libre), :id => "produit_vente_libre_#{produit_vente_libre.id}", :class => "modifier_product", :remote => true, "data-toggle" =>"modal" %></td>
     <td><%= link_to 'Supprimer', administration_user_produit_vente_libre_path(params[:user_id],produit_vente_libre), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
@@ -39,7 +54,7 @@
 
 <br />
 
-<%= link_to 'Nouveau Produit vente libre', new_administration_user_produit_vente_libre_path(params[:user_id]), :remote => true,"data-toggle" =>"modal", :class => "button-add btn btn-primary" %>
+<%= link_to 'Nouveau Produit vente libre', new_administration_user_produit_vente_libre_path(params[:user_id]), :remote => true,"data-toggle" =>"modal", :class => "button-add btn btn-primary", :id => "user_#{params[:user_id]}" %>
 
 
 <div class="modal" id="light_box">

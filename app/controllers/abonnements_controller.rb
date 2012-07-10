@@ -105,7 +105,9 @@ class AbonnementsController < InheritedResources::Base
 		  	end
 	  		
 	  		if @isnt_yours == false
-		  		@abonnement.duree == params[:duree]
+		  		@abonnement.duree = params[:duree].to_i #EN MOIS
+  		
+  		        @abonnement.date_fin = (@abonnement.date_debut).months_since(params[:duree].to_i)
 		  		if @abonnement.save
 		  			flash[:notice] = "Duree panier/abonnmement updater"
 		  			#redirect_to process_order_resume_path
@@ -122,6 +124,9 @@ class AbonnementsController < InheritedResources::Base
   		flash[:notice] = "Abonnement n'existe pas"
   		#redirect_to process_order_resume_path
       end
+      render :json =>{
+	      :message => flash[:notice]
+      }
   end
   #_________________________________________________ AJOUT QUANTITE ___________________________________________________
   def ajouterQuantite
@@ -234,18 +239,22 @@ class AbonnementsController < InheritedResources::Base
 	  		@abonnement.etat = 'annule'
 	  		if @abonnement.save
 	  			flash[:notice] = "Abonnement supprimer"
-	  			redirect_to process_order_resume_path
+	  			#redirect_to process_order_resume_path
 	  		else
 	  			flash[:notice] = "ERREUR"
-	  			redirect_to process_order_resume_path
+	  			#redirect_to process_order_resume_path
 	  		end
 	  	else
 	  		redirect_to process_order_resume_path
 	  	end
   	else
   		flash[:notice] = "Abonnement n'existe pas"
-  		redirect_to process_order_resume_path
+  		#redirect_to process_order_resume_path
   	end
+  	
+  	render :json => {
+	  	:message => flash[:notice]
+  	}
   end
   
   

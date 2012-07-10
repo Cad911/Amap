@@ -22,19 +22,46 @@
             element.after('<span class="help-inline">'+message+'</span>')
     #____________________________________________ FUNCTION POUR AFFICHAGE DES MESSAGE D'INFORMATION ________________________
     window.message_information =
-      message_success: (id,titre,message) ->
-        div_message = '<div class="alert alert-success" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
-        message_information.content_message(id,titre,message,div_message)
-      message_warning: (id,titre,message) ->
-        div_message = '<div class="alert alert-warning" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
-        message_information.content_message(id,titre,message,div_message)
-      message_error: (id,titre,message) ->
-        div_message = '<div class="alert alert-error" style="display:block;"><a class="close" data-dismiss="alert">x</a>'
-        message_information.content_message(id,titre,message,div_message)
-      content_message: (id,titre,message,div_message) ->
-        if titre != ""
-           div_message += "<strong> #{titre} </strong>"
-        if message != ""
-          div_message += "#{message}"
-        div_message += "</div>"  
-        $("#{id}").after(div_message)
+      content_message : (id,titre,message,time,class_to_add,type) ->
+          #console.log(id)
+          div = $(document.createElement('div'))
+          div.addClass('alert alert-'+type)
+          if class_to_add != false
+              div.addClass(class_to_add)
+          div.css('display','block')
+          
+          a = $(document.createElement('a'))
+          a.addClass('close')
+          a.attr('data-dismiss','alert')
+          a.text('x')
+          
+          div.append(a)
+          
+          if titre != ""
+              strong = $(document.createElement('strong'))
+              strong.text(titre)
+              div.append(strong)
+          if message != ""
+              div.append(message)
+          console.log(div)
+          $("#{id}").after(div)
+          
+          #__ TEMPS DEFINI POUR DISPARITION DU MESSAGE DINFO
+          if time != 0
+              setTimeout(message_information.hide_message,time, div)
+              
+      hide_message: (div) ->
+          div.animate({
+              opacity:0    
+          },{
+              duration:1000,
+              complete: () ->
+                  $(this).remove()
+          })
+                
+      message_success: (id,titre,message,time = 0, class_to_add = false) ->
+        message_information.content_message(id,titre,message, time, class_to_add, 'success')
+      message_warning: (id,titre,message,time = 0, class_to_add = false) ->
+        message_information.content_message(id,titre,message, time, class_to_add, 'warning')
+      message_error: (id,titre,message,time = 0, class_to_add = false) ->
+        message_information.content_message(id,titre,message, time, class_to_add, 'error')

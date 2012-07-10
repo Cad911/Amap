@@ -1,7 +1,13 @@
 class Administration::ProduitVenteLibresController < InheritedResources::Base
   load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
 
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   #________________ INDEX ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   def index
   	@produit_vente_libres = ProduitVenteLibre.where(:user_id => params[:user_id])
   	authorize! :update, User.find(params[:user_id])
@@ -9,14 +15,37 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   #_________________________________________________________________
   
   
-  #__________________ SHOW ________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #________________ SHOW ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   def show
   	@produit_vente_libre = ProduitVenteLibre.find(params[:id])
+  	@stock = Stock.find(@produit_vente_libre.stock.id)
+  	@unite_mesure = UniteMesure.find(@stock.unite_mesure.id)
+  	respond_to do |format|
+  		format.json { render :json => {
+  						:produit_vente_libre => @produit_vente_libre,
+  						:stock => @stock,
+  						:unite_mesure => @unite_mesure
+  					} 	
+  		}
+  		format.html { render :show }
+  	end
   end
   #_________________________________________________________________
   
   
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   #________________ NEW ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   def new
     @produit_vente_libre = ProduitVenteLibre.new
     respond_to do |format|
@@ -27,9 +56,28 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   end
   #_________________________________________________________________
   
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #________________ EDIT ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  def edit
+  @produit_vente_libre = ProduitVenteLibre.find(params[:id])
+  respond_to do |format|
+  		format.js { render "edit_ajax", :layout => false }
+  		format.html { render :new }
+  	end
+  end
   
-  
-  #_________________ CREATE _________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #________________ CREATE ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
   def create
 	  @produit_vente_libre = ProduitVenteLibre.new(params[:produit_vente_libre])
 	  @stock_produit = Stock.find(params[:produit_vente_libre][:stock_id])
@@ -57,8 +105,14 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   
   
   
-  #_______________________ DEJA EN VENTE FOR JS _______________________________________
-  def dejaEnVente
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #________________ ONE PRODUCT DEJA EN VENTE ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  def oneDejaEnVente
   	existe_deja = true
   	produit_vente = ProduitVenteLibre.where("stock_id = ? AND user_id = ?",params[:stock_id], params[:user_id])
   	
@@ -73,6 +127,50 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   		format.html { render :show }
   	end
   end
+  
+   #_________________________________________________________________
   #_________________________________________________________________
+  #_________________________________________________________________
+  #________________ ALL PRODUCT DEJA EN VENTE BY USER ____________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________
+  #_________________________________________________________________ 
+  def allDejaEnVente
+  	all_deja_vente = true
+  	stock_id = 0
+  	
+  	stock_user = Stock.where("user_id = ?", params[:user_id])
+  	produit_vente = ProduitVenteLibre.where("user_id = ?", params[:user_id])
+  	
+  	stock_user.each do |stock_u|
+  	    deja_vente = false
+  		
+  		produit_vente.each do |produit_u|
+  			if stock_u.id == produit_u.stock_id
+  			    deja_vente = true
+  			else
+  			    stock_id = stock_u.id
+  			end
+  		end
+  		
+  		if deja_vente == false
+  		    #ARRETER LA BOUCLE POUR DIRE QUE C'EST OK
+  		    all_deja_vente = false
+  		    break
+  		end
+  	end
+  	
+  	respond_to do |format|
+  		format.json { render :json => {
+	  		:all_deja_vente => all_deja_vente,
+	  		:stock_id => stock_id	
+  		}}
+  		format.html { render :show }
+  	end
+  end
+  #_________________________________________________________________
+  
+  
+
     
 end

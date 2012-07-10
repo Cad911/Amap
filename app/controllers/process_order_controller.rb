@@ -16,6 +16,7 @@ class ProcessOrderController < ApplicationController
   	if @abonnement_exist.count > 0
   		@titre = "Resume abonnement"
   		@abonnement_panier = Abonnement.find(@abonnement_exist[0].id)
+  		@total = @abonnement_panier.panier.prix_unite_ttc
   	#__ SI ABONNEMENT EXISTE PAS
   	else
   		@titre = "Resume cageot"
@@ -83,13 +84,14 @@ class ProcessOrderController < ApplicationController
   			#____ SI PRODUIT DANS PANIER ____
   			if @rel_cageot.count > 0
   			    @has_cageot_or_abo = true
-  				@point_relais = PointRelai.all #__ ACHANGER PEUT ETRE
+  				#@point_relais = PointRelai.all #__ ACHANGER PEUT ETRE
   			end
   		end
   	end
 	
 	#__ SI ABONNEMENT OU CAGEOT__
 	if @has_cageot_or_abo
+	   @point_relais = PointRelai.all #__ ACHANGER PEUT ETRE
 	   render :confirmation
 	else
 	   flash[:notice] = "Votre panier est vide"
@@ -143,6 +145,7 @@ class ProcessOrderController < ApplicationController
   					@rel_commande_produit.prix_unite_ttc = product.produit_vente_libre.prix_unite_ttc
   					@rel_commande_produit.nb_pack = product.nombre_pack
   					@rel_commande_produit.quantite = product.produit_vente_libre.quantite
+  					@rel_commande_produit.quantite = product.produit_vente_libre.stock.user.id
   					@rel_commande_produit.save
   			end
   		
@@ -166,8 +169,12 @@ class ProcessOrderController < ApplicationController
   		
   		#____________________________ SI ABONNEMENT __________________________________________________
   		@abonnement_encours = Abonnement.where("client_id = ? AND etat = 'en_cours'", current_client.id)
-  		if @abonnement_encours.count >0
-  		
+  		if @abonnement_encours.count > 0
+  		    @mon_abonnement = Abonnement.find(@abonnement_encours[0].id)
+  		    @mon_abonnement.point_relai_id = params[:point_relai][:id]
+  		    @mon_abonnement.save()
+  		else
+  		   @mon_abonnement = nil
   		end
   		redirect_to process_order_paiement_path
   	else
@@ -179,6 +186,8 @@ class ProcessOrderController < ApplicationController
   #________________________________ PAGE PAIEMENT _____________________________________
   def paiement
   	@commande_apayer = Commande.where("client_id = ? AND etat = 'en_cours'", current_client.id)
+  	@abonnement_apayer = Abonnement.where("client_id = ? AND etat = 'en_cours'", current_client.id)
+  	@mon_abonnement = nil
   	#___ SI COMMANDE
   	if @commande_apayer.count > 0
   		@ma_commande = Commande.find(@commande_apayer[0].id)
@@ -196,20 +205,26 @@ class ProcessOrderController < ApplicationController
   			produit_commande.prix_unite_ht = @produit_vente_libre.prix_unite_ht
   			produit_commande.prix_unite_ttc = @produit_vente_libre.prix_unite_ttc
   			produit_commande.quantite = @produit_vente_libre.quantite
+  			produit_commande.user_id = @produit_vente_libre.user_id
+  			produit_commande.save
   		end
   		@mes_produit_commande = RelCommandeProduit.where('commande_id = ?', @ma_commande)
   		@mon_point_relai = PointRelai.find(@ma_commande.point_relai.id)
-  		
+  	elsif @abonnement_apayer.count > 0
+  		@mon_abonnement = Abonnement.find(@abonnement_apayer[0].id)
+  		@mon_point_relai = PointRelai.find(@mon_abonnement.point_relai_id)
   	else
   		flash[:notice] = "Vous navez rien a payer"
   		redirect_to process_order_resume_path
   	end
-    @mon_point_relai = PointRelai.find(@ma_commande.point_relai_id)
+    
   end
   
   #______________________ ACTION DE PAYER LA COMMANDE ______________________________________________
   def payerCommande
   	@commande_apayer = Commande.where("client_id = ? AND etat = 'en_cours'", current_client.id)
+  	@abonnement_apayer = Abonnement.where("client_id = ? AND etat = 'en_cours'", current_client.id)
+  	@mon_abonnement = nil
   	if @commande_apayer.count > 0
   		#__UPDATE COMMANDE
   		@ma_commande_payer = Commande.find(@commande_apayer[0].id)
@@ -220,6 +235,11 @@ class ProcessOrderController < ApplicationController
   		@cageot_valide.etat = "confirme"
   		@cageot_valide.save()
   		@produit_de_commande = RelCommandeProduit.where('commande_id = ?', @ma_commande_payer.id)
+  		render "end_process"
+  	elsif @abonnement_apayer.count > 0
+  		@mon_abonnement = Abonnement.find(@abonnement_apayer[0].id)
+  		@mon_abonnement.etat = 'paye'
+  		@mon_abonnement.save()
   		render "end_process"
   	else
   		flash[:notice] = "Une erreur est survenue, veuillez recommencer "

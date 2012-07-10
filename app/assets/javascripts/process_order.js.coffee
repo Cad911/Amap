@@ -11,20 +11,91 @@ $(document).ready(->
         event: () ->
             #___ SI EVENT POUR PANIER ___
             if $('.raw_panier').length > 0
-	            $('.price>div.close_square').bind('click',->
+	            $('.price>div.close_square').bind('click', () ->
 	                abonnement_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')
-	                event_resume_p.delete_quantity(abonnement_id)
+	                event_panier_resume.delete_panier(abonnement_id)
 	            )
 	          
-	            $('.quantity>span.plus').bind('click', ->
+	            $('.quantity>span.plus').bind('click', () ->
 	                abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
-	                event_panier_resume.change_duree(abonnement_id)
+	                duree = event_panier_resume.next_value()
+	                event_panier_resume.change_duree(abonnement_id,duree)
+	                event_panier_resume.change_duree_html(duree,'plus')
 	            )
-        change_duree: (abonnement_id) ->
-        
+	            
+	            $('.quantity>span.minus').bind('click', () ->
+	                abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_','')) 
+	                duree = event_panier_resume.prev_value()
+	                event_panier_resume.change_duree(abonnement_id,duree)
+	                event_panier_resume.change_duree_html(duree,'minus')
+	            )
+        next_value: () ->
+            if $("select#panier_duree option:selected").next().val() != undefined
+	            $("select#panier_duree option:selected").next().attr('selected','selected')
+            else
+	            $('select#panier_duree option').first().attr('selected','selected')
+            $("select#panier_duree option:selected").val()
+        prev_value: () ->
+	        if $("select#panier_duree option:selected").prev().val() != undefined
+	            $("select#panier_duree option:selected").prev().attr('selected','selected')
+            else
+	            $('select#panier_duree option').last().attr('selected','selected')
+            $("select#panier_duree option:selected").val()
+        change_duree_html: (la_duree, direction) ->  
+            if direction == 'plus'
+                first_top = '-500px'
+                second_top = '500px'
+            
+            if direction == 'minus'
+                first_top = '500px'
+                second_top = '-500px'
+            $('.quantity>.sum').animate({
+                    top: first_top
+                },{
+                    duration: 500,
+                    complete: () ->
+                        $(this).css('top',second_top)
+                        $(this).text(la_duree)
+                        $(this).animate({
+                            top: '-8px'
+                        }, 500)
+                }
+            )
+        change_duree: (abonnement_id, la_duree) ->
+            data_ = 
+            	id_abonnement: abonnement_id
+            	duree : la_duree
+            
+            $.ajax(
+               type:"POST",
+               url:'/abonnements/changeDuree',
+               format:"json",
+               data: data_
+               success : (data) ->
+                   #console.log(data)
+                   message_information.message_success(".products","Success",data.message,2000)
+            ) 
+        hide_raw: (abonnement_id) -> 
+             $('#raw_'+abonnement_id).animate({
+                 marginLeft: '-1000px'
+             },{
+                 duration: 500,
+                 complete: () ->
+                    $(this).remove()
+                    $('.products').append('<p> Aucun Abonnement </p>')
+             })  
         delete_panier: (abonnement_id) ->
+            $.ajax(
+               type:"GET",
+               url:'/abonnements/suppAbonnement/'+abonnement_id,
+               format:"json",
+               success : (data) ->
+                   #console.log(data)
+                   event_panier_resume.hide_raw(abonnement_id)
+                   message_information.message_success(".products","Success",data.message,2000)
+            )
   
-  
+    event_panier_resume.event()
   
   #____________________________________________ FUNCTION POUR AFFICHAGE DES MESSAGE D'INFORMATION ________________________
  #  message_information =

@@ -13,7 +13,11 @@
 	<p id="notice"><%= notice %></p>
 	<div class="labels">
 			<span class="label_description">Description</span>
-			<span class="label_quantity">Quantité</span>
+			<% if !@abonnement_panier.nil? %>
+			    <span class="label_quantity">Durée</span>
+			<% else %>
+			    <span class="label_quantity">Quantité</span>
+			<% end %>
 			<span class="label_price">Prix</span>	
 			<br class="clear">		
 		</div>
@@ -33,8 +37,16 @@
 						</div>
 						<div class="quantity">
 							<span class="minus"></span>
-							<span class="sum"><%= @abonnement_panier.quantite %></span>
+							<span class="sum"><%= @abonnement_panier.duree %></span>
 							<span class="plus"></span>
+							<p style="display:block;position:absolute;top:-60px;left:0;"> 
+				        	    <select name="panier[duree]" id="panier_duree" class="select optional">
+				        	    <% (1..12).each do |i| %>
+				        	    	<option value="<%= i %>" <% if i == @abonnement_panier.duree%> selected = "selected" <% end %>><%= i %></option>
+				        	    <% end %>
+								</select>
+			        	    </p>
+
 						</div>						
 						<div class="price">
 							<span class="sum"> <%= @abonnement_panier.panier.prix_unite_ttc %> €</span>
@@ -43,7 +55,13 @@
 					</div>
 				</div>
 			</li>			
-			</ul>	
+			</ul>
+			<div class="footer">
+					<div class="total">
+						<p>Total &nbsp;<%= @total %> €</p>
+					</div>
+					<span class="button next_step"><%= link_to "Etape suivante", process_order_confirmation_path %></span>
+			</div>	
 					 
 				
 	<% elsif !@listing_produit.nil? %>
@@ -86,9 +104,9 @@
 					<span class="button next_step"><%= link_to "Etape suivante", process_order_confirmation_path %></span>
 				</div>
 
-				<% else %>
+	<% else %>
 					<p> Aucun produit</p>
-				<% end %>
+	<% end %>
 
 			</div>
 		

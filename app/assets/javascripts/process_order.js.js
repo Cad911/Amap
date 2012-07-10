@@ -11,16 +11,79 @@
             abonnement_id = ($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_', '');
             return event_resume_p.delete_quantity(abonnement_id);
           });
-          return $('.quantity>span.plus').bind('click', function() {
-            var abonnement_id;
+          $('.quantity>span.plus').bind('click', function() {
+            var abonnement_id, duree;
             abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_', ''));
-            return event_panier_resume.change_duree(abonnement_id);
+            duree = event_panier_resume.next_value();
+            event_panier_resume.change_duree(abonnement_id, duree);
+            return event_panier_resume.change_duree_html(duree, 'plus');
+          });
+          return $('.quantity>span.minus').bind('click', function() {
+            var abonnement_id, duree;
+            abonnement_id = parseInt(($(this).parent('div').parent('div').parent('div').attr('id')).replace('raw_', ''));
+            duree = event_panier_resume.prev_value();
+            event_panier_resume.change_duree(abonnement_id, duree);
+            return event_panier_resume.change_duree_html(duree, 'minus');
           });
         }
       },
-      change_duree: function(abonnement_id) {},
-      delete_panier: function(abonnement_id) {}
+      next_value: function() {
+        if ($("select#panier_duree option:selected").next().val() !== void 0) {
+          $("select#panier_duree option:selected").next().attr('selected', 'selected');
+        } else {
+          $('select#panier_duree option').first().attr('selected', 'selected');
+        }
+        return $("select#panier_duree option:selected").val();
+      },
+      prev_value: function() {
+        if ($("select#panier_duree option:selected").prev().val() !== void 0) {
+          $("select#panier_duree option:selected").prev().attr('selected', 'selected');
+        } else {
+          $('select#panier_duree option').last().attr('selected', 'selected');
+        }
+        return $("select#panier_duree option:selected").val();
+      },
+      change_duree_html: function(la_duree, direction) {
+        var first_top, second_top;
+        if (direction === 'plus') {
+          first_top = '-500px';
+          second_top = '500px';
+        }
+        if (direction === 'minus') {
+          first_top = '500px';
+          second_top = '-500px';
+        }
+        return $('.quantity>.sum').animate({
+          top: first_top
+        }, {
+          duration: 500,
+          complete: function() {
+            $(this).css('top', second_top);
+            $(this).text(la_duree);
+            return $(this).animate({
+              top: '-8px'
+            }, 500);
+          }
+        });
+      },
+      change_duree: function(abonnement_id, la_duree) {
+        var data_;
+        data_ = {
+          id_abonnement: abonnement_id,
+          duree: la_duree
+        };
+        return $.ajax({
+          type: "POST",
+          url: '/abonnements/changeDuree',
+          format: "json",
+          data: data_,
+          success: function(data) {
+            return message_information.message_success(".products", "Success", data.message, 2000);
+          }
+        });
+      }
     };
+    event_panier_resume.event();
     form_se_connecter = {
       display: function() {
         return $('#l_se_connecter').fadeIn(1000);
