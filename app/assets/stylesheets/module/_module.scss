@@ -763,7 +763,6 @@ ul.dropdown_menu {
   float:left;
   width:120px;
   opacity:0.7;
-  border-bottom: solid 1px #ebebeb;
   margin:0;
   padding-bottom:14px;
   @include transition-property(all);
@@ -855,6 +854,7 @@ ul.dropdown_menu {
   background-repeat:repeat-y;
   @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
   @include borderradius(5px); 
+  margin-bottom:20px;
   &:hover {
     .buttons_card {
       opacity: 1 !important;
@@ -886,45 +886,70 @@ ul.dropdown_menu {
     }
   }
   .right_area {
-    width:548px;
+    width:568px;
     height:100%;
-    padding:20px;
+    padding:20px 20px 20px 0;
     float: left;
-    h2 {
-      float:left;
-      width:428px;
-      margin:0;
-      padding:0;
+    .header {
+      margin-left:20px;
       border-bottom: solid 1px #ebebeb;
-      font-size:30px;
-      padding-bottom:10px;
-      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
-    }       
-    p {
-      border-top: solid 1px #ffffff;
-      font-size:16px;
-      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+      h2 {
+        float:left;
+        width:406px;
+        margin:0;
+        padding:0;
+        font-size:30px;
+        padding:5px 0px 0px 10px;
+        margin:0px 20px 5px -10px;
+        text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+      }       
     }
   }
-  .description {
-    clear:both;
-    margin-top:0;
-    padding-top:20px;
+  .body {
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ebebeb;    
+    margin-left:20px;
+    .description {
+      font-size:16px;
+      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+      clear:both;
+      margin:5px 0 10px -10px;
+      padding:10px 0 5px 10px;
+    }
+  }
+  .description, h2, ul li.details {
+    border:#fcfcfc solid 1px;
+    @include transition-property(all);
+    @include transition-duration(0.3s);
+    @include transition-timing-function(ease-out);         
+    &:hover {
+      background-color:lighten(#E9D986, 20%);
+      border:solid 1px lighten(#E9D986, 1%);
+      cursor:pointer;
+    }
+    &:active {
+      background-color:lighten(#E9D986, 10%);
+    }      
   }
   .footer {
+    margin:0px 0 0 20px;
+    padding:10px 0 0 0;
+    border-top: solid 1px #ffffff;    
     ul {
       padding: 0;
       margin: 0;
       li.details {
-        width: 250px;
+        width: 252px;
         float:left;
-        margin-left:-5px;
-        padding:5px 20px 5px 5px;
+        margin-left:-10px;
+        padding:5px 5px 5px 10px;
+        margin-right:15px;      
         .label {
           background-color:transparent;
           color: $brown;
           font-family:'helveticaneue-bold';
           font-size:14px;
+          padding:0;
           text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
         }
         .value {

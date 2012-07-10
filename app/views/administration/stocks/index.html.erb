@@ -75,20 +75,23 @@
 				<div class="header">
 					<h2 class="title"><%= stock.titre %></h2>
 					<ul class="buttons_card">
-				        <%= link_to administration_user_stock_path(params[:user_id],stock) do %>
-			            	<li class="historique button" title="historique"><span class="picture"></span></li>
-			            <% end %>
+		        <%= link_to administration_user_stock_path(params[:user_id],stock) do %>
+	            	<li class="historique button" title="historique"><span class="picture"></span></li>
+	            <% end %>
 
-				        <%= link_to edit_administration_user_stock_path(params[:user_id],stock) do %> 
-			              <li class="edit button" title="modifier"><span class="picture"></span></li>
-			            <% end %> 
-			            
-			            <%= link_to administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete do %>
-			            	<li class="delete button" title="supprimer"><span class="picture"></span></li>
-			            <% end %>
+		        <%= link_to edit_administration_user_stock_path(params[:user_id],stock) do %> 
+	              <li class="edit button" title="modifier"><span class="picture"></span></li>
+	            <% end %> 
+	            
+	            <%= link_to administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete do %>
+	            	<li class="delete button" title="supprimer"><span class="picture"></span></li>
+	            <% end %>
 					</ul>
+          <div class="clear"></div>
 				</div>
-				<p class="description"><%= stock.description %></p>
+        <div class="body">
+				  <p class="description"><%= stock.description %></p>          
+        </div>
 				<div class="footer">
 					<ul>
 						<li class="details">
@@ -136,10 +139,11 @@
 							<span class="label">Stock total:</span>
 							<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic">(<%= stock.unite_mesure.nom %>)</span></span>
 						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="clear"></div>
+			     <div class="clear"></div>
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
 		</li>
 	<% end %>
 </ul>
