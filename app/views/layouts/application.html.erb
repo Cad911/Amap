@@ -95,7 +95,7 @@
 				<ul class="pannels">
 					<li class="top stock"> <span class="picture"></span><span class="link">Stock</span> </li>
 					<ul class="subnav <%= 'subnav_isopen' if @admin_produit || @admin_basket %>">
-						<%= link_to administration_user_produit_vente_libres_path(current_user) do %>
+						<%= link_to administration_user_stocks_path(current_user) do %>
 							<li class="product subnav_element <%= 'subnav_product_active' if @admin_produit %>" > 
 								<span class="picture"></span><span class="link">Produits</span>
 							</li>
@@ -108,11 +108,17 @@
 					</ul>
 					<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
 					<li class="blog"><span class="picture"></span><span class="link">Blog</span></li>
+					<%= link_to administration_user_path(current_user) do %>
 					<li class="farmer bottom"><span class="picture"></span><span class="link">Profil</span></li>
+					<% end %>
 				</ul>
 				
 			</div>
+<<<<<<< HEAD
 	<% end %>
+=======
+			<% end %>
+>>>>>>> 7918577ec46800da6094be6288b912de8b25efd6
 			<div class="container l_main_gutter">
 				
 
@@ -167,34 +173,7 @@
 				</ul>
 -->
 					
-<!-- 
-					<div class="basket_of_fiches">
-						<div class="card fade in one">
-							<div class="left_area">
-							</div>
-							<div class="right_area">
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<div class="basket_of_fiches">
-						<div class="card fade in two">
-							<div class="left_area">
-							</div>
-							<div class="right_area">
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<div class="basket_of_fiches">
-						<div class="card fade in three">
-							<div class="left_area">
-							</div>
-							<div class="right_area">
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>		 -->	
+	
 
 			<!--
 		<div class="my_tooltip">

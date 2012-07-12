@@ -29,103 +29,101 @@
 		}
 	}
 	// Liste
-.raw_select{
-	.l_photo_description {
-				.image {
-					.radio{
-						background-position:0px -26px;
-					}					
-				}
+	.raw_select{
+		.l_photo_description {
+			.image {
+				.radio{
+					background-position:0px -26px;
+				}					
+			}
+		}
 	}
-
-
-}
-.raw {
-			.l_photo_description {
-				.image {
-					margin:20px 20px 20px 0;	
-					width:65px;						
-				}
-				.content {
-					width:440px;
-					float:left;		
-					height:89px;
-					padding:20px 20px 0px 0;
-					border-right:solid 1px $embossed_dark;
-					.title {
-						@include title(2,16px);
-						padding:0;
-						margin:0;
-						span {
-							margin-left:10px;
-						}
-					}					
-					.descritpion {
-						margin-top:4px;
+	.raw {
+		.l_photo_description {
+			.image {
+				margin:20px 20px 20px 0;	
+				width:65px;						
+			}
+			.content {
+				width:440px;
+				float:left;		
+				height:89px;
+				padding:20px 20px 0px 0;
+				border-right:solid 1px $embossed_dark;
+				.title {
+					@include title(2,16px);
+					padding:0;
+					margin:0;
+					span {
+						margin-left:10px;
 					}
+				}					
+				.descritpion {
+					margin-top:4px;
 				}
 			}
 		}
-		ul.products {
-			width:780px;
-			border:solid 1px $embossed_dark;
-			@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
-			@include bg-sprite(height_109);
-			background-repeat:repeat !important;
-			margin-top:0px;
-			li {
-				&:last-child .raw {
-					border-bottom:none;
-				}
-				.raw {
-					width:740px;
-					height:109px;
-					@include bg-sprite(height_109);
-					background-repeat:repeat-x;
-					padding:0 20px 0 20px;
-					border-top:1px solid #ffffff;
-					border-bottom:solid 1px $embossed_dark;
-					&:hover {						
-						@include bg-sprite(height_109);					
-						background-repeat:repeat-x;							
-					}
-					.sum {
-						font-size:20px;
-						font-weight:bold;
-						position:relative;
-					}
-					.quantity {
-						float:left;
-						width:100px;
-						height:66px;
-						border-left:solid 1px #ffffff;
-						border-right:solid 1px $embossed_dark;
-						text-align:center;
-						padding-top:43px;
-						overflow: hidden;
-						.sum {
-							top:-8px;
-						}
-					}
-					.price {
-						text-align:center;
-						float:left;
-						width:90px;
-						height:109px;
-						border-left:solid 1px #ffffff;
-						position:relative;
-						.sum {
-							top:42px;
-						}
-						.close_square {
-							position:absolute;
-							top:42px;
-							right:-75px;
-						}
-					}
-				}				
+	}
+	ul.products {
+		width:780px;
+		border:solid 1px $embossed_dark;
+		@include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
+		@include bg-sprite(height_109);
+		background-repeat:repeat !important;
+		margin-top:0px;
+		li {
+			&:last-child .raw {
+				border-bottom:none;
 			}
-		}	
+			.raw {
+				width:740px;
+				height:109px;
+				@include bg-sprite(height_109);
+				background-repeat:repeat-x;
+				padding:0 20px 0 20px;
+				border-top:1px solid #ffffff;
+				border-bottom:solid 1px $embossed_dark;
+				&:hover {						
+					@include bg-sprite(height_109);					
+					background-repeat:repeat-x;							
+				}
+				.sum {
+					font-size:20px;
+					font-weight:bold;
+					position:relative;
+				}
+				.quantity {
+					float:left;
+					width:100px;
+					height:66px;
+					border-left:solid 1px #ffffff;
+					border-right:solid 1px $embossed_dark;
+					text-align:center;
+					padding-top:43px;
+					overflow: hidden;
+					.sum {
+						top:-8px;
+					}
+				}
+				.price {
+					text-align:center;
+					float:left;
+					width:90px;
+					height:109px;
+					border-left:solid 1px #ffffff;
+					position:relative;
+					.sum {
+						top:42px;
+					}
+					.close_square {
+						position:absolute;
+						top:42px;
+						right:-75px;
+					}
+				}
+			}				
+		}
+	}	
 	&.step_1 {
 		.process_sign {
 			.picture {
@@ -218,16 +216,16 @@
 		}
 		//__ ME
 		.is_choose {
-				color:#ffffff;
-			    text-shadow:none;
-			    background-color: transparentize($embossed_dark, 0.7);
-			    border:solid 1px darken($embossed_dark, 5%);
-			    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-			    .radio_area {
-					.radio {
-						background-position:0px -26px;
-					}
+			color:#ffffff;
+			text-shadow:none;
+			background-color: transparentize($embossed_dark, 0.7);
+			border:solid 1px darken($embossed_dark, 5%);
+			@include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+			.radio_area {
+				.radio {
+					background-position:0px -26px;
 				}
+			}
 		}
 		.choice, .loggin {
 			float:left;			

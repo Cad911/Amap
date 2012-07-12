@@ -27,32 +27,53 @@
     margin:0 auto;
   }
 }
-
+// Boite de dialogue d'aide 
+.helper {
+  position: relative;
+  padding:20px;
+  margin:0 0 20px 0;
+  border:$embossed_dark solid 1px;
+  @include border-radius(5px);
+  background-color:rgba($brown, 0.05);
+  .title {
+    padding:0 20px 0 0;
+    margin:0;
+    @include title(2,20px);
+  }
+  .close {
+    display:block;
+    position: absolute;
+    top:20px;
+    right:20px;
+  }
+  .content {
+    padding:0;
+    margin:0;
+  }
+}
 //TOOLTIP
-.my_tooltip{
+.my_tooltip {
 	display: inline-block;
 	position: absolute;
-	opacity: 0.8;
 	z-index:1001;
-
-	.tooltip_body{
-		background: rgba(105,81,59,1);
-		border:1px solid white;
-		border-radius: 5px;
-		text-align: center;
-		padding: 5px 10px 5px;
-		color: white
-	}
-	.tooltip_fleche
-	{
-		margin: -6px auto 0;
-		width: 10px;
-		height: 10px;
-		background: rgba(105,81,59,1);
-		border-left:1px solid white;
-		border-bottom:1px solid white;
-		-moz-transform: rotate(-45deg);
-	}
+  opacity:0.8;
+  .tooltip_body {
+    background: rgba(105,81,59, 1);
+    border:1px solid white;
+    @include border-radius(5px);
+    text-align: center;
+    padding: 5px 10px 5px;
+    color: white;
+  }
+  .tooltip_fleche	{
+    margin: -6px auto 0;
+    width: 10px;
+    height: 10px;
+    background: rgba(105,81,59, 1);
+    border-left:1px solid white;
+    border-bottom:1px solid white;
+    @include rotate(-45deg);
+  }
 }
 
 // applique un style de inscrusté
@@ -181,9 +202,9 @@ span.button {
   padding:6px 0 5px  0;
   @include borderradius(20px);
   font-size: 22px;
-   &:hover, &:hover a {
-      cursor:pointer;
-    }
+  &:hover, &:hover a {
+    cursor:pointer;
+  }
   &:active {
     border:solid 1px rgba(139, 230,104, 0);
   }
@@ -767,85 +788,92 @@ ul.dropdown_menu {
   padding-bottom:14px;
   @include transition-property(all);
   @include transition-duration(0.2s);
-  @include transition-timing-function(ease-out);          
-    .button {
-      width:30px;
-      height:30px;
-      display:block;
-      text-align:center;
-      float:left;
-      margin-left: 0 !important;
-      margin-right:10px;
-      @include embossed_button(#cacaca);
-      @include border-radius(5px);
+  @include transition-timing-function(ease-out);   
+  a {
+    margin-right:10px;
+    display:block;
+    float:left;
+    &:last-child {
+      margin-right:0;
+    }
+  }       
+  .button {
+    width:30px;
+    height:30px;
+    display:block;
+    text-align:center;
+    float:left;
+    margin-left: 0 !important;
+    @include embossed_button(#cacaca);
+    @include border-radius(5px);
+    background-image:none;
+    background-color:#F2F2F2;
+    text-align:center;
+    padding:0;
+    &:hover {
       background-image:none;
-      background-color:#F2F2F2;
-      text-align:center;
-      padding:0;
-      &:hover {
-        background-image:none;
-        background-color:#F7F7F7;
-      }
-      &:last-child {
-        margin:0;
-      }
+      background-color:#F7F7F7;
+    }
+    span {
+      display:inline-block !important;
+      margin-top:6px;
+    }
+    &:active {
+      background:#E5E5E5;
+      @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
+    }
+  } 
+  .historique {
+    &:hover {
       span {
-        display:inline-block !important;
-        margin-top:6px;
-      }
-      &:active {
-        background:#E5E5E5;
-        @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
+        @include ui-sprite(archive_hover);              
       }
     } 
-    .historique {
-      &:hover {
-        span {
-          @include ui-sprite(archive_hover);              
-        }
-      } 
+    span {
+      @include ui-sprite(archive);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }         
+  .delete {
+    @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+    background:$red;
+    border:#A44235 solid 1px;
+    &:hover {
+      background-color:lighten($red, 5%);
+      @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);            
+    }
+    &:active {
+      background-color:darken($red, 5%);   
+      @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);                
+    }
+    span {
+      @include ui-sprite(delete);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }         
+  .edit {
+    &:hover {
       span {
-        @include ui-sprite(archive);
-        display:block;
-        width:18px;
-        height:18px;            
+        @include ui-sprite(edit_hover);              
       }
-    }         
-    .delete {
-      @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-      background:$red;
-      border:#A44235 solid 1px;
-      &:hover {
-        background-color:lighten($red, 5%);
-        @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);            
-      }
-      &:active {
-        background-color:darken($red, 5%);   
-        @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);                
-      }
-      span {
-        @include ui-sprite(delete);
-        display:block;
-        width:18px;
-        height:18px;            
-      }
-    }         
-    .edit {
-      &:hover {
-        span {
-          @include ui-sprite(edit_hover);              
-        }
-      } 
-      span {
-        @include ui-sprite(edit);
-        display:block;
-        width:18px;
-        height:18px;            
-      }
-    }                
+    } 
+    span {
+      @include ui-sprite(edit);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }                
 }
 
 
+.cards {
+  margin:0;
+}
 .card {
   min-height:190px;
   border:solid 1px #ffffff;
@@ -895,7 +923,7 @@ ul.dropdown_menu {
       border-bottom: solid 1px #ebebeb;
       h2 {
         float:left;
-        width:406px;
+        width:400px;
         margin:0;
         padding:0;
         font-size:30px;
@@ -921,7 +949,9 @@ ul.dropdown_menu {
     border:#fcfcfc solid 1px;
     @include transition-property(all);
     @include transition-duration(0.3s);
-    @include transition-timing-function(ease-out);         
+    @include transition-timing-function(ease-out);           
+  }
+  .description.is_editing, h2.is_editing, ul li.details.is_editing {
     &:hover {
       background-color:lighten(#E9D986, 20%);
       border:solid 1px lighten(#E9D986, 1%);
@@ -960,7 +990,7 @@ ul.dropdown_menu {
     }
   }
 }
-.basket_of_fiches {
+.basket_of_cards {
   position:relative;  
   .card {
     position:absolute;
@@ -981,10 +1011,10 @@ ul.dropdown_menu {
 
 .overall_shadow {
  // display:block;
-  opacity:1;
-  width:100%;
-  height:100%;
-  background-color:rgba(0,0,0,0.3);
+ opacity:1;
+ width:100%;
+ height:100%;
+ background-color:rgba(0,0,0,0.3);
   //position:fixed;
   top:0;
   right:0;
@@ -1009,7 +1039,7 @@ ul.dropdown_menu {
       &:hover {
         td {
           .buttons_card {
-            opacity: 1;
+            opacity: 1;            
           }
         }
       }
@@ -1021,6 +1051,7 @@ ul.dropdown_menu {
         vertical-align:middle;
         .buttons_card {
           float:none;
+          width:130px;
         }
       }
       th, tr:first-child td {

@@ -1,0 +1,386 @@
+@import "layouts/profile.scss";
+
+body .backoffice {
+	margin-top:50px;
+	.l_wrapper {
+		margin-bottom:50px;
+		.side_navigation {
+			ul.pannels {
+				padding:0;
+				margin:48px 0 0 0;
+				float:left;
+				.link {
+					@include title(1, 30px);
+					position:relative;
+					top:-10px;
+				}
+				li {
+					display:block;
+					width:221px;
+					height:102px;
+					margin-top:-1px;
+					@include backoffice-sprite(bg_sidebar_middle);
+					&:hover {
+						cursor:pointer;
+						.link {
+							color:$red;	
+						}
+					}
+					span.picture {
+						display:inline-block;
+						margin:20px 20px 0 20px;
+					}
+					&.top {
+						margin-top:0;
+						height:105px;
+						@include backoffice-sprite(bg_sidebar_top);
+					}
+					&.bottom {
+						height:104px;
+						@include backoffice-sprite(bg_sidebar_bottom);
+					}
+					&.stock {
+						span.picture {
+							width:45px;
+							height:45px;
+							margin-top: 25px + 0px; // marge générale plus différence due à la hauteur spécifique de l'image																					
+							@include backoffice-sprite(stock);
+						}	
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(stock_hover);
+							}
+						}
+					}
+					&.archive {
+						span.picture {
+							width:45px;
+							height:38px;
+							margin-top: 25px + 4px; // marge générale plus différence due à la hauteur spécifique de l'image							
+							@include backoffice-sprite(archive);
+						}	
+						.link {
+							top:-10 + 4 !important; // marge générale plus différence due à la hauteur spécifique de l'image							
+						}
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(archive_hover);
+							}
+						}						
+					}
+					&.blog {
+						span.picture {
+							width:45px;
+							height:44px;
+							margin-top: 25px + 1px; // marge générale plus différence due à la hauteur spécifique de l'image							
+							@include backoffice-sprite(blog);
+						}	
+						.link {
+							top:-10 + 1 !important; // marge générale plus différence due à la hauteur spécifique de l'image							
+						}						
+						&:hover {
+							span.picture {							
+								@include backoffice-sprite(blog_hover);
+							}
+						}						
+					}
+					&.farmer {
+						span.picture {
+							width:43px;
+							height:47px;
+							margin-top: 25px + 1px; // marge générale plus différence due à la hauteur spécifique de l'image
+							@include backoffice-sprite(farmer);
+						}	
+						&:hover {
+							span.picture {
+								@include backoffice-sprite(farmer_hover);
+							}
+						}						
+					}															
+				}
+				ul.subnav {
+					padding:0;
+					margin-top:0;
+					li {
+						height:50px;
+						width:160px;
+						padding:0 20px 0 20px;
+						margin:0 0 0 21px;
+						background-color:$dark_bg_color;
+						@include bg-sprite(height_109);
+						background-repeat:repeat-x;
+						border-top:solid 1px #ffffff;
+						border-bottom:solid 1px #d7d0c4;
+						.link {
+							font-family:helveticaneue;
+							color:$grey;
+							font-size:16px;
+							padding-top:10px;
+							display:inline-block;
+							margin:0 0 0 0px;
+						}
+						&:hover {
+							color:$red;
+							cursor:pointer;
+						}
+						&.subnav_element:active {
+							color:$red;
+							background-image:none;						
+						}
+						&.product {
+							span.picture {
+								margin:10px 15px 0 0;
+								@include backoffice-sprite(product);
+								display: inline-block;
+								width: 18px;
+								height: 26px;								
+							}
+							.link {
+								position:relative;
+								top:-5px;
+								color:$brown;
+							}
+							&:hover {
+								.link {
+									color:$red;									
+								}
+								span.picture {
+									@include backoffice-sprite(product_hover);
+								}
+							}
+						}
+						&.basket {
+							span.picture {
+								margin:16px 15px 0 0;
+								@include backoffice-sprite(basket);
+								display: inline-block;
+								width: 19px;
+								height: 16px;								
+							}
+							.link {
+								position:relative;
+								top:-2px;
+								color:$brown;
+							}
+							&:hover {
+								.link {
+									color:$red;									
+								}
+								span.picture {
+									@include backoffice-sprite(basket_hover);
+								}
+							}
+						}
+						//ELEMENT ACTIF QUAND ON EST DANS LA PAGE
+						&.subnav_product_active
+						{
+							background-image:none;
+							.link {
+								color:$red;									
+							}
+							span.picture {
+								@include backoffice-sprite(product_hover);
+							}
+						}
+						&.subnav_basket_active
+						{
+							background-image:none;
+							.link {
+								color:$red;									
+							}
+							span.picture {
+								@include backoffice-sprite(basket_hover);
+							}
+						}
+					}
+				}
+			}
+		}
+		.container.l_main_gutter {
+			width:697px; // + 40px de marge
+			float:right;
+			@include box;
+			position:relative;
+			z-index: 3;
+		}
+		.page-header {
+			width:737px;
+			text-align:center;
+			height:51px;
+			padding:0;
+			margin:-20px 0 20px -20px;
+			border-bottom:solid 1px #ffffff;
+			background:url(/../images/bg_darkener.png);
+			h1 {
+				width:480px;
+				border-bottom:solid 1px $embossed_dark;
+				padding:14px 20px 6px 20px;
+				margin:0;
+				text-align:left;
+				float:left;
+			}
+			.buttons {
+				border-bottom:solid 1px $embossed_dark;
+				width:146px;
+				height:40px;
+				float:left;
+				padding:10px 20px 0 51px;
+				margin:0;
+				.group_button {
+					.button {
+						margin:0 -1px 0 0;
+				    @include borderradius(0);
+				    &:first-child {
+				      -webkit-border-top-left-radius: 5px;
+				      -webkit-border-bottom-left-radius: 5px;
+				      -moz-border-radius-topleft: 5px;
+				      -moz-border-radius-bottomleft: 5px;
+				      border-top-left-radius: 5px;
+				      border-bottom-left-radius: 5px;
+				    }
+				    &:last-child {
+				      -webkit-border-top-right-radius: 5px;
+				      -webkit-border-bottom-right-radius: 5px;
+				      -moz-border-radius-topright: 5px;
+				      -moz-border-radius-bottomright: 5px;
+				      border-top-right-radius: 5px;
+				      border-bottom-right-radius: 5px;      
+				    }						
+					}
+				}
+				.button {
+					width:30px;
+					height:30px;
+					display:block;
+					text-align:center;
+					float:right;
+					margin-left: 0 !important;
+					margin-right:10px;
+					@include embossed_button(#c2bdb1);
+					@include border-radius(5px);
+					text-align:center;
+					padding:0;
+					&:first-child {
+						margin-right:0;
+					}
+					span {
+						display:inline-block !important;
+						margin-top:7px;
+					}
+					&:active {
+						background:$red;
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
+					}
+				}
+				.help {
+		      &:hover {
+		        span {
+		          @include ui-sprite(help_hover);              
+		        }
+		      } 
+					&:active {
+						span.picture {
+							@include ui-sprite(help_active);							
+						}
+					}				      
+		      span {
+		        @include ui-sprite(help);
+		        display:block;
+		        width:18px;
+		        height:18px;            
+		      }					
+				}
+		    .edit {
+		      &:hover {
+		        span {
+		          @include ui-sprite(edit_hover);              
+		        }
+		      } 
+					&:active {
+						span.picture {
+							@include ui-sprite(edit_active);							
+						}
+					}				      
+		      span {
+		        @include ui-sprite(edit);
+		        display:block;
+		        width:18px;
+		        height:18px;            
+		      }
+		    }  				
+				.stats {
+					&:hover {
+						span {
+							@include ui-sprite(stats_hover);							
+						}
+					}	
+					&:active {
+						span.picture {
+							@include ui-sprite(stats_active);							
+						}
+					}										
+					span {
+						@include ui-sprite(stats);
+						display:block;
+						width:16px;
+						height:16px;						
+					}
+				}
+				.tables {
+					&:hover {
+						span {
+							@include ui-sprite(list_hover);							
+						}
+					}
+					&:active {
+						span.picture {
+							@include ui-sprite(list_active);							
+						}
+					}					
+					span {
+						@include ui-sprite(list);
+						display:block;
+						width:16px;
+						height:16px;						
+					}
+				}
+				.cards {
+					&:hover {
+						span {
+							@include ui-sprite(card_hover);							
+						}
+					}		
+					&:active {
+						span.picture {
+							@include ui-sprite(card_active);							
+						}
+					}								
+					span {
+						@include ui-sprite(card);
+						display:block;
+						width:16px;
+						height:16px;
+					}
+				}	
+				.add {
+					&:hover {
+						span {
+							@include ui-sprite(add_hover);							
+						}
+					}	
+					&:active {
+						span.picture {
+							@include ui-sprite(add_active);							
+						}
+					}									
+					span {
+						@include ui-sprite(add);
+						display:block;
+						width:16px;
+						height:16px;
+					}
+				}												
+			}
+		}
+	}
+}

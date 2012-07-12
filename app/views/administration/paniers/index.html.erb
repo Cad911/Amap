@@ -1,6 +1,48 @@
 <div class="page-header">
-   <h1>Listing paniers</h1>
+ <h1>Listing paniers</h1>
+ <ul class="buttons">
+    <li class="stats button"><span class="picture"></span></li>
+    <li class="add button"><span class="picture"></span></li>
+    <li class="help button"><span class="picture"></span></li>        
+</ul>
 </div>
+
+<div class="helper">
+    <p class="title is_bold">Gérer vos paniers</p>
+  <span class="close"><i class="icon-remove"></i></span>
+  <p class="content">Modifier chaque éléments d'un panier en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
+</div>
+
+
+<div class="basket_of_cards">
+    <div class="card fade in one">
+        <div class="left_area">
+        </div>
+        <div class="right_area">
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="basket_of_fiches">
+    <div class="card fade in two">
+        <div class="left_area">
+        </div>
+        <div class="right_area">
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="basket_of_fiches">
+    <div class="card fade in three">
+        <div class="left_area">
+        </div>
+        <div class="right_area">
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>  
+
+
 <% if @panier.nil? %>
 
 <% else %>
@@ -19,11 +61,11 @@
     <th></th>
     <th></th>
     <th></th>
-  </tr>
+</tr>
 
 
 <% @paniers.each do |panier| %>
-  <tr>
+<tr>
     <td><%= panier.id %></td>
     <td><%= panier.revendeur_id %></td>
     <td><%= panier.categorie.nom %></td>
@@ -37,7 +79,7 @@
     <td><%= link_to 'Show', administration_user_panier_path(params[:user_id],panier) %></td>
     <td><%= link_to 'Edit', edit_administration_user_panier_path(params[:user_id],panier) %></td>
     <td><%= link_to 'Destroy', administration_user_panier_path(params[:user_id],panier), confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+</tr>
 <% end %>
 </table>
 <% end %>

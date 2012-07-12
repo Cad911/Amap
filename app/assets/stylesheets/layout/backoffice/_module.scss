@@ -7,6 +7,9 @@
 				height:34px;
 			}
 			td {
+				&:first-child {
+					width:300px;
+				}
 				.type {
 					color:$lightgrey;
 				}
