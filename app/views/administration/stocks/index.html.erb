@@ -128,10 +128,10 @@
 							</span>
 						</li>
 						<li class="details">
-							<span class="label">Lots mis en Rayon:</span>
+							<span class="label">Lots en boutique:</span>
 							<span class="value"> 
 								<% if stock.produit_vente_libre %>
-										<%= (stock.produit_vente_libre.nombre_pack) %> sur <%= (stock.produit_vente_libre.lotPossibleMax) %> (possible)</span> 
+										<%= (stock.produit_vente_libre.nombre_pack) %> / <%= (stock.produit_vente_libre.lotPossibleMax) %> (max)</span> 
 								<%	else %>
 										Aucun lot en vente actuellement
 								<%	end %>

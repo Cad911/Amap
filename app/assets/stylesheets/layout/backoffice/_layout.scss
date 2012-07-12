@@ -121,6 +121,7 @@ body .backoffice {
 						}
 						&:hover {
 							color:$red;
+							cursor:pointer;
 						}
 						&.subnav_element:active {
 							color:$red;
