@@ -1,0 +1,39 @@
+.backoffice {
+	.user_profile {
+		.description, .title, .phone, .email, .location {
+			margin:5px 0 5px -10px;
+			padding:5px 0 5px 10px;	
+			border:rgba(#E9D986, 0) solid 1px;
+			@include transition-property(all);
+			@include transition-duration(0.3s);
+			@include transition-timing-function(ease-out);  		       
+		}
+		.description.is_editing, .title.is_editing, .phone.is_editing, .email.is_editing, .location.is_editing { 
+			&:hover {
+				background-color:lighten(#E9D986, 20%);
+				border:solid 1px lighten(#E9D986, 1%);
+				cursor:pointer;
+			}
+			&:active {
+				background-color:lighten(#E9D986, 10%);
+			}      
+		}
+		.description {
+
+		}
+		.has_corners_shadow.is_medium {
+			float:left;
+			margin:0 20px 20px 0
+		}
+		.content {
+			width:460px;
+			float:left;
+			.title {
+				@include title(1, 40px);
+			}			
+			.title, .location, .phone {
+				margin-top:0px !important;
+			}
+		}
+	}
+}

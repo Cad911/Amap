@@ -3,23 +3,26 @@
     <ul class="buttons">
         <li class="stats button"><span class="picture"></span></li>
         <li class="add button"><span class="picture"></span></li>
-        <li class="group_button">
-            <div class="cards button"><span class="picture"></span></div>
-            <div class="tables button"><span class="picture"></span></div>
-        </li>
+        <li class="help button"><span class="picture"></span></li>        
     </ul>
 </div>
 
-<div class="table">
+<div class="helper">
+  <p class="title is_bold">Gérer vos produits</p>
+  <span class="close"><i class="icon-remove"></i></span>
+  <p class="content">Modifier chaque éléments d'un produit en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
+</div>
+
+<!-- <div class="table">
     <table class="">
       <tr>
     <!--     <th>Id</th>
-     --><!--     <th>User</th> -->
+     --><!--     <th>User</th> 
         <th>Titre</th>
-        <!-- <th>Categorie</th> -->
+        <!-- <th>Categorie</th> 
         <th> Mis en Rayon</th>
         <th>Description</th>
-        <!-- <th>Deleted</th> -->
+        <!-- <th>Deleted</th> 
         <th></th>
         <th></th>
         <th></th>
@@ -29,12 +32,12 @@
       <tr>
     <!--     <td><%= stock.id %></td>
      --><!--     <td><%= stock.user_id %></td>
-     -->
+
         <td><%= stock.titre %> <span class="type is_italic">(<%= stock.unite_mesure.abbreviation %>)</span></td>
-    <!--     <td><%= stock.categorie_id %></td> -->
+    <!--     <td><%= stock.categorie_id %></td> 
         <td> <%= stock.quantiteProduitVente.to_int %> / <%= stock.quantite.to_int %> </td>
         <td><%= stock.description %></td>
-        <!-- <td><%= stock.deleted %></td> -->
+        <!-- <td><%= stock.deleted %></td> 
         <td class="action">
           <ul class="buttons_card">
             
@@ -54,7 +57,7 @@
       </tr>
     <% end %>
     </table>
-</div>
+</div> -->
 
 <br />
 

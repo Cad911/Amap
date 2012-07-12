@@ -27,7 +27,30 @@
     margin:0 auto;
   }
 }
-
+// Boite de dialogue d'aide 
+.helper {
+  position: relative;
+  padding:20px;
+  margin:0 0 20px 0;
+  border:$embossed_dark solid 1px;
+  @include border-radius(5px);
+  background-color:rgba($brown, 0.05);
+  .title {
+    padding:0 20px 0 0;
+    margin:0;
+    @include title(2,20px);
+  }
+  .close {
+    display:block;
+    position: absolute;
+    top:20px;
+    right:20px;
+  }
+  .content {
+    padding:0;
+    margin:0;
+  }
+}
 //TOOLTIP
 .my_tooltip {
 	display: inline-block;
@@ -919,7 +942,7 @@ ul.dropdown_menu {
       padding:10px 0 5px 10px;
     }
   }
-  .description, h2, ul li.details {
+  .description.is_editing, h2.is_editing, ul li.details.is_editing {
     border:#fcfcfc solid 1px;
     @include transition-property(all);
     @include transition-duration(0.3s);
