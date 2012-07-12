@@ -69,7 +69,14 @@ jQuery.fn.tool_tip = (timeout = 0) ->
             offset = $(element).offset()
             position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + $(element).outerWidth() / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
             position_top = offset.top - 90
+            
             my_tooltip.css({
                'left':position_left
-               'top':position_top
+               'top':position_top - 5
+               'opacity':0
             })
+            
+            my_tooltip.animate({
+                'opacity':1
+                'top':position_top
+            },500)

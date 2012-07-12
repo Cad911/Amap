@@ -72,6 +72,11 @@
 				<div class="picture"></div>
 			</div>
 			<div class="right_area">
+				<div class="informations_card">
+					<input type="hidden" class="user_id" value="<%= current_user.id %>" />
+					<input type="hidden" class="id_stock" value="<%= stock.id %>" />
+					<input type="hidden" class="id_produit_vente_libre" value="<%= stock.produit_vente_libre.id %>" />
+				</div>
 				<div class="header">
 					<h2 class="title"><%= stock.titre %></h2>
 					<ul class="buttons_card">
@@ -94,7 +99,7 @@
         </div>
 				<div class="footer">
 					<ul>
-						<li class="details">
+						<li class="details prix">
 							<span class="label">Prix:</span>
 							<span class="value"> 
 							<%= 
@@ -110,13 +115,13 @@
 							%> 
 							</span>
 						</li>
-						<li class="details">
+						<li class="details unite_mesure">
 							<span class="label">Unité:</span>
 							<span class="value"> 
 								<%= stock.unite_mesure.nom %> 
 							</span>
 						</li>
-						<li class="details">
+						<li class="details quantite_lot">
 							<span class="label">Vendu par lots:</span>
 							<span class="value">
 								<% if stock.produit_vente_libre %>
@@ -126,7 +131,7 @@
 								<%	end %>
 							</span>
 						</li>
-						<li class="details">
+						<li class="details nombre_pack">
 							<span class="label">Lots mis en Rayon:</span>
 							<span class="value"> 
 								<% if stock.produit_vente_libre %>
@@ -135,7 +140,7 @@
 										Aucun lot en vente actuellement
 								<%	end %>
 						</li>
-						<li class="details">
+						<li class="details stock_total">
 							<span class="label">Stock total:</span>
 							<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic">(<%= stock.unite_mesure.nom %>)</span></span>
 						</li>

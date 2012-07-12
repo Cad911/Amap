@@ -2,7 +2,7 @@
 (function() {
 
   $(document).ready(function() {
-    var listing_tooltip, menu;
+    var card, listing_tooltip, menu;
     menu = {
       hover_action: function() {
         $('.subnav').each(function() {
@@ -42,7 +42,35 @@
         return $('.historique,.edit,.delete').tool_tip(1000);
       }
     };
-    return listing_tooltip.listing();
+    listing_tooltip.listing();
+    card = {
+      event: function() {
+        return $('.card h2.title').bind('click', function() {
+          return card.show_form('title', $(this).text());
+        });
+      },
+      show_form: function(intitule, value) {
+        if (intitule === 'title') {
+          window.light_box_information.title_header('Titre');
+        }
+        card.generate_form(intitule, value);
+        return window.light_box_information.show();
+      },
+      generate_form: function(intitule, value) {
+        var input;
+        if (intitule === 'title') {
+          input = $(document.createElement('input'));
+          input.attr('id', 'stock_titre');
+          input.attr('type', 'text');
+          input.attr('size', '50');
+          input.attr('name', 'stock[titre]');
+          input.val(value);
+          input.addClass("string optional");
+          return window.light_box_information.html_content(input);
+        }
+      }
+    };
+    return card.event();
   });
 
 }).call(this);

@@ -15,8 +15,36 @@ class Administration::StocksController < InheritedResources::Base
   	#____
   	@unite_mesure = UniteMesure.find(@stock.unite_mesure_id)
   	@photo_stock = PhotoStock.new
+  	
+  	@stock_produit_vente_libre = {
+	  	:stock => {
+		  	:id => @stock.id,
+		  	:user_id => @stock.user_id,
+		  	:categorie_id => @stock.categorie_id,
+		  	:quantite => @stock.quantite,
+		  	:titre => @stock.titre,
+		  	:description => @stock.description,
+	  	},
+	  	
+	  	:unite_mesure => {
+		  	:id => @unite_mesure.id,
+		  	:nom => @unite_mesure.nom,
+		  	:abbreviation => @unite_mesure.abbreviation,
+	  	},
+	  	
+	  	:produit_vente_libre => {
+		  	:stock_id => @stock.produit_vente_libre.stock_id,
+		  	:titre => @stock.produit_vente_libre.titre,
+		  	:description => @stock.produit_vente_libre.description,
+		  	:quantite => @stock.produit_vente_libre.quantite,
+		  	:nombre_pack => @stock.produit_vente_libre.nombre_pack,
+		  	:lot_possible_max => @stock.produit_vente_libre.lotPossibleMax,
+		  	:prix_unite_ht => @stock.produit_vente_libre.prix_unite_ht,
+		  	:prix_unite_ttc => @stock.produit_vente_libre.prix_unite_ttc,
+	  	}
+  	}
   	respond_to do |format|
-  		format.json { render :json => [@stock,@unite_mesure] }
+  		format.json { render :json => @stock_produit_vente_libre }
   		format.html { render :show }
   	end
   end
