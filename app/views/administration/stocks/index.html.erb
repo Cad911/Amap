@@ -1,5 +1,5 @@
 <div class="page-header">
-   	<h1>Listing stocks</h1>
+   	<h1>Stock: produits</h1>
     <ul class="buttons">
         <li class="stats button"><span class="picture"></span></li>
         <li class="add button"><span class="picture"></span></li>
@@ -59,12 +59,10 @@
     </table>
 </div> -->
 
-<br />
-
-<%= link_to 'Nouveau Stock', new_administration_user_stock_path %>
+<%#= link_to 'Nouveau Stock', new_administration_user_stock_path %>
 
 
-<ul>
+<ul class="cards">
     <% @stocks.each do |stock| %>
 		<li class="card fade in">
 			<div class="left_area">

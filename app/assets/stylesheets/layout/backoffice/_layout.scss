@@ -191,7 +191,6 @@ body .backoffice {
 								@include backoffice-sprite(basket_hover);
 							}
 						}
-						//BY GG
 					}
 				}
 			}
@@ -200,6 +199,8 @@ body .backoffice {
 			width:697px; // + 40px de marge
 			float:right;
 			@include box;
+			position:relative;
+			z-index: 3;
 		}
 		.page-header {
 			width:737px;
