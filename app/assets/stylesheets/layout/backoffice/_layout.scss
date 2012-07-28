@@ -1,7 +1,11 @@
 @import "layouts/profile.scss";
+@import "layouts/parameters.scss";
 
 body .backoffice {
 	margin-top:50px;
+	.l_main_gutter {
+		margin-bottom:50px;			
+	}
 	.l_wrapper {
 		margin-bottom:50px;
 		.side_navigation {
