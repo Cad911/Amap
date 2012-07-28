@@ -129,6 +129,9 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       #___ STATISTIQUES _________
       match '/ca_by_month' => 'statistiques#CAProductSellThisMonth', :as => :ca_by_month, :via => :post
       match '/ca_by_year' => 'statistiques#CAProductSellThisYear', :as => :ca_by_year, :via => :post
+      
+      #UNITE_MESURE
+      match '/get_unite_mesure' => 'unite_mesures#get_unite_mesure', :as => :get_unite_mesure, :via => :post
     end
   end
 	

@@ -29,6 +29,14 @@ $(document).ready(->
            $('.login>span.sign_in').html(a_infos)
            $('.login>span.sign_up').html(a_deconnexion)
         
+        create_annuler: () ->
+            span_annuler = $(document.createElement('span'))
+            span_annuler.addClass('annuler close_lightbox')
+            span_annuler.text('annuler')
+            span_annuler.bind('click', ()->
+                window.light_box_information.hide()
+            )
+            return span_annuler
         title_header: (texte) ->
              $(@id_lightbox+'>.lightbox>.header>.title').text(texte)
         
@@ -40,13 +48,30 @@ $(document).ready(->
         
         hide: () ->
             $(@id_lightbox).css('display','none')
+            $('.overall_shadow').css('position','relative')
         show: () ->
             $(@id_lightbox).css('display','block')
+            $('.overall_shadow').css('position','fixed')
             
         hide_sous_div: () ->
             $(@div_in_lightbox).css('display','none')
         show_sous_div: () ->
             $(@div_in_lightbox).css('display','block')
+        
+        append_content: (data)->
+            $(@id_lightbox+'>.lightbox>.content').append(data)
+        
+        prepend_content: (data)->
+            $(@id_lightbox+'>.lightbox>.content').prepend(data)
+            
+        html_content:(data)->
+            $(@id_lightbox+'>.lightbox>.content').html(data)
+        html_footer: (data)->
+            $(@id_lightbox+'>.lightbox>.footer').html(data)
+        append_footer: (data)->
+            $(@id_lightbox+'>.lightbox>.footer').append(data)
+            
+        
             
   #_________________________________________________________________________________________________
     window.lightbox_connexion = new Lightbox('.lightbox_connexion_inscription','.lightbox_form_connexion')
