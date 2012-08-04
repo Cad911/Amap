@@ -18,7 +18,7 @@
           width:60px;
           height:60px;
           @include boxshadow(1px, 1px, 0px, 0px, rgba(255,255,255, 0.5));
-          background:url('/../images/header/ciel.png');
+          background:#fcfcfc;
           &:after {
             display:none;
           }

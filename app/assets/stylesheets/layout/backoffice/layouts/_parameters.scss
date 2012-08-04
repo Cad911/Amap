@@ -1,0 +1,22 @@
+.parameters {
+	min-height:600px;
+	display:block;
+	.parameter {
+		width:316px;
+    margin:0px 20px 10px -10px;
+    padding:10px 10px 5px 10px;
+		float:left;
+		.labels, .field {
+			display:block;
+			font-size:16px;
+			padding-bottom:5px;
+		}
+		.labels {
+			display:block;
+			margin-right:15px;
+		}
+		.field {
+			margin-bottom:10px;
+		}		
+	}
+}

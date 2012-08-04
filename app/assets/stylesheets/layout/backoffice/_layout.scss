@@ -1,7 +1,11 @@
 @import "layouts/profile.scss";
+@import "layouts/parameters.scss";
 
 body .backoffice {
 	margin-top:50px;
+	.l_main_gutter {
+		margin-bottom:50px;			
+	}
 	.l_wrapper {
 		margin-bottom:50px;
 		.side_navigation {
@@ -96,7 +100,23 @@ body .backoffice {
 								@include backoffice-sprite(farmer_hover);
 							}
 						}						
-					}															
+					}
+					&.settings {
+						span.picture {
+							width:45px;
+							height:44px;
+							margin-top: 25px + 1px; // marge générale plus différence due à la hauteur spécifique de l'image							
+							@include backoffice-sprite(cog);
+						}	
+						.link {
+							top:-10 + 1 !important; // marge générale plus différence due à la hauteur spécifique de l'image							
+						}						
+						&:hover {
+							span.picture {							
+								@include backoffice-sprite(cog_hover);
+							}
+						}						
+					}																				
 				}
 				ul.subnav {
 					padding:0;
