@@ -33,6 +33,7 @@ class Administration::StocksController < InheritedResources::Base
 	  	},
 	  	
 	  	:produit_vente_libre => {
+	  		:id => @stock.produit_vente_libre.id,
 		  	:stock_id => @stock.produit_vente_libre.stock_id,
 		  	:titre => @stock.produit_vente_libre.titre,
 		  	:description => @stock.produit_vente_libre.description,
@@ -100,7 +101,9 @@ class Administration::StocksController < InheritedResources::Base
   
    @stock = Stock.find(params[:id])
    
-   if current_user.can_stock_ar
+   
+   #A VOIR POUR CETTE CONDITION
+   if current_user.can_stock_ar && !params[:stock][:produit_autorise_id].nil?
   	    @produit_autorise = ProduitAutorise.find(params[:stock][:produit_autorise_id])
 
   	    @stock.titre = @produit_autorise.titre

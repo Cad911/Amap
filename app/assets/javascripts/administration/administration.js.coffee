@@ -2,7 +2,85 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+$(window).load(()->
+    listing_tooltip = 
+        listing:()->
+            $('.historique,.edit,.delete').tool_tip(1000)
+    listing_tooltip.listing()
+)
+
 $(document).ready( () ->
+    #SHOW INFOS USER
+    $('.user_profile .content>.title').form_plugin(
+        url_get_infos:['user']
+        champ: 'prenom'
+        element: 
+            type: 'input'
+    )
+    $('.user_profile .content>.email').form_plugin(
+        url_get_infos:['user']
+        champ: 'email'
+        element: 
+            type: 'input'
+    )
+    # INDEX STOCK PRODUIT VENTE LIBRE 
+    $('.card h2.title').form_plugin(
+        #table_get_infos: 'stock'
+        champ: 'titre'
+        element: 
+            type: 'input'
+        url_get_infos:['user','stock']
+        url_to_update: ['user','stock']
+    )
+    $('.card p.description').form_plugin(
+        url_get_infos:['user','stock']
+        champ: 'description'
+        element: 
+            type: 'textarea'
+    )
+    $('.card li.prix').form_plugin(
+        url_get_infos:['user','stock']
+        url_to_update:['user','produit_vente_libre'] 
+        champ: 'prix_unite_ttc'
+        element: 
+            type: 'input'
+    )
+    $('.card li.unite_mesure').form_plugin(
+        url_get_infos:['user','stock']
+        champ: 'unite_mesure_id'
+        element: 
+            type: 'select'
+            options: 
+                value : [1,2]
+                text: ["Kilos","grammes"]
+    )
+    $('.card li.quantite_lot').form_plugin(
+        url_get_infos:['user','stock']
+        url_to_update:['user','produit_vente_libre'] 
+        champ: 'quantite'
+        element: 
+            type: 'input'
+    )
+
+    $('.card li.nombre_pack').form_plugin(
+        url_get_infos:['user','stock']
+        url_to_update:['user','produit_vente_libre']
+        champ: 'nombre_pack'
+        element: 
+            type: 'input'
+    )
+
+    $('.card li.stock_total').form_plugin(
+        url_get_infos:['user','stock']
+        champ: 'quantite'
+        element: 
+            type: 'input'
+    )
+
+
+
+    
+    console.log($('.card li.unite_mesure').parent('div').prevAll('div.informations_card').children('input.id_stock').val())
 #FOR THE MENU
     menu = 
         hover_action: () ->
@@ -37,83 +115,80 @@ $(document).ready( () ->
             )
     menu.hover_action()
     
-    listing_tooltip = 
-        listing:()->
-            $('.historique,.edit,.delete').tool_tip(1000)
-    listing_tooltip.listing()
+    
     
     
     
     card =
         event: ()->
-            $('.card h2.title').bind('click',()->
-                stock_id = $(this).parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('title',data, that )
-                )
-            )
+            # $('.card h2.title').bind('click',()->
+#                 stock_id = $(this).parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('title',data, that )
+#                 )
+#             )
             
-            $('.card p.description').bind('click',()->
-                stock_id = $(this).parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('description',data, that)
-                )
-            )
+            # $('.card p.description').bind('click',()->
+#                 stock_id = $(this).parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('description',data, that)
+#                 )
+#             )
             
-            $('.card li.prix').bind('click',()->
-                stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('prix',data,that)
-                )
-                
-                
-            )
+            # $('.card li.prix').bind('click',()->
+#                 stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('prix',data,that)
+#                 )
+#                 
+#                 
+#             )
             
-            $('.card li.unite_mesure').bind('click',()->
-                stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('unite_mesure',data,that)
-                )
-                
-                
-            )
+            # $('.card li.unite_mesure').bind('click',()->
+#                 stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('unite_mesure',data,that)
+#                 )
+#                 
+#                 
+#             )
             
-            $('.card li.quantite_lot').bind('click',()->
-                stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                console.log(stock_id)
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('quantite_lot',data,that)
-                )
-                
-                
-            )
+            # $('.card li.quantite_lot').bind('click',()->
+#                 stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 console.log(stock_id)
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('quantite_lot',data,that)
+#                 )
+#                 
+#                 
+#             )
             
-            $('.card li.nombre_pack').bind('click',()->
-                stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                console.log(stock_id)
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('nombre_pack',data,that)
-                )
-                
-                
-            )
+            # $('.card li.nombre_pack').bind('click',()->
+#                 stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 console.log(stock_id)
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('nombre_pack',data,that)
+#                 )
+#                 
+#                 
+#             )
             
-            $('.card li.stock_total').bind('click',()->
-                stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
-                console.log(stock_id)
-                that = this
-                $.when(card.get_information(stock_id)).done((data)->
-                    card.show_form('stock_total',data,that)
-                )
-                
-                
-            )
+            # $('.card li.stock_total').bind('click',()->
+#                 stock_id = $(this).parent('ul').parent('div').prevAll('div.informations_card').children('input.id_stock').val()
+#                 console.log(stock_id)
+#                 that = this
+#                 $.when(card.get_information(stock_id)).done((data)->
+#                     card.show_form('stock_total',data,that)
+#                 )
+#                 
+#                 
+#             )
             
             
             
@@ -124,9 +199,18 @@ $(document).ready( () ->
                     window.light_box_information.title_header('Titre')
                     
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'stock_id'
+                            value:donnees['stock']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'stock[id]'
+                            
                         input:
                             balise : 'input'
                             id:'stock_titre'
+                            value:donnees['stock']['titre']
                             size:'50'
                             type_input:'text'
                             name:'stock[titre]'
@@ -137,15 +221,23 @@ $(document).ready( () ->
                             text:'Modifier le titre'
                     
                     console.log(donnees)
-                    card.generate_form(donnees['stock']['titre'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()
 			            
                 when 'description'
                     window.light_box_information.title_header('Description')
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'stock_id'
+                            value:donnees['stock']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'stock[id]'
                         input:
                             balise : 'textarea'
                             id:'stock_description'
+                            value:donnees['stock']['description']
                             size:'40'
                             type_input:''
                             name:'stock[description]'
@@ -155,15 +247,24 @@ $(document).ready( () ->
                             class:'update_description'
                             text:'Modifier la description'
                             
-                    card.generate_form(donnees['stock']['description'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()
 
                 when 'prix'
                     window.light_box_information.title_header('Prix')                 
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'produit_vente_libre_id'
+                            value:donnees['produit_vente_libre']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'produit_vente_libre[id]'
+                            
                         input:
                             balise : 'input'
                             id:'produit_vente_libre_prix_unite_ttc'
+                            value:donnees['produit_vente_libre']['prix_unite_ttc']
                             type_input:'text'
                             name:'produit_vente_libre[prix_unite_ttc]'
                             class:'numerical optional'
@@ -172,7 +273,7 @@ $(document).ready( () ->
                             class:'update_prix_unite_ttc'
                             text:'Modifier le prix'
                     
-                    card.generate_form(donnees['produit_vente_libre']['prix_unite_ttc'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()
 
                 when 'unite_mesure'
@@ -192,11 +293,19 @@ $(document).ready( () ->
                                 options.push(option)
                                 
                             attribut = 
+                                hidden_input:
+                                    balise:'input'
+                                    id:'stock_id'
+                                    value:donnees['stock']['id']
+                                    size:'50'
+                                    type_input:'hidden'
+                                    name:'stock[id]'
                                 input:
                                     balise : 'select'
-                                    id:'stock_unite_mesure'
+                                    id:'stock_unite_mesure_id'
+                                    value:donnees['unite_mesure']['nom']
                                     type_input:'text'
-                                    name:'stock[unite_mesure]'
+                                    name:'stock[unite_mesure_id]'
                                     class:'numerical optional'
                                     options : options
 			            
@@ -204,7 +313,7 @@ $(document).ready( () ->
                                     class:'update_unite_mesure'
                                     text:'Modifier l\'unite'
                                 
-                            card.generate_form(donnees['unite_mesure']['nom'],attribut)
+                            card.generate_form(attribut)
                             window.light_box_information.show()
                             
                         
@@ -214,9 +323,18 @@ $(document).ready( () ->
                     window.light_box_information.title_header('Quantité lot')
                     
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'produit_vente_libre_id'
+                            value:donnees['produit_vente_libre']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'produit_vente_libre[id]'
+                            
                         input:
                             balise : 'input'
                             id:'produit_vente_libre_quantite'
+                            value:donnees['produit_vente_libre']['quantite']
                             type_input:'text'
                             name:'produit_vente_libre[quantite]'
                             class:'numerical optional'
@@ -228,16 +346,25 @@ $(document).ready( () ->
                         span_infos:
                             text:'('+donnees['unite_mesure']['nom']+')'
                     
-                    card.generate_form(donnees['produit_vente_libre']['quantite'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()
                 
                 when 'nombre_pack'
                     window.light_box_information.title_header('Quantité lot en rayon')
                     
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'stock_id'
+                            value:donnees['stock']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'stock[id]'
+                            
                         input:
                             balise : 'input'
                             id:'produit_vente_libre_nombre_pack'
+                            value:donnees['produit_vente_libre']['nombre_pack']
                             type_input:'text'
                             name:'produit_vente_libre[nombre_pack]'
                             class:'numerical optional'
@@ -249,7 +376,7 @@ $(document).ready( () ->
                         span_infos:
                             text:'sur '+donnees['produit_vente_libre']['lot_possible_max']+' (possible)'
                     
-                    card.generate_form(donnees['produit_vente_libre']['nombre_pack'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()
 
 
@@ -257,9 +384,17 @@ $(document).ready( () ->
                     window.light_box_information.title_header('Quantité du stock')
                     
                     attribut = 
+                        hidden_input:
+                            balise:'input'
+                            id:'stock_id'
+                            value:donnees['stock']['id']
+                            size:'50'
+                            type_input:'hidden'
+                            name:'stock[id]'
                         input:
                             balise : 'input'
                             id:'stock_quantite'
+                            value:donnees['stock']['quantite']
                             type_input:'text'
                             name:'stock[quantite]'
                             class:'numerical optional'
@@ -271,7 +406,7 @@ $(document).ready( () ->
                         span_infos:
                             text:'('+donnees['unite_mesure']['nom']+' '
                     
-                    card.generate_form(donnees['stock']['quantite'],attribut)
+                    card.generate_form(attribut)
                     window.light_box_information.show()     
           
             
@@ -284,12 +419,21 @@ $(document).ready( () ->
                 success:(data)->
                     return data
             )
-        generate_form: (value,attribut) ->
+            
+        generate_form: (attribut) ->
+            #HIDDEN INPUT WITH ID
+            hidden_input = $(document.createElement(attribut['hidden_input']['balise']))
+            hidden_input.attr('id',attribut['hidden_input']['id'])
+            hidden_input.attr('name',attribut['hidden_input']['name'])
+            hidden_input.val(attribut['hidden_input']['value'])
+            hidden_input.attr('type',attribut['hidden_input']['type_input'])
+            hidden_input.addClass(attribut['hidden_input']['class'])
+            
             #INPUT SELECT TEXTARE
             input = $(document.createElement(attribut['input']['balise']))
             input.attr('id',attribut['input']['id'])
             input.attr('name',attribut['input']['name'])
-            input.val(value)
+            input.val(attribut['input']['value'])
             input.addClass(attribut['input']['class'])
             
             if attribut['input']['balise'] == 'input'
@@ -301,8 +445,9 @@ $(document).ready( () ->
                 for champ, valeur of attribut['input']['options']
                     input.append(valeur)
             
-            window.light_box_information.html_content(input)
             
+            window.light_box_information.html_content(input)
+            window.light_box_information.append_content(hidden_input)
             #SPAN INFOS
             if attribut['span_infos']
                 span_infos = $(document.createElement('span'))
@@ -324,6 +469,30 @@ $(document).ready( () ->
             
             window.light_box_information.html_footer(span_annuler)
             window.light_box_information.append_footer(span)
+            span.on('click',()->
+                card.update_information(this)
+            )
+        
+        update_information: (button)->
+            url = '/administration/users/7/stocks/4'
+            user_id = $('input.user_id').val()
+            
+            tab_concerned = $(button).parent('.footer').prev('.content').children('input[type="hidden"]').attr('id').replace('_id','')
+            id_entite = $(button).parent('.footer').prev('.content').children('#'+tab_concerned+'_id').val()
+            champ = $(button).parent('.footer').prev('.content').children().first().attr('id').replace(tab_concerned+'_','')
+            val = $(button).parent('.footer').prev('.content').children().first().val()
+            data = {}
+            data[tab_concerned] = {}
+            data[tab_concerned][champ] = val
+            console.log($(button).parent('.footer').prev('.content').children('input[type="hidden"]'))        
+            $.ajax(
+                type: 'PUT'
+                url:'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
+                data:data
+                format:'json'
+                success:(data)->
+                    return data
+            )        
 
                     
                 

@@ -1,4 +1,4 @@
-$(document).ready(()->
+#$(document).ready(()->
 	jQuery.fn.tool_tip = (timeout = 0) ->
 	    test = 'test'
 	    this.each( () ->
@@ -9,7 +9,7 @@ $(document).ready(()->
 	        
 	        
 	        
-	        $(this).bind('mouseover', () ->
+	        $(this).on('mouseover', () ->
 	            #create tooltip
 	            my_tooltip = $(document.createElement('div'))
 	            my_tooltip.addClass('my_tooltip')
@@ -34,7 +34,7 @@ $(document).ready(()->
 	            
 	        )
 	        
-	        $(this).bind('mouseout', () ->
+	        $(this).on('mouseout', () ->
 	            if tooltip.the_timeout
 	                clearTimeout(tooltip.the_timeout)
 	            $('.my_tooltip').remove()
@@ -68,18 +68,19 @@ $(document).ready(()->
 	            $('body').append(my_tooltip)
 	           
 	            offset = $(element).offset()
-	            position_left = offset.left #- parseInt(my_tooltip.outerWidth() / 2) + $(element).outerWidth() / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
-	            position_top = offset.top #- 90
+	            position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + $(element).outerWidth() / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
+	            position_wait_top = offset.top - $(element).outerHeight()  - 10
+	            position_top = offset.top - $(element).outerHeight()  - 5 
 	            
-	            console.log(position_left+' '+offset.top)
+	            console.log((($(element).outerHeight() - my_tooltip.outerHeight()) - 30)+' '+offset.top)
 	            my_tooltip.css({
 	               'left':position_left
-	               'top':position_top - 45
+	               'top':position_wait_top
 	               'opacity':0
 	            })
 	            
 	            my_tooltip.animate({
 	                'opacity':1
-	                'top':position_top - 35
+	                'top':position_top
 	            },500)
-)
+#)

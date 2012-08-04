@@ -18,6 +18,11 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		else
 			@title_user = "Informations agriculteurs"
 		end
+		
+		respond_to do |format|
+  			format.json { render :json => {'user' => @user} }
+  			format.html { render :show }
+  		end
 	end
 	
 	
