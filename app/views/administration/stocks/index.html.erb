@@ -103,17 +103,16 @@
 						<li class="details prix">
 							<span class="label">Prix:</span>
 							<span class="value"> 
-							<%= 
-								if stock.produit_vente_libre 
-									if (stock.produit_vente_libre.prix_unite_ttc).to_int == (stock.produit_vente_libre.prix_unite_ttc)
-									    ((stock.produit_vente_libre.prix_unite_ttc).to_int).to_s+'€' 
-									else
-									    ((stock.produit_vente_libre.prix_unite_ttc)).to_s+'€'
-									end
-								else 
-									'Aucun prix defini' 
-								end 
-							%> 
+							<% if stock.produit_vente_libre %>
+								<% if (stock.produit_vente_libre.prix_unite_ttc).to_int == (stock.produit_vente_libre.prix_unite_ttc) %>
+									    <%= ((stock.produit_vente_libre.prix_unite_ttc).to_int).to_s %> <span class='is_italic'> € </span>
+								<% else %>
+									    <%= ((stock.produit_vente_libre.prix_unite_ttc)).to_s %> <span class='is_italic'> € </span>
+								<% end %>
+							<% else  %>
+									Aucun prix defini
+							<% end %>
+							 
 							</span>
 						</li>
 						<li class="details unite_mesure">
@@ -123,10 +122,10 @@
 							</span>
 						</li>
 						<li class="details quantite_lot">
-							<span class="label">Vendu par lots:</span>
+							<span class="label">Vendu par lots de :</span>
 							<span class="value">
 								<% if stock.produit_vente_libre %>
-										<%= (stock.produit_vente_libre.quantite).to_int %> <span class="is_italic">( <%= stock.unite_mesure.nom %>)</span> 
+										<%= (stock.produit_vente_libre.quantite).to_int %> <span class="is_italic info_unite_mesure_id">( <%= stock.unite_mesure.nom %>)</span> 
 								<%	else %>
 										Aucun lot en vente actuellement
 								<%	end %>
@@ -136,14 +135,15 @@
 							<span class="label">Lots en boutique:</span>
 							<span class="value"> 
 								<% if stock.produit_vente_libre %>
-										<%= (stock.produit_vente_libre.nombre_pack) %> / <%= (stock.produit_vente_libre.lotPossibleMax) %> (max)</span> 
+										<%= (stock.produit_vente_libre.nombre_pack) %> <span class="is_italic">/ <%= (stock.produit_vente_libre.lotPossibleMax) %> (max)</span> 
 								<%	else %>
 										Aucun lot en vente actuellement
 								<%	end %>
+							</span>
 						</li>
 						<li class="details stock_total">
 							<span class="label">Stock total:</span>
-							<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic">(<%= stock.unite_mesure.nom %>)</span></span>
+							<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic info_unite_mesure_id">(<%= stock.unite_mesure.nom %>)</span></span>
 						</li>
 			     <div class="clear"></div>
           </ul>

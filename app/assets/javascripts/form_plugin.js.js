@@ -2,7 +2,7 @@
 (function() {
 
   $.fn.form_plugin = function(optn) {
-    var functions, options, _ref, _ref1;
+    var functions, options, _ref, _ref1, _ref2, _ref3;
     options = {
       user_id: $('input.user_id').val(),
       table_get_infos: '',
@@ -19,8 +19,8 @@
       },
       "class": 'string optional',
       button: {
-        "class": 'update_titre',
-        text_update: 'Modifier le titre'
+        "class": optn['button'] !== void 0 ? (_ref2 = optn['button']['class']) != null ? _ref2 : 'update_element' : 'update_element',
+        text_update: optn['button'] !== void 0 ? (_ref3 = optn['button']['text_update']) != null ? _ref3 : 'Modifier' : 'Modifier'
       }
     };
     functions = {
@@ -47,8 +47,8 @@
             option: []
           },
           link: {
-            "class": 'update_titre',
-            text: 'Modifier le titre'
+            "class": options.button["class"],
+            text: options.button.text_update
           }
         };
         if (attribut['input']['balise'] === 'select') {
@@ -57,12 +57,17 @@
             option = $(document.createElement('option'));
             option.attr('value', options['element']['options']['value'][i]);
             option.text(options['element']['options']['text'][i]);
-            if (options['element']['options']['value'][i] === donnees['unite_mesure']['id']) {
+            if (options['element']['options']['value'][i] === donnees[options.table_to_update][options.champ]) {
               option.attr('selected', 'selected');
             }
             attribut.input.option.push(option);
             i++;
           }
+        }
+        if (optn.infos !== void 0) {
+          options.infos = {};
+          options.infos["class"] = 'is_italic';
+          options.infos.text = ' (' + donnees[optn.infos.table][optn.infos.champ] + ')';
         }
         functions.generate_form(attribut);
         return window.light_box_information.show();
@@ -138,25 +143,46 @@
         data[tab_concerned][champ] = val;
         return $.ajax({
           type: 'PUT',
-          url: options.the_url_get_infos,
+          url: options.the_url_to_update,
           data: data,
           format: 'json',
           success: function(data) {
-            return data;
+            var span_is_italic;
+            if (data) {
+              if (options.element.type === 'select') {
+                $(options.element_clicked).text($(functions.input_create).children("option[value='" + val + "']").text());
+              } else {
+                $(options.element_clicked).text(val);
+              }
+              functions.update_text_infos($(options.element_clicked).text());
+              if (options.infos !== void 0) {
+                span_is_italic = $(document.createElement('span'));
+                span_is_italic.addClass(options.infos["class"]);
+                span_is_italic.text(options.infos.text);
+                $(options.element_clicked).append(span_is_italic);
+              }
+              return window.light_box_information.hide();
+            } else {
+              return alert('erreur');
+            }
           }
+        });
+      },
+      update_text_infos: function(text) {
+        return $(options.element_clicked).parents('div.footer').find('.info_' + options['champ']).each(function() {
+          return $(this).text('(' + text + ')');
         });
       }
     };
     return this.each(function() {
       return $(this).bind('click', function() {
         var champ_lvl, i, that;
+        options.element_clicked = this;
         if (optn.url_to_update === void 0) optn.url_to_update = optn.url_get_infos;
         options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1];
         options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1];
-        console.log(optn.url_get_infos);
         options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_get_infos).val();
         options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_to_update).val();
-        console.log(options);
         options.the_url_get_infos = '/administration';
         options.the_url_to_update = '/administration';
         if (optn.url_get_infos !== void 0) {
@@ -181,7 +207,7 @@
           if (i === 0) {
             options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.user_id;
           } else {
-            options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.id_entite_to_update;
+            options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.id_entite_update;
           }
           i++;
         }

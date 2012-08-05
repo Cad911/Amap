@@ -8,7 +8,12 @@
 # THE PROBLEME :
 # On a l'id du stock et celui des produit en vente libre et il faut s'arrange pour avoir les 2.
 #ET AUSSI le probleme de l'url quand on est avec l'utilisateur. Idée : créer un niveau d'url
-#
+# A FAIRE 4/08
+# quand la modif est effectué, modifier le texte dans le champ (en live)
+# mieux placer la box
+
+
+
 #_____________________________ README ______________________________________
 #PLUGIN PERMETTANT DE MODIFIER DES ENTITES JUSTE EN CLIQUANT SUR L'INFO
 # POUR CECI IL FAUT DONC INITIALISER CHAQUE ELEMENT DU DOM POUVANT ETRE MODIFIER PAR LE PLUGIN EN AJOUTANT DES ATTRIBUTS OBLIGATOIRES:
@@ -41,12 +46,13 @@ $.fn.form_plugin = (optn)->
                 text: if optn['element']['options'] != undefined then optn['element']['options']['text'] else []
         class:'string optional'
         button:
-            class:'update_titre'
-            text_update:'Modifier le titre'
+            class: if optn['button'] != undefined then optn['button']['class'] ? 'update_element' else 'update_element'
+            text_update: if optn['button'] != undefined then optn['button']['text_update'] ? 'Modifier' else 'Modifier'
         #url_get_infos:''
         #url_to_update:''
         #the_url_get_infos:''
         #the_url_to_update:''
+    
     
     
     #__ FUNCTIONS ___
@@ -72,22 +78,31 @@ $.fn.form_plugin = (optn)->
                     name:options.table_to_update+'['+options.champ+']'
                     class:'string optional'
                     option: []
+                
                                    
                 link:
-                    class:'update_titre'
-                    text:'Modifier le titre'
+                    class:options.button.class
+                    text:options.button.text_update
             
+            #SI SELECT
             if attribut['input']['balise'] == 'select'
                 i = 0
                 while  i < options['element']['options']['value'].length
                     option = $(document.createElement('option'))
                     option.attr('value',options['element']['options']['value'][i])
                     option.text(options['element']['options']['text'][i])
-                    if options['element']['options']['value'][i] ==   donnees['unite_mesure']['id']     
+                    if options['element']['options']['value'][i] ==   donnees[options.table_to_update][options.champ]     
                         option.attr('selected','selected')
                     (attribut.input.option).push(option)
                     i++
-
+            
+            #SI INFOS AFFICHE A COTE de lelement . Ex : devise à coté du prix
+            #Information complementaire dans le champ
+            if optn.infos != undefined
+                options.infos = {}
+                options.infos.class = 'is_italic'
+                options.infos.text = ' ('+donnees[optn.infos.table][optn.infos.champ]+')'
+            
             
             functions.generate_form(attribut)
             window.light_box_information.show()
@@ -174,31 +189,55 @@ $.fn.form_plugin = (optn)->
       
             $.ajax(
                 type: 'PUT'
-                url:options.the_url_get_infos#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
+                url:options.the_url_to_update#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
                 data:data
                 format:'json'
                 success:(data)->
-                    return data
-            )        
+                    if data
+                        if options.element.type == 'select'
+                            $(options.element_clicked).text($(functions.input_create).children("option[value='"+val+"']").text())
+                        else
+                            $(options.element_clicked).text(val)
+                        
+                        functions.update_text_infos($(options.element_clicked).text())
+                        if options.infos != undefined
+                            span_is_italic = $(document.createElement('span'))
+                            span_is_italic.addClass(options.infos.class)
+                            span_is_italic.text(options.infos.text)
+                            $(options.element_clicked).append(span_is_italic)
+                        window.light_box_information.hide()
+                    else
+                        alert('erreur')
+            )
+        update_text_infos :(text)->
+            $(options.element_clicked).parents('div.footer').find('.info_'+options['champ']).each(()->
+                $(this).text('('+text+')')
+            )
+               
 
 
 
 #_______ EACH ________________
     this.each(()->
         $(this).bind('click',()->
+            #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
+            options.element_clicked = this
+            
+            
+            
             #url level to update
             if optn.url_to_update == undefined
-                optn.url_to_update = optn.url_get_infos
-                
+                optn.url_to_update = optn.url_get_infos 
+                 
             #init table
             options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1]
             options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1]
-            console.log(optn.url_get_infos)
+            
             
             options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_get_infos).val()
             options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_to_update).val()
             
-            console.log(options)
+            
             options.the_url_get_infos = '/administration'
             options.the_url_to_update = '/administration'
             #url level get infos
@@ -224,7 +263,7 @@ $.fn.form_plugin = (optn)->
                 if i == 0
                     options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.user_id
                 else
-                    options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.id_entite_to_update
+                    options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.id_entite_update
                 i++
             
             

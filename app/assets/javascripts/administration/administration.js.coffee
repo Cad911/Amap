@@ -16,12 +16,20 @@ $(document).ready( () ->
         champ: 'prenom'
         element: 
             type: 'input'
+        button:
+            class:'update_prenom'
+            text_update:'Modifier le prenom'
+        
     )
+    
     $('.user_profile .content>.email').form_plugin(
         url_get_infos:['user']
         champ: 'email'
         element: 
             type: 'input'
+        button:
+            class:'update_email'
+            text_update:'Modifier l\'email'
     )
     # INDEX STOCK PRODUIT VENTE LIBRE 
     $('.card h2.title').form_plugin(
@@ -29,6 +37,9 @@ $(document).ready( () ->
         champ: 'titre'
         element: 
             type: 'input'
+        button:
+            class:'update_titre'
+            text_update:'Modifier le titre'
         url_get_infos:['user','stock']
         url_to_update: ['user','stock']
     )
@@ -37,15 +48,21 @@ $(document).ready( () ->
         champ: 'description'
         element: 
             type: 'textarea'
+        button:
+            class:'update_description'
+            text_update:'Modifier la description'
     )
-    $('.card li.prix').form_plugin(
+    $('.card li.prix>span.value').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre'] 
         champ: 'prix_unite_ttc'
         element: 
             type: 'input'
+        button:
+            class:'update_prix'
+            text_update:'Modifier le prix'
     )
-    $('.card li.unite_mesure').form_plugin(
+    $('.card li.unite_mesure>span.value').form_plugin(
         url_get_infos:['user','stock']
         champ: 'unite_mesure_id'
         element: 
@@ -53,28 +70,46 @@ $(document).ready( () ->
             options: 
                 value : [1,2]
                 text: ["Kilos","grammes"]
+        button:
+            class:'update_unite_mesure'
+            text_update:'Modifier l\'unite de mesure'
     )
-    $('.card li.quantite_lot').form_plugin(
+    
+    $('.card li.quantite_lot>span.value').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre'] 
         champ: 'quantite'
         element: 
             type: 'input'
+        button:
+            class:'update_quantite'
+            text_update:'Modifier la quantite'
+        infos:
+            class:'is_italic'
+            table:'unite_mesure'
+            champ:'nom'
     )
 
-    $('.card li.nombre_pack').form_plugin(
+    $('.card li.nombre_pack>span.value').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre']
         champ: 'nombre_pack'
         element: 
             type: 'input'
+        button:
+            class:'update_nombre_pack'
+            text_update:'Modifier le nombre de lot'
+        
     )
 
-    $('.card li.stock_total').form_plugin(
+    $('.card li.stock_total>span.value').form_plugin(
         url_get_infos:['user','stock']
         champ: 'quantite'
         element: 
             type: 'input'
+        button:
+            class:'update_quantite_stock'
+            text_update:'Modifier le stock total'
     )
 
 

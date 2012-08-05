@@ -24,6 +24,7 @@ class Administration::StocksController < InheritedResources::Base
 		  	:quantite => @stock.quantite,
 		  	:titre => @stock.titre,
 		  	:description => @stock.description,
+		  	:unite_mesure_id => @unite_mesure.id
 	  	},
 	  	
 	  	:unite_mesure => {
@@ -118,10 +119,19 @@ class Administration::StocksController < InheritedResources::Base
 	
    if @stock.update_attributes(params[:stock])
   		flash[:notice] = 'Stock modifie'
-		redirect_to administration_user_stock_path(params[:user_id],@stock)
+		
+		respond_to do |format|
+	  		format.json { render :json => true }
+	  		format.html { redirect_to administration_user_stock_path(params[:user_id],@stock) }
+	  	end
   	else
-  		flash[:notice] = 'Une erreur est survenu, veuillez ressayer'
-  		render 'edit'
+  		respond_to do |format|
+	  		format.json { render :json => false }
+	  		format.html { 
+	  			flash[:notice] = 'Une erreur est survenu, veuillez ressayer'
+	  			render 'edit' 
+	  		}
+	  	end
   	end
   end
   
