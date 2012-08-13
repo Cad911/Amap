@@ -105,6 +105,28 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   end
   #_________________________________________________________________
   
+  def update
+	  @produit_vente_libre = ProduitVenteLibre.new(params[:produit_vente_libre])
+	  
+	  #@stock_produit.quantite -=  (@produit_vente_libre.nombre_pack * @produit_vente_libre.quantite) #ON CHANGE LA QUANTITE EN STOCK
+	  
+	  
+	  if @produit_vente_libre.save #and @stock_produit.save 
+	  	respond_to do |format|
+	  		format.js { render :json => true}
+	  		format.html {flash[:notice] = "Produit ajoute et Stock mis a jour en consequence"
+	  				 redirect_to [:administration,User.find(params[:user_id]),@produit_vente_libre] }
+	  	end
+	  else
+	  	respond_to do |format|
+	  		format.js { render :json => true}
+	  		format.html {flash[:notice] = "ERREUR"
+	  	render 'new'}
+	  	end
+	  	
+	  end
+  end
+  #_________________________________________________________________
   
   
   
