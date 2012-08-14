@@ -569,6 +569,7 @@ ul.dropdown_menu {
     cursor:pointer;
   }
 }
+.deleted_p_c { @extend .close_cross; }
 
 .close_square {
   display:inline-block;
