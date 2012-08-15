@@ -31,7 +31,13 @@ $(document).ready( () ->
             class:'update_email'
             text_update:'Modifier l\'email'
     )
+    #-----------------------------------
+    #-----------------------------------
+    #-----------------------------------
     # INDEX STOCK PRODUIT VENTE LIBRE 
+    #-----------------------------------
+    #-----------------------------------
+    #-----------------------------------        
     $('.card h2.title').form_plugin(
         #table_get_infos: 'stock'
         champ: 'titre'
@@ -61,18 +67,36 @@ $(document).ready( () ->
         button:
             class:'update_prix'
             text_update:'Modifier le prix'
+    ).bind('end_form_plugin', ()->
+        $(this).append(' €')
     )
-    $('.card li.unite_mesure>span.value').form_plugin(
-        url_get_infos:['user','stock']
-        champ: 'unite_mesure_id'
-        element: 
-            type: 'select'
-            options: 
-                value : [1,2]
-                text: ["Kilos","grammes"]
-        button:
-            class:'update_unite_mesure'
-            text_update:'Modifier l\'unite de mesure'
+    
+    $.ajax(
+        type: 'POST'
+        url:"/administration/users/"+$('input.user_id').val()+"/get_unite_mesure"
+        format:'json'
+        complete:(data)->
+            informations = $.parseJSON(data['responseText'])
+            id = []
+            value = []
+            for champ, valeur of informations
+                id.push(valeur['id'])
+                value.push(valeur['nom'])
+            
+            $('.card li.unite_mesure>span.value').form_plugin(
+                url_get_infos:['user','stock']
+                champ: 'unite_mesure_id'
+                element: 
+                    type: 'select'
+                    options: 
+                        value : id
+                        text: value
+                button:
+                    class:'update_unite_mesure'
+                    text_update:'Modifier l\'unite de mesure'
+            ).bind('end_form_plugin',()->
+                    $('.info_unite_mesure_id').text('('+$(this).text()+')')
+            )       
     )
     
     $('.card li.quantite_lot>span.value').form_plugin(
@@ -84,11 +108,26 @@ $(document).ready( () ->
         button:
             class:'update_quantite'
             text_update:'Modifier la quantite'
-        infos:
-            class:'is_italic'
-            table:'unite_mesure'
-            champ:'nom'
-    )
+        # infos:
+#             class:'is_italic'
+#             table:'unite_mesure'
+#             champ:'nom'
+    ).bind('end_form_plugin',()->
+            user_id = $('input.user_id').val()
+            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+            url = '/administration/users/'+user_id+'/stocks/'+id_stock
+            that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+            this_element = this
+            $.ajax(
+                type: 'GET'
+                url:url
+                format:'json'
+                success:(data)->
+                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+                    $(this_element).append(' ('+data['unite_mesure']['nom']+')')
+                    
+            )
+    )#A FAIRE
 
     $('.card li.nombre_pack>span.value').form_plugin(
         url_get_infos:['user','stock']
@@ -100,6 +139,18 @@ $(document).ready( () ->
             class:'update_nombre_pack'
             text_update:'Modifier le nombre de lot'
         
+    ).bind('end_form_plugin',()->
+            user_id = $('input.user_id').val()
+            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+            url = '/administration/users/'+user_id+'/stocks/'+id_stock
+            that = this
+            $.ajax(
+                type: 'GET'
+                url:url
+                format:'json'
+                success:(data)->
+                    $(that).append(' /'+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+            )
     )
 
     $('.card li.stock_total>span.value').form_plugin(
@@ -110,7 +161,22 @@ $(document).ready( () ->
         button:
             class:'update_quantite_stock'
             text_update:'Modifier le stock total'
-    )
+            
+    ).bind('end_form_plugin',()->
+            user_id = $('input.user_id').val()
+            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+            url = '/administration/users/'+user_id+'/stocks/'+id_stock
+            that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+            this_element = this
+            $.ajax(
+                type: 'GET'
+                url:url
+                format:'json'
+                success:(data)->
+                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+                    $(this_element).append(' ('+data['unite_mesure']['nom']+')')
+            )
+    )#A FAIRE
 
 
 
