@@ -1,10 +1,10 @@
 		 <div class="page-header">
 		 	<h1> <%= @title_user %> </h1>
-		    <ul class="buttons">
-		        <li class="stats button"><span class="picture"></span></li>
-		        <li class="edit button" title=""><span class="picture"></span></li>
-		        <li class="help button"><span class="picture"></span></li>
-		    </ul>		 	
+		 	<ul class="buttons">
+		 		<li class="stats button"><span class="picture"></span></li>
+		 		<li class="edit button" title=""><span class="picture"></span></li>
+		 		<li class="help button"><span class="picture"></span></li>
+		 	</ul>		 	
 		 </div>
 
 
@@ -16,8 +16,8 @@
 
 		 <div class="user_profile">
 		 	<div class="informations_card">
-					<input type="hidden" class="user_id" value="<%= current_user.id %>" />
-				</div>
+		 		<input type="hidden" class="user_id" value="<%= current_user.id %>" />
+		 	</div>
 		 	<%#= current_user.id %>
 		 	<%#= notice %>
 		 	<%#= @user.id %>
@@ -33,15 +33,23 @@
 		 	<%#= @user.mode_denvoi_id %>
 		 	<%#= @user.alaune %>
 		 	<div class="pictures">
-		 		<div class="has_corners_shadow is_medium is_editing"><span class="modify">modifier</span><%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %></div>
-	 	        <span class="add button" title="Ajouter une image"><span class="picture"></span></span>
+		 		<div class="has_corners_shadow is_medium is_editing"><span class="deleted_p_c"></span><span class="modify">modifier</span><%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %></div>
+
+		 		<ul>
+		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><span class="add button" title="Ajouter une image"><span class="picture"></span></span></li>
+		 		</ul>
+
 		 	</div>
 		 	<div class="content">
-		 		<p class="title"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
-		 		<p class="is_note is_italic note location"><%= @user.ville.nom %> <%= @user.adresse %></p>
-		 		<p class="description"><%= @user.description %></p>
-		 		<p class="phone"><%= @user.telephone %></p>
-		 		<p class="email"><%= @user.email %></p>
+		 		<p class="title is_editing"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
+		 		<p class="is_note is_italic note location is_editing"><%= @user.ville.nom %> <%= @user.adresse %></p>
+		 		<p class="description is_editing"><%= @user.description %></p>
+		 		<p class="phone is_editing"><%= @user.telephone %></p>
+		 		<p class="email is_editing"><%= @user.email %></p>
 		 	</div>
 		 	<div class="clear"></div>
 
@@ -53,7 +61,7 @@
 
 
 		 </div>	
-		 <div class="">
+<!-- 		 <div class="">
 		 	<%= render 'form_photo' %>
 		 </div>
 		 <div class="">
@@ -67,6 +75,6 @@
 		 			<%= render 'update_form_photo' %>
 		 		</li>
 		 		<% end %>
-		 	</ul>
+		 	</ul> -->
 
 		 </div>	

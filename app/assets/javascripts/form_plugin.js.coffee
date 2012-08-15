@@ -14,6 +14,7 @@
 # A FAIRE 15/08
 # Reorganiser le code (faire une relecture)
 #Pour le prix (par exemple), lors de la mise à jour la devise ne s'affiche plus -- OK --
+#Probleme pour le nom et prenom, comment faire ?
 
 
 
