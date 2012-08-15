@@ -41,12 +41,17 @@ body .l_wrapper .l_main_gutter.home_page {
 			border-bottom:#C8C5BF 1px solid;
 			padding:20px;
 			.image {
-				width:525px;				
-				height:270px;				
-				border-top:solid 1px #C8C5BF;
-				border-left:solid 1px #C8C5BF;
-				border-bottom:solid 1px #ffffff;
-				border-right:solid 1px #ffffff;
+				width:515px;				
+				height:260px;				
+				border:solid 1px #ffffff;
+				background-color:#FCFCFC;
+				background-repeat:repeat-y;
+				padding: 5px;
+				@include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
+				img {
+					width: 515px;
+					height: 260px;
+				}
 			}
 			ul.nav {
 				li {

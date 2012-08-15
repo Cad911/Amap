@@ -1,3 +1,96 @@
-.cards {
-	
+.card_stack {
+	position: relative;
+	.packaging {
+		display: block;
+		position: relative;
+		width: 409px;
+		height: 172px;
+		z-index: 6;
+		top: -7px;
+		left: 111px;
+		padding: 10px 33px 19px 33px;
+
+		@include backoffice-sprite(basket_packaging);
+	}
+	.header {
+		margin:10px 0 0 0;
+
+		border-bottom: solid 1px #EBEBEB;
+	}
+	h2 {
+		float: left;
+		width: 269px;
+		margin:5px 0 5px -10px;
+		padding:5px 0 5px 10px;	
+	}
+	.body {
+		border-bottom: solid 1px #EBEBEB;
+	}
+	.description {
+      margin:5px 0 10px -10px;
+      padding:10px 0 5px 10px;
+
+      border: solid 1px #fcfcfc;
+	}
+	.buttons_card {
+		width: 80px;
+		float: right;
+		margin: 10px 0 0px 0;
+	}
+	.button {
+		float: right;
+		margin-right: 10px;
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+	.footer {
+
+	}
+	.main-informations {
+		li {
+			display: inline-block;
+			padding-right: 25px;
+		}
+	}
+	.icon {
+		margin-left: 10px;
+		vertical-align: top;
+		display: inline-block;
+		&.members {
+			width: 22px;
+			height: 24px;
+			@include backoffice-sprite(farmer_little);
+		}
+		&.pictures {
+			width: 27px;
+			height: 19px;
+			@include backoffice-sprite(pictures_little);
+			margin-top: 3px;
+		}
+		&.products {
+			width: 18px;
+			height: 24px;
+			@include backoffice-sprite(products_little);
+		}
+	}
+	.number {
+		color: $brown;
+		font-size: 20px;
+	}
+	.card {
+		position: absolute;
+		&.one {
+			top: 0;
+			z-index: 3;
+		}
+		&.two {
+			top: -3px;
+			z-index: 4;
+		}
+		&.three {
+			top: -6px;
+			z-index: 5;
+		}
+	}
 }
