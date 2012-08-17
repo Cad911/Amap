@@ -21,7 +21,7 @@ $(document).ready( () ->
 
     $('.user_profile .content>.title').form_plugin(
         url_get_infos:['user']
-        champ: 'prenom'
+        champ: 'prenom, nom'
         element: 
             type: 'input'
         button:

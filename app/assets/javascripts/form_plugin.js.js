@@ -2,16 +2,16 @@
 (function() {
 
   $.fn.form_plugin = function(optn) {
-    var functions, options, _ref, _ref1, _ref2, _ref3;
+    var champ, champ_opt, functions, options, valeur, _ref, _ref1, _ref2, _ref3;
     options = {
       user_id: $('input.user_id').val(),
       table_get_infos: '',
       table_to_update: '',
-      champ: (_ref = optn.champ) != null ? _ref : '',
+      champ: [],
       id_entite_get_infos: '',
       id_entite_update: '',
       element: {
-        type: (_ref1 = optn['element']['type']) != null ? _ref1 : 'input',
+        type: (_ref = optn['element']['type']) != null ? _ref : 'input',
         options: {
           value: optn['element']['options'] !== void 0 ? optn['element']['options']['value'] : [],
           text: optn['element']['options'] !== void 0 ? optn['element']['options']['text'] : []
@@ -19,14 +19,20 @@
       },
       "class": 'string optional',
       button: {
-        "class": optn['button'] !== void 0 ? (_ref2 = optn['button']['class']) != null ? _ref2 : 'update_element' : 'update_element',
-        text_update: optn['button'] !== void 0 ? (_ref3 = optn['button']['text_update']) != null ? _ref3 : 'Modifier' : 'Modifier'
-      }
+        "class": optn['button'] !== void 0 ? (_ref1 = optn['button']['class']) != null ? _ref1 : 'update_element' : 'update_element',
+        text_update: optn['button'] !== void 0 ? (_ref2 = optn['button']['text_update']) != null ? _ref2 : 'Modifier' : 'Modifier'
+      },
+      callback: (_ref3 = optn.callback) != null ? _ref3 : null
     };
+    champ_opt = optn['champ'].split(',');
+    for (champ in champ_opt) {
+      valeur = champ_opt[champ];
+      options.champ.push($.trim(valeur));
+    }
     functions = {
-      input_create: '',
+      input_create: [],
       show_form: function(donnees) {
-        var attribut, i, option;
+        var attribut, attribut_input, champ, i, option, valeur_champ, _ref4;
         attribut = {
           hidden_input: {
             balise: 'input',
@@ -36,44 +42,47 @@
             type_input: 'hidden',
             name: options.table + '[id]'
           },
-          input: {
-            balise: options['element']['type'],
-            id: options.table_to_update + '_' + options.champ,
-            value: donnees[options['table_to_update']][options['champ']],
-            size: '50',
-            type_input: 'text',
-            name: options.table_to_update + '[' + options.champ + ']',
-            "class": 'string optional',
-            option: []
-          },
           link: {
             "class": options.button["class"],
             text: options.button.text_update
-          }
+          },
+          input: []
         };
-        if (attribut['input']['balise'] === 'select') {
-          i = 0;
-          while (i < options['element']['options']['value'].length) {
-            option = $(document.createElement('option'));
-            option.attr('value', options['element']['options']['value'][i]);
-            option.text(options['element']['options']['text'][i]);
-            if (options['element']['options']['value'][i] === donnees[options.table_to_update][options.champ]) {
-              option.attr('selected', 'selected');
+        _ref4 = options.champ;
+        for (champ in _ref4) {
+          valeur_champ = _ref4[champ];
+          attribut_input = {
+            balise: options['element']['type'],
+            id: options.table_to_update + '_' + valeur_champ,
+            value: donnees[options['table_to_update']][valeur_champ],
+            size: '50',
+            type_input: 'text',
+            name: options.table_to_update + '[' + valeur_champ + ']',
+            "class": 'string optional',
+            option: []
+          };
+          attribut['input'].push(attribut_input);
+          if (attribut_input['balise'] === 'select') {
+            attribut.input[champ].option = [];
+            i = 0;
+            while (i < options['element']['options']['value'].length) {
+              option = $(document.createElement('option'));
+              option.attr('value', options['element']['options']['value'][i]);
+              option.text(options['element']['options']['text'][i]);
+              if (options['element']['options']['value'][i] === donnees[options.table_to_update][valeur_champ]) {
+                option.attr('selected', 'selected');
+              }
+              attribut.input[champ].option.push(option);
+              i++;
             }
-            attribut.input.option.push(option);
-            i++;
           }
-        }
-        if (optn.infos !== void 0) {
-          options.infos = {};
-          options.infos["class"] = 'is_italic';
-          options.infos.text = ' (' + donnees[optn.infos.table][optn.infos.champ] + ')';
         }
         functions.generate_form(attribut);
         return window.light_box_information.show();
       },
       generate_form: function(attribut) {
-        var a, hidden_input, i, input, span, span_annuler, span_infos;
+        var a, champ, hidden_input, i, input, span, span_annuler, span_infos, valeur, _ref4;
+        window.light_box_information.html_content('');
         window.light_box_information.title_header('Titre');
         hidden_input = $(document.createElement(attribut['hidden_input']['balise']));
         hidden_input.attr('id', attribut['hidden_input']['id']);
@@ -81,25 +90,29 @@
         hidden_input.val(attribut['hidden_input']['value']);
         hidden_input.attr('type', attribut['hidden_input']['type_input']);
         hidden_input.addClass(attribut['hidden_input']['class']);
-        input = $(document.createElement(attribut['input']['balise']));
-        input.attr('id', attribut['input']['id']);
-        input.attr('name', attribut['input']['name']);
-        input.val(attribut['input']['value']);
-        input.addClass(attribut['input']['class']);
-        if (attribut['input']['balise'] === 'input') {
-          input.attr('type', attribut['input']['type_input']);
-          input.attr('size', attribut['input']['size']);
-        } else if (attribut['input']['balise'] === 'textarea') {
-          input.attr('cols', attribut['input']['size']);
-        } else if (attribut['input']['balise'] === 'select') {
-          i = 0;
-          while (i < options['element']['options']['value'].length) {
-            input.append(attribut.input.option[i]);
-            i++;
+        _ref4 = attribut['input'];
+        for (champ in _ref4) {
+          valeur = _ref4[champ];
+          input = $(document.createElement(valeur['balise']));
+          input.attr('id', valeur['id']);
+          input.attr('name', valeur['name']);
+          input.val(valeur['value']);
+          input.addClass(valeur['class']);
+          if (valeur['balise'] === 'input') {
+            input.attr('type', valeur['type_input']);
+            input.attr('size', valeur['size']);
+          } else if (valeur['balise'] === 'textarea') {
+            input.attr('cols', valeur['size']);
+          } else if (valeur['balise'] === 'select') {
+            i = 0;
+            while (i < options['element']['options']['value'].length) {
+              input.append(valeur.option[i]);
+              i++;
+            }
           }
+          functions.input_create.push(input);
+          window.light_box_information.append_content(input);
         }
-        functions.input_create = input;
-        window.light_box_information.html_content(input);
         window.light_box_information.append_content(hidden_input);
         if (attribut['span_infos']) {
           span_infos = $(document.createElement('span'));
@@ -126,52 +139,56 @@
           type: 'GET',
           url: options.the_url_get_infos,
           format: 'json',
-          success: function(data) {
-            return data;
-          }
-        });
-      },
-      update_information: function(button) {
-        var champ, data, id_entite, tab_concerned, user_id, val;
-        user_id = $('input.user_id').val();
-        tab_concerned = options.table_to_update;
-        id_entite = options.id_entite_update;
-        champ = options.champ;
-        val = $(functions.input_create).val();
-        data = {};
-        data[tab_concerned] = {};
-        data[tab_concerned][champ] = val;
-        return $.ajax({
-          type: 'PUT',
-          url: options.the_url_to_update,
-          data: data,
-          format: 'json',
-          success: function(data) {
-            var span_is_italic;
-            if (data) {
-              if (options.element.type === 'select') {
-                $(options.element_clicked).text($(functions.input_create).children("option[value='" + val + "']").text());
-              } else {
-                $(options.element_clicked).text(val);
-              }
-              functions.update_text_infos($(options.element_clicked).text());
-              if (options.infos !== void 0) {
-                span_is_italic = $(document.createElement('span'));
-                span_is_italic.addClass(options.infos["class"]);
-                span_is_italic.text(options.infos.text);
-                $(options.element_clicked).append(span_is_italic);
-              }
-              return window.light_box_information.hide();
+          complete: function(data) {
+            var informations;
+            informations = $.parseJSON(data['responseText']);
+            if (informations['status'] === 'OK') {
+              return informations;
             } else {
-              return alert('erreur');
+              return alert(informations['error']);
             }
           }
         });
       },
-      update_text_infos: function(text) {
-        return $(options.element_clicked).parents('div.footer').find('.info_' + options['champ']).each(function() {
-          return $(this).text('(' + text + ')');
-        });
+      update_information: function(button) {
+        var champ, data, id_entite, tab_concerned, user_id, val, valeur, value_to_show, _ref4, _results;
+        user_id = $('input.user_id').val();
+        value_to_show = '';
+        _ref4 = functions.input_create;
+        _results = [];
+        for (champ in _ref4) {
+          valeur = _ref4[champ];
+          tab_concerned = options.table_to_update;
+          id_entite = options.id_entite_update;
+          champ = options.champ[champ];
+          val = $(valeur).val();
+          data = {};
+          data[tab_concerned] = {};
+          data[tab_concerned][champ] = val;
+          value_to_show += ' ' + val;
+          _results.push($.ajax({
+            type: 'PUT',
+            url: options.the_url_to_update,
+            data: data,
+            format: 'json',
+            complete: function(data) {
+              var informations;
+              informations = $.parseJSON(data['responseText']);
+              if (informations['status'] === 'OK') {
+                if (options.element.type === 'select') {
+                  $(options.element_clicked).text($(valeur).children("option[value='" + val + "']").text());
+                } else {
+                  $(options.element_clicked).text($.trim(value_to_show));
+                }
+                window.light_box_information.hide();
+                return $(options.element_clicked).trigger('end_form_plugin');
+              } else {
+                return alert(informations['error']);
+              }
+            }
+          }));
+        }
+        return _results;
       }
     };
     return this.each(function() {
@@ -212,9 +229,10 @@
           i++;
         }
         that = this;
-        return $.when(functions.get_information()).done(function(data) {
+        $.when(functions.get_information()).done(function(data) {
           return functions.show_form(data);
         });
+        return this;
       });
     });
   };
