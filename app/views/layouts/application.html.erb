@@ -41,7 +41,7 @@
 </head>
 <body>
 <div class="overall_shadow"></div>
-
+<!-- 
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -56,17 +56,17 @@
 				<div class="nav-collapse"> 
 					<ul class="nav">
 						<li> <%= link_to "Mes infos" , administration_user_path(current_user) %></li>
-							<!-- _______________________________ REVENDEUR _______________________________________ -->
+							 _______________________________ REVENDEUR _______________________________________ 
 							<% if current_user.has_revendeur %>
 							<li> <%= link_to "Mes revendeurs" , administration_user_revendeur_path(current_user) %> </li>
 							<li> <%= link_to "Mes points relai" , administration_user_point_relais_path(current_user) %> </li>
 							<% end %>
-							<!-- _______________________________ AUTORISATION PRODUIT _______________________________________ -->
+							 _______________________________ AUTORISATION PRODUIT _______________________________________ 
 							<% if current_user.autorisation_produit %>
 							<li> <%= link_to "Produits autorise" , administration_user_produit_autorises_path(current_user) %> </li>
 							<li> <%= link_to "Paniers autorise" , administration_user_panier_autorises_path(current_user) %> </li>
 							<% end %>
-							<!-- _______________________________ CAN STOCK _______________________________________ -->
+							 _______________________________ CAN STOCK _______________________________________ 
 							<% if current_user.can_stock_ar || current_user.can_stock_sr %>
 							<li> <%= link_to "Mon stock" , administration_user_stocks_path(current_user) %> </li>
 							<li> <%= link_to "Mes produits en ligne" , administration_user_produit_vente_libres_path(current_user) %> </li>
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 	
-	</div>
+	</div> -->
 	
 	
 
