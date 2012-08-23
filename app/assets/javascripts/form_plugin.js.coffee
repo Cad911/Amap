@@ -11,6 +11,12 @@
 # A FAIRE 4/08
 # quand la modif est effectué, modifier le texte dans le champ (en live)
 # mieux placer la box
+# A FAIRE 15/08
+# Reorganiser le code (faire une relecture)
+#Pour le prix (par exemple), lors de la mise à jour la devise ne s'affiche plus -- OK --
+#Probleme pour le nom et prenom, comment faire ?
+
+
 
 
 
@@ -27,6 +33,7 @@
 #  - element.options.text : les valeurs du text des options du select (si select il y a)
 #  - button.class : class du bouton valider modification
 #  - button.text_update: text du bouton pour la modification
+#  - trigger d'un evenement a la fin du update pour pouvoir faire de nouvel modif. Nom event : end_form_plugin
  
 
 
@@ -36,7 +43,7 @@ $.fn.form_plugin = (optn)->
         user_id: $('input.user_id').val()
         table_get_infos : ''
         table_to_update: ''
-        champ: optn.champ ? ''
+        champ: []
         id_entite_get_infos: ''
         id_entite_update: ''  #ID ENTITE
         element: 
@@ -48,18 +55,23 @@ $.fn.form_plugin = (optn)->
         button:
             class: if optn['button'] != undefined then optn['button']['class'] ? 'update_element' else 'update_element'
             text_update: if optn['button'] != undefined then optn['button']['text_update'] ? 'Modifier' else 'Modifier'
+        callback: optn.callback ? null
         #url_get_infos:''
         #url_to_update:''
         #the_url_get_infos:''
         #the_url_to_update:''
     
+    champ_opt = optn['champ'].split(',')            
+    for champ, valeur of champ_opt 
+        options.champ.push($.trim(valeur))
     
     
     #__ FUNCTIONS ___
     functions = 
-        input_create : ''
+        input_create : []
         #_____ RECUP DES DONNEES POUR GENERER LE FORMULAIRE _____
         show_form:(donnees) ->
+            
             attribut = 
                 hidden_input:
                     balise:'input'
@@ -68,40 +80,42 @@ $.fn.form_plugin = (optn)->
                     size:'50'
                     type_input:'hidden'
                     name:options.table+'[id]'
-                    
-                input:
-                    balise : options['element']['type']
-                    id:options.table_to_update+'_'+options.champ #'stock_titre'
-                    value:donnees[options['table_to_update']][options['champ']]
-                    size:'50'
-                    type_input:'text'
-                    name:options.table_to_update+'['+options.champ+']'
-                    class:'string optional'
-                    option: []
-                
                                    
                 link:
                     class:options.button.class
                     text:options.button.text_update
+                
+                input:[]
+                    
+            #SI IL Y A PLUSiEURS CHAMPS       
             
-            #SI SELECT
-            if attribut['input']['balise'] == 'select'
-                i = 0
-                while  i < options['element']['options']['value'].length
-                    option = $(document.createElement('option'))
-                    option.attr('value',options['element']['options']['value'][i])
-                    option.text(options['element']['options']['text'][i])
-                    if options['element']['options']['value'][i] ==   donnees[options.table_to_update][options.champ]     
-                        option.attr('selected','selected')
-                    (attribut.input.option).push(option)
-                    i++
+            for champ, valeur_champ of options.champ 
+                attribut_input = 
+                    balise : options['element']['type']
+                    id:options.table_to_update+'_'+valeur_champ #'stock_titre'
+                    value:donnees[options['table_to_update']][valeur_champ]
+                    size:'50'
+                    type_input:'text'
+                    name:options.table_to_update+'['+valeur_champ+']'
+                    class:'string optional'
+                    option: []
+                attribut['input'].push(attribut_input)
+                
+                #SI SELECT
+                if attribut_input['balise'] == 'select'
+                    attribut.input[champ].option = []
+                    i = 0
+                    while  i < options['element']['options']['value'].length
+                        option = $(document.createElement('option'))
+                        option.attr('value',options['element']['options']['value'][i])
+                        option.text(options['element']['options']['text'][i])
+                        if options['element']['options']['value'][i] ==   donnees[options.table_to_update][valeur_champ]     
+                            option.attr('selected','selected')
+                        (attribut.input[champ].option).push(option)
+                        i++
             
-            #SI INFOS AFFICHE A COTE de lelement . Ex : devise à coté du prix
-            #Information complementaire dans le champ
-            if optn.infos != undefined
-                options.infos = {}
-                options.infos.class = 'is_italic'
-                options.infos.text = ' ('+donnees[optn.infos.table][optn.infos.champ]+')'
+            
+            
             
             
             functions.generate_form(attribut)
@@ -109,6 +123,7 @@ $.fn.form_plugin = (optn)->
 			            
 
         generate_form: (attribut) ->
+            window.light_box_information.html_content('')
             window.light_box_information.title_header('Titre')
             #HIDDEN INPUT WITH ID
             hidden_input = $(document.createElement(attribut['hidden_input']['balise']))
@@ -119,26 +134,28 @@ $.fn.form_plugin = (optn)->
             hidden_input.addClass(attribut['hidden_input']['class'])
             
             #INPUT SELECT TEXTARE
-            input = $(document.createElement(attribut['input']['balise']))
-            input.attr('id',attribut['input']['id'])
-            input.attr('name',attribut['input']['name'])
-            input.val(attribut['input']['value'])
-            input.addClass(attribut['input']['class'])
+            for champ, valeur of attribut['input']
+                input = $(document.createElement(valeur['balise']))
+                input.attr('id',valeur['id'])
+                input.attr('name',valeur['name'])
+                input.val(valeur['value'])
+                input.addClass(valeur['class'])
+                
+                if valeur['balise'] == 'input'
+                    input.attr('type',valeur['type_input'])
+                    input.attr('size',valeur['size'])
+                else if valeur['balise'] == 'textarea'
+                    input.attr('cols',valeur['size'])
+                else if valeur['balise'] == 'select'
+                    i = 0
+                    while  i < options['element']['options']['value'].length       
+                        input.append(valeur.option[i])
+                        i++
             
-            if attribut['input']['balise'] == 'input'
-                input.attr('type',attribut['input']['type_input'])
-                input.attr('size',attribut['input']['size'])
-            else if attribut['input']['balise'] == 'textarea'
-                input.attr('cols',attribut['input']['size'])
-            else if attribut['input']['balise'] == 'select'
-                i = 0
-                while  i < options['element']['options']['value'].length       
-                    input.append(attribut.input.option[i])
-                    i++
+                (functions.input_create).push(input)
             
+                window.light_box_information.append_content(input)
             
-            functions.input_create = input
-            window.light_box_information.html_content(input)
             window.light_box_information.append_content(hidden_input)
             #SPAN INFOS
             if attribut['span_infos']
@@ -171,54 +188,55 @@ $.fn.form_plugin = (optn)->
                 type: 'GET'
                 url:options.the_url_get_infos#'/administration/users/'+user_id+'/'+options.table_get_infos+'s/'+options.id_entite_get_infos
                 format:'json'
-                success:(data)->
-                    return data
+                complete:(data)->
+                    informations = $.parseJSON(data['responseText'])
+                    if informations['status'] == 'OK'
+                        return informations
+                    else
+                        alert(informations['error'])
+                    
             )
         
         update_information: (button)->
             user_id = $('input.user_id').val()
+            value_to_show = ''
             
-            tab_concerned = options.table_to_update
-            id_entite = options.id_entite_update
-            champ = options.champ
-            val = $(functions.input_create).val()
-            
-            data = {}
-            data[tab_concerned] = {}
-            data[tab_concerned][champ] = val
-      
-            $.ajax(
-                type: 'PUT'
-                url:options.the_url_to_update#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
-                data:data
-                format:'json'
-                success:(data)->
-                    if data
-                        if options.element.type == 'select'
-                            $(options.element_clicked).text($(functions.input_create).children("option[value='"+val+"']").text())
-                        else
-                            $(options.element_clicked).text(val)
+            for champ, valeur of functions.input_create
+                tab_concerned = options.table_to_update
+                id_entite = options.id_entite_update
+                champ = options.champ[champ]
+                val = $(valeur).val()
+                
+                data = {}
+                data[tab_concerned] = {}
+                data[tab_concerned][champ] = val
+                value_to_show += ' '+val
+                $.ajax(
+                    type: 'PUT'
+                    url:options.the_url_to_update#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
+                    data:data
+                    format:'json'
+                    complete:(data)->
+                        informations = $.parseJSON(data['responseText'])
                         
-                        functions.update_text_infos($(options.element_clicked).text())
-                        if options.infos != undefined
-                            span_is_italic = $(document.createElement('span'))
-                            span_is_italic.addClass(options.infos.class)
-                            span_is_italic.text(options.infos.text)
-                            $(options.element_clicked).append(span_is_italic)
-                        window.light_box_information.hide()
-                    else
-                        alert('erreur')
-            )
-        update_text_infos :(text)->
-            $(options.element_clicked).parents('div.footer').find('.info_'+options['champ']).each(()->
-                $(this).text('('+text+')')
-            )
+                        if informations['status'] == 'OK'
+                            if options.element.type == 'select'
+                                $(options.element_clicked).text($(valeur).children("option[value='"+val+"']").text())
+                            else
+                                $(options.element_clicked).text($.trim(value_to_show))
+                            
+                            window.light_box_information.hide()
+                            $(options.element_clicked).trigger('end_form_plugin')
+                        else
+                            alert(informations['error'])
+                )
+
                
 
 
 
 #_______ EACH ________________
-    this.each(()->
+    return this.each(()->
         $(this).bind('click',()->
             #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
             options.element_clicked = this
@@ -272,6 +290,7 @@ $.fn.form_plugin = (optn)->
             $.when(functions.get_information()).done((data)->
                 functions.show_form(data)
             )
+            this
         )
 
          

@@ -109,7 +109,7 @@
   }                
 }
 
-.is_editing {
+.is-editing {
     border:rgba(255,255,255, 0) solid 1px;
     @include transition-property(all);
     @include transition-duration(0.3s);
@@ -204,7 +204,7 @@
     @include transition-duration(0.3s);
     @include transition-timing-function(ease-out);           
   }
-  .description.is_editing, h2.is_editing, ul li.details.is_editing {
+  .description.is-editing, h2.is-editing, ul li.details.is-editing {
     &:hover {
       background-color:lighten(#E9D986, 20%);
       border:solid 1px lighten(#E9D986, 1%);

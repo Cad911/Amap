@@ -40,6 +40,9 @@
     margin:0;
     @include title(2,20px);
   }
+  i {
+    padding-right: 5px;
+  }
   .close {
     display:block;
     position: absolute;
@@ -902,4 +905,35 @@ ul.dropdown_menu {
       border-left:1px solid $embossed_dark;
     }
   }
+}
+.truncate-wrap {
+  position:relative;
+}
+.is-truncated {
+  //max-width: 125px;
+  //height: 24px;
+  position: absolute;
+
+  vertical-align: top;
+  overflow: hidden;  
+  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover, &:active {
+    z-index: 100;
+    white-space: normal;
+    overflow: visible;
+
+    background: #fcfcfc;
+    @include single-box-shadow;
+  }
+}
+
+
+.icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  @include ui-sprite(help_hover);
 }

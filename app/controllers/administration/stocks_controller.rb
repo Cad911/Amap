@@ -46,7 +46,13 @@ class Administration::StocksController < InheritedResources::Base
 	  	}
   	}
   	respond_to do |format|
-  		format.json { render :json => @stock_produit_vente_libre }
+  		format.json { render :json => {
+  			:status => "OK",
+  			:stock => @stock_produit_vente_libre[:stock],
+  			:unite_mesure => @stock_produit_vente_libre[:unite_mesure],
+  			:produit_vente_libre => @stock_produit_vente_libre[:produit_vente_libre],  			  			
+  			}
+  		}
   		format.html { render :show }
   	end
   end
@@ -121,12 +127,19 @@ class Administration::StocksController < InheritedResources::Base
   		flash[:notice] = 'Stock modifie'
 		
 		respond_to do |format|
-	  		format.json { render :json => true }
+	  		format.json { render :json => {
+	  			:status => "OK"
+	  			}
+	  		 }
 	  		format.html { redirect_to administration_user_stock_path(params[:user_id],@stock) }
 	  	end
   	else
   		respond_to do |format|
-	  		format.json { render :json => false }
+	  		format.json { render :json => {
+		  		:status => "error",
+		  		:error => 'Une erreur est survenue'
+		  		} 
+		  	}
 	  		format.html { 
 	  			flash[:notice] = 'Une erreur est survenu, veuillez ressayer'
 	  			render 'edit' 

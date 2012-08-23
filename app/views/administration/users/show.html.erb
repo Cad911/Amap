@@ -9,7 +9,7 @@
 
 
 		 <div class="helper">
-		 	<p class="title is_bold">Gérer votre profil</p>
+		 	<p class="title is_bold"><i class="icon ui-help_hover">Gérer votre profil</p>
 		 	<span class="close"><i class="icon-remove"></i></span>
 		 	<p class="content">Modifier chaque éléments de votre profil en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 		 </div>			
@@ -33,23 +33,23 @@
 		 	<%#= @user.mode_denvoi_id %>
 		 	<%#= @user.alaune %>
 		 	<div class="pictures">
-		 		<div class="has_corners_shadow is_medium is_editing"><span class="deleted_p_c"></span><span class="modify">modifier</span><%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %></div>
+		 		<div class="has_corners_shadow is_medium is-editing"><span class="deleted_p_c"></span><span class="modify">modifier</span><%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %></div>
 
 		 		<ul>
-		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is_editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
+		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
 		 			<li><span class="add button" title="Ajouter une image"><span class="picture"></span></span></li>
 		 		</ul>
 
 		 	</div>
 		 	<div class="content">
-		 		<p class="title is_editing"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
-		 		<p class="is_note is_italic note location is_editing"><%= @user.ville.nom %> <%= @user.adresse %></p>
-		 		<p class="description is_editing"><%= @user.description %></p>
-		 		<p class="phone is_editing"><%= @user.telephone %></p>
-		 		<p class="email is_editing"><%= @user.email %></p>
+		 		<p class="title is-editing"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
+		 		<p class="is_note is_italic note location is-editing"><%= @user.ville.nom %> <%= @user.adresse %></p>
+		 		<p class="description is-editing"><%= @user.description %></p>
+		 		<p class="phone is-editing"><%= @user.telephone %></p>
+		 		<p class="email is-editing"><%= @user.email %></p>
 		 	</div>
 		 	<div class="clear"></div>
 

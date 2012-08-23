@@ -20,7 +20,11 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		end
 		
 		respond_to do |format|
-  			format.json { render :json => {'user' => @user} }
+  			format.json { render :json => {
+  					:status => 'OK',
+  					:user => @user
+  				} 
+  			}
   			format.html { render :show }
   		end
 	end
@@ -48,8 +52,19 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	def update
 		@user = User.find(params[:id])
 		if @user.update_attributes(params[:user])
-	  		flash[:notice] = 'User mis a jour'
-	  		redirect_to administration_user_path(@user)
+	  		respond_to do |format|
+  			format.json { render :json => {
+  					:status => 'OK',
+  					:user => @user
+  				} 
+  			}
+  			format.html { 
+  				flash[:notice] = 'User mis a jour'
+  				render :show
+  			}
+  		end
+  		
+	  		
 	  	else
 	  		render 'edit'
 	  	end

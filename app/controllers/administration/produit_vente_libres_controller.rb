@@ -106,20 +106,50 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   #_________________________________________________________________
   
   def update
-	  @produit_vente_libre = ProduitVenteLibre.new(params[:produit_vente_libre])
+	  @produit_vente_libre = ProduitVenteLibre.find(params[:id])
+	  #@stock = Stock.find(@produit_vente_libre.stock.id)
 	  
-	  #@stock_produit.quantite -=  (@produit_vente_libre.nombre_pack * @produit_vente_libre.quantite) #ON CHANGE LA QUANTITE EN STOCK
+	  #verification si quantite mis en ligne ne depasse pas la quantite en stock
+	  @quantite_produit_vente_libre = (!params[:produit_vente_libre][:quantite].nil?) ? params[:produit_vente_libre][:quantite] : @produit_vente_libre.quantite
+	  @nb_pack = (!params[:produit_vente_libre][:nombre_pack ].nil?) ? params[:produit_vente_libre][:nombre_pack ] : @produit_vente_libre.nombre_pack
+	  
+	  @quantite_restante = @produit_vente_libre.stock.quantite - (@quantite_produit_vente_libre.to_i * @nb_pack.to_i)
 	  
 	  
-	  if @produit_vente_libre.save #and @stock_produit.save 
-	  	respond_to do |format|
-	  		format.js { render :json => true}
-	  		format.html {flash[:notice] = "Produit ajoute et Stock mis a jour en consequence"
-	  				 redirect_to [:administration,User.find(params[:user_id]),@produit_vente_libre] }
-	  	end
+	  if @quantite_restante >= 0
+		  if @produit_vente_libre.update_attributes(params[:produit_vente_libre]) #and @stock_produit.save 
+		  	respond_to do |format|
+		  		format.js { render :json => {
+			  			:status => "OK", 
+			  			:produit_vente_libre => { 
+				  			:id => @produit_vente_libre.id
+			  			},
+			  			:stock => {
+				  			:quantite_restante => @quantite_restante
+			  			}
+		  			}
+		  		}
+		  		format.html {flash[:notice] = "Produit ajoute et Stock mis a jour en consequence"
+		  				 redirect_to [:administration,User.find(params[:user_id]),@produit_vente_libre] }
+		  	end
+		  end
 	  else
 	  	respond_to do |format|
-	  		format.js { render :json => true}
+	  		format.js { render :json => {
+		  			:status => "error",
+		  			:error => "Quantite mis en ligne depasse la quantite du stock", 
+		  			:produit_vente_libre => { 
+			  			:id => @produit_vente_libre.id,
+			  			:nb_pack => @nb_pack,
+			  			:quantite => @quantite_produit_vente_libre,
+			  			:rest => @quantite_restante
+		  			},
+		  			:stock => {
+			  			:quantite_restante => @quantite_restante
+		  			}
+	
+		  		}
+	  		}
 	  		format.html {flash[:notice] = "ERREUR"
 	  	render 'new'}
 	  	end
@@ -129,7 +159,10 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   #_________________________________________________________________
   
   
-  
+#   def lotMaximum
+#   	@produit_vente_libre = ProduitVenteLibre.find(params[:id])
+#   	return  @produit_vente_libre.lotPossibleMax
+#   end
   #_________________________________________________________________
   #_________________________________________________________________
   #_________________________________________________________________

@@ -8,7 +8,7 @@
 			@include transition-duration(0.3s);
 			@include transition-timing-function(ease-out);  		       
 		}
-		.description.is_editing, .title.is_editing, .phone.is_editing, .email.is_editing, .location.is_editing { 
+		.description.is-editing, .title.is-editing, .phone.is-editing, .email.is-editing, .location.is-editing { 
 			&:hover {
 				background-color:lighten(#E9D986, 20%);
 				border:solid 1px lighten(#E9D986, 1%);
@@ -74,7 +74,7 @@
 				}
 			}	
 			.has_corners_shadow {
-				&.is_editing {
+				&.is-editing {
 					.modify {
 						display:none;
 						position:absolute;
@@ -101,7 +101,7 @@
 				float:left;
 				margin:0 20px 20px 0;
 				position:relative;
-				&.is_editing {
+				&.is-editing {
 					.modify {
 						top: 85px;
 						left:65px;	

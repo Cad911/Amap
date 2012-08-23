@@ -1,5 +1,10 @@
 .card_stack {
 	position: relative;
+	&:hover {
+		.buttons_card {
+			opacity: 1;
+		}
+	}
 	.packaging {
 		display: block;
 		position: relative;
@@ -19,18 +24,22 @@
 	}
 	h2 {
 		float: left;
-		width: 269px;
+		width: 309px;
 		margin:5px 0 5px -10px;
 		padding:5px 0 5px 10px;	
 	}
 	.body {
+		height: 50px;
+
 		border-bottom: solid 1px #EBEBEB;
 	}
 	.description {
+	  width: 410px;
       margin:5px 0 10px -10px;
       padding:10px 0 5px 10px;
 
       border: solid 1px #fcfcfc;
+      border: solid 1px rgba(255,255,255,0);
 	}
 	.buttons_card {
 		width: 80px;
@@ -48,17 +57,46 @@
 
 	}
 	.main-informations {
+		width: 225px;
+		float: left;
+		margin: 0px 0 0px -10px;
+		padding: 7px 0 8px 10px;
 		li {
 			display: inline-block;
 			padding-right: 25px;
 		}
+		.number {
+			color: $brown;
+			font-size: 20px;
+		}		
 	}
 	.details {
 		float: left;
-		width: 200px;
+		width: 180px;
+		margin: 0px 0 0px 0px;
+		padding: 5px 0 0px 0px;
 	}
 	.detail {
-		display: inline-block;
+		display: block;
+		float: left;
+		width: 60px;
+
+		text-align: center;
+		.label {
+			display: block;
+
+			font-size: 13px;
+			color: $brown;
+			font-family: 'helveticaneue-bold';
+		}
+		.number {
+			display: block;
+			margin: 0;
+			padding: 0;
+			li {
+				display: inline-block;
+			}
+		}
 	}
 	.icon {
 		margin-left: 10px;
@@ -80,10 +118,6 @@
 			height: 24px;
 			@include backoffice-sprite(products_little);
 		}
-	}
-	.number {
-		color: $brown;
-		font-size: 20px;
 	}
 	.card {
 		position: absolute;
