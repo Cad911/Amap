@@ -8,7 +8,7 @@
 </div>
 
 <div class="helper">
-    <p class="title is_bold">Gérer vos paniers</p>
+    <p class="title is_bold"><i class="icon ui-help_hover"></i>Gérer vos paniers</p>
     <span class="close"><i class="icon-remove"></i></span>
     <p class="content">Modifier chaque éléments d'un panier en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 </div>
@@ -18,7 +18,7 @@
 
     <div class="packaging">
         <div class="header">
-            <h2 class="title">Mon petit panier</h2>
+            <span class="truncate-wrap"><h2 class="title is-truncated">Mon petit panier lorem ipsum dolor ipsum</h2></span>
             <ul class="buttons_card">
 
                 <%#= link_to edit_administration_user_stock_path(params[:user_id],stock) do %> 
@@ -32,13 +32,35 @@
             <div class="clear"></div>
         </div>
         <div class="body">
-            <p class="description">Description lorem ipsum dolor et sit amet</p>          
+            <span class="truncate-wrap"><p class="description is-truncated">Description lorem ipsum dolor et sit amet consedum adiscipling dolor et sit amet consedum adiscipling</p></span> 
         </div>
         <div class="footer">
-            <ul class="main-informations">
+            <ul class="main-informations is-editing">
                 <li><span class="number is_bold">8</span><span class="icon members"></span></li>
                 <li><span class="number is_bold">4</span><span class="icon pictures"></span></li>
                 <li><span class="number is_bold">7</span><span class="icon products"></span></li>
+            </ul>
+            <ul class="details is-editing">
+                <li class="detail">
+                    <span class="label">Max</span>
+                    <span class="number">200</span>
+                </li>
+                <li class="detail">
+                    <span class="label">Format</span>
+                    <ul class="number">
+                        <li>2</li>
+                        <li>4</li>
+                        <li>6</li>
+                    </ul>
+                </li>
+                <li class="detail">
+                    <span class="label">Durée</span>
+                    <ul class="number">
+                        <li>3</li>
+                        <li>6</li>
+                        <li>9</li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
