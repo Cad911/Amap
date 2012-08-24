@@ -2,16 +2,17 @@
 (function() {
 
   $.fn.form_plugin = function(optn) {
-    var champ, champ_opt, functions, options, valeur, _ref, _ref1, _ref2, _ref3;
+    var champ, champ_opt, functions, options, valeur, _ref, _ref1, _ref2, _ref3, _ref4;
     options = {
       user_id: $('input.user_id').val(),
       table_get_infos: '',
       table_to_update: '',
       champ: [],
+      titre: (_ref = optn.titre) != null ? _ref : 'Titre',
       id_entite_get_infos: '',
       id_entite_update: '',
       element: {
-        type: (_ref = optn['element']['type']) != null ? _ref : 'input',
+        type: (_ref1 = optn['element']['type']) != null ? _ref1 : 'input',
         options: {
           value: optn['element']['options'] !== void 0 ? optn['element']['options']['value'] : [],
           text: optn['element']['options'] !== void 0 ? optn['element']['options']['text'] : []
@@ -19,10 +20,10 @@
       },
       "class": 'string optional',
       button: {
-        "class": optn['button'] !== void 0 ? (_ref1 = optn['button']['class']) != null ? _ref1 : 'update_element' : 'update_element',
-        text_update: optn['button'] !== void 0 ? (_ref2 = optn['button']['text_update']) != null ? _ref2 : 'Modifier' : 'Modifier'
+        "class": optn['button'] !== void 0 ? (_ref2 = optn['button']['class']) != null ? _ref2 : 'update_element' : 'update_element',
+        text_update: optn['button'] !== void 0 ? (_ref3 = optn['button']['text_update']) != null ? _ref3 : 'Modifier' : 'Modifier'
       },
-      callback: (_ref3 = optn.callback) != null ? _ref3 : null
+      callback: (_ref4 = optn.callback) != null ? _ref4 : null
     };
     champ_opt = optn['champ'].split(',');
     for (champ in champ_opt) {
@@ -32,7 +33,7 @@
     functions = {
       input_create: [],
       show_form: function(donnees) {
-        var attribut, attribut_input, champ, i, option, valeur_champ, _ref4;
+        var attribut, attribut_input, champ, i, option, valeur_champ, _ref5;
         attribut = {
           hidden_input: {
             balise: 'input',
@@ -48,9 +49,9 @@
           },
           input: []
         };
-        _ref4 = options.champ;
-        for (champ in _ref4) {
-          valeur_champ = _ref4[champ];
+        _ref5 = options.champ;
+        for (champ in _ref5) {
+          valeur_champ = _ref5[champ];
           attribut_input = {
             balise: options['element']['type'],
             id: options.table_to_update + '_' + valeur_champ,
@@ -81,18 +82,19 @@
         return window.light_box_information.show();
       },
       generate_form: function(attribut) {
-        var a, champ, hidden_input, i, input, span, span_annuler, span_infos, valeur, _ref4;
+        var a, champ, hidden_input, i, input, span, span_annuler, span_infos, valeur, _ref5;
         window.light_box_information.html_content('');
-        window.light_box_information.title_header('Titre');
+        window.light_box_information.title_header(options.titre);
         hidden_input = $(document.createElement(attribut['hidden_input']['balise']));
         hidden_input.attr('id', attribut['hidden_input']['id']);
         hidden_input.attr('name', attribut['hidden_input']['name']);
         hidden_input.val(attribut['hidden_input']['value']);
         hidden_input.attr('type', attribut['hidden_input']['type_input']);
         hidden_input.addClass(attribut['hidden_input']['class']);
-        _ref4 = attribut['input'];
-        for (champ in _ref4) {
-          valeur = _ref4[champ];
+        functions.input_create = [];
+        _ref5 = attribut['input'];
+        for (champ in _ref5) {
+          valeur = _ref5[champ];
           input = $(document.createElement(valeur['balise']));
           input.attr('id', valeur['id']);
           input.attr('name', valeur['name']);
@@ -126,6 +128,12 @@
         a.text(attribut['link']['text']);
         span.append(a);
         span_annuler = window.light_box_information.create_annuler();
+        window.light_box_information.css({
+          'margin': 'Opx',
+          top: options.top,
+          left: options.left,
+          position: 'absolute'
+        });
         window.light_box_information.html_footer(span_annuler);
         window.light_box_information.append_footer(span);
         return span.on('click', function() {
@@ -151,13 +159,13 @@
         });
       },
       update_information: function(button) {
-        var champ, data, id_entite, tab_concerned, user_id, val, valeur, value_to_show, _ref4, _results;
+        var champ, data, id_entite, tab_concerned, user_id, val, valeur, value_to_show, _ref5, _results;
         user_id = $('input.user_id').val();
         value_to_show = '';
-        _ref4 = functions.input_create;
+        _ref5 = functions.input_create;
         _results = [];
-        for (champ in _ref4) {
-          valeur = _ref4[champ];
+        for (champ in _ref5) {
+          valeur = _ref5[champ];
           tab_concerned = options.table_to_update;
           id_entite = options.id_entite_update;
           champ = options.champ[champ];
@@ -166,73 +174,93 @@
           data[tab_concerned] = {};
           data[tab_concerned][champ] = val;
           value_to_show += ' ' + val;
-          _results.push($.ajax({
-            type: 'PUT',
-            url: options.the_url_to_update,
-            data: data,
-            format: 'json',
-            complete: function(data) {
-              var informations;
-              informations = $.parseJSON(data['responseText']);
-              if (informations['status'] === 'OK') {
-                if (options.element.type === 'select') {
-                  $(options.element_clicked).text($(valeur).children("option[value='" + val + "']").text());
+          if (val !== '') {
+            _results.push($.ajax({
+              type: 'PUT',
+              url: options.the_url_to_update,
+              data: data,
+              format: 'json',
+              complete: function(data) {
+                var element_for_text, informations;
+                console.log('ahhahahh');
+                informations = $.parseJSON(data['responseText']);
+                if (informations['status'] === 'OK') {
+                  if ($(options.element_clicked).children('span.value').length > 0) {
+                    element_for_text = $(options.element_clicked).children('span.value');
+                  } else {
+                    element_for_text = $(options.element_clicked);
+                  }
+                  if (options.element.type === 'select') {
+                    element_for_text.text($(valeur).children("option[value='" + val + "']").text());
+                  } else {
+                    element_for_text.text($.trim(value_to_show));
+                  }
+                  window.light_box_information.hide();
+                  return $(options.element_clicked).trigger('end_form_plugin');
                 } else {
-                  $(options.element_clicked).text($.trim(value_to_show));
+                  return window.message_information.message_error('input#' + $(valeur).attr('id'), 'erreur', informations['error'], 5000);
                 }
-                window.light_box_information.hide();
-                return $(options.element_clicked).trigger('end_form_plugin');
-              } else {
-                return alert(informations['error']);
               }
-            }
-          }));
+            }));
+          } else {
+            _results.push(window.message_information.message_error('input#' + $(valeur).attr('id'), 'erreur', 'le champ ' + champ + ' est vide', 5000));
+          }
         }
         return _results;
       }
     };
     return this.each(function() {
       return $(this).bind('click', function() {
-        var champ_lvl, i, that;
-        options.element_clicked = this;
-        if (optn.url_to_update === void 0) optn.url_to_update = optn.url_get_infos;
-        options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1];
-        options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1];
-        options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_get_infos).val();
-        options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_to_update).val();
-        options.the_url_get_infos = '/administration';
-        options.the_url_to_update = '/administration';
-        if (optn.url_get_infos !== void 0) {
-          options.url_get_infos = {};
+        var champ_lvl, i, offset, that;
+        if ($(this).hasClass('is_editing')) {
+          options.element_clicked = this;
+          offset = $(this).offset();
+          options.top = parseInt(offset.top) - 90 - 65;
+          options.left = parseInt(offset.left);
+          options.top += 'px';
+          options.left += 'px';
+          console.log(options);
+          if (optn.url_to_update === void 0) {
+            optn.url_to_update = optn.url_get_infos;
+          }
+          options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1];
+          options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1];
+          options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_get_infos).val();
+          options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_' + options.table_to_update).val();
+          options.the_url_get_infos = '/administration';
+          options.the_url_to_update = '/administration';
+          if (optn.url_get_infos !== void 0) {
+            options.url_get_infos = {};
+            i = 0;
+            while (i < optn.url_get_infos.length) {
+              champ_lvl = 'level_' + i;
+              options.url_get_infos[champ_lvl] = optn.url_get_infos[i];
+              if (i === 0) {
+                options.the_url_get_infos += '/' + optn.url_get_infos[i] + 's/' + options.user_id;
+              } else {
+                options.the_url_get_infos += '/' + optn.url_get_infos[i] + 's/' + options.id_entite_get_infos;
+              }
+              i++;
+            }
+          }
+          options.url_to_update = {};
           i = 0;
-          while (i < optn.url_get_infos.length) {
+          while (i < optn.url_to_update.length) {
             champ_lvl = 'level_' + i;
-            options.url_get_infos[champ_lvl] = optn.url_get_infos[i];
+            options.url_to_update[champ_lvl] = optn.url_to_update[i];
             if (i === 0) {
-              options.the_url_get_infos += '/' + optn.url_get_infos[i] + 's/' + options.user_id;
+              options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.user_id;
             } else {
-              options.the_url_get_infos += '/' + optn.url_get_infos[i] + 's/' + options.id_entite_get_infos;
+              options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.id_entite_update;
             }
             i++;
           }
+          that = this;
+          $.when(functions.get_information()).done(function(data) {
+            return functions.show_form(data);
+          });
+          return this;
         }
-        options.url_to_update = {};
-        i = 0;
-        while (i < optn.url_to_update.length) {
-          champ_lvl = 'level_' + i;
-          options.url_to_update[champ_lvl] = optn.url_to_update[i];
-          if (i === 0) {
-            options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.user_id;
-          } else {
-            options.the_url_to_update += '/' + optn.url_to_update[i] + 's/' + options.id_entite_update;
-          }
-          i++;
-        }
-        that = this;
-        $.when(functions.get_information()).done(function(data) {
-          return functions.show_form(data);
-        });
-        return this;
       });
     });
   };

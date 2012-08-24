@@ -1,5 +1,7 @@
 ECommerce::Application.routes.draw do
  
+  get "villes/index"
+
   #get "commandes/index"
 
   #get "abonnements/index"

@@ -10,6 +10,348 @@ $(window).load(()->
 )
 
 $(document).ready( () ->
+    form_add_stock =
+        init : ()->
+            form_add_stock.form_new_stock()
+            form_add_stock.event()
+            
+        actual_step : 1
+        
+        re_init_form: ()->
+            form_add_stock.actual_step = 1
+            $('.etape_1').css('display','block')
+            $('.etape_3').css('display','none')
+            $('.title_1').css('display','block')
+            $('.title_3').css('display','none')
+        
+        upload_form : ()->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/stocks')
+            
+            form = new FormData();
+            
+            $('#new_stock input, #new_stock textarea, #new_stock select').each(()->
+                #console.log($(this).attr('name'))
+                name = $(this).attr('name')
+                if data[name] == undefined && $(this).attr('type') != 'button' && $(this).attr('type') != 'file'
+                    data[name] = $(this).val()
+                    form.append(name,$(this).val())
+                else if $(this).attr('type') == 'file'
+                    fileInput = document.querySelector('#'+$(this).attr('id'))
+                    form.append(name,fileInput.files[0])
+                    
+            )
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    form_add_stock.re_init_form()
+                    window.lightbox_new_stock.hide()
+                    console.log(xhr.responseText)
+                    new_card = xhr.responseText
+                    new_card_2 = $($(new_card)[0])
+                    new_card_2.css({
+                        opacity:0,
+                        top: '-250px'
+                    });
+                    
+                    #console.log(new_card_2.find('.buttons_card li.delete'))
+                    $('ul.cards').prepend(new_card_2)
+                    supp_stock.event_one_element(new_card_2.find('.buttons_card li.delete'))
+                    new_card_2.animate({
+                        opacity:1,
+                        top:'0px'
+                    },500)
+
+                    
+            console.log(data)
+            
+        
+        event:()->
+            $('.buttons>li.add').on('click', ()->
+                window.lightbox_new_stock.show()
+            )
+            
+            $('#new_stock').bind "ajax:complete", (et,e) ->
+                    form_add_stock.re_init_form()
+                    window.lightbox_new_stock.hide()
+                    new_card = e.responseText
+                    new_card_2 = $($(new_card)[0])
+                    new_card_2.css({
+                        opacity:0,
+                        top: '-250px'
+                    });
+                    
+                    #console.log(new_card_2.find('.buttons_card li.delete'))
+                    $('ul.cards').prepend(new_card_2)
+                    supp_stock.event_one_element(new_card_2.find('.buttons_card li.delete'))
+                    new_card_2.animate({
+                        opacity:1,
+                        top:'0px'
+                    },500)
+                    
+
+
+
+            
+            $('.next_step').on('click',()->
+                if !form_add_stock['error_step_'+form_add_stock.actual_step]()
+                    form_add_stock.next_step()
+            )
+            
+            $('.previous_step').on('click',()->
+                form_add_stock.previous_step()
+            )
+            $('.formulaire_add input,.formulaire_add textarea').on('change', ()->
+                form_add_stock.verif_one_input(this)
+            )
+            
+            $('#produit_vente_libre_quantite').on('change', ()->
+                if form_add_stock.stock_is_depassed()
+                    window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
+            )
+            $('#produit_vente_libre_nombre_pack').on('change', ()->
+                if form_add_stock.stock_is_depassed()
+                    window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
+            )
+        form_new_stock: ()->
+            window.lightbox_new_stock = new Lightbox('.lightbox_new_stock','.lightbox_form_new_stock')
+            
+        stock_is_depassed: ()->
+            if $('#produit_vente_libre_quantite').val() == '' || $('#produit_vente_libre_nombre_pack').val() == ''
+                return false
+            else
+                quantite_online = parseInt($('#produit_vente_libre_quantite').val())
+                nb_pack_online = parseInt($('#produit_vente_libre_nombre_pack').val())
+                quantite_stock = parseInt($('#stock_quantite').val())
+                
+                
+                quantite_restante = quantite_stock - (nb_pack_online * quantite_online)
+                if quantite_restante >= 0
+                    return false
+                else
+                    return true
+        
+        verif_one_input: (element)->
+            error = false
+            if $(element).val() == ''
+                    $(element).parents('.control-group').addClass('error')
+                    error = true
+                else
+                    $(element).parents('.control-group').removeClass('error')
+            return error
+        error_step_1:()->
+            error = false
+            $('.etape_1 input, .etape_1 textarea').each(()->
+                if form_add_stock.verif_one_input(this)
+                    error = true
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            return error
+        error_step_2:()->
+            error = false
+            $('.etape_2 input, .etape_2 textarea').each(()->
+                 if form_add_stock.verif_one_input(this)
+                    error = true         
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            return error
+        error_step_3:()->
+            error = false
+            $('.etape_3 input,  .etape_3 textarea').each(()->
+                 if form_add_stock.verif_one_input(this)
+                    error = true
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            
+            if form_add_stock.stock_is_depassed()
+                window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
+                error = true
+            return error
+        
+        next_step:()->
+            if form_add_stock.actual_step == 3
+                #$('#new_stock').submit()
+                form_add_stock.upload_form()
+            else
+                $('.etape_'+form_add_stock.actual_step).slideUp(500)
+                $('.title_'+form_add_stock.actual_step).css('display','none')
+                form_add_stock.actual_step += 1
+                $('.etape_'+form_add_stock.actual_step).slideDown(500)
+                $('.title_'+form_add_stock.actual_step).css('display','block')
+        previous_step: ()->
+            $('.etape_'+form_add_stock.actual_step).slideUp(500)
+            $('.title_'+form_add_stock.actual_step).css('display','none')
+            form_add_stock.actual_step -= 1
+            $('.etape_'+form_add_stock.actual_step).slideDown(500)
+            $('.title_'+form_add_stock.actual_step).css('display','block')
+            
+    form_add_stock.init()
+    
+    
+    supp_stock = 
+        init:()->
+            $('.buttons_card li.delete').on('click',()->
+                stock_id = $(this).attr('id').replace('stock_id_','')
+                user_id = $('.user_id').val()
+                that = this
+                supp_stock.have_confirmation(user_id, stock_id, that)
+            )
+        
+        delete: (user_id, stock_id, element)->
+            $.ajax({
+                type: 'DELETE'
+                url:"/administration/users/"+user_id+"/stocks/"+stock_id
+                format:'json'
+                complete:(data)->
+                    card = $(element).parents('li.card')
+                    card.animate({
+                        opacity:0
+                        
+                    },{
+                        duration:500,
+                        complete:()->
+                            $(this).slideUp(500,()->
+                                $(this).remove()
+                            )  
+                    })
+                    
+                    
+            })
+
+        
+        have_confirmation: (user_id, stock_id, element)->
+            window.light_box_information.html_content('<p> Etes vous sur ? </p>')
+            window.light_box_information.title_header('Confirmation')
+            span_annuler = window.light_box_information.create_annuler()
+            window.light_box_information.html_footer(span_annuler)
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            a = $(document.createElement('a'))
+            a.text('Oui')
+            
+            span.append(a)      
+            window.light_box_information.append_footer(span)
+            window.light_box_information.show()
+            
+            span.on('click', ()->
+                window.light_box_information.hide()
+                supp_stock.delete(user_id, stock_id, element)
+            )
+        
+        event_one_element: (button_supp)->
+            $(button_supp).on('click',()->
+                stock_id = $(this).attr('id').replace('stock_id_','')
+                user_id = $('.user_id').val()
+                that = this
+                that = this
+                supp_stock.have_confirmation(user_id, stock_id, that)            )
+        
+    
+    supp_stock.init()
+    #__________________________________________
+    #__________________________________________
+    #__________________________________________
+    #__________________________________________
+    #_______ GENERAL FUNCTION _______________
+    #__________________________________________
+    #__________________________________________
+    #__________________________________________        
+    functions =
+        init: ()->
+            functions.edit_button()
+            functions.help_button()
+            functions.event_close()
+        
+        
+        heigth_help_div: '0px' 
+        event_close: ()->
+            $('.helper>.close').on('click',()->
+                functions.close_help('.buttons>li.help')
+            )   
+        help_button: ()->
+            if $('.buttons>li.help').length > 0
+                functions.heigth_help_div = $('.helper').css('height')
+                $('.buttons>li.help').on('click', ()->
+                    if $(this).hasClass('button_active')
+                        functions.close_help(this)
+                    else
+                        functions.show_help(this)
+                )
+                
+        close_help: (help_button)->
+            $(help_button).removeClass('button_active')
+            $('.helper').animate({
+                opacity:0
+                
+            },{
+                duration:500,
+                complete:()->
+                    $(this).slideUp(500,()->
+                        $(this).addClass('helper_close')
+                    )  
+            })
+        
+        show_help:(help_button)->
+            $(help_button).addClass('button_active')
+            $('.helper').removeClass('helper_close')
+            $('.helper').slideDown(500,()->
+                $(this).animate({
+                    opacity:1
+                },{
+                    duration:500
+                })
+            )
+            
+        
+        edit_button : () ->
+            if $('.buttons>li.edit').length > 0
+                $('.buttons>li.edit').on('click',()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        functions.remove_editing_class()
+                    else
+                        $(this).addClass('button_active')
+                        functions.add_editing_class()
+                )
+            
+            if $('.buttons_card').length > 0
+                $('.buttons_card>.edit').on('click',()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        functions.remove_editing_class($(this).parents('li.card'))
+                    else
+                        $(this).addClass('button_active')
+                        functions.add_editing_class($(this).parents('li.card'))
+                )
+        
+        remove_editing_class:(element = 'body')->
+            if $('.user_profile').length > 0
+                $('.user_profile>.content>p').removeClass('is_editing')
+            
+            if $('.cards').length > 0
+               $(element).children('.right_area').children('.header').children('.title').removeClass('is_editing')
+               $(element).children('.right_area').children('.body').children('.description').removeClass('is_editing')
+               $(element).children('.right_area').children('.footer').children('ul').children('li').removeClass('is_editing')
+        
+        add_editing_class:(element = 'body')->
+            if $('.user_profile').length > 0
+                $('.user_profile>.content>p').addClass('is_editing')
+            
+            if $('.cards').length > 0
+               console.log($(element).children('.rigth_area'))
+               $(element).children('.right_area').children('.header').children('.title').addClass('is_editing')
+               $(element).children('.right_area').children('.body').children('.description').addClass('is_editing')
+               $(element).children('.right_area').children('.footer').children('ul').children('li').addClass('is_editing')
+    
+    functions.init()
+    
+    
     #-----------------------------------
     #-----------------------------------
     #-----------------------------------
@@ -22,12 +364,70 @@ $(document).ready( () ->
     $('.user_profile .content>.title').form_plugin(
         url_get_infos:['user']
         champ: 'prenom, nom'
+        titre:'Modifier le prenom et le nom'
         element: 
             type: 'input'
         button:
             class:'update_prenom'
-            text_update:'Modifier le prenom'
-        
+            text_update:'Modifier'
+    )
+    
+    $.ajax(
+        type: 'GET'
+        url:"/villes/index"
+        format:'json'
+        complete:(data)->
+            informations = $.parseJSON(data['responseText'])
+            id = []
+            value = []
+            for champ, valeur of informations['ville']
+                id.push(valeur['id'])
+                value.push(valeur['cp']+' - '+valeur['nom'])
+            
+            $('.user_profile .content>.city').form_plugin(
+                url_get_infos:['user']
+                champ: 'ville_id'
+                element: 
+                    type: 'select'
+                    options: 
+                        value : id
+                        text: value
+                button:
+                    class:'update_ville'
+                    text_update:'Modifier la ville'
+            ).bind('end_form_plugin',()->
+                    #$('.info_unite_mesure_id').text('('+$(this).text()+')')
+            )       
+    )
+    
+    $('.user_profile .content>.description').form_plugin(
+        url_get_infos:['user']
+        champ: 'description'
+        element: 
+            type: 'textarea'
+        button:
+            class:'update_description'
+            text_update:'Modifier la description'
+    )
+    
+    $('.user_profile .content>.address').form_plugin(
+        url_get_infos:['user']
+        champ: 'adresse'
+        element: 
+            type: 'input'
+        button:
+            class:'update_adresse'
+            text_update:'Modifier l\'adresse'
+    )
+    
+    $('.user_profile .content>.phone').form_plugin(
+        url_get_infos:['user']
+        champ: 'telephone'
+        element: 
+            type: 'input'
+        button:
+            class:'update_telephone'
+            text_update:'Modifier le telephone'
     )
     
     $('.user_profile .content>.email').form_plugin(
@@ -57,6 +457,7 @@ $(document).ready( () ->
         url_get_infos:['user','stock']
         url_to_update: ['user','stock']
     )
+    
     $('.card p.description').form_plugin(
         url_get_infos:['user','stock']
         champ: 'description'
@@ -66,7 +467,7 @@ $(document).ready( () ->
             class:'update_description'
             text_update:'Modifier la description'
     )
-    $('.card li.prix>span.value').form_plugin(
+    $('.card li.prix').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre'] 
         champ: 'prix_unite_ttc'
@@ -91,7 +492,7 @@ $(document).ready( () ->
                 id.push(valeur['id'])
                 value.push(valeur['nom'])
             
-            $('.card li.unite_mesure>span.value').form_plugin(
+            $('.card li.unite_mesure').form_plugin(
                 url_get_infos:['user','stock']
                 champ: 'unite_mesure_id'
                 element: 
@@ -103,11 +504,11 @@ $(document).ready( () ->
                     class:'update_unite_mesure'
                     text_update:'Modifier l\'unite de mesure'
             ).bind('end_form_plugin',()->
-                    $('.info_unite_mesure_id').text('('+$(this).text()+')')
+                    $('.info_unite_mesure_id').text('('+$(this).children('span.value').text()+')')
             )       
     )
     
-    $('.card li.quantite_lot>span.value').form_plugin(
+    $('.card li.quantite_lot').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre'] 
         champ: 'quantite'
@@ -131,13 +532,16 @@ $(document).ready( () ->
                 url:url
                 format:'json'
                 success:(data)->
-                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
-                    $(this_element).append(' ('+data['unite_mesure']['nom']+')')
+                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
+                    span = $(document.createElement('span'))
+                    span.addClass('is_italic info_unite_mesure_id')
+                    span.text(' ('+data['unite_mesure']['nom']+')')
+                    $(this_element).append(span)
                     
             )
     )#A FAIRE
 
-    $('.card li.nombre_pack>span.value').form_plugin(
+    $('.card li.nombre_pack').form_plugin(
         url_get_infos:['user','stock']
         url_to_update:['user','produit_vente_libre']
         champ: 'nombre_pack'
@@ -157,11 +561,11 @@ $(document).ready( () ->
                 url:url
                 format:'json'
                 success:(data)->
-                    $(that).append(' /'+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+                    $(that).children('span.value').append(' /'+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
             )
     )
 
-    $('.card li.stock_total>span.value').form_plugin(
+    $('.card li.stock_total').form_plugin(
         url_get_infos:['user','stock']
         champ: 'quantite'
         element: 
@@ -182,7 +586,10 @@ $(document).ready( () ->
                 format:'json'
                 success:(data)->
                     that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
-                    $(this_element).append(' ('+data['unite_mesure']['nom']+')')
+                    span = $(document.createElement('span'))
+                    span.addClass('is_italic info_unite_mesure_id')
+                    span.text(' ('+data['unite_mesure']['nom']+')')
+                    $(this_element).append(span)
             )
     )#A FAIRE
 

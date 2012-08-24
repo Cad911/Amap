@@ -9,12 +9,13 @@
 # On a l'id du stock et celui des produit en vente libre et il faut s'arrange pour avoir les 2.
 #ET AUSSI le probleme de l'url quand on est avec l'utilisateur. Idée : créer un niveau d'url
 # A FAIRE 4/08
-# quand la modif est effectué, modifier le texte dans le champ (en live)
-# mieux placer la box
+# quand la modif est effectué, modifier le texte dans le champ (en live) -- OK --
+# mieux placer la box -- OK --
 # A FAIRE 15/08
 # Reorganiser le code (faire une relecture)
 #Pour le prix (par exemple), lors de la mise à jour la devise ne s'affiche plus -- OK --
-#Probleme pour le nom et prenom, comment faire ?
+#Probleme pour le nom et prenom, comment faire ? -- OK --
+#Probleme, une mise a jour fonctionne mais 2 mis a jour sans recharger la page provoque un bug -- OK -- (Initialisation input_create pas effectué)
 
 
 
@@ -34,16 +35,33 @@
 #  - button.class : class du bouton valider modification
 #  - button.text_update: text du bouton pour la modification
 #  - trigger d'un evenement a la fin du update pour pouvoir faire de nouvel modif. Nom event : end_form_plugin
+#  - Gestion des erreurs, voici le format pour renvoyer une erreur et son message :
+#                 format.js { render :json => {
+#                 		  			:status => "error",
+#                 		  			:error => "Quantite mis en ligne depasse la quantite du stock", 
+#                 		  			:produit_vente_libre => { 
+#                 			  			:id => @produit_vente_libre.id,
+#                 			  			:nb_pack => @nb_pack,
+#                 			  			:quantite => @quantite_produit_vente_libre,
+#                 			  			:rest => @quantite_restante
+#                 		  			},
+#                 		  			:stock => {
+#                 			  			:quantite_restante => @quantite_restante
+#                 		  			}
+#                 	
+#                 		  		}
+#                 	  		}
  
 
 
 $.fn.form_plugin = (optn)->
-
+    
     options = 
         user_id: $('input.user_id').val()
         table_get_infos : ''
         table_to_update: ''
         champ: []
+        titre:optn.titre ? 'Titre'
         id_entite_get_infos: ''
         id_entite_update: ''  #ID ENTITE
         element: 
@@ -60,6 +78,8 @@ $.fn.form_plugin = (optn)->
         #url_to_update:''
         #the_url_get_infos:''
         #the_url_to_update:''
+        #top:''
+        #left:''
     
     champ_opt = optn['champ'].split(',')            
     for champ, valeur of champ_opt 
@@ -124,7 +144,7 @@ $.fn.form_plugin = (optn)->
 
         generate_form: (attribut) ->
             window.light_box_information.html_content('')
-            window.light_box_information.title_header('Titre')
+            window.light_box_information.title_header(options.titre)
             #HIDDEN INPUT WITH ID
             hidden_input = $(document.createElement(attribut['hidden_input']['balise']))
             hidden_input.attr('id',attribut['hidden_input']['id'])
@@ -132,6 +152,8 @@ $.fn.form_plugin = (optn)->
             hidden_input.val(attribut['hidden_input']['value'])
             hidden_input.attr('type',attribut['hidden_input']['type_input'])
             hidden_input.addClass(attribut['hidden_input']['class'])
+            
+            functions.input_create = []
             
             #INPUT SELECT TEXTARE
             for champ, valeur of attribut['input']
@@ -176,6 +198,13 @@ $.fn.form_plugin = (optn)->
            
             span_annuler = window.light_box_information.create_annuler()
             
+            window.light_box_information.css({
+                'margin':'Opx',
+                top:options.top,
+                left:options.left,
+                position:'absolute',
+                
+            })
             window.light_box_information.html_footer(span_annuler)
             window.light_box_information.append_footer(span)
             span.on('click',()->
@@ -211,25 +240,33 @@ $.fn.form_plugin = (optn)->
                 data[tab_concerned] = {}
                 data[tab_concerned][champ] = val
                 value_to_show += ' '+val
-                $.ajax(
-                    type: 'PUT'
-                    url:options.the_url_to_update#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
-                    data:data
-                    format:'json'
-                    complete:(data)->
-                        informations = $.parseJSON(data['responseText'])
-                        
-                        if informations['status'] == 'OK'
-                            if options.element.type == 'select'
-                                $(options.element_clicked).text($(valeur).children("option[value='"+val+"']").text())
+                if val != ''
+                    $.ajax(
+                        type: 'PUT'
+                        url:options.the_url_to_update#'/administration/users/'+user_id+'/'+tab_concerned+'s/'+id_entite
+                        data:data
+                        format:'json'
+                        complete:(data)->
+                            console.log('ahhahahh')
+                            informations = $.parseJSON(data['responseText'])
+                            if informations['status'] == 'OK'
+                                if $(options.element_clicked).children('span.value').length > 0
+                                    element_for_text = $(options.element_clicked).children('span.value')
+                                else
+                                    element_for_text = $(options.element_clicked)
+                                
+                                if options.element.type == 'select'
+                                    element_for_text.text($(valeur).children("option[value='"+val+"']").text())
+                                else
+                                    element_for_text.text($.trim(value_to_show))
+                                
+                                window.light_box_information.hide()
+                                $(options.element_clicked).trigger('end_form_plugin')
                             else
-                                $(options.element_clicked).text($.trim(value_to_show))
-                            
-                            window.light_box_information.hide()
-                            $(options.element_clicked).trigger('end_form_plugin')
-                        else
-                            alert(informations['error'])
-                )
+                                window.message_information.message_error('input#'+$(valeur).attr('id'),'erreur',informations['error'],5000)
+                    )
+                else
+                    window.message_information.message_error('input#'+$(valeur).attr('id'),'erreur','le champ '+champ+' est vide' ,5000)
 
                
 
@@ -238,59 +275,64 @@ $.fn.form_plugin = (optn)->
 #_______ EACH ________________
     return this.each(()->
         $(this).bind('click',()->
-            #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
-            options.element_clicked = this
-            
-            
-            
-            #url level to update
-            if optn.url_to_update == undefined
-                optn.url_to_update = optn.url_get_infos 
-                 
-            #init table
-            options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1]
-            options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1]
-            
-            
-            options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_get_infos).val()
-            options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_to_update).val()
-            
-            
-            options.the_url_get_infos = '/administration'
-            options.the_url_to_update = '/administration'
-            #url level get infos
-            if optn.url_get_infos != undefined
-                options.url_get_infos = {}
+            if $(this).hasClass('is_editing')
+                #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
+                options.element_clicked = this
+                
+                offset = $(this).offset()
+                options.top = parseInt(offset.top) - 90 - 65
+                options.left = parseInt(offset.left)
+                options.top += 'px'
+                options.left += 'px'
+                console.log(options)
+                #url level to update
+                if optn.url_to_update == undefined
+                    optn.url_to_update = optn.url_get_infos 
+                     
+                #init table
+                options.table_get_infos = optn.url_get_infos[optn.url_get_infos.length - 1]
+                options.table_to_update = optn.url_to_update[optn.url_to_update.length - 1]
+                
+                
+                options.id_entite_get_infos = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_get_infos).val()
+                options.id_entite_update = $(this).parents('div').prevAll('div.informations_card').children('input.id_'+options.table_to_update).val()
+                
+                
+                options.the_url_get_infos = '/administration'
+                options.the_url_to_update = '/administration'
+                #url level get infos
+                if optn.url_get_infos != undefined
+                    options.url_get_infos = {}
+                    i=0
+                    while i < (optn.url_get_infos).length
+                        champ_lvl = 'level_'+i
+                        options.url_get_infos[champ_lvl] = optn.url_get_infos[i] #/administration/users/
+                        if i == 0
+                            options.the_url_get_infos += '/'+optn.url_get_infos[i]+'s/'+options.user_id
+                        else
+                            options.the_url_get_infos += '/'+optn.url_get_infos[i]+'s/'+options.id_entite_get_infos
+                        i++
+                
+                
+                #url level to update
+                options.url_to_update = {}
                 i=0
-                while i < (optn.url_get_infos).length
+                while i < (optn.url_to_update).length
                     champ_lvl = 'level_'+i
-                    options.url_get_infos[champ_lvl] = optn.url_get_infos[i] #/administration/users/
+                    options.url_to_update[champ_lvl] = optn.url_to_update[i] #/administration/users/
                     if i == 0
-                        options.the_url_get_infos += '/'+optn.url_get_infos[i]+'s/'+options.user_id
+                        options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.user_id
                     else
-                        options.the_url_get_infos += '/'+optn.url_get_infos[i]+'s/'+options.id_entite_get_infos
+                        options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.id_entite_update
                     i++
-            
-            
-            #url level to update
-            options.url_to_update = {}
-            i=0
-            while i < (optn.url_to_update).length
-                champ_lvl = 'level_'+i
-                options.url_to_update[champ_lvl] = optn.url_to_update[i] #/administration/users/
-                if i == 0
-                    options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.user_id
-                else
-                    options.the_url_to_update += '/'+optn.url_to_update[i]+'s/'+options.id_entite_update
-                i++
-            
-            
-            #show form
-            that = this
-            $.when(functions.get_information()).done((data)->
-                functions.show_form(data)
-            )
-            this
+                
+ 
+                #show form
+                that = this
+                $.when(functions.get_information()).done((data)->
+                    functions.show_form(data)
+                )
+                this
         )
 
          

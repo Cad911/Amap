@@ -31,6 +31,7 @@
 .helper {
   position: relative;
   padding:20px;
+  overflow: hidden;
   margin:0 0 20px 0;
   border:$embossed_dark solid 1px;
   @include border-radius(5px);
@@ -50,6 +51,10 @@
     padding:0;
     margin:0;
   }
+}
+.helper_close
+{
+	display:none;
 }
 //TOOLTIP
 .my_tooltip {
@@ -791,7 +796,7 @@ ul.dropdown_menu {
   right:0;
   left:0;
   bottom:0;
-  z-index:1040;
+  //z-index:1040;
   @include transition-property(all);
   @include transition-duration(400ms);
 }
