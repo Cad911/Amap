@@ -12,7 +12,10 @@ $(document).ready(->
               if that.div_in_lightbox != false
                   that.hide_sous_div()
            )
-           
+        
+        css: (attribut)->
+        	for champ, valeur of attribut
+        		$(@id_lightbox+'>.lightbox').css(champ, valeur)
         link_top: (data) ->
            a_infos = $(document.createElement('a'))
            a_infos.attr('href',data['link']['mes_infos'])
@@ -49,6 +52,14 @@ $(document).ready(->
         hide: () ->
             $(@id_lightbox).css('display','none')
             $('.overall_shadow').css('position','relative')
+            window.light_box_information.css({
+                'margin':'Opx',
+                top:'0px',
+                left:'0px',
+                position:'relative',
+                
+            })
+            
         show: () ->
             $(@id_lightbox).css('display','block')
             $('.overall_shadow').css('position','fixed')

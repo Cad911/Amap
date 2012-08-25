@@ -3,7 +3,7 @@
 		 	<ul class="buttons">
 		 		<li class="stats button"><span class="picture"></span></li>
 		 		<li class="edit button" title=""><span class="picture"></span></li>
-		 		<li class="help button"><span class="picture"></span></li>
+		 		<li class="help button button_active"><span class="picture"></span></li>
 		 	</ul>		 	
 		 </div>
 
@@ -45,11 +45,12 @@
 
 		 	</div>
 		 	<div class="content">
-		 		<p class="title is-editing"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
-		 		<p class="is_note is_italic note location is-editing"><%= @user.ville.nom %> <%= @user.adresse %></p>
-		 		<p class="description is-editing"><%= @user.description %></p>
-		 		<p class="phone is-editing"><%= @user.telephone %></p>
-		 		<p class="email is-editing"><%= @user.email %></p>
+		 		<p class="title"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
+		 		<p class="is_note is_italic note city"><%= (@user.ville_id.nil?) ? 'Aucune ville' :  @user.ville.cp %> <%= @user.ville.nom %></p>
+		 		<p class="is_note is_italic note address"> <%= (@user.adresse.nil?) ? 'Aucune adresse' : @user.adresse  %></p>
+		 		<p class="description"> <%=(@user.description.nil?) ? 'Aucune description' : @user.description  %></p>
+		 		<p class="phone"><%= (@user.telephone.nil?) ? 'Aucun numéro' : @user.telephone  %></p>
+		 		<p class="email"><%= (@user.email.nil?) ? 'Aucune adresse mail' : @user.email %></p>
 		 	</div>
 		 	<div class="clear"></div>
 

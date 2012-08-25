@@ -38,12 +38,13 @@
           div.append(a)
           
           if titre != ""
+              titre = titre+' '
               strong = $(document.createElement('strong'))
               strong.text(titre)
               div.append(strong)
           if message != ""
               div.append(message)
-          console.log(div)
+          console.log($("#{id}"))
           $("#{id}").after(div)
           
           #__ TEMPS DEFINI POUR DISPARITION DU MESSAGE DINFO

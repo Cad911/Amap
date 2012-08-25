@@ -3,7 +3,11 @@ class Administration::StocksController < InheritedResources::Base
 
   #________________ INDEX ____________________________________________
   def index
-  	@stocks = Stock.where(:user_id => params[:user_id])
+  	#TO DEFINE THE PAGE WHERE I AM
+  	@admin_produit = true
+  	
+  	@stocks = Stock.where(:user_id => params[:user_id]).order('created_at DESC')
+  	@stock_new = Stock.new
    	authorize! :update, User.find(params[:user_id]) #TRADUCTION : EST-IL AUTORISE A UPDATER CETTE UTILISATEUR ?
   end
 
@@ -73,19 +77,53 @@ class Administration::StocksController < InheritedResources::Base
   	if current_user.can_stock_ar
   	    @produit_autorise = ProduitAutorise.find(params[:stock][:produit_autorise_id])
   	    @stock = Stock.new(params[:stock])
-  	    @stock.titre = @produit_autorise.titre
-  	    @stock.description = @produit_autorise.description
+#   	    @stock.titre = @produit_autorise.titre
+#   	    @stock.description = @produit_autorise.description
   	    @stock.categorie_id =  @produit_autorise.categorie_id
   	elsif current_user.can_stock_sr
 	  	@stock = Stock.new(params[:stock])
 	end
-	
-	
 	@stock.user_id = current_user.id
+	
+	
+	
+	
 	  	
 	if @stock.save
-	  	flash[:notice] = "Produit ajoute a votre stock"
-	  	redirect_to administration_user_stock_path(params[:user_id],@stock)
+		#CREATE PRODUIT VENTE LIBRE
+		if !params[:produit_vente_libre].nil?
+			@produit_vente_libre = ProduitVenteLibre.new(params[:produit_vente_libre])
+			@produit_vente_libre.stock_id = @stock.id
+			@produit_vente_libre.prix_unite_ht = @produit_vente_libre.prix_unite_ttc
+			@produit_vente_libre.titre = @stock.titre
+			@produit_vente_libre.description = @stock.description
+			
+			@produit_vente_libre.save
+		end
+		
+		#CREATE PHOTO STOCK SI IL EN A
+		if !params[:photo_stock].nil?	
+		    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+			if params[:photo_stock][:first_image] == "1"
+				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+				if @photo_first_image.count > 0
+					@photo_first_image[0].first_image = 0
+					@photo_first_image[0].save	
+				end
+			else
+				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+				#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
+				if @photo_first_image.count == 0
+					params[:photo_stock][:first_image] = "1"
+				end
+			end
+		@photo_stock = PhotoStock.new(params[:photo_stock])
+		@photo_stock.stock_id = @stock.id
+		@photo_stock.save
+	end
+	  	
+	  	#flash[:notice] = "Produit ajoute a votre stock"
+	  	render :partial => 'card', :locals => {:stock => @stock}
 	else
 		render 'new'
 	end
@@ -146,6 +184,19 @@ class Administration::StocksController < InheritedResources::Base
 	  		}
 	  	end
   	end
+  end
+  
+  def destroy
+  	stock = Stock.find(params[:id])
+  	stock.destroy
+  	
+  	produit_to_delete = ProduitVenteLibre.where(:stock_id => params[:id])
+  	
+  	produit_to_delete.each do |produit|
+  		produit.destroy
+  	end
+  	
+  	render :nothing => true
   end
   
   

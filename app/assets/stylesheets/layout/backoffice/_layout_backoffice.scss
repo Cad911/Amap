@@ -293,6 +293,23 @@ body .backoffice {
 				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
 					}
 				}
+				//FOR BUTTON SI CLICK ON
+				.button_active.edit
+				{
+					background:$red;
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    span.picture {
+							@include ui-sprite(edit_active);							
+					}
+				}
+				.button_active.help
+				{
+					background:$red;
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    span.picture {
+							@include ui-sprite(help_active);							
+					}
+				}
 				.help {
 		      &:hover {
 		        span {
