@@ -13,73 +13,17 @@
     <p class="content">Modifier chaque éléments d'un panier en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 </div>
 
+<% if @panier.nil? %>
 
-<div class="card_stack">
+<% else %>
 
-    <div class="packaging">
-        <div class="header">
-            <span class="truncate-wrap"><h2 class="title is-truncated">Mon petit panier lorem ipsum dolor ipsum</h2></span>
-            <ul class="buttons_card">
+	<% @paniers.each do |panier| %>
+		<%= render :partial => "card_panier", :locals => {:panier => panier} %>
+	<% end %>
 
-                <%#= link_to edit_administration_user_stock_path(params[:user_id],stock) do %> 
-                <li class="edit button" title="modifier"><span class="picture"></span></li>
-                <%# end %> 
+<% end %>
 
-                <%#= link_to administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete do %>
-                <li class="delete button" title="supprimer"><span class="picture"></span></li>
-                <%# end %>
-            </ul>
-            <div class="clear"></div>
-        </div>
-        <div class="body">
-            <span class="truncate-wrap"><p class="description is-truncated">Description lorem ipsum dolor et sit amet consedum adiscipling dolor et sit amet consedum adiscipling</p></span> 
-        </div>
-        <div class="footer">
-            <ul class="main-informations is-editing">
-                <li><span class="number is_bold">8</span><span class="icon members"></span></li>
-                <li><span class="number is_bold">4</span><span class="icon pictures"></span></li>
-                <li><span class="number is_bold">7</span><span class="icon products"></span></li>
-            </ul>
-            <ul class="details is-editing">
-                <li class="detail">
-                    <span class="label">Max</span>
-                    <span class="number">200</span>
-                </li>
-                <li class="detail">
-                    <span class="label">Format</span>
-                    <ul class="number">
-                        <li>2</li>
-                        <li>4</li>
-                        <li>6</li>
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Durée</span>
-                    <ul class="number">
-                        <li>3</li>
-                        <li>6</li>
-                        <li>9</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
 
-    <div class="card fade in one"><div class="left_area"></div><div class="right_area"></div></div>
-    <div class="card fade in two"><div class="left_area"></div><div class="right_area"></div></div>
-    <div class="card fade in three">
-        <div class="left_area">
-            <div class="is_small has_corners_shadow"></div>
-            <div class="picture first_cloumn"></div> 
-            <div class="picture"></div>
-            <div class="picture first_cloumn"></div>
-            <div class="picture"></div>
-        </div>
-        <div class="right_area">
-        </div>
-    </div>
-
-</div>
 <!--
 <% if @panier.nil? %>
 
@@ -121,8 +65,8 @@
 <% end %>
 </table>
 <% end %>
+-->
 
 <br />
 
 <%= link_to 'New Panier', new_administration_user_panier_path(params[:user_id]) %>
--->

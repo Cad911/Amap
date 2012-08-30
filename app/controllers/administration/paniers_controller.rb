@@ -12,6 +12,30 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		#___ On affiche les produits se trouvant dans le panier ___
 		@produit_paniers = ProduitPanier.where(:panier_id => params[:id])
 		@photo_panier = PhotoPanier.new
+		@panier = Panier.find(params[:id])
+		
+	  	@panier_produit_panier = {
+		  	:panier => {
+			  	:id => @panier.id,
+			  	:user_id => @panier.revendeur_id,
+			  	:categorie_id => @panier.categorie_id,
+			  	:nb_pack => @panier.nb_pack,
+			  	:titre => @panier.titre,
+			  	:description => @panier.description,
+		  	},
+		  	
+		  	:produit_paniers => @produit_paniers		  	
+	  	}
+	  	
+	  	respond_to do |format|
+	  		format.json { render :json => {
+	  			:status => "OK",
+	  			:panier => @panier_produit_panier[:panier],
+	  			:produit_paniers => @panier_produit_panier[:produit_paniers] 			  			
+	  			}
+	  		}
+	  		format.html { render :show }
+	  	end
 	end
 	
 	
@@ -27,7 +51,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		@panier.attributes = params[:panier]
 		@panier.revendeur_id = params[:user_id]
 		#_______ CONDITION CAN STOCK AR ______ 
-  		if current_user.can_stock_ar
+  		if current_user.can_stock_ar && !params[:panier][:panier_autorise_id].nil?
   			@panier_autorise = PanierAutorise.find(params[:panier][:panier_autorise_id])
   			@panier.titre = @panier_autorise.titre
   			@panier.description = @panier_autorise.description
@@ -41,12 +65,29 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
   		end
 	
 		if @panier.save
-			flash[:notice] = "Panier modifier"
-			redirect_to administration_user_panier_path(params[:user_id],@panier)
-		else
-			flash[:notice] = "ERREUR"
-			render :new
-		end
+	  		flash[:notice] = 'Panier modifie'
+			
+			respond_to do |format|
+		  		format.json { render :json => {
+		  			:status => "OK"
+		  			}
+		  		 }
+		  		format.html { redirect_to administration_user_panier_path(params[:user_id],@panier) }
+		  	end
+	  	else
+	  		respond_to do |format|
+		  		format.json { render :json => {
+			  		:status => "error",
+			  		:error => 'Une erreur est survenue'
+			  		} 
+			  	}
+		  		format.html { 
+		  			flash[:notice] = 'Une erreur est survenu, veuillez ressayer'
+		  			render 'edit' 
+		  		}
+		  	end
+	  	end
+
  	end
 	
 	

@@ -10,6 +10,107 @@ $(window).load(()->
 )
 
 $(document).ready( () ->
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ ADD PHOTO STOCK ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    add_photo_stock = 
+        card : ''
+        init: ()->
+            $('.add.button.image').on('click', ()->
+               stock_id = $(this).attr('id').replace('stock_id_','')
+               add_photo_stock.card = $(this).parents('div').parents('li.card')
+               add_photo_stock.generate_form(stock_id)
+            )
+        
+        generate_form : (stock_id)->
+            window.light_box_information.html_content('')
+            input = $(document.createElement('input'))
+            input.attr('name','photo_stock[image]')
+            input.attr('id','photo_stock_image')
+            input.attr('type','file')
+            
+            #BUTTON FOOTER
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            
+            a = $(document.createElement('a'))
+            a.addClass('test')
+            a.text('Ajouter')
+            
+            span.append(a)                        
+           
+            span_annuler = window.light_box_information.create_annuler()
+            
+            window.light_box_information.html_footer(span_annuler)
+            window.light_box_information.append_footer(span)
+            window.light_box_information.title_header('Ajout photo')
+            window.light_box_information.append_content(input)
+            window.light_box_information.show()
+            span.on('click', ()->
+                add_photo_stock.upload_form(input,stock_id)
+            )
+            
+        upload_form : (input,stock_id)->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/stocks/'+stock_id+'/add_image')
+            
+            form = new FormData();
+            name = $(input).attr('name')
+            form.append('photo_stock[first_image]','0')
+            console.log(input)
+            fileInput = input[0]
+            console.log(input)
+            console.log(fileInput)        
+            form.append(name,fileInput.files[0])
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    window.light_box_information.hide()
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    add_photo_stock.create_photo(data['photo_stock'])
+                    
+                    
+        create_photo: (data)->
+            console.log(data)
+            div = $(document.createElement('div'))
+            
+            nb_photo = $(add_photo_stock.card).children('.left_area').children('.picture').length
+            class_div = ''
+            if nb_photo%2 == 0
+                class_div = "picture first_cloumn"
+            else
+                class_div = "picture"
+            div.addClass(class_div)
+            
+            img = $(document.createElement('img'))
+            img.attr('src',data['image']['is_small']['url'])
+            
+            div.append(img)
+            
+            $(add_photo_stock.card).children('.left_area').children('.picture').last().after(div)
+            
+
+
+        
+    add_photo_stock.init()
+        
+    
+    
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ FORM ADD STOCK ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
     form_add_stock =
         init : ()->
             form_add_stock.form_new_stock()
@@ -194,6 +295,14 @@ $(document).ready( () ->
     form_add_stock.init()
     
     
+    
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ SUPP STOCK ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
     supp_stock = 
         init:()->
             $('.buttons_card li.delete').on('click',()->
@@ -324,32 +433,96 @@ $(document).ready( () ->
                 $('.buttons_card>.edit').on('click',()->
                     if $(this).hasClass('button_active')
                         $(this).removeClass('button_active')
-                        functions.remove_editing_class($(this).parents('li.card'))
+                        if $('.cards').length > 0
+                            functions.remove_editing_class($(this).parents('li.card'))
+                        if $('.card_stack').length > 0
+                            functions.remove_editing_class($(this).parents('div.card_stack'))    
                     else
                         $(this).addClass('button_active')
-                        functions.add_editing_class($(this).parents('li.card'))
+                        if $('.cards').length > 0
+                            functions.add_editing_class($(this).parents('li.card'))
+                        if $('.card_stack').length > 0
+                            functions.add_editing_class($(this).parents('div.card_stack'))
+                            #console.log($(this).parents('div.card_stack'))
                 )
         
         remove_editing_class:(element = 'body')->
             if $('.user_profile').length > 0
-                $('.user_profile>.content>p').removeClass('is_editing')
+                $('.user_profile>.content>p').removeClass('is-editing')
+                $('.user_profile>.pictures>div').removeClass('is-editing')
+                
             
             if $('.cards').length > 0
-               $(element).children('.right_area').children('.header').children('.title').removeClass('is_editing')
-               $(element).children('.right_area').children('.body').children('.description').removeClass('is_editing')
-               $(element).children('.right_area').children('.footer').children('ul').children('li').removeClass('is_editing')
+               $(element).children('.right_area').children('.header').children('.title').removeClass('is-editing')
+               $(element).children('.right_area').children('.body').children('.description').removeClass('is-editing')
+               $(element).children('.right_area').children('.footer').children('ul').children('li').removeClass('is-editing')
+            
+            if $('.card_stack').length > 0
+                $(element).children('.packaging').children('.header').children('.title').removeClass('is-editing')
+                $(element).children('.packaging').children('.body').children('.description').removeClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul').children('li').removeClass('is-editing')
         
         add_editing_class:(element = 'body')->
+            #pour user profile
             if $('.user_profile').length > 0
-                $('.user_profile>.content>p').addClass('is_editing')
+                $('.user_profile>.content>p').addClass('is-editing')
+                $('.user_profile>.pictures>div').addClass('is-editing')
             
+            #pour produit
             if $('.cards').length > 0
                console.log($(element).children('.rigth_area'))
-               $(element).children('.right_area').children('.header').children('.title').addClass('is_editing')
-               $(element).children('.right_area').children('.body').children('.description').addClass('is_editing')
-               $(element).children('.right_area').children('.footer').children('ul').children('li').addClass('is_editing')
+               $(element).children('.right_area').children('.header').children('.title').addClass('is-editing')
+               $(element).children('.right_area').children('.body').children('.description').addClass('is-editing')
+               $(element).children('.right_area').children('.footer').children('ul').children('li').addClass('is-editing')
+            
+            #Pour panier
+            if $('.card_stack').length > 0
+                $(element).children('.packaging').children('.header').children('span').children('.title').addClass('is-editing')
+                $(element).children('.packaging').children('.body').children('span').children('.description').addClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul').children('li').addClass('is-editing')
     
     functions.init()
+    
+    
+    
+    #-----------------------------------
+    #-----------------------------------
+    #-----------------------------------
+    # SHOW INFOS PANIER
+    #-----------------------------------
+    #-----------------------------------
+    #----------------------------------- 
+    $('div.card_stack>.packaging h2.title').form_plugin(
+        champ: 'titre'
+        element: 
+            type: 'input'
+        button:
+            class:'update_titre'
+            text_update:'Modifier le titre'
+        url_get_infos:['user','panier']
+    )
+
+    $('div.card_stack>.packaging p.description').form_plugin(
+        champ: 'description'
+        element: 
+            type: 'input'
+        button:
+            class:'update_description'
+            text_update:'Modifier le description'
+        url_get_infos:['user','panier']
+    )
+    
+    $('div.card_stack>.packaging li.detail_max').form_plugin(
+        champ: 'nb_pack'
+        element: 
+            type: 'input'
+        button:
+            class:'update_description'
+            text_update:'Modifier le description'
+        url_get_infos:['user','panier']
+    )
+    
     
     
     #-----------------------------------

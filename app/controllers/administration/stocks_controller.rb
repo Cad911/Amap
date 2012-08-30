@@ -1,5 +1,5 @@
 class Administration::StocksController < InheritedResources::Base
-
+protect_from_forgery :except => :add_image 
 
   #________________ INDEX ____________________________________________
   def index
@@ -240,12 +240,16 @@ class Administration::StocksController < InheritedResources::Base
 		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 		if @photo_first_image.count == 0
 			params[:photo_stock][:first_image] = "1"
+		else
+			params[:photo_stock][:first_image] = "0"
 		end
 	end
-	@photo_stock = PhotoStock.new
+	@photo_stock = PhotoStock.new(params[:photo_stock])
 	@photo_stock.stock_id = @stock.id
-	@photo_stock.update_attributes(params[:photo_stock])
-	redirect_to [:administration,current_user,@stock]
+	@photo_stock.save
+	
+	render :json => {:photo_stock => @photo_stock}
+	#redirect_to [:administration,current_user,@stock]
   end
   
   
@@ -276,7 +280,8 @@ class Administration::StocksController < InheritedResources::Base
 			flash[:notice] = "Aucun changement"
 		end
 	end
-	redirect_to [:administration,current_user,@stock]
+	render :nothing => true
+	#redirect_to [:administration,current_user,@stock]
   end
   
   #____________________________ DELETE IMAGE _________________________________________________

@@ -12,6 +12,23 @@ class Panier < ActiveRecord::Base
     attr_accessor :duree
     
     
+    
+    #___ nb produit dans panier
+    def product_number
+    	#@number_product = ProduitPanier.where(:)
+    	return self.produit_paniers.count
+    end
+    
+    #___ nb personne inscrite
+    def customer_number
+    	@today = Date.today #return aaaa-mm-jj
+	    @number_customer = Abonnement.where('panier_id = ? AND etat = "paye" AND date_fin >= ?',self.id,@today).count
+	    
+	    return @number_customer
+    	#@number_customer = Abonnement.where()
+    end
+    
+    
     #_____ IMAGE USER ________________________________
     def default_image
   	  @default_photo = PhotoPanier.where('panier_id = ? AND first_image = "1"',self.id)
