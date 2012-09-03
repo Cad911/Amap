@@ -252,8 +252,8 @@ $.fn.form_plugin = (optn)->
                             if informations['status'] == 'OK'
                                 if $(options.element_clicked).children('span.value').length > 0
                                     element_for_text = $(options.element_clicked).children('span.value')
-                                else
-                                    element_for_text = $(options.element_clicked)
+                                else if $(options.element_clicked).children('span.number').length > 0
+                                    element_for_text = $(options.element_clicked).children('span.number')
                                 
                                 if options.element.type == 'select'
                                     element_for_text.text($(valeur).children("option[value='"+val+"']").text())
@@ -275,7 +275,7 @@ $.fn.form_plugin = (optn)->
 #_______ EACH ________________
     return this.each(()->
         $(this).bind('click',()->
-            if $(this).hasClass('is_editing')
+            if $(this).hasClass('is-editing')
                 #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
                 options.element_clicked = this
                 

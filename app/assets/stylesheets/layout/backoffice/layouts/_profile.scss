@@ -40,39 +40,6 @@
 	//			right: 7px;
 				z-index: 1000;
 			}
-			.add {
-				width:30px;
-				height:30px;
-				display:block;
-				text-align:center;
-				float:left;
-				margin-left: 0 !important;
-				margin-right:10px;
-				@include embossed_button(#c2bdb1);
-				@include border-radius(5px);
-				text-align:center;
-				padding:0;			
-				.picture {
-					display:inline-block;
-					margin-top:6px;
-				}	
-				&:hover {
-					span {
-						@include ui-sprite(add_hover);							
-					}
-				}	
-				&:active {
-					span.picture {
-						@include ui-sprite(add_active);							
-					}
-				}									
-				span {
-					@include ui-sprite(add);
-					display:block;
-					width:16px;
-					height:16px;
-				}
-			}	
 			.has_corners_shadow {
 				&.is-editing {
 					.modify {
