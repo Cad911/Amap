@@ -46,7 +46,8 @@ class UserAbility
 	  		can :show, ProduitAutorise, :user_id => user.direction.id #POUR LE JS, PRE REMPLISSAGE DES INPUT
 	  		
 	  		can :manage, Panier, :revendeur_id => user.id
-	  		can :create, Panier
+	  		can [:create, :create_declinaison], Panier
+	  		#can :create_declinaison, Panier
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
 	  		can :create, ProduitPanier
@@ -69,7 +70,7 @@ class UserAbility
 	  		can :create, ProduitVenteLibre
 	  		
 	  		can :manage, Panier, :revendeur_id => user.id
-	  		can :create, Panier
+	  		can [:create, :create_declinaison], Panier
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
 	  		can :create, ProduitPanier

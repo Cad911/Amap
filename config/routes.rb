@@ -97,6 +97,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       end
       
       #_____ ROUTE POUR IMAGE PANIER _____
+      match '/paniers/create_declinaison' => 'paniers#create_declinaison', :as => :create_declinaison, :via => :post
       match '/paniers/:panier_id/add_image' => 'paniers#add_image', :as => :panier_add_image, :via => :post
       match '/paniers/:panier_id/update_image/:image_id' => 'paniers#update_image', :as => :panier_update_image, :via => :put
       match '/paniers/:panier_id/delete_image/:image_id' => 'paniers#delete_image', :as => :panier_delete_image, :via => :delete

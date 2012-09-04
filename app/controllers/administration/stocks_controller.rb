@@ -97,6 +97,7 @@ protect_from_forgery :except => :add_image
 			@produit_vente_libre.prix_unite_ht = @produit_vente_libre.prix_unite_ttc
 			@produit_vente_libre.titre = @stock.titre
 			@produit_vente_libre.description = @stock.description
+			@produit_vente_libre.user_id = @stock.user_id
 			
 			@produit_vente_libre.save
 		end

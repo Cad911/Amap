@@ -247,18 +247,19 @@ $.fn.form_plugin = (optn)->
                         data:data
                         format:'json'
                         complete:(data)->
-                            console.log('ahhahahh')
                             informations = $.parseJSON(data['responseText'])
                             if informations['status'] == 'OK'
                                 if $(options.element_clicked).children('span.value').length > 0
                                     element_for_text = $(options.element_clicked).children('span.value')
                                 else if $(options.element_clicked).children('span.number').length > 0
                                     element_for_text = $(options.element_clicked).children('span.number')
+                                else
+                                    element_for_text = options.element_clicked
                                 
                                 if options.element.type == 'select'
-                                    element_for_text.text($(valeur).children("option[value='"+val+"']").text())
+                                    $(element_for_text).text($(valeur).children("option[value='"+val+"']").text())
                                 else
-                                    element_for_text.text($.trim(value_to_show))
+                                    $(element_for_text).text($.trim(value_to_show))
                                 
                                 window.light_box_information.hide()
                                 $(options.element_clicked).trigger('end_form_plugin')

@@ -461,7 +461,7 @@ $(document).ready( () ->
                 $(element).children('.packaging').children('.header').children('.title').removeClass('is-editing')
                 $(element).children('.packaging').children('.body').children('.description').removeClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
-                $(element).children('.packaging').children('.footer').children('ul').children('li').removeClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
         
         add_editing_class:(element = 'body')->
             #pour user profile
@@ -480,7 +480,7 @@ $(document).ready( () ->
             if $('.card_stack').length > 0
                 $(element).children('.packaging').children('.header').children('span').children('.title').addClass('is-editing')
                 $(element).children('.packaging').children('.body').children('span').children('.description').addClass('is-editing')
-                $(element).children('.packaging').children('.footer').children('ul').children('li').addClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul').addClass('is-editing')
     
     functions.init()
     
@@ -513,18 +513,231 @@ $(document).ready( () ->
         url_get_infos:['user','panier']
     )
     
-    $('div.card_stack>.packaging li.detail_max').form_plugin(
-        champ: 'nb_pack'
-        element: 
-            type: 'input'
-        button:
-            class:'update_description'
-            text_update:'Modifier le description'
-        url_get_infos:['user','panier']
-    )
+    # $('div.card_stack>.packaging li.detail_max').form_plugin(
+#         champ: 'nb_pack'
+#         element: 
+#             type: 'input'
+#         button:
+#             class:'update_description'
+#             text_update:'Modifier le description'
+#         url_get_infos:['user','panier']
+#     )
+
     
     
+    change_infos_panier = 
+        panier_id: 0
+        div_form: $('')
+        init:()->
+            $('div.card_stack>.packaging ul.details').on( 'click', ()->
+                if ($(this).hasClass('is-editing'))
+                     #generate box
+                     change_infos_panier.generate_box()
+                     change_infos_panier.add_select()
+                     change_infos_panier.div_form.css('display','none')
+                     change_infos_panier.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
+                     change_infos_panier.get_panier()
+
+            )
+        
+        get_panier: ()->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/paniers/'+change_infos_panier.panier_id)
+            xhr.setRequestHeader('Accept','application/json')
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    
+                    for champ, valeur of data['declinaison_panier']
+                        window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
+                    
+
+            
+        
+        create_fiche_declinaison: (declinaison_panier)->
+            div_form = $(document.createElement('div'))
+            div_card.addClass('card_stack')
+            
+            
+            ul = $(document.createElement('ul'))
+            ul.addClass('details')
+            
+            li_format = $(document.createElement('li'))
+            label_nombre_personne = $(document.createElement('span'))
+            label_nombre_personne.text('Format')
+            label_nombre_personne.addClass('label')
+            li_format.append(label_nombre_personne)
+            
+            ul_value = $(document.createElement('ul'))
+            value_nombre_personne = $(document.createElement('span'))
+            value_nombre_personne.text(declinaison_panier['nombre_personne'])
+            p_nombre_personne.append(label_nombre_personne)
+            p_nombre_personne.append(value_nombre_personne)
+            <li class="detail">
+<span class="label">Format</span>
+<ul class="number">
+</li>
+            
+            
+            p_max = $(document.createElement('p'))
+            label_max = $(document.createElement('span'))
+            label_max.text('max : ')
+            value_max = $(document.createElement('span'))
+            value_max.text(declinaison_panier['nb_pack'])
+            p_max.append(label_max)
+            p_max.append(value_max)
+            
+            
+            
+            p_duree = $(document.createElement('p'))
+            label_duree = $(document.createElement('span'))
+            label_duree.text('duree : ')
+            value_duree = $(document.createElement('span'))
+            value_duree.text(declinaison_panier['duree'])
+            p_duree.append(label_duree)
+            p_duree.append(value_duree)
+            
+            div_card.append(p_max)            
+            div_card.append(p_nombre_personne)
+            div_card.append(p_duree)
+            
+            return p_declinaison
+                                    
+        generate_box: ()->
+            window.light_box_information.html_content(change_infos_panier.button_add_select())
+            window.light_box_information.title_header('titre')
+            span_annuler = window.light_box_information.create_annuler()
+            window.light_box_information.html_footer(span_annuler)
+            #change_infos_panier.add_select()
+            window.light_box_information.show()
+        
+        button_add_select: ()->
+            span = $(document.createElement('span'))
+            a = $(document.createElement('a'))
+            a.text('Ajoutez declinaison')
+            span.addClass('button')
+            
+            a.on('click',()->
+                change_infos_panier.div_form.slideDown(1000)
+            )
+            
+            span.append(a)
+            
+            return span 
+        
+        add_select:()->
+            div_form = $(document.createElement('div'))
+            #div_card.addClass('card_stack')
+            
+            #max
+            p_max = $(document.createElement('p'))
+            label_max = $(document.createElement('label'))
+            label_max.text('Nombre mis en ligne : ')
+            input_max = $(document.createElement('input'))
+            input_max.attr('name','panier[nb_pack]')
+            p_max.append(label_max)
+            p_max.append(input_max)
+            
+            #format
+            p_format = $(document.createElement('p'))
+            label_format = $(document.createElement('label'))
+            label_format.text('Nombre de personne : ')
+            select_format = $(document.createElement('select'))
+            select_format.attr('name','panier[nombre_personne]')
+            options_format = [2,4,6]
+            i = 0
+            while(options_format.length > i)
+                option = $(document.createElement('option'))
+                option.val(options_format[i])
+                option.text(options_format[i])
+                select_format.append(option)
+                i++
+            p_format.append(label_format)
+            p_format.append(select_format)
+            
+            #duree
+            p_duree = $(document.createElement('p'))
+            label_duree = $(document.createElement('label'))
+            label_duree.text('Duree (mois) : ')    
+            select_duree = $(document.createElement('select'))
+            select_duree.attr('name','panier[duree]')
+            options_duree = [3,6,9]
+            i = 0
+            while(options_duree.length > i)
+                option = $(document.createElement('option'))
+                option.val(options_duree[i])
+                option.text(options_duree[i])
+                select_duree.append(option)
+                i++
+            
+            p_duree.append(label_duree)
+            p_duree.append(select_duree)
+            
+            #button add
+            span_add = $(document.createElement('span'))
+            a = $(document.createElement('a'))
+            a.text('Ajoutez')
+            span_add.addClass('button')
+            
+            a.on('click',()->
+                data = 
+                    nb_pack: input_max.val()
+                    nombre_personne: select_format.val()
+                    duree: select_duree.val()
+                change_infos_panier.add_declinaison(data)
+            )
+            
+            #all in div_form
+            span_add.append(a)
+            div_form.append(p_format)
+            div_form.append(p_duree)
+            div_form.append(p_max)
+            div_form.append(span_add)
+            
+            change_infos_panier.div_form = div_form
+            window.light_box_information.prepend_content(div_form)
+            
+            
+        
+        add_declinaison: (data_)->
+            #data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/create_declinaison')
+            xhr.setRequestHeader('Accept','application/json')
+            
+            form = new FormData();
+            form.append('panier[id]', change_infos_panier.panier_id)
+            form.append('panier[nb_pack]', data_.nb_pack)
+            form.append('panier[nombre_personne]', data_.nombre_personne)
+            form.append('panier[duree]', data_.duree)
+            
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    #window.light_box_information.hide()
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'error'
+                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                    else
+                       change_infos_panier.div_form.slideUp(1000)
+                       window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(data_))
+                    #add_photo_stock.create_photo(data['photo_stock'])
+
+            
+            
+                
+            
+            
     
+    change_infos_panier.init()
     #-----------------------------------
     #-----------------------------------
     #-----------------------------------

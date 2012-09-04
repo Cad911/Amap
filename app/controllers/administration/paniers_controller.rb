@@ -1,9 +1,18 @@
 class Administration::PaniersController < InheritedResources::Base
-load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID	
+#load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
+protect_from_forgery :except => :create_declinaison #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
-		@panier = Panier.where(:revendeur_id => params[:user_id])
+		@panier_ = Panier.where(:revendeur_id => params[:user_id]).order('panier_autorise_id')
+		@panier_autorise = 0
+		@paniers = []
+		@panier_.each do |panier|
+				if @panier_autorise != panier.panier_autorise_id
+					@paniers.push(panier)	
+				end
+				@panier_autorise = panier.panier_autorise_id
+		end
 		authorize! :update, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
 	end
 	
@@ -14,6 +23,9 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		@photo_panier = PhotoPanier.new
 		@panier = Panier.find(params[:id])
 		
+		@declinaison_panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ? ', @panier.panier_autorise_id , @panier.revendeur_id )
+		#@panier_correspondant.push(@panier)
+	  	
 	  	@panier_produit_panier = {
 		  	:panier => {
 			  	:id => @panier.id,
@@ -23,7 +35,7 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 			  	:titre => @panier.titre,
 			  	:description => @panier.description,
 		  	},
-		  	
+		  	:declinaison_panier => @declinaison_panier,
 		  	:produit_paniers => @produit_paniers		  	
 	  	}
 	  	
@@ -31,7 +43,8 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 	  		format.json { render :json => {
 	  			:status => "OK",
 	  			:panier => @panier_produit_panier[:panier],
-	  			:produit_paniers => @panier_produit_panier[:produit_paniers] 			  			
+	  			:declinaison_panier => @panier_produit_panier[:declinaison_panier], 
+	  			:produit_paniers => @panier_produit_panier[:produit_paniers]		  			
 	  			}
 	  		}
 	  		format.html { render :show }
@@ -125,6 +138,60 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 				flash[:notice] = "ERREUR"
 				render :new
 			end
+	end
+
+
+	#_______ CREATE DECLINAISON________
+	def create_declinaison
+		@panier_model = Panier.find(params[:panier][:id])
+		@declinaison_panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', @panier_model.panier_autorise_id, @panier_model.revendeur_id)
+		@declinaison_exist = false
+		@declinaison_panier.each do |panier_|
+			if panier_.nombre_personne.to_i == params[:panier][:nombre_personne].to_i && panier_.duree.to_i == params[:panier][:duree].to_i 
+				@declinaison_exist = true
+			end
+		end
+		
+		
+		if @declinaison_exist == false
+			@panier = Panier.new()
+			@panier.titre = @panier_model.titre
+			@panier.description = @panier_model.description
+			@panier.prix_unite_ht = @panier_model.prix_unite_ht
+			@panier.prix_unite_ttc = @panier_model.prix_unite_ttc
+			@panier.panier_autorise_id = @panier_model.panier_autorise_id
+			@panier.revendeur_id = @panier_model.revendeur_id
+			@panier.categorie_id = @panier_model.categorie_id
+			@panier.nb_pack = params[:panier][:nb_pack]
+			@panier.nombre_personne = params[:panier][:nombre_personne]
+			@panier.duree = params[:panier][:duree]
+			if @panier.save
+				respond_to do |format|
+			  		format.json { render :json => {
+				  		:status => "OK",
+				  		:error => 'Declinaison ajoute'
+				  		} 
+				  	}
+			  		format.html { 
+			  			flash[:notice] = 'La declinaison existe deja'
+			  			render 'new' 
+			  		}
+			  	end
+			 end
+		
+		else
+			respond_to do |format|
+		  		format.json { render :json => {
+			  		:status => "error",
+			  		:error => 'La declinaison existe deja'
+			  		} 
+			  	}
+		  		format.html { 
+		  			flash[:notice] = 'La declinaison existe deja'
+		  			render 'new' 
+		  		}
+		  	end
+		end	
 	end
 	
 	# def delete

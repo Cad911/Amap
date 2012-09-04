@@ -1,3 +1,4 @@
+
 <div class="card_stack">
 
     <div class="packaging">
@@ -33,20 +34,25 @@
                     <span class="label">Max</span>
                     <span class="number"><%= panier.nb_pack %></span>
                 </li>
-                <li class="detail">
-                    <span class="label">Format</span>
-                    <ul class="number">
-                        <li> <%= panier.nombre_personne %> </li>
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Durée</span>
-                    <ul class="number">
-                        <li>3</li>
-                        <li>6</li>
-                        <li>9</li>
-                    </ul>
-                </li>
+                <div id="">
+	                <li class="detail">
+	                    <span class="label">Format</span>
+	                    <ul class="number">
+	                    	<li <%= (panier.regroup_nombre_personne.include?(2)) ? 'class="check"' : "" %>> 2 </li>
+	                    	<li <%= (panier.regroup_nombre_personne.include?(4)) ? 'class="check"' : "" %>> 4 </li>
+	                    	<li <%= (panier.regroup_nombre_personne.include?(6)) ? 'class="check"' : "" %>> 6 </li>
+	                  
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Durée</span>
+	                    <ul class="number">
+		                    <li <%= (panier.regroup_duree.include?('3')) ? 'class="check"' : "" %>> 3 </li>
+	                    	<li <%= (panier.regroup_duree.include?('6')) ? 'class="check"' : "" %>> 6 </li>
+	                    	<li <%= (panier.regroup_duree.include?('9')) ? 'class="check"' : "" %>> 9 </li>
+	                    </ul>
+	                </li>
+                </div>
             </ul>
         </div>
     </div>
