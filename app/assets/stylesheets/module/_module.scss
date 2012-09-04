@@ -326,6 +326,7 @@ span.button {
   z-index:1050;
   top: 50%;
   left: 50%;
+  margin: -175px 0 0 -250px;
   .lightbox {
     width:  500px;
     position:relative;
@@ -354,6 +355,7 @@ span.button {
     }
     .content {
       border-bottom:solid 1px #C8C5BF;
+      padding: 20px 40px 20px 40px;
       .title{
         line-height:inherit;
         @include title(2,16px);
@@ -388,6 +390,9 @@ span.button {
     margin: -250px 0 0 -350px;
     .alert {
         margin:0 20px 0 240px;      
+    }
+    .content {
+      padding: 0;
     }
     .lightbox {
       width: 700px;

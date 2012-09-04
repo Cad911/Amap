@@ -178,11 +178,11 @@
 			<div class="content">
 				<ul class="navigation">
 					<li><span class="current"><span class="number">1</span> Description</span></li>
-					<li><span><span class="number">2</span> Quantité</span></li>
+					<li><span><span class="number">2</span> Stock</span></li>
 					<li><span><span class="number">3</span> En rayon</span></li>
 				</ul>
 				<h2 class="title title_1"> Description </h2>
-				<h2 class="title title_2"> Quantité </h2>
+				<h2 class="title title_2"> Stock </h2>
 				<h2 class="title title_3"> En rayon </h2>
 				<%= simple_form_for([:administration, current_user, @stock_new], :remote => true,:html => {:class => 'form-horizontal' }) do |f| %>
 				<%= f.error_notification %>
@@ -247,20 +247,20 @@
 					<div class="formulaire_add etape_3">
 						<div class="modal-body">
 							<div class="control-group float optional">
-								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  quantite de chaque lot </label>
+								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  Quantite de chaque lot </label>
 								<div class="controls">
 									<%= file_field(:photo_stock, :image) %>
 								</div>
 							</div>
 							<div class="control-group float optional">
-								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  quantite de chaque lot </label>
+								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  Quantite de chaque lot </label>
 								<div class="controls">
 									<%= text_field(:produit_vente_libre, :quantite) %>
 								</div>
 							</div>
 
 							<div class="control-group float optional">
-								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  nombre de lot en ligne </label>
+								<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  Nombre de lot en ligne </label>
 								<div class="controls">
 									<%= text_field(:produit_vente_libre, :nombre_pack) %>
 								</div>
@@ -276,7 +276,7 @@
 					    -->
 
 					    <div class="control-group float optional">
-					    	<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  prix unite ttc </label>
+					    	<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  Prix unite ttc </label>
 					    	<div class="controls">
 					    		<%= text_field(:produit_vente_libre, :prix_unite_ttc) %>
 					    	</div>
