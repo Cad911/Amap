@@ -322,17 +322,16 @@ span.button {
 // Design de la Lighbox
 .lightbox_wrapper {
   position:fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
   display:none;
+  z-index:1050;
+  top: 50%;
+  left: 50%;
+  &.lightbox_new_stock {
+    margin: -250px 0 0 -350px;
+  }
   .lightbox {
     width:  500px;
     position:relative;
-    z-index:1050;
-    top:0;
-    margin:90px auto 40px auto;
     border:solid 1px $light_brown;
     background:#fafafa url(/../images/patterns/paper.png) repeat;
     @include borderradius(5px);
@@ -357,15 +356,17 @@ span.button {
       }
     }
     .content {
-      padding:20px 40px 20px 40px;
       border-bottom:solid 1px #C8C5BF;
-      h2.title{
+      .title{
+        line-height:inherit;
         @include title(2,16px);
         font-family:helveticaneue-bold;
       }
     }
-    .footer {
-      border-top:solid 1px #ffffff;
+    .modal-body {
+      padding:20px 40px 20px 40px;
+    }
+    .footer, .modal-footer {
       padding:5px 40px;
       text-align:right;
       background:url(/../images/bg_darkener.png);
@@ -386,8 +387,57 @@ span.button {
       }
     }
   }
-}
+  .lightbox.lightbox_form_new_stock {
+    width: 700px;
+    .form-horizontal .control-label {
+      text-align: left;
+    }
+    h2 {
+      margin-left:240px;
+      padding-top:0;
+      margin-top:0;
+    }
+    .content {
+      position: relative;
+      padding-top: 20px;
+    }
+    .modal-body {
+      width: 420px;
+      float: right;
+      padding-left: 50px;
+    }
+    .navigation {
+      width: 130px;
+      position: absolute;
+      margin: 0;
+      padding:0 20px 0 0;
+      top: 20px;
+      left: 40px;
+      border-right: 2px solid #DDD;
 
+      li {  
+        margin-bottom:20px;
+      }
+      li span {
+        &.current {
+          font-weight: bold;
+          font-family: 'helveticaneue-bold';
+          .number {
+          }
+        }
+        .number {
+          font-family: 'bellopro';
+          font-size: 30px;
+          padding-right: 10px;
+          line-height: inherit;
+        }
+      }
+    }
+  }
+}
+.navbar-fixed-top {
+  display:none;
+}
 // Menu dropdown
 ul.dropdown_menu {
   @include borderradius(5px);
@@ -799,7 +849,7 @@ ul.dropdown_menu {
   right:0;
   left:0;
   bottom:0;
-  //z-index:1040;
+ z-index:999;
   @include transition-property(all);
   @include transition-duration(400ms);
 }
