@@ -158,7 +158,7 @@
 <% end %>
 </ul>
 
-<div class="lightbox_wrapper lightbox_new_stock">
+<div class="lightbox_wrapper lightbox_new_stock has-menu">
 	<!-- _______________ form for connexion ____________ -->
 	<div class="lightbox lightbox_form_new_stock">
 		<div class="header">
@@ -176,9 +176,14 @@
 			}
 			</style>
 			<div class="content">
-				<h2 class="title title_1"> Choix du produit </h2>
-				<h2 class="title title_2"> Definition du stock </h2>
-				<h2 class="title title_3"> Mis en ligne </h2>
+				<ul class="navigation">
+					<li><span class="current"><span class="number">1</span> Description</span></li>
+					<li><span><span class="number">2</span> Quantité</span></li>
+					<li><span><span class="number">3</span> En rayon</span></li>
+				</ul>
+				<h2 class="title title_1"> Description </h2>
+				<h2 class="title title_2"> Quantité </h2>
+				<h2 class="title title_3"> En rayon </h2>
 				<%= simple_form_for([:administration, current_user, @stock_new], :remote => true,:html => {:class => 'form-horizontal' }) do |f| %>
 				<%= f.error_notification %>
 				
@@ -186,11 +191,6 @@
 
 					<% if current_user.can_stock_ar %>
 					<div class="formulaire_add etape_1">
-					<ul class="navigation">
-						<li><span class="current"><span class="number">1</span> Description</span></li>
-						<li><span><span class="number">2</span> Quantité</span></li>
-						<li><span><span class="number">3</span> En ligne</span></li>
-					</ul>
 						<div class="modal-body">
 							<%= f.input :id_user_input, :as => :hidden, :input_html => { :value => params[:user_id] } %>
 							<%= f.association :produit_autorise,:collection=>ProduitAutorise.where(:user_id => current_user.direction_id).map{|pa| [pa.titre,pa.id]}, :include_blank => false %>
