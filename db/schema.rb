@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829133632) do
+ActiveRecord::Schema.define(:version => 20120904142220) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20120829133632) do
     t.integer  "categorie_id"
     t.integer  "panier_autorise_id"
     t.integer  "nombre_personne"
-    t.string   "duree"
+    t.integer  "duree"
   end
 
   create_table "photo_paniers", :force => true do |t|

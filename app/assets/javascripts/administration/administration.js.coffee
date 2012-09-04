@@ -558,55 +558,70 @@ $(document).ready( () ->
                     
 
             
-        
+        li_detail:(data)->
+            li_max = $(document.createElement('li'))
+            li_max.addClass('detail')
+            
+            span_label = $(document.createElement('span'))
+            span_label.addClass('label')
+            span_label.text(data['label'])
+            
+            if (data['value']['element'] == 'span')
+                 element_number = $(document.createElement('span'))
+                 element_number.addClass('number')
+                 element_number.text(data['value']['value'])
+                 
+            if (data['value']['element'] == 'ul')
+                element_number = $(document.createElement('ul'))
+                element_number.addClass('number')
+                for champ, valeur of data['value']['value']
+                    li_number = $(document.createElement('li'))
+                    if valeur == data['value']['check']
+                        li_number.addClass('check')
+                    li_number.text(valeur)
+                    element_number.append(li_number)
+            
+            li_max.append(span_label)
+            li_max.append(element_number)
+            
+            return li_max
+                    
         create_fiche_declinaison: (declinaison_panier)->
-            div_form = $(document.createElement('div'))
+            div_card = $(document.createElement('div'))
             div_card.addClass('card_stack')
             
+            ul_details = $(document.createElement('ul'))
+            ul_details.addClass('details')
             
-            ul = $(document.createElement('ul'))
-            ul.addClass('details')
+            li_max = change_infos_panier.li_detail({
+                label:'Max'
+                value:
+                    element:'span'
+                    value:declinaison_panier['nb_pack']  
+            })
             
-            li_format = $(document.createElement('li'))
-            label_nombre_personne = $(document.createElement('span'))
-            label_nombre_personne.text('Format')
-            label_nombre_personne.addClass('label')
-            li_format.append(label_nombre_personne)
+            li_format = change_infos_panier.li_detail({
+                label:'Format'
+                value:
+                    element:'ul'
+                    value:[2,4,6]
+                    check:declinaison_panier['nombre_personne']  
+            })
             
-            ul_value = $(document.createElement('ul'))
-            value_nombre_personne = $(document.createElement('span'))
-            value_nombre_personne.text(declinaison_panier['nombre_personne'])
-            p_nombre_personne.append(label_nombre_personne)
-            p_nombre_personne.append(value_nombre_personne)
-            <li class="detail">
-<span class="label">Format</span>
-<ul class="number">
-</li>
+            li_duree = change_infos_panier.li_detail({
+                label:'Duree'
+                value:
+                    element:'ul'
+                    value:[3,6,9]
+                    check:declinaison_panier['duree']
+            })
             
+            ul_details.append(li_max)
+            ul_details.append(li_format)
+            ul_details.append(li_duree)
             
-            p_max = $(document.createElement('p'))
-            label_max = $(document.createElement('span'))
-            label_max.text('max : ')
-            value_max = $(document.createElement('span'))
-            value_max.text(declinaison_panier['nb_pack'])
-            p_max.append(label_max)
-            p_max.append(value_max)
-            
-            
-            
-            p_duree = $(document.createElement('p'))
-            label_duree = $(document.createElement('span'))
-            label_duree.text('duree : ')
-            value_duree = $(document.createElement('span'))
-            value_duree.text(declinaison_panier['duree'])
-            p_duree.append(label_duree)
-            p_duree.append(value_duree)
-            
-            div_card.append(p_max)            
-            div_card.append(p_nombre_personne)
-            div_card.append(p_duree)
-            
-            return p_declinaison
+            div_card.append(ul_details)
+            return div_card
                                     
         generate_box: ()->
             window.light_box_information.html_content(change_infos_panier.button_add_select())
