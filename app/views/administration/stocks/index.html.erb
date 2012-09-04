@@ -8,11 +8,7 @@
 </div>
 
 <div class="helper">
-<<<<<<< HEAD
 	<p class="title is_bold"><i class="icon ui-help_hover"></i>Gérer vos produits</p>
-=======
-	<p class="title is_bold"><i class="icon ui-help_hover"> </i>Gérer vos produits</p>
->>>>>>> 0aad967202497e91e93de7f8fcaf1d37330f52c7
 	<span class="close"><i class="icon-remove"></i></span>
 	<p class="content">Modifier chaque éléments d'un produit en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 </div>
@@ -188,15 +184,20 @@
 				
 				<div class="form-inputs">
 
-
 					<% if current_user.can_stock_ar %>
 					<div class="formulaire_add etape_1">
+					<ul class="navigation">
+						<li><span class="current"><span class="number">1</span> Description</span></li>
+						<li><span><span class="number">2</span> Quantité</span></li>
+						<li><span><span class="number">3</span> En ligne</span></li>
+					</ul>
 						<div class="modal-body">
 							<%= f.input :id_user_input, :as => :hidden, :input_html => { :value => params[:user_id] } %>
 							<%= f.association :produit_autorise,:collection=>ProduitAutorise.where(:user_id => current_user.direction_id).map{|pa| [pa.titre,pa.id]}, :include_blank => false %>
 							<%= f.input :titre %>
 							<%= f.input :description,:input_html => { :rows => "10" } %>
 						</div>
+						<div class="clear"></div>
 						<div class="form-actions modal-footer">
 							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
 						</div>
@@ -207,6 +208,7 @@
 							<%= f.association :unite_mesure, :collection => UniteMesure.all.map{ |um| [um.nom,um.id]}, :label => "Unite de mesure", :include_blank => false %>
 							<%= f.input :quantite %>
 						</div>
+						<div class="clear"></div>
 						<div class="form-actions modal-footer">
 							<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  %>
 							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
@@ -220,7 +222,7 @@
 							<%= f.input :titre %>
 							<%= f.input :description %>
 						</div>
-
+						<div class="clear"></div>
 						<div class="form-actions modal-footer">
 							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
 						</div>
@@ -231,6 +233,7 @@
 							<%= f.association :unite_mesure, :collection => UniteMesure.all.map{ |um| [um.nom,um.id]}, :label => "Unite de mesure", :include_blank => false %>
 							<%= f.input :quantite %>
 						</div>
+						<div class="clear"></div>
 						<div class="form-actions modal-footer">
 							<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  %>
 							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
@@ -279,7 +282,7 @@
 					    	</div>
 					    </div>
 					</div>
-					
+					<div class="clear"></div>
 					<div class="form-actions modal-footer">
 						<%= f.button :submit, :type => :button, :value => "Retour", :class => "previous_step btn"  %>
 						<%= f.button :submit, :type => :button, :value => "Ajouter", :class => "next_step btn-primary" %>
