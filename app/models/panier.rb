@@ -9,8 +9,30 @@ class Panier < ActiveRecord::Base
     
     has_many :photo_paniers
     
-    attr_accessor :duree
+    #attr_accessor :duree
     
+    
+    #pour administration
+    def regroup_nombre_personne
+    	@panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', self.panier_autorise_id, self.revendeur_id)
+    	@nb_personne = []
+    	@panier.each do |panier|
+    		@nb_personne.push(panier.nombre_personne)
+    	end
+    	
+    	return @nb_personne
+    end
+    
+    #pour administration
+    def regroup_duree
+    	@panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', self.panier_autorise_id, self.revendeur_id)
+    	@duree = []
+    	@panier.each do |panier|
+    		@duree.push(panier.duree)
+    	end
+
+    	return @duree
+    end
     
     
     #___ nb produit dans panier
