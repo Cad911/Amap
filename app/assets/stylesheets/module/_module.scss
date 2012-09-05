@@ -263,6 +263,36 @@ span.button {
   }
 }
 
+// Liste incrustée
+.embosed-list {
+  width: 90%;
+  @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
+
+  border:solid 1px $embossed_dark;
+  .raw {
+    height: 40px;
+    padding: 15px;
+    position: relative;
+
+    border-top:1px solid #ffffff;
+    border-bottom:solid 1px $embossed_dark; 
+
+    @include bg-sprite(height_70);
+    background-repeat:repeat-x;
+    &:last-child  {
+      border-bottom: none;
+    }
+    &:first-child {
+      border-top: none;      
+    }
+  }
+  .close_square {
+    position: absolute;
+    top: 10px;
+    right: -55px;
+  }
+}
+
 // Fil d'arianne
 .breadcrumb {
   padding:0;

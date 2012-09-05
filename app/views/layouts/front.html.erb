@@ -27,7 +27,7 @@
   <%= javascript_include_tag 'formulaire_sinscrire' %>
   
   <%= #javascript_include_tag 'produit_vente_libres' 
-	  
+
   %>
   <%= javascript_include_tag 'stocks' %>
   <%= javascript_include_tag 'page_front' %>
@@ -47,9 +47,9 @@
 
   <div class="l_header_wrapper">
 
-	
+
     <div class="logo"><div class="link"><%= link_to "",root_path %></div></div>
-	
+
     
     <div class="l_nav">
 
@@ -58,7 +58,7 @@
           <a href="" class="dropdown-toggle l_link basket" data-toggle="dropdown"><span></span>Paniers</a>
           <ul class="dropdown-menu dropdown_menu">
             <li> <%= link_to "Tous",page_panier_index_path %> </li>
-            <%	Categorie.all.each do |categorie| %>
+            <%  Categorie.all.each do |categorie| %>
             <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
               <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
             <% end %>
@@ -116,10 +116,10 @@
       <div class="login">
         <span class="user"></span>
         <% if current_client.nil? %>
-        	<span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a>inscription</a></span>
+          <span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a>inscription</a></span>
         <% else %>
-        	<span class="sign_in connected"><%= link_to "Mes infos" , espace_client_client_path(current_client.id) %></span>&nbsp;/&nbsp;
-        	<span class="sign_up connected"><%= link_to "deconnexion", client_logout_path() , :method => 'delete' %></span>
+          <span class="sign_in connected"><%= link_to "Mes infos" , espace_client_client_path(current_client.id) %></span>&nbsp;/&nbsp;
+          <span class="sign_up connected"><%= link_to "deconnexion", client_logout_path() , :method => 'delete' %></span>
         <% end %>
        
       </div>
@@ -194,18 +194,18 @@
       <h1 class="title">Connexion</h1>
     </div>
       <div class="loggin" id="lightbox_se_connecter">
-			<div class="content">
-			    <h2 class="title">Connexion</h2>
-				<%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter_lightbox' }, :remote => true) do |f| %>
-					<%= f.input :email, :required => false, :autofocus => true %>
-			   		<%= f.input :password, :required => false %>
-			</div>
-				
-			<div class="footer">
-			    <span class="annuler">annuler</span>
-				<span class="button" id="lightbox_sign_in"><a>Se connecter</a></span>
-			</div>
-				<% end %>
+      <div class="content">
+          <h2 class="title">Connexion</h2>
+        <%= simple_form_for(Client.new, :as => "client", :url => session_path("client") , :html => {:class => '', :id => 'form_se_connecter_lightbox' }, :remote => true) do |f| %>
+          <%= f.input :email, :required => false, :autofocus => true %>
+            <%= f.input :password, :required => false %>
+      </div>
+
+      <div class="footer">
+          <span class="annuler">annuler</span>
+        <span class="button" id="lightbox_sign_in"><a>Se connecter</a></span>
+      </div>
+        <% end %>
     </div>
   </div>
   
@@ -214,24 +214,26 @@
     <div class="header">
       <h1 class="title">Inscription</h1>
     </div>
+    <div class="content">
       <div class="loggin" id="lightbox_se_connecter">
-			<div class="content">
-			    <h2 class="title">Connexion</h2>
-				 <%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire_lightbox' } ,:remote => true) do |f| %>
-					<%= f.error_notification %>
-					
-					<%= f.input :email, :required => true, :autofocus => true, :wrap_with => {:tag => 'span',:class => 'help-inline'} %>
-			    	<%= f.error :email %>
-			    	<%= f.input :nom, :required => true, :autofocus => true %> 
-			    	<%= f.input :password, :required => true %>
-			    	<%= f.input :password_confirmation, :required => true %>
-			</div>
-				
-			<div class="footer">
-			    <span class="annuler">annuler</span>
-				<span class="button" id="lightbox_sign_up"><a>S'inscrire</a></span>
-			</div>
-				<% end %>
+      <div class="content">
+          <h2 class="title">Connexion</h2>
+         <%= simple_form_for([:espace_client,Client.new], :html => {:class => '', :id => 'form_sinscrire_lightbox' } ,:remote => true) do |f| %>
+          <%= f.error_notification %>
+
+          <%= f.input :email, :required => true, :autofocus => true, :wrap_with => {:tag => 'span',:class => 'help-inline'} %>
+            <%= f.error :email %>
+            <%= f.input :nom, :required => true, :autofocus => true %> 
+            <%= f.input :password, :required => true %>
+            <%= f.input :password_confirmation, :required => true %>
+      </div>
+
+      <div class="footer">
+          <span class="annuler">annuler</span>
+        <span class="button" id="lightbox_sign_up"><a>S'inscrire</a></span>
+      </div>
+        <% end %>
+    </div>
     </div>
     
   </div>
@@ -249,28 +251,28 @@
   <div class="l_dock_wrapper">
     <ul>
     <% if @cageot != nil %> 
-    	<% if @product_cageot.count != 0 %>
-	      <% @product_cageot.each do |product_cageot| %>
-	      	<li id="<%= product_cageot.id %>" >
-	      	<% if !product_cageot.produit_vente_libre.stock.default_image.nil? %>
-	      		<%= link_to page_produit_show_path(product_cageot.produit_vente_libre.user,product_cageot.produit_vente_libre) do %>
-	      	    	<%= image_tag (product_cageot.produit_vente_libre.stock.default_image).image_url(:is_small), :class => "has_corners_shadow is_small" %>
-	      	    <% end %>
-	      	<% else %>
-	      		<img src="<%= product_cageot.produit_vente_libre.stock.default_image %>" class="has_corners_shadow is_small"> 
-	      	<% end %>
-	      		<span class="nombre_pack_p_c"> <%= product_cageot.nombre_pack %> </span> 
-	      		<span class="deleted_p_c"></span>
-	      		<div class="plus_btn">
-              		<span class="plus_quantite_p_c"></span>
-            	</div>
-	      		<div class="minus_btn">
-              		<span class="moins_quantite_p_c"></span>
-            	</div>
-	      	</li>
-	      <% end %>
-		<% end %>
-	<% end %>      
+      <% if @product_cageot.count != 0 %>
+        <% @product_cageot.each do |product_cageot| %>
+          <li id="<%= product_cageot.id %>" >
+          <% if !product_cageot.produit_vente_libre.stock.default_image.nil? %>
+            <%= link_to page_produit_show_path(product_cageot.produit_vente_libre.user,product_cageot.produit_vente_libre) do %>
+                <%= image_tag (product_cageot.produit_vente_libre.stock.default_image).image_url(:is_small), :class => "has_corners_shadow is_small" %>
+              <% end %>
+          <% else %>
+            <img src="<%= product_cageot.produit_vente_libre.stock.default_image %>" class="has_corners_shadow is_small"> 
+          <% end %>
+            <span class="nombre_pack_p_c"> <%= product_cageot.nombre_pack %> </span> 
+            <span class="deleted_p_c"></span>
+            <div class="plus_btn">
+                  <span class="plus_quantite_p_c"></span>
+              </div>
+            <div class="minus_btn">
+                  <span class="moins_quantite_p_c"></span>
+              </div>
+          </li>
+        <% end %>
+    <% end %>
+  <% end %>      
       <!-- <li><img src="" class=has_corners_shadow is_small"></li>
       <li><img src="" class="has_corners_shadow is_small"></li>
       <li><img src="" class="has_corners_shadow is_small"></li> -->
