@@ -263,6 +263,36 @@ span.button {
   }
 }
 
+// Liste incrustée
+.embosed-list {
+  width: 90%;
+  @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px);
+
+  border:solid 1px $embossed_dark;
+  .raw {
+    height: 40px;
+    padding: 15px;
+    position: relative;
+
+    border-top:1px solid #ffffff;
+    border-bottom:solid 1px $embossed_dark; 
+
+    @include bg-sprite(height_70);
+    background-repeat:repeat-x;
+    &:last-child  {
+      border-bottom: none;
+    }
+    &:first-child {
+      border-top: none;      
+    }
+  }
+  .close_square {
+    position: absolute;
+    top: 10px;
+    right: -55px;
+  }
+}
+
 // Fil d'arianne
 .breadcrumb {
   padding:0;
@@ -326,9 +356,7 @@ span.button {
   z-index:1050;
   top: 50%;
   left: 50%;
-  &.lightbox_new_stock {
-    margin: -250px 0 0 -350px;
-  }
+  margin: -175px 0 0 -250px;
   .lightbox {
     width:  500px;
     position:relative;
@@ -357,6 +385,7 @@ span.button {
     }
     .content {
       border-bottom:solid 1px #C8C5BF;
+      padding: 20px 40px 20px 40px;
       .title{
         line-height:inherit;
         @include title(2,16px);
@@ -387,49 +416,60 @@ span.button {
       }
     }
   }
-  .lightbox.lightbox_form_new_stock {
-    width: 700px;
-    .form-horizontal .control-label {
-      text-align: left;
-    }
-    h2 {
-      margin-left:240px;
-      padding-top:0;
-      margin-top:0;
+  &.has-menu {
+    margin: -250px 0 0 -350px;
+    .alert {
+        margin:0 20px 0 240px;      
     }
     .content {
-      position: relative;
-      padding-top: 20px;
+      padding: 0;
     }
-    .modal-body {
-      width: 420px;
-      float: right;
-      padding-left: 50px;
-    }
-    .navigation {
-      width: 130px;
-      position: absolute;
-      margin: 0;
-      padding:0 20px 0 0;
-      top: 20px;
-      left: 40px;
-      border-right: 2px solid #DDD;
-
-      li {  
-        margin-bottom:20px;
+    .lightbox {
+      width: 700px;
+      .form-horizontal .control-label {
+        text-align: left;
       }
-      li span {
-        &.current {
-          font-weight: bold;
-          font-family: 'helveticaneue-bold';
-          .number {
-          }
+      h2 {
+        margin-left:240px;
+        padding-top:0;
+        margin-top:0;
+      }
+      .content {
+        position: relative;
+        padding-top: 20px;
+      }
+      .modal-body {
+        width: 420px;
+        float: right;
+        padding-left: 50px;
+      }
+      .navigation {
+        width: 130px;
+        position: absolute;
+        margin: 0;
+        padding:0 20px 0 0;
+        top: 20px;
+        left: 40px;
+        border-right: 2px solid #DDD;
+
+        li {  
+          margin-bottom:20px;
         }
-        .number {
-          font-family: 'bellopro';
-          font-size: 30px;
-          padding-right: 10px;
-          line-height: inherit;
+        li span {
+          &.current {
+            font-weight: bold;
+            font-family: 'helveticaneue-bold';
+            color: $red;
+            .number {
+              color: $red;
+            }
+          }
+          .number {
+            font-family: 'bellopro';
+            font-size: 30px;
+            padding-right: 10px;
+            line-height: inherit;
+          }
         }
       }
     }
@@ -838,21 +878,21 @@ ul.dropdown_menu {
   opacity:1;  
 }
 
-.overall_shadow {
- // display:block;
- opacity:1;
- width:100%;
- height:100%;
- background-color:rgba(0,0,0,0.3);
-  //position:fixed;
-  top:0;
-  right:0;
-  left:0;
-  bottom:0;
- z-index:999;
-  @include transition-property(all);
-  @include transition-duration(400ms);
-}
+//.overall_shadow {
+// // display:block;
+// opacity:1;
+// width:100%;
+// height:100%;
+// background-color:rgba(0,0,0,0.3);
+// //position:fixed;
+// top:0;
+// right:0;
+// left:0;
+// bottom:0;
+// z-index:999;
+// @include transition-property(all);
+// @include transition-duration(400ms);
+//}
 
 
 .table {
