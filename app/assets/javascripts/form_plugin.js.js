@@ -33,7 +33,7 @@
     functions = {
       input_create: [],
       show_form: function(donnees) {
-        var attribut, attribut_input, champ, i, option, valeur_champ, _ref5;
+        var attribut, attribut_input, champ, d, data_, i, valeur_champ, _ref5;
         attribut = {
           hidden_input: {
             balise: 'input',
@@ -66,14 +66,13 @@
           if (attribut_input['balise'] === 'select') {
             attribut.input[champ].option = [];
             i = 0;
+            data_ = [];
             while (i < options['element']['options']['value'].length) {
-              option = $(document.createElement('option'));
-              option.attr('value', options['element']['options']['value'][i]);
-              option.text(options['element']['options']['text'][i]);
-              if (options['element']['options']['value'][i] === donnees[options.table_to_update][valeur_champ]) {
-                option.attr('selected', 'selected');
-              }
-              attribut.input[champ].option.push(option);
+              d = {
+                value: options['element']['options']['value'][i],
+                text: options['element']['options']['text'][i]
+              };
+              attribut.input[champ].option.push(d);
               i++;
             }
           }
@@ -82,9 +81,9 @@
         return window.light_box_information.show();
       },
       generate_form: function(attribut) {
-        var a, champ, hidden_input, i, input, span, span_annuler, span_infos, valeur, _ref5;
+        var a, champ, data_, form, hidden_input, input, offset_lightbox_input, span, span_annuler, span_infos, valeur, _ref5;
         window.light_box_information.html_content('');
-        window.light_box_information.title_header(options.titre);
+        window.light_box_information.header_content('');
         hidden_input = $(document.createElement(attribut['hidden_input']['balise']));
         hidden_input.attr('id', attribut['hidden_input']['id']);
         hidden_input.attr('name', attribut['hidden_input']['name']);
@@ -92,29 +91,37 @@
         hidden_input.attr('type', attribut['hidden_input']['type_input']);
         hidden_input.addClass(attribut['hidden_input']['class']);
         functions.input_create = [];
+        form = $(document.createElement('form'));
+        form.addClass('form-horizontal');
         _ref5 = attribut['input'];
         for (champ in _ref5) {
           valeur = _ref5[champ];
-          input = $(document.createElement(valeur['balise']));
-          input.attr('id', valeur['id']);
-          input.attr('name', valeur['name']);
-          input.val(valeur['value']);
-          input.addClass(valeur['class']);
-          if (valeur['balise'] === 'input') {
-            input.attr('type', valeur['type_input']);
-            input.attr('size', valeur['size']);
-          } else if (valeur['balise'] === 'textarea') {
-            input.attr('cols', valeur['size']);
-          } else if (valeur['balise'] === 'select') {
-            i = 0;
-            while (i < options['element']['options']['value'].length) {
-              input.append(valeur.option[i]);
-              i++;
+          data_ = {
+            type_element: valeur['balise'],
+            label: {
+              text: options.titre
+            },
+            input: {
+              value: valeur['value'],
+              name: valeur['name'],
+              "class": valeur['class'],
+              id: valeur['id'],
+              other_attributes: []
             }
+          };
+          if (valeur['balise'] === 'input') {
+            data_.input.other_attributes.push(['type', valeur['type_input']]);
+            data_.input.other_attributes.push(['size', valeur['size']]);
+          } else if (valeur['balise'] === 'textarea') {
+            data_.input.other_attributes.push(['cols', valeur['size']]);
+          } else if (valeur['balise'] === 'select') {
+            data_.input.options = valeur.option;
           }
-          functions.input_create.push(input);
-          window.light_box_information.append_content(input);
+          input = window.global_functions.standard_input(data_);
+          form.append(input);
+          functions.input_create.push(input.find(valeur['balise']));
         }
+        window.light_box_information.append_content(form);
         window.light_box_information.append_content(hidden_input);
         if (attribut['span_infos']) {
           span_infos = $(document.createElement('span'));
@@ -128,10 +135,12 @@
         a.text(attribut['link']['text']);
         span.append(a);
         span_annuler = window.light_box_information.create_annuler();
+        offset_lightbox_input = $('.lightbox_wrapper.lightbox_information .form-horizontal .controls').position();
+        options.left += offset_lightbox_input.left;
         window.light_box_information.css({
           'margin': 'Opx',
-          top: options.top,
-          left: options.left,
+          top: options.top + 'px',
+          left: options.left + 'px',
           position: 'absolute'
         });
         window.light_box_information.html_footer(span_annuler);
@@ -182,18 +191,19 @@
               format: 'json',
               complete: function(data) {
                 var element_for_text, informations;
-                console.log('ahhahahh');
                 informations = $.parseJSON(data['responseText']);
                 if (informations['status'] === 'OK') {
                   if ($(options.element_clicked).children('span.value').length > 0) {
                     element_for_text = $(options.element_clicked).children('span.value');
+                  } else if ($(options.element_clicked).children('span.number').length > 0) {
+                    element_for_text = $(options.element_clicked).children('span.number');
                   } else {
-                    element_for_text = $(options.element_clicked);
+                    element_for_text = options.element_clicked;
                   }
                   if (options.element.type === 'select') {
-                    element_for_text.text($(valeur).children("option[value='" + val + "']").text());
+                    $(element_for_text).text($(valeur).children("option[value='" + val + "']").text());
                   } else {
-                    element_for_text.text($.trim(value_to_show));
+                    $(element_for_text).text($.trim(value_to_show));
                   }
                   window.light_box_information.hide();
                   return $(options.element_clicked).trigger('end_form_plugin');
@@ -211,14 +221,18 @@
     };
     return this.each(function() {
       return $(this).bind('click', function() {
-        var champ_lvl, i, offset, that;
-        if ($(this).hasClass('is_editing')) {
+        var champ_lvl, i, offset, offset_left, offset_lightbox_left, offset_lightbox_top, offset_top, scroll_top, that;
+        if ($(this).hasClass('is-editing')) {
           options.element_clicked = this;
+          offset_lightbox_top = $(window).height() * 0.5;
+          offset_lightbox_left = $(window).width() * 0.5;
           offset = $(this).offset();
-          options.top = parseInt(offset.top) - 90 - 65;
-          options.left = parseInt(offset.left);
-          options.top += 'px';
-          options.left += 'px';
+          scroll_top = $(document).scrollTop();
+          console.log(scroll_top);
+          offset_top = parseInt(offset.top) - scroll_top - offset_lightbox_top;
+          offset_left = parseInt(offset.left) - offset_lightbox_left;
+          options.top = offset_top;
+          options.left = offset_left;
           console.log(options);
           if (optn.url_to_update === void 0) {
             optn.url_to_update = optn.url_get_infos;

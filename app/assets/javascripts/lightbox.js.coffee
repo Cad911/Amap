@@ -40,6 +40,9 @@ $(document).ready(->
                 window.light_box_information.hide()
             )
             return span_annuler
+        header_content:(html_content)->
+        	$(@id_lightbox+'>.lightbox>.header').html(html_content)
+        	
         title_header: (texte) ->
              $(@id_lightbox+'>.lightbox>.header>.title').text(texte)
         

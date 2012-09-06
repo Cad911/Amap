@@ -9,6 +9,14 @@ protect_from_forgery :except => :add_image
   	@stocks = Stock.where(:user_id => params[:user_id]).order('created_at DESC')
   	@stock_new = Stock.new
    	authorize! :update, User.find(params[:user_id]) #TRADUCTION : EST-IL AUTORISE A UPDATER CETTE UTILISATEUR ?
+   	respond_to do |format|
+  		format.json { render :json => {
+  			:status => "OK",
+  			:stock => @stocks  			  			
+  			}
+  		}
+  		format.html { render :index }
+  	end
   end
 
   #__________________ SHOW __________________________________________
