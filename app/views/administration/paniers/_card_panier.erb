@@ -27,7 +27,7 @@
             <ul class="main-informations">
                 <li><span class="number is_bold"><%= panier.customer_number %></span><span class="icon members"></span></li>
                 <li><span class="number is_bold">4</span><span class="icon pictures"></span></li>
-                <li><span class="number is_bold"><%= panier.product_number %></span><span class="icon products"></span></li>
+                <li class="product_number"><span class="number is_bold"><%= panier.product_number %></span><span class="icon products"></span></li>
             </ul>
             <ul class="details">
                 <li class="detail detail_max">
@@ -38,9 +38,11 @@
 	                <li class="detail">
 	                    <span class="label">Format</span>
 	                    <ul class="number">
+
 	                    	<li <% if (panier.regroup_nombre_personne.include?(2))%> class="check" <%end%>> 2 </li>
 	                    	<li <% if (panier.regroup_nombre_personne.include?(4))%> class="check" <%end%>> 4 </li>
 	                    	<li <% if (panier.regroup_nombre_personne.include?(6))%> class="check" <%end%>> 6 </li>
+
 	                  
 	                    </ul>
 	                </li>
@@ -50,6 +52,7 @@
 		                    <li <% if (panier.regroup_duree.include?('3'))%> class="check" <%end%>> 3 </li>
 	                    	<li <% if (panier.regroup_duree.include?('6'))%> class="check" <%end%>> 6 </li>
 	                    	<li <% if (panier.regroup_duree.include?('9'))%> class="check" <%end%>> 9 </li>
+
 	                    </ul>
 	                </li>
                 </div>

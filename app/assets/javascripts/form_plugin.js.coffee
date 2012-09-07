@@ -125,13 +125,18 @@ $.fn.form_plugin = (optn)->
                 if attribut_input['balise'] == 'select'
                     attribut.input[champ].option = []
                     i = 0
+                    data_ = []
                     while  i < options['element']['options']['value'].length
-                        option = $(document.createElement('option'))
-                        option.attr('value',options['element']['options']['value'][i])
-                        option.text(options['element']['options']['text'][i])
-                        if options['element']['options']['value'][i] ==   donnees[options.table_to_update][valeur_champ]     
-                            option.attr('selected','selected')
-                        (attribut.input[champ].option).push(option)
+                        d = 
+                            value: options['element']['options']['value'][i]
+                            text: options['element']['options']['text'][i]
+                        (attribut.input[champ].option).push(d) 
+#                         option = $(document.createElement('option'))
+#                         option.attr('value',options['element']['options']['value'][i])
+#                         option.text(options['element']['options']['text'][i])
+#                         if options['element']['options']['value'][i] ==   donnees[options.table_to_update][valeur_champ]     
+#                             option.attr('selected','selected')
+#                         (attribut.input[champ].option).push(option)
                         i++
             
             
@@ -144,7 +149,8 @@ $.fn.form_plugin = (optn)->
 
         generate_form: (attribut) ->
             window.light_box_information.html_content('')
-            window.light_box_information.title_header(options.titre)
+            window.light_box_information.header_content('')
+            #window.light_box_information.title_header(options.titre)
             #HIDDEN INPUT WITH ID
             hidden_input = $(document.createElement(attribut['hidden_input']['balise']))
             hidden_input.attr('id',attribut['hidden_input']['id'])
@@ -155,28 +161,55 @@ $.fn.form_plugin = (optn)->
             
             functions.input_create = []
             
-            #INPUT SELECT TEXTARE
-            for champ, valeur of attribut['input']
-                input = $(document.createElement(valeur['balise']))
-                input.attr('id',valeur['id'])
-                input.attr('name',valeur['name'])
-                input.val(valeur['value'])
-                input.addClass(valeur['class'])
+            form = $(document.createElement('form'))
+            form.addClass('form-horizontal')
                 
+            #INPUT SELECT TEXTAREA
+            for champ, valeur of attribut['input']
+                data_ = 
+                    type_element:valeur['balise']
+                    label:
+                        text:options.titre
+                    input:
+                        value: valeur['value'] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name: valeur['name']
+                        class: valeur['class']
+                        id: valeur['id']
+                        other_attributes: []
+                
+                
+                
+                
+                # input = $(document.createElement(valeur['balise']))
+#                 input.attr('id',valeur['id'])
+#                 input.attr('name',valeur['name'])
+#                 input.val(valeur['value'])
+#                 input.addClass(valeur['class'])  
                 if valeur['balise'] == 'input'
-                    input.attr('type',valeur['type_input'])
-                    input.attr('size',valeur['size'])
+                    data_.input.other_attributes.push(['type',valeur['type_input']])
+                    data_.input.other_attributes.push(['size',valeur['size']])
+                    # input.attr('type',valeur['type_input'])
+#                     input.attr('size',valeur['size'])
                 else if valeur['balise'] == 'textarea'
-                    input.attr('cols',valeur['size'])
+                    data_.input.other_attributes.push(['cols',valeur['size']])
+                    # input.attr('cols',valeur['size'])
                 else if valeur['balise'] == 'select'
-                    i = 0
-                    while  i < options['element']['options']['value'].length       
-                        input.append(valeur.option[i])
-                        i++
-            
-                (functions.input_create).push(input)
-            
-                window.light_box_information.append_content(input)
+                    data_.input.options = valeur.option
+                        
+                    #i = 0
+                    #while  i < options['element']['options']['value'].length       
+                        
+                        # input.append(valeur.option[i])
+                        #i++
+                
+                
+                
+                input = window.global_functions.standard_input(data_)
+                
+                form.append(input)
+                (functions.input_create).push(input.find(valeur['balise']))
+                
+            window.light_box_information.append_content(form)
             
             window.light_box_information.append_content(hidden_input)
             #SPAN INFOS
@@ -197,11 +230,14 @@ $.fn.form_plugin = (optn)->
             span.append(a)                        
            
             span_annuler = window.light_box_information.create_annuler()
-            
+            offset_lightbox_input = $('.lightbox_wrapper.lightbox_information .form-horizontal .controls').position()
+            #console.log(options.left)
+            #console.log(offset_lightbox_input.left)
+            options.left += offset_lightbox_input.left
             window.light_box_information.css({
                 'margin':'Opx',
-                top:options.top,
-                left:options.left,
+                top:options.top+'px',
+                left:options.left+'px',
                 position:'absolute',
                 
             })
@@ -280,11 +316,22 @@ $.fn.form_plugin = (optn)->
                 #ON ENREGISTRE LELEMENT SUR LEQUEL ON A CLIQUER POUR L'UTILISER PAR LA SUITE
                 options.element_clicked = this
                 
+                
+                #offset_lightbox_input = $('.lightbox_wrapper.lightbox_information .form-horizontal .controls').position()
+                #scroll_top_light = $('.lightbox_wrapper.lightbox_information').scrollTop()
+                offset_lightbox_top = $(window).height() * 0.5 #parseInt(offset_lightbox.top) - scroll_top_light
+                offset_lightbox_left = $(window).width() * 0.5 #parseInt(offset_lightbox.left)
+                
                 offset = $(this).offset()
-                options.top = parseInt(offset.top) - 90 - 65
-                options.left = parseInt(offset.left)
-                options.top += 'px'
-                options.left += 'px'
+                scroll_top = $(document).scrollTop()
+                console.log(scroll_top)
+                offset_top = parseInt(offset.top) - scroll_top - offset_lightbox_top
+                offset_left = parseInt(offset.left) - offset_lightbox_left #- offset_lightbox_input.left
+                
+                options.top = offset_top
+                options.left = offset_left
+                #options.top += 'px'
+                #options.left += 'px'
                 console.log(options)
                 #url level to update
                 if optn.url_to_update == undefined

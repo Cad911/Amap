@@ -26,6 +26,12 @@ $(document).ready( () ->
                add_photo_stock.generate_form(stock_id)
             )
         
+        init_one_element:(button)->
+            $(button).on('click', ()->
+               stock_id = $(this).attr('id').replace('stock_id_','')
+               add_photo_stock.card = $(this).parents('div').parents('li.card')
+               add_photo_stock.generate_form(stock_id)
+            )
         generate_form : (stock_id)->
             window.light_box_information.html_content('')
             input = $(document.createElement('input'))
@@ -95,7 +101,11 @@ $(document).ready( () ->
             
             div.append(img)
             
-            $(add_photo_stock.card).children('.left_area').children('.picture').last().after(div)
+            
+            if $(add_photo_stock.card).children('.left_area').children('.picture').length > 0
+                $(add_photo_stock.card).children('.left_area').children('.picture').last().after(div)
+            else
+                $(add_photo_stock.card).children('.left_area').children('.is_small').last().after(div)
             
 
 
@@ -160,7 +170,12 @@ $(document).ready( () ->
                     
                     #console.log(new_card_2.find('.buttons_card li.delete'))
                     $('ul.cards').prepend(new_card_2)
+                    #event sur les bouton
                     supp_stock.event_one_element(new_card_2.find('.buttons_card li.delete'))
+                    add_photo_stock.init_one_element(new_card_2.find('.add.button.image'))
+                    functions.one_edit_button(new_card_2.find('.buttons_card>.edit'))
+                    form_plugin_element.init_one_card(new_card_2)
+                    
                     new_card_2.animate({
                         opacity:1,
                         top:'0px'
@@ -319,16 +334,29 @@ $(document).ready( () ->
                 format:'json'
                 complete:(data)->
                     card = $(element).parents('li.card')
-                    card.animate({
+                    card.removeClass('in')
+                    card.css('top','0px')
+                    #card.addClass('out')
+                    card.animate(
                         opacity:0
-                        
-                    },{
-                        duration:500,
+                        top:'-270px'
+                    ,{
+                        duration:500
                         complete:()->
-                            $(this).slideUp(500,()->
-                                $(this).remove()
-                            )  
+                            $(this).remove()
                     })
+                    # setTimeout(()-> 
+#                         card.remove()
+#                     , 300)
+                    # card.animate({
+#                         
+#                     },{
+#                         duration:300,
+#                         complete:()->
+#                             #$(this).slideUp(500,()->
+#                                 $(this).remove()
+#                             #)  
+#                     })
                     
                     
             })
@@ -417,7 +445,33 @@ $(document).ready( () ->
                 })
             )
             
-        
+        one_edit_button: (button)->
+            if $('.buttons>li.edit').length > 0
+                $('.buttons>li.edit').on('click',()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        functions.remove_editing_class()
+                    else
+                        $(this).addClass('button_active')
+                        functions.add_editing_class()
+                )
+            
+            if $('.buttons_card').length > 0
+                $(button).on('click',()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        if $('.cards').length > 0
+                            functions.remove_editing_class($(this).parents('li.card'))
+                        if $('.card_stack').length > 0
+                            functions.remove_editing_class($(this).parents('div.card_stack'))    
+                    else
+                        $(this).addClass('button_active')
+                        if $('.cards').length > 0
+                            functions.add_editing_class($(this).parents('li.card'))
+                        if $('.card_stack').length > 0
+                            functions.add_editing_class($(this).parents('div.card_stack'))
+                            #console.log($(this).parents('div.card_stack'))
+                )
         edit_button : () ->
             if $('.buttons>li.edit').length > 0
                 $('.buttons>li.edit').on('click',()->
@@ -461,7 +515,8 @@ $(document).ready( () ->
                 $(element).children('.packaging').children('.header').children('.title').removeClass('is-editing')
                 $(element).children('.packaging').children('.body').children('.description').removeClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
-                $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul.details').removeClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul.main-informations').children('li').removeClass('is-editing')
         
         add_editing_class:(element = 'body')->
             #pour user profile
@@ -480,7 +535,8 @@ $(document).ready( () ->
             if $('.card_stack').length > 0
                 $(element).children('.packaging').children('.header').children('span').children('.title').addClass('is-editing')
                 $(element).children('.packaging').children('.body').children('span').children('.description').addClass('is-editing')
-                $(element).children('.packaging').children('.footer').children('ul').addClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul.details').addClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul.main-informations').children('li').addClass('is-editing')
     
     functions.init()
     
@@ -524,7 +580,7 @@ $(document).ready( () ->
 #     )
 
     
-    
+    #FUNCTIONS POUR AJOUTER DES DECLINAISON
     change_infos_panier = 
         panier_id: 0
         div_form: $('')
@@ -747,12 +803,143 @@ $(document).ready( () ->
                     #add_photo_stock.create_photo(data['photo_stock'])
 
             
-            
-                
-            
-            
-    
     change_infos_panier.init()
+    
+    
+    
+    #--------------------------------------------------------
+    #--------------------------------------------------------
+    #--------------------------------------------------------
+    #FUNCTIONS POUR AJOUTER DES PRODUITS DANS LE PANIER------
+    #--------------------------------------------------------
+    #--------------------------------------------------------
+    #--------------------------------------------------------
+    function_product_in_basket = 
+        panier_id: ''
+        init: ()->
+            $('div.card_stack>.packaging ul.main-informations>.product_number').on( 'click', ()->
+                if ($(this).hasClass('is-editing'))
+                     #generate box
+                     function_product_in_basket.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
+                     function_product_in_basket.all_product()
+                     
+
+            )
+
+        all_product: ()->
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/get_all_product')
+            #xhr.setRequestHeader('Accept','application/json')
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    console.log(xhr.responseText)
+                    data = xhr.responseText
+                    window.light_box_information.title_header('Produits du panier')
+                    window.light_box_information.html_content('')
+                    window.light_box_information.append_content(data)
+                    function_product_in_basket.button_add_product()
+                    window.light_box_information.show()
+                    
+        button_add_product:()->
+            button = window.global_functions.standard_button( 
+                link: 
+                    text:'Form add'
+                    event:[{type:'click', callback:[function_product_in_basket.get_own_stock]}]
+            )
+            window.light_box_information.append_content(button)
+            
+        form_add_product:(stocks)->
+            #AJOUTER DES ACTIONS SUR LES BOUTONS (ex: quand on selectionne un stock, il ne faut pas qu'il soit deja choisi)
+            value_option = []
+            for champ, valeur of stocks
+                data_ = 
+                    value: valeur['id']
+                    text: valeur['titre']
+                
+                value_option.push(data_)                
+
+            element_produit = window.global_functions.standard_input( 
+                type_element:'select',
+                label:
+                    text:'Produit'
+                input:
+                    value: '' #obj si select, string si input
+                    options:value_option
+                    name:''
+                    class:''
+                    id:''
+            )
+           
+            element_produit.find('select').on('change',()->
+                function_product_in_basket.verif_stock($(this).val())
+            )
+            
+            element_quantite = window.global_functions.standard_input( 
+                type_element:'input',
+                label:
+                    text:'Quantite'
+                input:
+                    value: '' #obj si select, string si input
+                    name:''
+                    class:''
+                    id:''
+            )
+            
+            button = window.global_functions.standard_button( 
+                link: 
+                    text:'Ajoutez nouveau produit'
+                    event:[{type:'click', callback:[function_product_in_basket.get_own_stock]}]
+            )
+            
+            form = $(document.createElement('form'))
+            form.addClass('form-horizontal')
+
+            form.append(element_produit)
+            form.append(element_quantite)
+            form.append(button)
+            
+            window.light_box_information.append_content(form)
+        
+        verif_stock: (id_stock)-> 
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/produit_stock_already_in')
+            xhr.setRequestHeader('Accept','application/json')
+            form = new FormData();
+            form.append('stock_id', id_stock)
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'error'
+                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                        
+            
+        get_own_stock:()->
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/stocks/')
+            xhr.setRequestHeader('Accept','application/json')
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'OK'
+                        console.log(xhr.responseText)
+                        function_product_in_basket.form_add_product(data['stock'])
+                    # window.light_box_information.title_header('Produits du panier')
+#                     window.light_box_information.html_content('')
+#                     window.light_box_information.append_content(data)
+#                     window.light_box_information.show()
+        
+        fiche_product: ()->
+    function_product_in_basket.init()
+    
+
+
     #-----------------------------------
     #-----------------------------------
     #-----------------------------------
@@ -788,6 +975,7 @@ $(document).ready( () ->
             $('.user_profile .content>.city').form_plugin(
                 url_get_infos:['user']
                 champ: 'ville_id'
+                titre:'La ville'
                 element: 
                     type: 'select'
                     options: 
@@ -804,6 +992,7 @@ $(document).ready( () ->
     $('.user_profile .content>.description').form_plugin(
         url_get_infos:['user']
         champ: 'description'
+        titre:'La description'
         element: 
             type: 'textarea'
         button:
@@ -814,6 +1003,7 @@ $(document).ready( () ->
     $('.user_profile .content>.address').form_plugin(
         url_get_infos:['user']
         champ: 'adresse'
+        titre:'L\'adresse'    
         element: 
             type: 'input'
         button:
@@ -824,6 +1014,7 @@ $(document).ready( () ->
     $('.user_profile .content>.phone').form_plugin(
         url_get_infos:['user']
         champ: 'telephone'
+        titre:'Le telephone'
         element: 
             type: 'input'
         button:
@@ -834,6 +1025,7 @@ $(document).ready( () ->
     $('.user_profile .content>.email').form_plugin(
         url_get_infos:['user']
         champ: 'email'
+        titre:'L\'email'
         element: 
             type: 'input'
         button:
@@ -847,152 +1039,318 @@ $(document).ready( () ->
     #-----------------------------------
     #-----------------------------------
     #-----------------------------------        
-    $('.card h2.title').form_plugin(
-        #table_get_infos: 'stock'
-        champ: 'titre'
-        element: 
-            type: 'input'
-        button:
-            class:'update_titre'
-            text_update:'Modifier le titre'
-        url_get_infos:['user','stock']
-        url_to_update: ['user','stock']
-    )
     
-    $('.card p.description').form_plugin(
-        url_get_infos:['user','stock']
-        champ: 'description'
-        element: 
-            type: 'textarea'
-        button:
-            class:'update_description'
-            text_update:'Modifier la description'
-    )
-    $('.card li.prix').form_plugin(
-        url_get_infos:['user','stock']
-        url_to_update:['user','produit_vente_libre'] 
-        champ: 'prix_unite_ttc'
-        element: 
-            type: 'input'
-        button:
-            class:'update_prix'
-            text_update:'Modifier le prix'
-    ).bind('end_form_plugin', ()->
-        $(this).append(' €')
-    )
-    
-    $.ajax(
-        type: 'POST'
-        url:"/administration/users/"+$('input.user_id').val()+"/get_unite_mesure"
-        format:'json'
-        complete:(data)->
-            informations = $.parseJSON(data['responseText'])
-            id = []
-            value = []
-            for champ, valeur of informations
-                id.push(valeur['id'])
-                value.push(valeur['nom'])
-            
-            $('.card li.unite_mesure').form_plugin(
-                url_get_infos:['user','stock']
-                champ: 'unite_mesure_id'
+    form_plugin_element = 
+        init:()->
+            $('.card h2.title').form_plugin(
+                #table_get_infos: 'stock'
+                champ: 'titre'
+                titre:'Le titre'        
                 element: 
-                    type: 'select'
-                    options: 
-                        value : id
-                        text: value
+                    type: 'input'
                 button:
-                    class:'update_unite_mesure'
-                    text_update:'Modifier l\'unite de mesure'
-            ).bind('end_form_plugin',()->
-                    $('.info_unite_mesure_id').text('('+$(this).children('span.value').text()+')')
-            )       
-    )
-    
-    $('.card li.quantite_lot').form_plugin(
-        url_get_infos:['user','stock']
-        url_to_update:['user','produit_vente_libre'] 
-        champ: 'quantite'
-        element: 
-            type: 'input'
-        button:
-            class:'update_quantite'
-            text_update:'Modifier la quantite'
-        # infos:
-#             class:'is_italic'
-#             table:'unite_mesure'
-#             champ:'nom'
-    ).bind('end_form_plugin',()->
-            user_id = $('input.user_id').val()
-            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
-            url = '/administration/users/'+user_id+'/stocks/'+id_stock
-            that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
-            this_element = this
-            $.ajax(
-                type: 'GET'
-                url:url
-                format:'json'
-                success:(data)->
-                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
-                    span = $(document.createElement('span'))
-                    span.addClass('is_italic info_unite_mesure_id')
-                    span.text(' ('+data['unite_mesure']['nom']+')')
-                    $(this_element).append(span)
-                    
+                    class:'update_titre'
+                    text_update:'Modifier le titre'
+                url_get_infos:['user','stock']
+                url_to_update: ['user','stock']
             )
-    )#A FAIRE
-
-    $('.card li.nombre_pack').form_plugin(
-        url_get_infos:['user','stock']
-        url_to_update:['user','produit_vente_libre']
-        champ: 'nombre_pack'
-        element: 
-            type: 'input'
-        button:
-            class:'update_nombre_pack'
-            text_update:'Modifier le nombre de lot'
-        
-    ).bind('end_form_plugin',()->
-            user_id = $('input.user_id').val()
-            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
-            url = '/administration/users/'+user_id+'/stocks/'+id_stock
-            that = this
-            $.ajax(
-                type: 'GET'
-                url:url
-                format:'json'
-                success:(data)->
-                    $(that).children('span.value').append(' /'+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
-            )
-    )
-
-    $('.card li.stock_total').form_plugin(
-        url_get_infos:['user','stock']
-        champ: 'quantite'
-        element: 
-            type: 'input'
-        button:
-            class:'update_quantite_stock'
-            text_update:'Modifier le stock total'
             
-    ).bind('end_form_plugin',()->
-            user_id = $('input.user_id').val()
-            id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
-            url = '/administration/users/'+user_id+'/stocks/'+id_stock
-            that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
-            this_element = this
-            $.ajax(
-                type: 'GET'
-                url:url
-                format:'json'
-                success:(data)->
-                    that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
-                    span = $(document.createElement('span'))
-                    span.addClass('is_italic info_unite_mesure_id')
-                    span.text(' ('+data['unite_mesure']['nom']+')')
-                    $(this_element).append(span)
+            $('.card p.description').form_plugin(
+                url_get_infos:['user','stock']
+                champ: 'description'
+                titre:'La description'
+                element: 
+                    type: 'textarea'
+                button:
+                    class:'update_description'
+                    text_update:'Modifier la description'
             )
-    )#A FAIRE
+            $('.card li.prix').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre'] 
+                champ: 'prix_unite_ttc'
+                titre:'Le prix'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_prix'
+                    text_update:'Modifier le prix'
+            ).bind('end_form_plugin', ()->
+                $(this).append(' €')
+            )
+            
+            $.ajax(
+                type: 'POST'
+                url:"/administration/users/"+$('input.user_id').val()+"/get_unite_mesure"
+                format:'json'
+                complete:(data)->
+                    informations = $.parseJSON(data['responseText'])
+                    id = []
+                    value = []
+                    for champ, valeur of informations
+                        id.push(valeur['id'])
+                        value.push(valeur['nom'])
+                    
+                    $('.card li.unite_mesure').form_plugin(
+                        url_get_infos:['user','stock']
+                        champ: 'unite_mesure_id'
+                        titre:'L\'unite de mesure'
+                        element: 
+                            type: 'select'
+                            options: 
+                                value : id
+                                text: value
+                        button:
+                            class:'update_unite_mesure'
+                            text_update:'Modifier l\'unite de mesure'
+                    ).bind('end_form_plugin',()->
+                            $('.info_unite_mesure_id').text('('+$(this).children('span.value').text()+')')
+                    )       
+            )
+            
+            $('.card li.quantite_lot').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre'] 
+                titre:'quantite d\'un lot'
+                champ: 'quantite'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_quantite'
+                    text_update:'Modifier la quantite'
+                # infos:
+        #             class:'is_italic'
+        #             table:'unite_mesure'
+        #             champ:'nom'
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+                    this_element = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
+                            span = $(document.createElement('span'))
+                            span.addClass('is_italic info_unite_mesure_id')
+                            span.text(' ('+data['unite_mesure']['nom']+')')
+                            $(this_element).append(span)
+                            
+                    )
+            )#A FAIRE
+        
+            $('.card li.nombre_pack').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre']
+                titre:'nombre de lot'
+                champ: 'nombre_pack'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_nombre_pack'
+                    text_update:'Modifier le nombre de lot'
+                
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            $(that).children('span.value').append(' /'+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
+                    )
+            )
+        
+            $('.card li.stock_total').form_plugin(
+                url_get_infos:['user','stock']
+                champ: 'quantite'
+                titre:'Le stock total'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_quantite_stock'
+                    text_update:'Modifier le stock total'
+                    
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+                    this_element = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+                            span = $(document.createElement('span'))
+                            span.addClass('is_italic info_unite_mesure_id')
+                            span.text(' ('+data['unite_mesure']['nom']+')')
+                            $(this_element).append(span)
+                    )
+            )#A FAIRE
+            
+            
+        init_one_card:(card)->
+            $(card).find('h2.title').form_plugin(
+                #table_get_infos: 'stock'
+                champ: 'titre'
+                titre:'Le titre'        
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_titre'
+                    text_update:'Modifier le titre'
+                url_get_infos:['user','stock']
+                url_to_update: ['user','stock']
+            )
+            
+            $(card).find('p.description').form_plugin(
+                url_get_infos:['user','stock']
+                champ: 'description'
+                titre:'La description'
+                element: 
+                    type: 'textarea'
+                button:
+                    class:'update_description'
+                    text_update:'Modifier la description'
+            )
+            $(card).find('li.prix').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre'] 
+                champ: 'prix_unite_ttc'
+                titre:'Le prix'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_prix'
+                    text_update:'Modifier le prix'
+            ).bind('end_form_plugin', ()->
+                $(this).append(' €')
+            )
+            
+            $.ajax(
+                type: 'POST'
+                url:"/administration/users/"+$('input.user_id').val()+"/get_unite_mesure"
+                format:'json'
+                complete:(data)->
+                    informations = $.parseJSON(data['responseText'])
+                    id = []
+                    value = []
+                    for champ, valeur of informations
+                        id.push(valeur['id'])
+                        value.push(valeur['nom'])
+                    
+                    $(card).find('li.unite_mesure').form_plugin(
+                        url_get_infos:['user','stock']
+                        champ: 'unite_mesure_id'
+                        titre:'L\'unite de mesure'
+                        element: 
+                            type: 'select'
+                            options: 
+                                value : id
+                                text: value
+                        button:
+                            class:'update_unite_mesure'
+                            text_update:'Modifier l\'unite de mesure'
+                    ).bind('end_form_plugin',()->
+                            $('.info_unite_mesure_id').text('('+$(this).children('span.value').text()+')')
+                    )       
+            )
+            
+            $(card).find('li.quantite_lot').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre'] 
+                titre:'quantite d\'un lot'
+                champ: 'quantite'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_quantite'
+                    text_update:'Modifier la quantite'
+                # infos:
+        #             class:'is_italic'
+        #             table:'unite_mesure'
+        #             champ:'nom'
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+                    this_element = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
+                            span = $(document.createElement('span'))
+                            span.addClass('is_italic info_unite_mesure_id')
+                            span.text(' ('+data['unite_mesure']['nom']+')')
+                            $(this_element).append(span)
+                            
+                    )
+            )#A FAIRE
+        
+            $(card).find('li.nombre_pack').form_plugin(
+                url_get_infos:['user','stock']
+                url_to_update:['user','produit_vente_libre']
+                titre:'nombre de lot'
+                champ: 'nombre_pack'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_nombre_pack'
+                    text_update:'Modifier le nombre de lot'
+                
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            $(that).children('span.value').append(' /'+data['produit_vente_libre']['lot_possible_max']+ ' ( possible )')
+                    )
+            )
+        
+            $(card).find('li.stock_total').form_plugin(
+                url_get_infos:['user','stock']
+                champ: 'quantite'
+                titre:'Le stock total'
+                element: 
+                    type: 'input'
+                button:
+                    class:'update_quantite_stock'
+                    text_update:'Modifier le stock total'
+                    
+            ).bind('end_form_plugin',()->
+                    user_id = $('input.user_id').val()
+                    id_stock = $(this).parents('div').prevAll('div.informations_card').children('input.id_stock').val()
+                    url = '/administration/users/'+user_id+'/stocks/'+id_stock
+                    that = $(this).parents('ul').children('li.nombre_pack').children('span.value')
+                    this_element = this
+                    $.ajax(
+                        type: 'GET'
+                        url:url
+                        format:'json'
+                        success:(data)->
+                            that.text(data['produit_vente_libre']['nombre_pack']+' / '+data['produit_vente_libre']['lot_possible_max']+ '( possible )')
+                            span = $(document.createElement('span'))
+                            span.addClass('is_italic info_unite_mesure_id')
+                            span.text(' ('+data['unite_mesure']['nom']+')')
+                            $(this_element).append(span)
+                    )
+            )#A FAIRE
 
 
 
