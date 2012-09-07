@@ -187,9 +187,8 @@ $backoffice-layout:smart;
 @import "compass/utilities";
 @import "compass/css3/transform";
 @import "base/base";
-@import "module/module";
+@import "modules/module";
 @import "layout/layout";
-@import "layout/backoffice/module";
 @import "state/state";
 @import url(http://fonts.googleapis.com/css?family=Lobster);     // police google web-fond alternative de Bello Pro
 

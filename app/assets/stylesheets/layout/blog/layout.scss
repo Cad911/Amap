@@ -1,0 +1,27 @@
+.blog {
+	p, span, li, a {
+		font-size: 16px;
+	}
+	.main-nav {
+		padding: 0;
+		margin: 0;
+		li {
+			float: left;
+			padding: 5px 10px 5px 10px;
+			margin: 5px;
+			@include border-radius(3px);
+
+			color: $red;
+			font-size: 16px;
+
+			&:active, &:hover {
+				background: $red;
+
+				color: #fff;
+				text-shadow: none;
+
+				cursor: pointer;
+			}
+		}
+	}
+}

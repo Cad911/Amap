@@ -1,0 +1,27 @@
+.articles-list {
+	.article {
+		border-top: solid 4px $red;
+		.title {
+			margin:40px 0 25px 0;
+			@include title(1, 35px);
+			line-height:inherit;
+		}	
+		.sub-title {
+			padding-bottom: 15px;
+			border-bottom: 1px solid $embossed_dark;
+		}
+		.body {
+			padding: 20px 0 0 0;
+			border-top: 1px solid #fff;
+		}
+		.details {
+			padding: 0 0 10px 0;	
+		}
+		.detail {
+			margin: 0 15px 0 0;
+			.icon {
+				margin-right: 5px;
+			}
+		}
+	}
+}
