@@ -1,19 +1,31 @@
 
 	<li class="card fade in">
 		<div class="left_area">
-			<div class="is_small has_corners_shadow" <% if (stock.default_image).nil? %> style="opacity:0;" <% end %>><%= image_tag (stock.default_image).image_url(:is_small) if !(stock.default_image).nil? %></div>
+			<div class="is_small has_corners_shadow" <% if (stock.default_image).nil? %> style="opacity:0;" <% end %>>
+				<span class="modify">modifier</span>
+				<span class="deleted_p_c photo_stock" id="photo_stock_<%= stock.default_image.id%>"></span>
+			<%= image_tag (stock.default_image).image_url(:is_small) if !(stock.default_image).nil? %>
+			</div>
 			<% if !stock.other_image.nil? %>
 				<% i = 0 %>
 				<% stock.other_image.each do |image| %>
 					<% if i%2 == 0 %>
-						<div class="picture first_cloumn"> <%= image_tag (image).image_url(:is_small) %> </div>
+						<div class="picture first_cloumn"> 
+<!-- 							<span class="modify">modifier</span> -->
+							<span class="deleted_p_c photo_stock" id="photo_stock_<%= image.id%>"></span>
+							<%= image_tag (image).image_url(:is_small) %> 
+						</div>
 					<% else %> 
-						<div class="picture"> <%= image_tag (image).image_url(:is_small) %> </div>
+						<div class="picture"> 
+<!-- 							<span class="modify">modifier</span> -->
+							<span class="deleted_p_c photo_stock" id="photo_stock_<%= image.id%>"></span>
+							<%= image_tag (image).image_url(:is_small) %> 
+						</div>
 					<% end %>
 					<% i+=1 %>
 				<% end %>
 			<% end %>
-			<span class="add button image" id="stock_id_<%= stock.id %>" title="Ajouter une image"><span class="picture"></span></span>
+			<span class="add button image add_stock_image" id="stock_id_<%= stock.id %>" title="Ajouter une image"><span class="picture"></span></span>
 		</div>
 		<div class="right_area">
 			<div class="informations_card">

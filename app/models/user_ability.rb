@@ -36,6 +36,7 @@ class UserAbility
 	  	if user.can_stock_ar
 	  		can :index, User
 	  		can [:show,:update,:add_image], User, :id => user.id
+	  		can :delete_image, User
 	  		
 	  		can :manage, Stock, :user_id => user.id
 	  		can :create, Stock
@@ -62,6 +63,7 @@ class UserAbility
 	  	if user.can_stock_sr
 	  		can :index, User
 	  		can [:show,:update,:add_image], User, :id => user.id
+	  		can :delete_image, User
 	  		
 	  		can :manage, Stock, :user_id => user.id
 	  		can :create, Stock

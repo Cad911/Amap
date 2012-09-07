@@ -33,14 +33,20 @@
 		 	<%#= @user.mode_denvoi_id %>
 		 	<%#= @user.alaune %>
 		 	<div class="pictures">
-		 		<div class="has_corners_shadow is_medium is-editing"><span class="deleted_p_c"></span><span class="modify">modifier</span><%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %></div>
+		 		<div class="has_corners_shadow is_medium">
+		 			<span class="deleted_p_c photo_user" id="photo_user_<%= @user.default_image.id %>"></span>
+<!-- 		 			<span class="modify">modifier</span> -->
+		 			<%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %>
+		 		</div>
 
 		 		<ul>
-		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><div class="is_small has_corners_shadow is-editing"><span class="modify">modifier</span><span class="deleted_p_c"></span><%#= image_tag image.image_url(:is_small)%></div></li>
-		 			<li><span class="add button image" title="Ajouter une image"><span class="picture"></span></span></li>
+		 			<% if !@user.other_image.nil? %>
+						<% i = 0 %>
+						<% @user.other_image.each do |image| %>
+							<li><div class="is_small has_corners_shadow"><span class="deleted_p_c photo_user" id="photo_user_<%= image.id %>"></span><%= image_tag image.image_url(:is_small)%></div></li>
+		 				<% end %>
+		 			<% end %>
+		 			<li><span class="add button image add_user_image" id="user_id_<%= @user.id %>" title="Ajouter une image"><span class="picture"></span></span></li>
 		 		</ul>
 
 		 	</div>

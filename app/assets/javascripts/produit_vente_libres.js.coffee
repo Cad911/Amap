@@ -610,7 +610,7 @@ $(document).ready(->
     
 
 
-    function_add_produit.init()
+    #function_add_produit.init()
 	
 # 	initialisation_ajout = () ->
 # 			info_stock($('#produit_vente_libre_stock_id').val())

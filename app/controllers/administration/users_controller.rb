@@ -1,6 +1,6 @@
 class Administration::UsersController < InheritedResources::Base
 load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-
+protect_from_forgery :except => [:add_image, :delete_image] 
 	# _____________________________________ AFFICHAGE REVENDEUR ____________________________________________________
 	def revendeur
 		@revendeurs = User.where(:direction_id => params[:user_id])
@@ -98,7 +98,9 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
 		@photo_user = PhotoUser.new
 		@photo_user.user_id = current_user.id
 		@photo_user.update_attributes(params[:photo_user])
-		redirect_to [:administration,current_user]
+		#redirect_to [:administration,current_user]
+		
+		render :json => {:photo_user => @photo_user}
   end
 
 
@@ -137,6 +139,8 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
   	@image_user = PhotoUser.find(params[:image_id])
   	@image_user.remove_image = true
   	@image_user.destroy
+  	
+  	render :nothing => true
   end
 
 end

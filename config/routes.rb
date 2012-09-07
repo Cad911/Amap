@@ -115,6 +115,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       
       resources :stocks
       match 'exist_stock/:produit_autorise_id' => "stocks#alreadyExistStock", :as => :exist_stock, :via => :get #VERIF AJAX SI PRODUIT DEJA EN STOCK
+      
       #______ ROUTE POUR IMAGE STOCK ____
       match '/stocks/:stock_id/add_image' => 'stocks#add_image', :as => :stock_add_image, :via => :post
       match '/stocks/:stock_id/update_image/:image_id' => 'stocks#update_image', :as => :stock_update_image, :via => :put

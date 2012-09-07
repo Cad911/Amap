@@ -149,7 +149,7 @@ $.fn.form_plugin = (optn)->
 
         generate_form: (attribut) ->
             window.light_box_information.html_content('')
-            window.light_box_information.header_content('')
+            window.light_box_information.header_html_content('')
             #window.light_box_information.title_header(options.titre)
             #HIDDEN INPUT WITH ID
             hidden_input = $(document.createElement(attribut['hidden_input']['balise']))
@@ -231,9 +231,19 @@ $.fn.form_plugin = (optn)->
            
             span_annuler = window.light_box_information.create_annuler()
             offset_lightbox_input = $('.lightbox_wrapper.lightbox_information .form-horizontal .controls').position()
-            #console.log(options.left)
-            #console.log(offset_lightbox_input.left)
-            options.left += offset_lightbox_input.left
+            
+            margin_left = $('.lightbox_wrapper.lightbox_information').css('margin-left')
+            margin_top = $('.lightbox_wrapper.lightbox_information').css('margin-top')
+            
+            margin_bottom_control = $('.lightbox_wrapper.lightbox_information .form-horizontal .control-group').css('margin-bottom')
+            console.log(margin_bottom_control)
+            
+            padding_top = $('.lightbox_wrapper.lightbox_information .content').css('padding-left')
+            padding_left = $('.lightbox_wrapper.lightbox_information .content').css('padding-top')
+            
+            options.left += offset_lightbox_input.left - parseInt(margin_left) - parseInt(padding_left) - 10
+            options.top -= parseInt(margin_top) + parseInt(padding_top) - parseInt(margin_bottom_control)
+            
             window.light_box_information.css({
                 'margin':'Opx',
                 top:options.top+'px',
