@@ -1,0 +1,309 @@
+.backoffice {
+	table {
+		tr {
+			td, th {
+				@include bg-sprite(height_50);
+				background-repeat:repeat-x;
+				height:34px;
+			}
+			td {
+				&:first-child {
+					width:300px;
+				}
+				.type {
+					color:$lightgrey;
+				}
+			}
+		}
+	}
+}
+
+// bouton archive, éditer, supprimer
+.buttons_card {
+  float:right;
+  width:80px;
+  opacity:0.7;
+  margin:0;
+  padding-bottom:14px;
+  @include transition-property(all);
+  @include transition-duration(0.2s);
+  @include transition-timing-function(ease-out); 
+  a {
+    margin-right:10px;
+    display:block;
+    float:left;
+    &:last-child {
+      margin-right:0;
+    }
+  }       
+  .button {
+    width:30px;
+    height:30px;
+    display:block;
+    text-align:center;
+    float:left;
+    margin-left: 0 !important;
+    margin-right: 10px;
+    @include embossed_button(#cacaca);
+    @include border-radius(5px);
+    background-image:none;
+    background-color:#F2F2F2;
+    text-align:center;
+    padding:0;
+    &:last-child {
+      margin-right:0;
+    }
+    &:hover {
+      background-image:none;
+      background-color:#F7F7F7;
+    }
+    span {
+      display:inline-block !important;
+      margin-top:6px;
+    }
+    &:active {
+      background:#E5E5E5;
+      @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);  
+    }
+  }
+  .button_active.edit {
+	  background:$red;
+	  @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+    span.picture {
+	    @include ui-sprite(edit_active);							
+	  } 
+  }
+  .historique {
+    &:hover {
+      span {
+        @include ui-sprite(archive_hover);              
+      }
+    } 
+    span {
+      @include ui-sprite(archive);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }         
+  .delete {
+    @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+    background:$red;
+    border:#A44235 solid 1px;
+    &:hover {
+      background-color:lighten($red, 5%);
+      @include box-shadow(rgba(230,135,127, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);            
+    }
+    &:active {
+      background-color:darken($red, 5%);   
+      @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);                
+    }
+    span {
+      @include ui-sprite(delete);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }         
+  .edit {
+    &:hover {
+      span {
+        @include ui-sprite(edit_hover);              
+      }
+    } 
+    span {
+      @include ui-sprite(edit);
+      display:block;
+      width:18px;
+      height:18px;            
+    }
+  }                
+}
+
+.is-editing {
+    border:rgba(255,255,255, 0) solid 1px;
+    @include transition-property(all);
+    @include transition-duration(0.3s);
+    @include transition-timing-function(ease-out);     
+  &:hover {
+    background-color:lighten(#E9D986, 20%);
+    border:solid 1px lighten(#E9D986, 1%);
+    cursor:pointer;
+  }
+  &:active {
+    background-color:lighten(#E9D986, 10%);
+  }      
+}
+
+.cards {
+  margin:0;
+}
+.card {
+  min-height:190px;
+  border:solid 1px #ffffff;
+  background-color:#FCFCFC;
+  background-image:url(/../images/bg_darkener_106.png);
+  background-repeat:repeat-y;
+  @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 5px 0px);
+  @include borderradius(5px); 
+  margin-bottom:20px;
+  &:hover {
+    .buttons_card {
+      opacity: 1 !important;
+    }
+  }
+  .left_area {
+    height:100%;
+    width: 67px;
+    padding:0 20px;
+    float: left;
+    .is_small.has_corners_shadow {
+      margin-top:20px;
+      margin-bottom:10px;
+    }
+    .picture:last-child {
+      margin-bottom:20px;
+    }
+    div.picture {
+      width:24px;
+      height:24px;
+      border:solid #ffffff 3px;
+      float:left;
+      margin-left:7px;
+      margin-bottom:10px;
+      background-color:#ffffff;
+      &.first_cloumn {
+        margin-left:0;
+      }
+    }
+  }
+  .right_area {
+    width:568px;
+    height:100%;
+    padding:20px 20px 20px 0;
+    float: left;
+    .header {
+      margin-left:20px;
+      border-bottom: solid 1px #ebebeb;
+      h2 {
+        float:left;
+        width:400px;
+        margin:0;
+        padding:0;
+        font-size:30px;
+        padding:5px 0px 0px 10px;
+        margin:0px 20px 5px -10px;
+        text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+      }       
+    }
+  }
+  .body {
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ebebeb;    
+    margin-left:20px;
+    .description {
+      font-size:16px;
+      text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+      clear:both;
+      margin:5px 0 10px -10px;
+      padding:10px 0 5px 10px;
+    }
+  }
+  .description, h2, ul li.details {
+    border:#fcfcfc solid 1px;
+    @include transition-property(all);
+    @include transition-duration(0.3s);
+    @include transition-timing-function(ease-out);           
+  }
+  .description.is-editing, h2.is-editing, ul li.details.is-editing {
+    &:hover {
+      background-color:lighten(#E9D986, 20%);
+      border:solid 1px lighten(#E9D986, 1%);
+      cursor:pointer;
+    }
+    &:active {
+      background-color:lighten(#E9D986, 10%);
+    }      
+  }
+  .footer {
+    margin:0px 0 0 20px;
+    padding:10px 0 0 0;
+    border-top: solid 1px #ffffff;    
+    ul {
+      padding: 0;
+      margin: 0;
+      li.details {
+        width: 252px;
+        float:left;
+        margin-left:-10px;
+        padding:5px 5px 5px 10px;
+        margin-right:15px;      
+        .label {
+          background-color:transparent;
+          color: $brown;
+          font-family:'helveticaneue-bold';
+          font-size:14px;
+          padding:0;
+          text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+        }
+        .value {
+          color:$grey;
+          text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+  }
+}
+.card_stack {
+  margin-bottom: 20px;
+}
+.basket_of_cards {
+  position:relative;  
+  .card {
+    position:absolute;
+    top:0;
+    left:0
+  }
+  .one {
+    top:0px;
+  }
+  .two {
+    top:-7px;
+  }
+  .three {
+    top:-14px;
+  }
+}
+.add.button.image {
+	width:30px;
+	height:30px;
+	display:block;
+	text-align:center;
+	float:left;
+	margin-left: 0 !important;
+	margin-right:10px;
+	@include embossed_button(#c2bdb1);
+	@include border-radius(5px);
+	text-align:center;
+	padding:0;			
+	.picture {
+		display:inline-block;
+		margin-top:6px;
+	}	
+	&:hover {
+		span {
+			@include ui-sprite(add_hover);							
+		}
+	}	
+	&:active {
+		span.picture {
+			@include ui-sprite(add_active);							
+		}
+	}									
+	span {
+		@include ui-sprite(add);
+		display:block;
+		width:16px;
+		height:16px;
+	}
+}	

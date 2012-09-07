@@ -5,6 +5,7 @@
 @import "layout/farmer/farmer_show.scss";
 @import "layout/basket/basket_show.scss";
 @import "layout/basket/basket_list.scss";
+@import "layout/blog/layout.scss";
 @import "process_order.scss";
 @import "layout/index.scss";
 @import "layout/footer.scss";
@@ -21,5 +22,9 @@ body {
 	}
 	.l_main_gutter {
 		padding:20px;
+		.l_area_right {
+	        width:290px;
+        	margin-left:40px;
+		}
 	}
 }
