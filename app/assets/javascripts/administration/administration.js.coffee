@@ -901,13 +901,28 @@ $(document).ready( () ->
             functions.edit_button()
             functions.help_button()
             functions.event_close()
+            functions.stats_button()
         
         
         heigth_help_div: '0px' 
         event_close: ()->
             $('.helper>.close').on('click',()->
                 functions.close_help('.buttons>li.help')
-            )   
+            ) 
+        
+        stats_button: ()->
+            if $('.buttons>li.stats').length > 0
+                $('.buttons>li.stats').on('click', ()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        window.statisitques.hide()
+                        window.statisitques.clear_stats()
+                                                
+                    else
+                        $(this).addClass('button_active')
+                        window.statisitques.show()
+                        window.statisitques.init()
+                )  
         help_button: ()->
             if $('.buttons>li.help').length > 0
                 functions.heigth_help_div = $('.helper').css('height')
@@ -1081,18 +1096,25 @@ $(document).ready( () ->
 #         url_get_infos:['user','panier']
 #     )
 
-    
+    #--------------------------------------------
+    #--------------------------------------------
+    #-------------------------------------------
     #FUNCTIONS POUR AJOUTER DES DECLINAISON
+    #------------------------------------------
+    #------------------------------------------
+    
     change_infos_panier = 
         panier_id: 0
+        div_list:$('')
         div_form: $('')
+        div_sous_content:$('')
         init:()->
             $('div.card_stack>.packaging ul.details').on( 'click', ()->
                 if ($(this).hasClass('is-editing'))
                      #generate box
                      change_infos_panier.generate_box()
                      change_infos_panier.add_select()
-                     change_infos_panier.div_form.css('display','none')
+                     #change_infos_panier.div_form.css('display','none')
                      change_infos_panier.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
                      change_infos_panier.get_panier()
 
@@ -1108,12 +1130,15 @@ $(document).ready( () ->
             
             xhr.onreadystatechange = ()->
                 if xhr.readyState == xhr.DONE
-                    console.log(xhr.responseText)
+                    
                     data = JSON.parse(xhr.responseText)
-                    
+                    console.log(data)
+                    nombre_declinaison = data['panier']['nb_pack']
                     for champ, valeur of data['declinaison_panier']
-                        window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
-                    
+                        change_infos_panier.div_list.append(change_infos_panier.create_fiche_declinaison(valeur))
+                        nombre_declinaison += valeur['nb_pack']
+                        #window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
+                    $('.header-list>p   ').text(nombre_declinaison+' declinaisons')
 
             
         li_detail:(data)->
@@ -1145,8 +1170,42 @@ $(document).ready( () ->
             return li_max
                     
         create_fiche_declinaison: (declinaison_panier)->
-            div_card = $(document.createElement('div'))
-            div_card.addClass('card_stack')
+#             
+#              <div class="raw">
+#                 <ul class="details">
+#                     <li class="detail detail_max">
+#                         <span class="label">Max</span>
+#                         <span class="number">100</span>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Format</span>
+#                         <ul class="number">
+#                             <li> 2 </li>
+#                             <li> 4 </li>
+#                             <li> 6 </li>
+#     
+#                         </ul>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Durée</span>
+#                         <ul class="number">
+#                             <li> 3 </li>
+#                             <li> 6 </li>
+#                             <li> 9 </li>
+#                         </ul>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Prix</span>
+#                         <span class="number">5€</span>
+#                     </li>
+#                 </ul>
+#                 <div class="clear"></div>
+#                 <div class="close_square"></div>
+#             </div>
+#         
+        
+            div_raw = $(document.createElement('div'))
+            div_raw.addClass('raw')
             
             ul_details = $(document.createElement('ul'))
             ul_details.addClass('details')
@@ -1178,33 +1237,106 @@ $(document).ready( () ->
             ul_details.append(li_format)
             ul_details.append(li_duree)
             
-            div_card.append(ul_details)
-            return div_card
+            div_close = $(document.createElement('div'))
+            div_close.addClass('close_square')
+            
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+
+            div_raw.append(ul_details)
+            div_raw.append(div_close)
+            div_raw.append(div_clear)
+            return div_raw
                                     
         generate_box: ()->
-            window.light_box_information.html_content(change_infos_panier.button_add_select())
+            window.light_box_information.html_content('')
+            change_infos_panier.div_sous_content = $(document.createElement('div'))
+            change_infos_panier.div_sous_content.addClass('sous_content')
+            
+            change_infos_panier.div_sous_content.append(change_infos_panier.header_list())
+            
+            change_infos_panier.div_list = $(document.createElement('div'))
+            change_infos_panier.div_list.addClass('embosed-list basket-details')
+            
+            change_infos_panier.div_sous_content.append(change_infos_panier.div_list)
+            window.light_box_information.append_content(change_infos_panier.div_sous_content)
+            
             window.light_box_information.title_header('titre')
             span_annuler = window.light_box_information.create_annuler()
             window.light_box_information.html_footer(span_annuler)
             #change_infos_panier.add_select()
             window.light_box_information.show()
         
-        button_add_select: ()->
-            span = $(document.createElement('span'))
-            a = $(document.createElement('a'))
-            a.text('Ajoutez declinaison')
-            span.addClass('button')
+        header_list:()->
+#             <div class="header-list">
+#                 <p>17 déclinaisons</p>
+#                 <span class="button new-declinaision"><a href="">nouvelle</a></span>
+#                 <div class="clear"></div>
+#             </div>
+        
+        
+            div_header = $(document.createElement('div'))
+            div_header.addClass('header-list')
             
-            a.on('click',()->
-                change_infos_panier.div_form.slideDown(1000)
+            nombre_decli = $(document.createElement('p'))
+            nombre_decli.text('18 déclinaisons')
+            
+            span_new = $(document.createElement('span'))
+            span_new.addClass('button new-declinaision button_declinaion')
+            
+            a  = $(document.createElement('a'))
+            a.text('nouvelle')
+            span_new.append(a)
+            a.on('click', ()->
+                   change_infos_panier.animate_for_form(1000)
             )
             
-            span.append(a)
+            span_retour = $(document.createElement('span'))
+            span_retour.addClass('back-declinaison button_declinaion')
+            span_retour.text('retour')
             
-            return span 
+            span_retour.on('click', ()->
+                   change_infos_panier.animate_for_tab(1000)
+            )
+            
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+            
+            div_header.append(nombre_decli)
+            div_header.append(span_new)
+            div_header.append(span_retour)
+            div_header.append(div_clear)
+            
+            return div_header
         
+        # button_add_select: ()->
+#             span = $(document.createElement('span'))
+#             a = $(document.createElement('a'))
+#             a.text('Ajoutez declinaison')
+#             span.addClass('button')
+#             
+#             a.on('click',()->
+#                 change_infos_panier.div_form.slideDown(1000)
+#             )
+#             
+#             span.append(a)
+#             
+#             return span 
+#       
+        animate_for_tab: (time)->
+            change_infos_panier.div_sous_content.animate(
+                'margin-left': '0px'
+            )
+
+        animate_for_form: (time)->
+            change_infos_panier.div_sous_content.animate(
+                'margin-left': '-600px'
+            )
         add_select:()->
             div_form = $(document.createElement('div'))
+            div_form.addClass('form_add_decli')
+            div_form.css('float','right')
+            div_form.css('display','block')
             #div_card.addClass('card_stack')
             
             #max
@@ -1273,7 +1405,8 @@ $(document).ready( () ->
             div_form.append(span_add)
             
             change_infos_panier.div_form = div_form
-            window.light_box_information.prepend_content(div_form)
+            change_infos_panier.div_sous_content.prepend(div_form)
+            #window.light_box_information.append_content(div_form)
             
             
         
@@ -1300,7 +1433,7 @@ $(document).ready( () ->
                     if data['status'] == 'error'
                         window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
                     else
-                       change_infos_panier.div_form.slideUp(1000)
+                       #change_infos_panier.div_form.slideUp(1000)
                        window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(data_))
                     #add_photo_stock.create_photo(data['photo_stock'])
 

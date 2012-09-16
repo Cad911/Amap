@@ -2,7 +2,7 @@
 	<li class="card fade in">
 		<div class="left_area">
 			<div class="is_small has_corners_shadow" <% if (stock.default_image).nil? %> style="opacity:0;" <% end %>>
-				<span class="modify">modifier</span>
+				<!-- <span class="modify">modifier</span> -->
 				<span class="deleted_p_c photo_stock" id="photo_stock_<%= stock.default_image.id%>"></span>
 			<%= image_tag (stock.default_image).image_url(:is_small) if !(stock.default_image).nil? %>
 			</div>

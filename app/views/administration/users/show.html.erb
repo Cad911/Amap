@@ -34,9 +34,11 @@
 		 	<%#= @user.alaune %>
 		 	<div class="pictures">
 		 		<div class="has_corners_shadow is_medium">
+		 			<% if !@user.default_image.nil? %>
 		 			<span class="deleted_p_c photo_user" id="photo_user_<%= @user.default_image.id %>"></span>
 <!-- 		 			<span class="modify">modifier</span> -->
 		 			<%= image_tag (@user.default_image).image_url(:is_medium) if !(@user.default_image).nil? %>
+		 			<% end %>
 		 		</div>
 
 		 		<ul>
@@ -52,11 +54,11 @@
 		 	</div>
 		 	<div class="content">
 		 		<p class="title"><%= @user.prenom %>&nbsp;<%= @user.nom %></p>
-		 		<p class="is_note is_italic note city"><%= (@user.ville_id.nil?) ? 'Aucune ville' :  @user.ville.cp %> <%= @user.ville.nom %></p>
-		 		<p class="is_note is_italic note address"> <%= (@user.adresse.nil?) ? 'Aucune adresse' : @user.adresse  %></p>
-		 		<p class="description"> <%=(@user.description.nil?) ? 'Aucune description' : @user.description  %></p>
-		 		<p class="phone"><%= (@user.telephone.nil?) ? 'Aucun numéro' : @user.telephone  %></p>
-		 		<p class="email"><%= (@user.email.nil?) ? 'Aucune adresse mail' : @user.email %></p>
+		 		<p class="is_note is_italic note city"><%= (@user.ville_id.nil? || @user.ville_id == '') ? 'Aucune ville' :  @user.ville.cp %> <%= @user.ville.nom %></p>
+		 		<p class="is_note is_italic note address"> <%= (@user.adresse.nil? || @user.adresse == '') ? 'Aucune adresse' : @user.adresse  %></p>
+		 		<p class="description"> <%=(@user.description.nil? || @user.description == '') ? 'Aucune description' : @user.description  %></p>
+		 		<p class="phone"><%= (@user.telephone.nil? || @user.telephone == '') ? 'Aucun numéro' : @user.telephone  %></p>
+		 		<p class="email"><%= (@user.email.nil? || @user.email == '') ? 'Aucune adresse mail' : @user.email %></p>
 		 	</div>
 		 	<div class="clear"></div>
 

@@ -114,9 +114,10 @@ window.global_functions =
 #                 event:[{type:'click', callback:function()]
         p = $(document.createElement('p'))
         span_add = $(document.createElement('span'))
+        
         a = $(document.createElement('a'))
         a.text(data['link']['text'])
-        span_add.addClass('button')
+        span_add.addClass('button '+data['link']['class_span'])
         
         for champ, valeur of data['link']['event']
             a.on(valeur['type'],()->

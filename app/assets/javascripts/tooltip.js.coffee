@@ -55,6 +55,7 @@
 	            
 	            tooltip_body = $(document.createElement('div'))
 	            tooltip_body.addClass('tooltip_body')
+	            tooltip_body.text($(element).attr('title'))
 	            
 	            tooltip_fleche = $(document.createElement('div'))
 	            tooltip_fleche.addClass('tooltip_fleche')
@@ -62,17 +63,21 @@
 	            my_tooltip.append(tooltip_body)
 	            my_tooltip.append(tooltip_fleche)
 	            
-	            tooltip_body.text($(element).attr('title'))
 	            
 	            
 	            $('body').append(my_tooltip)
 	           
 	            offset = $(element).offset()
-	            position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + $(element).outerWidth() / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
-	            position_wait_top = offset.top - $(element).outerHeight()  - 10
-	            position_top = offset.top - $(element).outerHeight()  - 5 
-	            
-	            console.log((($(element).outerHeight() - my_tooltip.outerHeight()) - 30)+' '+offset.top)
+	            offset.top -= 50 #A CAUSE DE LA MARGE SUR L.wrapper 
+	            if $(element).children('circle').length > 0
+	            	outer_width_element = parseInt($(element).children('circle').attr('r')) + 1
+	            else
+	            	outer_width_element = $(element).outerWidth()
+	            position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + outer_width_element / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER
+	            position_wait_top = offset.top - my_tooltip.outerHeight()  - 10
+	            position_top = offset.top - my_tooltip.outerHeight() - 2
+	            console.log(outer_width_element)
+	            #console.log((($(element).outerHeight() - my_tooltip.outerHeight()) - 30)+' '+offset.top)
 	            my_tooltip.css({
 	               'left':position_left
 	               'top':position_wait_top
