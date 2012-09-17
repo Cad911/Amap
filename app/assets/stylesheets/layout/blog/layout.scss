@@ -1,20 +1,20 @@
 .blog {
-	p, span, li, a {
+	p, span:not(.button), li, a {
 		font-size: 16px;
 	}
 	.main-nav {
-		padding: 0;
+		padding: 0 0 15px 0;
 		margin: 0;
 		li {
-			float: left;
-			padding: 5px 10px 5px 10px;
+			display: inline-block;
+			padding: 5px 10px 0px 10px;
 			margin: 5px;
 			@include border-radius(3px);
 
 			color: $red;
 			font-size: 16px;
 
-			&:active, &:hover {
+			&:active, &:hover, &.current {
 				background: $red;
 
 				color: #fff;
@@ -23,5 +23,8 @@
 				cursor: pointer;
 			}
 		}
+	}
+	.has_corners_shadow {
+		margin-bottom: 35px;
 	}
 }

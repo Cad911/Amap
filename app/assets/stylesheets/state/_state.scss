@@ -48,6 +48,16 @@
       background-position: left -37px;
     }
   }
+  &.is_giant {
+    width:572px;
+    height:273px;
+    &:after {
+      bottom:-12px;
+      width:572px;
+      height:12px;
+      background-position: 10px -48px;
+    }   
+  }
   &.is_big {
     width:273px;
     height:273px;

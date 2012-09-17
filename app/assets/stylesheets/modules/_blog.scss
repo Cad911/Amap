@@ -1,10 +1,13 @@
+// style de articles et de sa liste
+
 .articles-list {
 	.article {
+		margin-bottom: 25px;
 		border-top: solid 4px $red;
 		.title {
+			line-height:1.3em;
 			margin:40px 0 25px 0;
 			@include title(1, 35px);
-			line-height:inherit;
 		}	
 		.sub-title {
 			padding-bottom: 15px;
@@ -23,5 +26,36 @@
 				margin-right: 5px;
 			}
 		}
+		.date {
+			.icon {
+				@include ui-sprite(date);
+			}
+		}
+		.comments {
+			.icon {
+				@include ui-sprite(comments);	
+			}
+		}
+		.tags {
+			.icon {
+				@include ui-sprite(tags);
+			}
+		}
+	}
+}
+
+// style des sideboxes
+.sidebox {
+	> .title {
+		padding: 0 0 0 40px;
+		@include ui-sprite(calendar);
+		font-size:18px;
+		color:$brown;
+	}
+	.event {
+		padding:0 0 15px 23px;		
+	}
+	.date {
+		padding-left: 20px;
 	}
 }

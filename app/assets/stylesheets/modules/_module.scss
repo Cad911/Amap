@@ -39,7 +39,10 @@
   .title {
     padding:0 20px 0 0;
     margin:0;
-    @include title(2,20px);
+    @include title(2,18px);
+    .is-grey {
+      color: $grey;
+    }
   }
   i {
     padding-right: 5px;
@@ -382,6 +385,10 @@ span.button {
         height:30px;
         @include title(1,25px);
       }
+    }
+    .l_photo_description .content { // override des div .content des listes d'éléments dans une lighbox
+      padding: 0 0 5px 0;
+      border: none;
     }
     .content {
       border-bottom:solid 1px #C8C5BF;
@@ -1035,6 +1042,11 @@ ul.dropdown_menu {
   vertical-align: middle;
   @include ui-sprite(help_hover);
 }
+
+.icon-puce {@include ui-sprite(circle);width:6px;height:6px;margin-right:10px;}
+.is-grey {color: $grey;}
+.is-brown {color:$brown;}
+.is-red {color:$red;}
 
 @import "_backoffice.scss";
 @import "_blog.scss";
