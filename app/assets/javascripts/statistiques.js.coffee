@@ -5,7 +5,7 @@
 $(document).ready( () ->
     
     window.statisitques = 
-        user_id : $('#id_user_stats').val()
+        user_id : $('.user_id').val()
         init: () ->
             $('.page-header').tooltip({'trigger': 'hover', 'placement': 'left'})
             statisitques.data_month()
@@ -54,9 +54,19 @@ $(document).ready( () ->
              	$('#camembert').append(h2_chiffre)
              else
 	             r = Raphael('camembert')
-	             data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
-	             console.log(data_pie)
-	             camembert = r.piechart(320, 240, 100, data_pie ,{legend: ["%%.%% - "+data_pie[0]+" €","%%.%% - "+data_pie[1]+" €"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             #AVEC CE PLUGIN VU QU IL N Y A QUE 2 INFOS, SI UNE VAUT 0 ALORS LE CAMEMBERT NE SE CONSTRUIT PAS, C'EST 
+	             #POUR CA QUE JE METS UNE VALEUR TENDANT VERS 0 AFIN QUE LE CAMEMBERT SE CREER
+	             if data.CA_product_ttc == 0
+	             	data_pie = [1/100000,data.CA_abonnement_ttc]
+	             	camembert = r.piechart(320, 240, 30, data_pie ,{legend: ["0% - 0 € (achat direct)","%%.%% - "+data_pie[1]+" € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             else if data.CA_abonnement_ttc == 0
+	             	data_pie = [data.CA_product_ttc,1/100000]
+	             	camembert = r.piechart(320, 240, 30, data_pie ,{legend: ["%%.%% - "+data_pie[0]+" € (achat direct) ","0% - 0 € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             else
+	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
+	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
+	             	camembert = r.piechart(320, 240, 30, data_pie ,{legend: ["%%.%% - "+data_pie[0]+" € ","%%.%% - "+data_pie[1]+" €"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             
 	             $('#camembert path').css("box-shadow", "1px 1px 1px solid black")
 	             r.text(320, 100, "Chiffre d'affaire du mois").attr({ font: "20px sans-serif" });
 	             camembert.hover( () ->
