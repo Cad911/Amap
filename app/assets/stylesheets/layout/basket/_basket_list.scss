@@ -35,11 +35,11 @@
 	}
 	.description {
 	  width: 410px;
-      margin:5px 0 10px -10px;
-      padding:10px 0 5px 10px;
+	  margin:5px 0 10px -10px;
+	  padding:10px 0 5px 10px;
 
-      border: solid 1px #fcfcfc;
-      border: solid 1px rgba(255,255,255,0);
+	  border: solid 1px #fcfcfc;
+	  border: solid 1px rgba(255,255,255,0);
 	}
 	.button {
 		float: right;
@@ -203,5 +203,18 @@
 	}
 	.close_square {
 		top: 17px;
+	}
+}
+.other_products {
+	li {
+		padding-bottom: 20px;
+		border-bottom:solid 1px $embossed_dark; 
+		border-top:1px solid #ffffff;
+		&:last-child  {
+		  border-bottom: none;
+		}
+		&:first-child {
+		  border-top: none;      
+		}
 	}
 }

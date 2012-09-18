@@ -5,7 +5,7 @@
 $(window).load(()->
     listing_tooltip = 
         listing:()->
-            $('.historique,.edit,.delete').tool_tip(1000)
+            $('.historique,.add,.help,.stats,.edit,.delete').tool_tip(1000)
     listing_tooltip.listing()
 )
 

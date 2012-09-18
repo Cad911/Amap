@@ -38,6 +38,21 @@ $embossed_dark:#C8C5BF;
 
 // Style de titre
 @mixin title($style, $taille) {
+	* {
+		@if $style == 1 {
+			font-family: bellopro, Lobster;
+			color:$brown;
+			font-weight:normal !important
+			;
+		}
+		@else if $style == 2 {
+			font-family: helveticaneue-bold, helvetica;
+			font-weight:bold;
+			color: $red;
+		}
+		text-shadow:1px 1px 1px #ffffff;
+		font-size: $taille;
+	}
 	@if $style == 1 {
 		font-family: bellopro, Lobster;
 		color:$brown;
@@ -45,11 +60,12 @@ $embossed_dark:#C8C5BF;
 		;
 	}
 	@else if $style == 2 {
-		font-family: helveticaneue, helvetica;
+		font-family: helveticaneue-bold, helvetica;
+		font-weight:bold;
 		color: $red;
 	}
 	text-shadow:1px 1px 1px #ffffff;
-	font-size: $taille;
+	font-size: $taille;	
 }
 
 // Coins arrondis

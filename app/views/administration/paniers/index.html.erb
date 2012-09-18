@@ -1,20 +1,29 @@
 <div class="page-header">
    <h1>Listing paniers</h1>
    <ul class="buttons">
-    <li class="stats button"><span class="picture"></span></li>
-    <li class="add button"><span class="picture"></span></li>
-    <li class="help button"><span class="picture"></span></li>        
+    <li class="stats button"  title="statistiques"><span class="picture"></span></li>
+    <li class="help button button_active"  title="aide"><span class="picture"></span></li>        
+	<li class="separator"></li>    
+    <li class="add button" title="ajouter un panier"><span class="picture"></span></li>
 </ul>
 </div>
 
 <div id="statistiques">
-	<div id="camembert" >
-	</div>
 	<div id="div_graph">
-		<h2> Chiffre d'affaire de l'année </h2>
+		<h3> Chiffre d'affaire de l'année </h3>
 		<div id="graph">
 		</div>
 	</div>
+	<div class="div_camembert">
+	<h3> Chiffre d'affaire du mois </h3>
+		<div id="camembert" >
+		</div>
+	</div>
+	<div class="clear"></div>
+	<ul class="legend">
+		<li class="basket"><span class="square"></span><span class="label">Vente en panier </span></li>
+		<li class="detail"><span class="square"></span><span class="label">Vente au détail</span></li>
+	</ul>
 </div>
 
 <div class="helper">

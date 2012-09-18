@@ -1,7 +1,7 @@
 class EspaceClient::ClientsController < InheritedResources::Base
 	#load_and_authorize_resource
     skip_load_and_authorize_resource :only => :emailExist
-	layout 'espace_client'
+	layout 'application'
 	
 	#___________________________ CREATE _____________________________________
 	def create 
