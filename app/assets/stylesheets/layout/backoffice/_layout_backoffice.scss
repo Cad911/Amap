@@ -30,6 +30,8 @@ body .backoffice {
 		}
 		#div_graph {
 			width: 450px;
+			z-index: 2;
+			position: relative;
 		}
 		#graph {
 			height: 160px;
@@ -63,17 +65,15 @@ body .backoffice {
 			.detail {
 				font-size:12px;
 			}
-			.label {
-
-			}
 		}
 		#camembert {
 			float: left;
-			width: 240px;
+			width: 260px;
 			svg {
-				width: 440px;
-				margin-left: -200px;
-				margin-top: -160px;
+				z-index:1;
+				width: 470px;
+				margin-left: -220px;
+				margin-top: -165px;
 				circle {
 					display: none;
 				}
@@ -324,6 +324,17 @@ body .backoffice {
 				float:left;
 				padding:10px 20px 0 51px;
 				margin:0;
+				li.separator {
+					display: block;
+					float: right;
+					width: 1px;
+					height: 32px;
+					margin-right: 10px;
+
+					border-right: 1px solid #fff;
+
+					background: $embossed_dark;
+				}
 				.group_button {
 					.button {
 						margin:0 -1px 0 0;
@@ -367,14 +378,14 @@ body .backoffice {
 					}
 					&:active {
 						background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
 					}
 				}
 				//FOR BUTTON SI CLICK ON
 				.button_active.edit
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
 				    span.picture {
 							@include ui-sprite(edit_active);							
 					}
@@ -383,7 +394,7 @@ body .backoffice {
 				.button_active.stats
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
 				    span.picture {
 							@include ui-sprite(stats_active);							
 					}
@@ -391,7 +402,7 @@ body .backoffice {
 				.button_active.help
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 5px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
 				    span.picture {
 							@include ui-sprite(help_active);							
 					}
