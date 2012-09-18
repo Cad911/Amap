@@ -608,7 +608,189 @@ $(document).ready( () ->
         
         
     add_photo_stock.init()
+       
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ FORM ADD PANIER ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    form_add_basket = 
+        actual_step: 1
+        init: ()->  
+            form_add_basket.form_new_basket()
+            form_add_basket.event()
+            form_add_basket.info_panier_autorise($('#panier_panier_autorise_id').val())
+        re_init_form: ()->
+            form_add_basket.actual_step = 1
+            $('.etape_1').css('display','block')
+            $('.etape_3').css('display','none')
+            $('.title_1').css('display','block')
+            $('.title_3').css('display','none')
         
+        #INFO DU PANIER AUTORISE
+        info_panier_autorise: (id_pa) ->
+                id_user = $('.user_id').val()
+                $.ajax("/administration/users/#{id_user}/panier_autorises/#{id_pa}",{
+                    type:"GET",
+                    async:false,
+                    format:"json",
+                    success: (data)->
+                        $('#panier_titre').val(data['titre'])
+                        $('#panier_description').val(data['description'])
+                        true
+                })
+                true
+        
+        upload_form: ()->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers')
+            
+            form = new FormData();
+            
+            $('#new_panier input, #new_panier textarea, #new_panier select').each(()->
+                #console.log($(this).attr('name'))
+                name = $(this).attr('name')
+                if data[name] == undefined && $(this).attr('type') != 'button' && $(this).attr('type') != 'file'
+                    data[name] = $(this).val()
+                    form.append(name,$(this).val())
+                else if $(this).attr('type') == 'file'
+                    fileInput = document.querySelector('#'+$(this).attr('id'))
+                    form.append(name,fileInput.files[0])
+                    
+            )
+
+            xhr.send(form)
+
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    form_add_basket.re_init_form()
+                    window.lightbox_new_basket.hide()
+                    console.log(xhr.responseText)
+                    new_card = xhr.responseText
+                    new_card_2 = $($(new_card)[0])
+                    console.log(new_card_2)
+                    new_card_2.css({
+                        opacity:0,
+                        top: '-250px'
+                    });
+                    
+                    #console.log(new_card_2.find('.buttons_card li.delete'))
+                    console.log($('.card_stack:first-child'))
+                    $($('.card_stack')[0]).before(new_card_2)
+                    #event sur les bouton
+                    #supp_stock.event_one_element(new_card_2.find('.buttons_card li.delete'))
+                    #add_photo_stock.init_one_element(new_card_2.find('.add.button.image'))
+                    #functions.one_edit_button(new_card_2.find('.buttons_card>.edit'))
+                    #form_plugin_element.init_one_card(new_card_2)
+                    
+                    new_card_2.animate({
+                        opacity:1,
+                        top:'0px'
+                    },500)
+
+            
+                    
+
+
+        event:()->
+            $('li.add.button').on('click',()->
+                window.lightbox_new_basket.show()
+            )
+            
+            $('.next_step').on('click',()->
+                if !form_add_basket['error_step_'+form_add_stock.actual_step]()
+                    form_add_basket.next_step()
+            )
+
+            $('.previous_step').on('click',()->
+                form_add_basket.previous_step()
+            )
+            
+            $('#panier_panier_autorise_id').on('change',()->
+                form_add_basket.info_panier_autorise($(this).val())
+            )
+
+        
+        form_new_basket: ()->
+            window.lightbox_new_basket = new Lightbox('.lightbox_new_basket','.lightbox_form_new_basket')
+        
+        verif_one_input: (element)->
+            error = false
+            if $(element).val() == ''
+                    $(element).parents('.control-group').addClass('error')
+                    error = true
+                else
+                    $(element).parents('.control-group').removeClass('error')
+            return error
+            
+        error_step_1:()->
+            error = false
+            $('.etape_1 input, .etape_1 textarea').each(()->
+                if form_add_basket.verif_one_input(this)
+                    error = true
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            return error
+            
+        error_step_2:()->
+            error = false
+            $('.etape_2 input, .etape_2 textarea').each(()->
+                 if form_add_basket.verif_one_input(this)
+                    error = true         
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            return error
+            
+        error_step_3:()->
+            error = false
+            $('.etape_3 input,  .etape_3 textarea').each(()->
+                 if form_add_basket.verif_one_input(this)
+                    error = true
+            )
+            if error
+                window.message_information.message_error('.title_3','erreur','Certain champ sont vides',2000)
+            
+            if form_add_basket.stock_is_depassed()
+                window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
+                error = true
+            return error
+        
+        next_step:()->
+            if form_add_basket.actual_step == 3
+                #$('#new_stock').submit()
+                form_add_basket.upload_form()
+            else
+                $('.etape_'+form_add_basket.actual_step).slideUp(500)
+                $('.title_'+form_add_basket.actual_step).css('display','none')
+                form_add_basket.actual_step += 1
+                $('.etape_'+form_add_basket.actual_step).slideDown(500)
+                $('.title_'+form_add_basket.actual_step).css('display','block')
+                #POUR MENU GAUCHE
+                next_current = $('.navigation>li>.current').parents('li').next().children('span')
+                $('.navigation>li>.current').removeClass('current')
+                console.log(next_current)
+                next_current.addClass('current')
+        previous_step: ()->
+            $('.etape_'+form_add_basket.actual_step).slideUp(500)
+            $('.title_'+form_add_basket.actual_step).css('display','none')
+            form_add_basket.actual_step -= 1
+            $('.etape_'+form_add_basket.actual_step).slideDown(500)
+            $('.title_'+form_add_basket.actual_step).css('display','block')
+            #POUR MENU GAUCHE
+            previous_current = $('.navigation>li>.current').parents('li').prev().children('span')
+            $('.navigation>li>.current').removeClass('current')
+            console.log(previous_current)
+            previous_current.addClass('current')
+
+    
+    if $('.card_stack').length > 0
+            form_add_basket.init()
+    
     
     
     #___________________________________________
@@ -619,11 +801,14 @@ $(document).ready( () ->
     #___________________________________________
     #___________________________________________
     form_add_stock =
-        init : ()->
+        previous_id: ""
+        exist_deja: false
+        actual_step: 1
+        init: ()-> 
+            
+            form_add_stock.init_select_stock()
             form_add_stock.form_new_stock()
             form_add_stock.event()
-            
-        actual_step : 1
         
         re_init_form: ()->
             form_add_stock.actual_step = 1
@@ -632,7 +817,21 @@ $(document).ready( () ->
             $('.title_1').css('display','block')
             $('.title_3').css('display','none')
         
-        upload_form : ()->
+        #ON PLACE LE SELECT SUR UN PRODUIT PAS DEJA MIS EN STOCK
+        init_select_stock: ()->
+            if form_add_stock.produit_deja_enstock($('#stock_produit_autorise_id').val())
+                dem_produit_enstock = false
+                $('#stock_produit_autorise_id option').each(()->
+                    value_option = $(this).attr("value")
+                    if !form_add_stock.produit_deja_enstock(value_option)
+                        dem_produit_enstock = true
+                        $('#stock_produit_autorise_id').val(value_option)
+                        form_add_stock.info_produit_autorise(value_option)
+                )
+                if !dem_produit_enstock
+                   alert('Tous les produits autorisé sont en stock')
+
+        upload_form: ()->
             data = {}
             xhr = new XMLHttpRequest();
             xhr.open('POST','/administration/users/'+$('.user_id').val()+'/stocks')
@@ -650,9 +849,9 @@ $(document).ready( () ->
                     form.append(name,fileInput.files[0])
                     
             )
-            
+
             xhr.send(form)
-            
+
             xhr.onreadystatechange = ()->
                 if xhr.readyState == xhr.DONE
                     form_add_stock.re_init_form()
@@ -678,15 +877,13 @@ $(document).ready( () ->
                         top:'0px'
                     },500)
 
-                    
-            console.log(data)
             
-        
-        event:()->
+            console.log(data)        
+        event: ()->
             $('.buttons>li.add').on('click', ()->
                 window.lightbox_new_stock.show()
             )
-            
+
             $('#new_stock').bind "ajax:complete", (et,e) ->
                     form_add_stock.re_init_form()
                     window.lightbox_new_stock.hide()
@@ -704,23 +901,19 @@ $(document).ready( () ->
                         opacity:1,
                         top:'0px'
                     },500)
-                    
 
-
-
-            
             $('.next_step').on('click',()->
                 if !form_add_stock['error_step_'+form_add_stock.actual_step]()
                     form_add_stock.next_step()
             )
-            
+
             $('.previous_step').on('click',()->
                 form_add_stock.previous_step()
             )
             $('.formulaire_add input,.formulaire_add textarea').on('change', ()->
                 form_add_stock.verif_one_input(this)
             )
-            
+
             $('#produit_vente_libre_quantite').on('change', ()->
                 if form_add_stock.stock_is_depassed()
                     window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
@@ -729,9 +922,49 @@ $(document).ready( () ->
                 if form_add_stock.stock_is_depassed()
                     window.message_information.message_error('.title_3','erreur','Quantite en ligne excede celle du stock',2000)
             )
+            
+            #CHANGE PRODUIT AUTORISE
+            $('#stock_produit_autorise_id').on('click',() ->
+                    form_add_stock.previous_id = $(this).val() #QUAND ON FOCUS LE SELECT
+            )
+            $('#stock_produit_autorise_id').on('change', ()->
+                    if form_add_stock.produit_deja_enstock($(this).val())
+                        alert('Deja dans le stock')
+                        $(this).val(form_add_stock.previous_id)
+                    else
+                        form_add_stock.info_produit_autorise($(this).val()) #Affichagedesinfosduproduitautorise
+            )
+        
+        #INFO DU PRODUIT AUTORISE
+        info_produit_autorise: (id_pa) ->
+                id_user = $('.user_id').val()
+                $.ajax("/administration/users/#{id_user}/produit_autorises/#{id_pa}",{
+                    type:"GET",
+                    async:false,
+                    format:"json",
+                    success: (data)->
+                        $('#stock_titre').val(data['titre'])
+                        $('#stock_description').val(data['description'])
+                        true
+                })
+                true
+
+        #PRODUIT DEJA EN STOCK (VERIF)
+        produit_deja_enstock: (id_produit) ->
+                id_user = $('.user_id').val()
+                $.ajax("/administration/users/#{id_user}/exist_stock/#{id_produit}",{
+                    type:"GET",
+                    async:false,
+                    format:"json",
+                    success: (data)->
+                       form_add_stock.exist_deja = data
+                       true
+                })
+                form_add_stock.exist_deja
+                 
         form_new_stock: ()->
             window.lightbox_new_stock = new Lightbox('.lightbox_new_stock','.lightbox_form_new_stock')
-            
+ 
         stock_is_depassed: ()->
             if $('#produit_vente_libre_quantite').val() == '' || $('#produit_vente_libre_nombre_pack').val() == ''
                 return false
@@ -797,14 +1030,25 @@ $(document).ready( () ->
                 form_add_stock.actual_step += 1
                 $('.etape_'+form_add_stock.actual_step).slideDown(500)
                 $('.title_'+form_add_stock.actual_step).css('display','block')
+                #POUR MENU GAUCHE
+                next_current = $('.navigation>li>.current').parents('li').next().children('span')
+                $('.navigation>li>.current').removeClass('current')
+                console.log(next_current)
+                next_current.addClass('current')
         previous_step: ()->
             $('.etape_'+form_add_stock.actual_step).slideUp(500)
             $('.title_'+form_add_stock.actual_step).css('display','none')
             form_add_stock.actual_step -= 1
             $('.etape_'+form_add_stock.actual_step).slideDown(500)
             $('.title_'+form_add_stock.actual_step).css('display','block')
-            
-    form_add_stock.init()
+            #POUR MENU GAUCHE
+            previous_current = $('.navigation>li>.current').parents('li').prev().children('span')
+            $('.navigation>li>.current').removeClass('current')
+            console.log(previous_current)
+            previous_current.addClass('current')
+    console.log($('.cards'))
+    if $('ul.cards').length > 0       
+        form_add_stock.init()
     
     
     
@@ -1105,12 +1349,15 @@ $(document).ready( () ->
     
     change_infos_panier = 
         panier_id: 0
+        actual_ul_details: $('')
         div_list:$('')
         div_form: $('')
         div_sous_content:$('')
+        nombre_declinaison_actuel: 0
         init:()->
             $('div.card_stack>.packaging ul.details').on( 'click', ()->
                 if ($(this).hasClass('is-editing'))
+                     change_infos_panier.actual_ul_details = this
                      #generate box
                      change_infos_panier.generate_box()
                      change_infos_panier.add_select()
@@ -1133,11 +1380,12 @@ $(document).ready( () ->
                     
                     data = JSON.parse(xhr.responseText)
                     console.log(data)
-                    nombre_declinaison = data['panier']['nb_pack']
+                    nombre_declinaison = data['panier']['nb_pack_total']
                     for champ, valeur of data['declinaison_panier']
                         change_infos_panier.div_list.append(change_infos_panier.create_fiche_declinaison(valeur))
-                        nombre_declinaison += valeur['nb_pack']
+                        #nombre_declinaison += valeur['nb_pack']
                         #window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
+                    change_infos_panier.nombre_declinaison_actuel = nombre_declinaison
                     $('.header-list>p   ').text(nombre_declinaison+' declinaisons')
 
             
@@ -1222,7 +1470,7 @@ $(document).ready( () ->
                 value:
                     element:'ul'
                     value:[2,4,6]
-                    check:declinaison_panier['nombre_personne']  
+                    check:parseInt(declinaison_panier['nombre_personne'])
             })
             
             li_duree = change_infos_panier.li_detail({
@@ -1230,15 +1478,27 @@ $(document).ready( () ->
                 value:
                     element:'ul'
                     value:[3,6,9]
-                    check:declinaison_panier['duree']
+                    check:parseInt(declinaison_panier['duree'])
+            })
+            
+            li_prix = change_infos_panier.li_detail({
+                label:'Prix'
+                value:
+                    element:'span'
+                    value:declinaison_panier['prix_panier_ht']
             })
             
             ul_details.append(li_max)
             ul_details.append(li_format)
             ul_details.append(li_duree)
+            ul_details.append(li_prix)
             
             div_close = $(document.createElement('div'))
-            div_close.addClass('close_square')
+            div_close.addClass('close_square declinaison_panier_'+declinaison_panier['id'])
+            
+            div_close.on('click',()->
+                change_infos_panier.supp_declinaison(declinaison_panier,div_raw)
+            )
             
             div_clear = $(document.createElement('div'))
             div_clear.addClass('clear')
@@ -1247,7 +1507,8 @@ $(document).ready( () ->
             div_raw.append(div_close)
             div_raw.append(div_clear)
             return div_raw
-                                    
+        
+        #GENERE LES ATTRIBUTS HTML DE LA BOX A SON INITIALISATION                         
         generate_box: ()->
             window.light_box_information.html_content('')
             change_infos_panier.div_sous_content = $(document.createElement('div'))
@@ -1326,12 +1587,14 @@ $(document).ready( () ->
         animate_for_tab: (time)->
             change_infos_panier.div_sous_content.animate(
                 'margin-left': '0px'
-            )
+            ,time)
 
         animate_for_form: (time)->
             change_infos_panier.div_sous_content.animate(
                 'margin-left': '-600px'
-            )
+            ,time)
+        
+        #GENERATION DU FORMULAIRE HTML POUR AJOUTER DES DECLNAISON
         add_select:()->
             div_form = $(document.createElement('div'))
             div_form.addClass('form_add_decli')
@@ -1344,7 +1607,7 @@ $(document).ready( () ->
             label_max = $(document.createElement('label'))
             label_max.text('Nombre mis en ligne : ')
             input_max = $(document.createElement('input'))
-            input_max.attr('name','panier[nb_pack]')
+            input_max.attr('name','declinaison_panier[nb_pack]')
             p_max.append(label_max)
             p_max.append(input_max)
             
@@ -1353,7 +1616,7 @@ $(document).ready( () ->
             label_format = $(document.createElement('label'))
             label_format.text('Nombre de personne : ')
             select_format = $(document.createElement('select'))
-            select_format.attr('name','panier[nombre_personne]')
+            select_format.attr('name','declinaison_panier[nombre_personne]')
             options_format = [2,4,6]
             i = 0
             while(options_format.length > i)
@@ -1370,7 +1633,7 @@ $(document).ready( () ->
             label_duree = $(document.createElement('label'))
             label_duree.text('Duree (mois) : ')    
             select_duree = $(document.createElement('select'))
-            select_duree.attr('name','panier[duree]')
+            select_duree.attr('name','declinaison_panier[duree]')
             options_duree = [3,6,9]
             i = 0
             while(options_duree.length > i)
@@ -1383,6 +1646,28 @@ $(document).ready( () ->
             p_duree.append(label_duree)
             p_duree.append(select_duree)
             
+            #prix_unite_ttc et ht
+            p_ht = $(document.createElement('p'))
+            label_ht = $(document.createElement('label'))
+            label_ht.text('Prix unite ht: ')
+            input_ht = $(document.createElement('input'))
+            input_ht.attr('name','declinaison_panier[prix_panier_ht]')
+            p_ht.append(label_ht)
+            p_ht.append(input_ht)
+            
+            p_ttc = $(document.createElement('p'))
+            label_ttc = $(document.createElement('label'))
+            label_ttc.text('Prix unite ttc: ')
+            input_ttc = $(document.createElement('input'))
+            input_ttc.attr('name','declinaison_panier[prix_panier_ttc]')
+            p_ttc.append(label_ttc)
+            p_ttc.append(input_ttc)
+            
+            
+            #clear div
+            clear_div = $(document.createElement('div'))
+            clear_div.addClass('clear')
+            
             #button add
             span_add = $(document.createElement('span'))
             a = $(document.createElement('a'))
@@ -1394,6 +1679,8 @@ $(document).ready( () ->
                     nb_pack: input_max.val()
                     nombre_personne: select_format.val()
                     duree: select_duree.val()
+                    prix_panier_ht: input_ht.val()
+                    prix_panier_ttc: input_ttc.val()
                 change_infos_panier.add_declinaison(data)
             )
             
@@ -1402,14 +1689,18 @@ $(document).ready( () ->
             div_form.append(p_format)
             div_form.append(p_duree)
             div_form.append(p_max)
+            div_form.append(p_ht)
+            div_form.append(p_ttc)
             div_form.append(span_add)
+            
             
             change_infos_panier.div_form = div_form
             change_infos_panier.div_sous_content.prepend(div_form)
+            #div_form.after(clear_div)
             #window.light_box_information.append_content(div_form)
             
             
-        
+        #AJOUT DE DECLINAISON - AJAX
         add_declinaison: (data_)->
             #data = {}
             xhr = new XMLHttpRequest();
@@ -1418,9 +1709,11 @@ $(document).ready( () ->
             
             form = new FormData();
             form.append('panier[id]', change_infos_panier.panier_id)
-            form.append('panier[nb_pack]', data_.nb_pack)
-            form.append('panier[nombre_personne]', data_.nombre_personne)
-            form.append('panier[duree]', data_.duree)
+            form.append('declinaison_panier[nb_pack]', data_.nb_pack)
+            form.append('declinaison_panier[nombre_personne]', data_.nombre_personne)
+            form.append('declinaison_panier[duree]', data_.duree)
+            form.append('declinaison_panier[prix_panier_ht]', data_.prix_panier_ht)
+            form.append('declinaison_panier[prix_panier_ttc]', data_.prix_panier_ttc)
             
             
             xhr.send(form)
@@ -1434,9 +1727,89 @@ $(document).ready( () ->
                         window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
                     else
                        #change_infos_panier.div_form.slideUp(1000)
-                       window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(data_))
+                       change_infos_panier.nombre_declinaison_actuel += data_.nb_pack
+                       $('.header-list>p   ').text(change_infos_panier.nombre_declinaison_actuel+' declinaisons')
+                       change_infos_panier.animate_for_tab(1000)
+                       change_infos_panier.div_list.append(change_infos_panier.create_fiche_declinaison(data['declinaison_panier']))
+                       change_infos_panier.modify_card()
                     #add_photo_stock.create_photo(data['photo_stock'])
-
+        
+        
+        have_confirmation: (declinaison,div_raw)->
+            light_box_confirmation = new window.Lightbox('.lightbox_confirmation')
+            light_box_confirmation.html_content('<p> Etes vous sur ? </p>')
+            light_box_confirmation.title_header('Confirmation')
+            span_annuler = light_box_confirmation.create_annuler()
+            light_box_confirmation.html_footer(span_annuler)
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            a = $(document.createElement('a'))
+            a.text('Oui')
+            
+            span.append(a)      
+            light_box_confirmation.append_footer(span)
+            light_box_confirmation.show()
+            
+            span.on('click', ()->
+                light_box_confirmation.hide()
+                change_infos_panier.supp_declinaison(declinaison,div_raw)
+            )
+            
+        #SUPPRESSION DECLINAISON
+        supp_declinaison:(declinaison,div_raw)->
+            console.log(declinaison)
+            xhr = new XMLHttpRequest();
+            xhr.open('DELETE','/administration/users/'+$('.user_id').val()+'/paniers/supp_declinaison/'+declinaison.id)
+            xhr.setRequestHeader('Accept','application/json')
+            
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'error'
+                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                    else
+                       #change_infos_panier.div_form.slideUp(1000)
+                       change_infos_panier.nombre_declinaison_actuel -= declinaison.nb_pack
+                       $('.header-list>p   ').text(change_infos_panier.nombre_declinaison_actuel+' declinaisons')
+                       div_raw.animate({
+                            left:'500px'
+                       },{
+                        duration:500
+                        complete:()->
+                            $(this).remove()
+                            change_infos_panier.modify_card()
+                       })
+            
+            
+        
+        modify_card: ()->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/paniers/'+change_infos_panier.panier_id)
+            xhr.setRequestHeader('Accept','application/json')
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    
+                    data = JSON.parse(xhr.responseText)
+                    console.log(data)
+                    $(change_infos_panier.actual_ul_details).children('.detail_max').children('.number').text(data['panier']['nb_pack_total'])
+                    $(change_infos_panier.actual_ul_details).children('.detail_format').children('.number').children('li').removeClass('check')
+                    $(change_infos_panier.actual_ul_details).children('.detail_duree').children('.number').children('li').removeClass('check')
+                    for champ, valeur of data['declinaison_panier']
+                        $(change_infos_panier.actual_ul_details).children('.detail_format').children('.number').children('li').each(()->
+                            if parseInt(valeur['nombre_personne']) == parseInt($(this).text())
+                                $(this).addClass('check')
+                        )
+                        $(change_infos_panier.actual_ul_details).children('.detail_duree').children('.number').children('li').each(()->
+                            if parseInt(valeur['duree']) == parseInt($(this).text())
+                                $(this).addClass('check')
+                        )
             
     change_infos_panier.init()
     
@@ -1451,15 +1824,95 @@ $(document).ready( () ->
     #--------------------------------------------------------
     function_product_in_basket = 
         panier_id: ''
+        div_sous_content: $('')
+        div_list:$('')
+        ul_listing_produit: $('')
+        value_id_actual_stock: 0
         init: ()->
             $('div.card_stack>.packaging ul.main-informations>.product_number').on( 'click', ()->
                 if ($(this).hasClass('is-editing'))
                      #generate box
                      function_product_in_basket.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
+                     function_product_in_basket.generate_box()
                      function_product_in_basket.all_product()
+                     function_product_in_basket.get_own_stock()
                      
 
             )
+        #REGARDER ICIIIIII
+        generate_box: ()->
+            window.light_box_information.html_content('')
+            function_product_in_basket.div_sous_content = $(document.createElement('div'))
+            function_product_in_basket.div_sous_content.addClass('sous_content')
+            
+            function_product_in_basket.div_sous_content.append(function_product_in_basket.header_list())
+            
+            function_product_in_basket.div_list = $(document.createElement('div'))
+            function_product_in_basket.div_list.addClass('')
+            
+            function_product_in_basket.div_sous_content.append(function_product_in_basket.div_list)
+            window.light_box_information.append_content(function_product_in_basket.div_sous_content)
+            
+            window.light_box_information.title_header('titre')
+            span_annuler = window.light_box_information.create_annuler()
+            window.light_box_information.html_footer(span_annuler)
+            #change_infos_panier.add_select()
+            window.light_box_information.show()
+        
+
+         header_list:()->
+#             <div class="header-list">
+#                 <p>17 déclinaisons</p>
+#                 <span class="button new-declinaision"><a href="">nouvelle</a></span>
+#                 <div class="clear"></div>
+#             </div>
+        
+        
+            div_header = $(document.createElement('div'))
+            div_header.addClass('header-list')
+            
+            nombre_decli = $(document.createElement('p'))
+            nombre_decli.text('2 produits dans le panier')
+            
+            span_new = $(document.createElement('span'))
+            span_new.addClass('button new-declinaision button_declinaion')
+            
+            a  = $(document.createElement('a'))
+            a.text('nouvelle')
+            span_new.append(a)
+            
+            a.on('click', ()->
+                   function_product_in_basket.animate_for_form(1000)
+            )
+            
+            span_retour = $(document.createElement('span'))
+            span_retour.addClass('back-declinaison button_declinaion')
+            span_retour.text('retour')
+            
+            span_retour.on('click', ()->
+                   function_product_in_basket.animate_for_tab(1000)
+            )
+            
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+            
+            div_header.append(nombre_decli)
+            div_header.append(span_new)
+            div_header.append(span_retour)
+            div_header.append(div_clear)
+            
+            return div_header
+            
+        animate_for_tab: (time)->
+            function_product_in_basket.div_sous_content.animate(
+                'margin-left': '0px'
+            ,time)
+
+        animate_for_form: (time)->
+            function_product_in_basket.div_sous_content.animate(
+                'margin-left': '-600px'
+            ,time)
+        
 
         all_product: ()->
             xhr = new XMLHttpRequest();
@@ -1472,15 +1925,16 @@ $(document).ready( () ->
                     console.log(xhr.responseText)
                     data = xhr.responseText
                     window.light_box_information.title_header('Produits du panier')
-                    window.light_box_information.html_content('')
-                    window.light_box_information.append_content(data)
-                    function_product_in_basket.button_add_product()
+                    #window.light_box_information.html_content('')
+                    function_product_in_basket.div_sous_content.append(data)
+                    function_product_in_basket.ul_listing_produit = $(data).find('.other_products').children('ul')
+                    #function_product_in_basket.button_add_product()
                     window.light_box_information.show()
                     
         button_add_product:()->
             button = window.global_functions.standard_button( 
                 link: 
-                    text:'Form add'
+                    text:'Ajouter un produit'
                     event:[{type:'click', callback:[function_product_in_basket.get_own_stock]}]
             )
             window.light_box_information.append_content(button)
@@ -1506,9 +1960,13 @@ $(document).ready( () ->
                     class:''
                     id:''
             )
-           
+            element_produit.find('select').on('mouseenter',()->
+                function_product_in_basket.value_id_actual_stock = $(this).val()
+                console.log(function_product_in_basket.value_id_actual_stock)
+            )
+            
             element_produit.find('select').on('change',()->
-                function_product_in_basket.verif_stock($(this).val())
+                function_product_in_basket.verif_stock($(this).val(),this)
             )
             
             element_quantite = window.global_functions.standard_input( 
@@ -1525,19 +1983,28 @@ $(document).ready( () ->
             button = window.global_functions.standard_button( 
                 link: 
                     text:'Ajoutez nouveau produit'
-                    event:[{type:'click', callback:[function_product_in_basket.get_own_stock]}]
+                    #event:[{type:'click', callback:[function_product_in_basket.get_own_stock]}]
             )
             
-            form = $(document.createElement('form'))
-            form.addClass('form-horizontal')
-
-            form.append(element_produit)
-            form.append(element_quantite)
-            form.append(button)
+            button.on('click',()->
+                function_product_in_basket.add_product({
+                    stock_id: element_produit.find('select').val()
+                    quantite: element_quantite.find('input').val()
+                })
+            )
+            div_form = $(document.createElement('div'))
+            div_form.addClass('form_add_product')
+            div_form.css('float','right')
+            div_form.css('display','block')
             
-            window.light_box_information.append_content(form)
+            div_form.append(element_produit)
+            div_form.append(element_quantite)
+            div_form.append(button)
+            
+            function_product_in_basket.div_sous_content.prepend(div_form)
+            #window.light_box_information.append_content(form)
         
-        verif_stock: (id_stock)-> 
+        verif_stock: (id_stock,select)-> 
             xhr = new XMLHttpRequest();
             xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/produit_stock_already_in')
             xhr.setRequestHeader('Accept','application/json')
@@ -1550,6 +2017,7 @@ $(document).ready( () ->
                     data = JSON.parse(xhr.responseText)
                     if data['status'] == 'error'
                         window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                        $(select).val(function_product_in_basket.value_id_actual_stock)
                         
             
         get_own_stock:()->
@@ -1570,7 +2038,43 @@ $(document).ready( () ->
 #                     window.light_box_information.append_content(data)
 #                     window.light_box_information.show()
         
-        fiche_product: ()->
+        add_product: (data_)->
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/produit_paniers')
+            xhr.setRequestHeader('Accept','application/json')
+            console.log(data_)
+            form = new FormData();
+            form.append('produit_panier[stock_id]', data_.stock_id)
+            form.append('produit_panier[quantite]', data_.quantite)            
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    #window.light_box_information.hide()
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'error'
+                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                    else
+                        function_product_in_basket.fiche_product(data)
+                        #function_product_in_basket.ul_listing_produit.append(data)
+                    #add_photo_stock.create_photo(data['photo_stock'])
+
+        
+        
+        fiche_product: (produit_panier)->
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/get_one_product/'+produit_panier.id)
+            #xhr.setRequestHeader('Accept','application/json')
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    console.log(xhr.responseText)
+                    data = xhr.responseText
+                    function_product_in_basket.ul_listing_produit.append(data)
+                    function_product_in_basket.animate_for_tab(1000)
     function_product_in_basket.init()
     
 

@@ -29,30 +29,28 @@
             <ul class="details">
                 <li class="detail detail_max">
                     <span class="label">Max</span>
-                    <span class="number"><%= panier.nb_pack %></span>
+                    <span class="number"><%= panier.regroup_max %></span>
                 </li>
-                <div id="">
-	                <li class="detail">
-	                    <span class="label">Format</span>
-	                    <ul class="number">
+                <li class="detail detail_format">
+                    <span class="label">Format</span>
+                    <ul class="number">
 
-	                    	<li <% if (panier.regroup_nombre_personne.include?(2))%> class="check" <%end%>> 2 </li>
-	                    	<li <% if (panier.regroup_nombre_personne.include?(4))%> class="check" <%end%>> 4 </li>
-	                    	<li <% if (panier.regroup_nombre_personne.include?(6))%> class="check" <%end%>> 6 </li>
+                    	<li <% if (panier.regroup_nombre_personne.include?(2))%> class="check" <%end%>> 2 </li>
+                    	<li <% if (panier.regroup_nombre_personne.include?(4))%> class="check" <%end%>> 4 </li>
+                    	<li <% if (panier.regroup_nombre_personne.include?(6))%> class="check" <%end%>> 6 </li>
 
-	                  
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Durée</span>
-	                    <ul class="number">
-		                    <li <% if (panier.regroup_duree.include?(3))%> class="check" <%end%>> 3 </li>
-	                    	<li <% if (panier.regroup_duree.include?(6))%> class="check" <%end%>> 6 </li>
-	                    	<li <% if (panier.regroup_duree.include?(9))%> class="check" <%end%>> 9 </li>
+                  
+                    </ul>
+                </li>
+                <li class="detail detail_duree">
+                    <span class="label">Durée</span>
+                    <ul class="number">
+	                    <li <% if (panier.regroup_duree.include?(3))%> class="check" <%end%>> 3 </li>
+                    	<li <% if (panier.regroup_duree.include?(6))%> class="check" <%end%>> 6 </li>
+                    	<li <% if (panier.regroup_duree.include?(9))%> class="check" <%end%>> 9 </li>
 
-	                    </ul>
-	                </li>
-                </div>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

@@ -43,123 +43,141 @@
 <% end %>
 
 
-<!--
-<div class="lightbox_wrapper lightbox_information" style="display:block;">
-  <div class="lightbox">
-    <div class="header">
-      <h1 class="title">Déclinaisons de ce panier</h1>
-  </div>
-  <div class="content">
-    <div class="header-list">
-        <p>17 déclinaisons</p>
-        <span class="button new-declinaision"><a href="">nouvelle</a></span>
-        <div class="clear"></div>
-    </div>
-    <div class="sous_content">
-	    <div class="embosed-list basket-details">
-	        <div class="raw">
-	            <ul class="details">
-	                <li class="detail detail_max">
-	                    <span class="label">Max</span>
-	                    <span class="number">100</span>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Format</span>
-	                    <ul class="number">
-	                        <li> 2 </li>
-	                        <li> 4 </li>
-	                        <li> 6 </li>
-	
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Durée</span>
-	                    <ul class="number">
-	                        <li> 3 </li>
-	                        <li> 6 </li>
-	                        <li> 9 </li>
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Prix</span>
-	                    <span class="number">5€</span>
-	                </li>
-	            </ul>
-	            <div class="clear"></div>
-	            <div class="close_square"></div>
-	        </div>  <div class="raw">
-	            <ul class="details">
-	                <li class="detail detail_max">
-	                    <span class="label">Max</span>
-	                    <span class="number">100</span>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Format</span>
-	                    <ul class="number">
-	                        <li> 2 </li>
-	                        <li> 4 </li>
-	                        <li> 6 </li>
-	
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Durée</span>
-	                    <ul class="number">
-	                        <li> 3 </li>
-	                        <li> 6 </li>
-	                        <li> 9 </li>
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Prix</span>
-	                    <span class="number">5€</span>
-	                </li>
-	            </ul>
-	            <div class="clear"></div>
-	            <div class="close_square"></div>
-	        </div>  
-	        <div class="raw">
-	            <ul class="details">
-	                <li class="detail detail_max">
-	                    <span class="label">Max</span>
-	                    <span class="number">100</span>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Format</span>
-	                    <ul class="number">
-	                        <li> 2 </li>
-	                        <li> 4 </li>
-	                        <li> 6 </li>
-	
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Durée</span>
-	                    <ul class="number">
-	                        <li> 3 </li>
-	                        <li> 6 </li>
-	                        <li> 9 </li>
-	                    </ul>
-	                </li>
-	                <li class="detail">
-	                    <span class="label">Prix</span>
-	                    <span class="number">5€</span>
-	                </li>
-	            </ul>
-	            <div class="clear"></div>
-	            <div class="close_square"></div>
-	        </div> 
-	    </div>
-	    
-    </div>
-</div>
-<div class="footer">
-  <!-- <span class="annuler">annuler</span>
-  <span class="button close_lightbox"><a> Merci pour l'infos</a></span>
-</div>
-</div>
-</div>
--->
+<div class="lightbox_wrapper lightbox_new_basket has-menu">
+	<!-- _______________ form for connexion ____________ -->
+	<div class="lightbox lightbox_form_new_basket">
+		<div class="header">
+			<h1 class="title"> Nouveau panier </h1>
+		</div>
+		<div class="loggin" id="">
+			<style>
+			.formulaire_add
+			{
+
+			}
+			.etape_2,.etape_3,.title_2,.title_3
+			{
+				display: none;
+			}
+			</style>
+			<div class="content">
+				<ul class="navigation">
+					<li><span class="current"><span class="number">1</span> Description</span></li>
+					<li><span><span class="number">2</span> Stock</span></li>
+					<li><span><span class="number">3</span> En rayon</span></li>
+				</ul>
+				<h2 class="title title_1"> Description </h2>
+				<h2 class="title title_2"> Stock </h2>
+				<h2 class="title title_3"> En rayon </h2>
+				<%= simple_form_for([:administration,User.find(params[:user_id]),Panier.new],:html => {:class => 'form-horizontal' }) do |f| %>
+				  <%= f.error_notification %>
+				
+				  <div class="form-inputs">
+				  	
+				  	<% if current_user.can_stock_sr %>
+				  		<div class="formulaire_add etape_1">
+							<div class="modal-body">
+				  				<%= f.association :categorie, :collection => Categorie.all.map{|c| [c.nom, c.id]} %>
+				  				<%= f.input :titre %>
+				  				<%= f.input :description %>
+							</div>
+							<div class="clear"></div>
+							<div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+				  		
+				  		<div class="formulaire_add etape_2">
+							<div class="modal-body">
+						    	<%= #f.input :nombre_personne 
+							    	
+						    	%>
+						    	<%= #f.input :duree 
+							    	
+						    	%>
+						    </div>
+						    <div class="clear"></div>
+						    <div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+						
+						<div class="formulaire_add etape_3">
+							<div class="modal-body">
+								<%= #f.input :nb_pack 
+									
+								%>
+						    	<%= #f.input :prix_unite_ht 
+							    	
+						    	%>
+						    	<%= #f.input :prix_unite_ttc 
+							    	
+						    	%>
+						    </div>
+						    <div class="clear"></div>
+						    <div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+				  	<% elsif current_user.can_stock_ar %>
+				  		<div class="formulaire_add etape_1">
+							<div class="modal-body">
+						  		<%= f.association :panier_autorise, :collection => PanierAutorise.where(:user_id => current_user.direction.id).map{ |pa| [pa.titre, pa.id] } %>
+						  		<%= f.input :titre %>
+				  				<%= f.input :description %>
+				  			</div>
+				  			<div class="clear"></div>
+				  			<div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+				  		
+				  		<div class="formulaire_add etape_2">
+							<div class="modal-body">
+						  		<%= #f.input :nombre_personne
+						  		 %>
+						  		<%= #f.input :duree 
+							  		
+						  		%>
+						  	</div>
+						  	<div class="clear"></div>
+						  	<div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+						 
+						<div class="formulaire_add etape_3">
+							<div class="modal-body">
+								<%=# f.input :nb_pack 
+									
+								%>
+						  		<%= #f.input :prix_unite_ht 
+							  		
+						  		%>
+						    	<%= #f.input :prix_unite_ttc 
+							    	
+						    	%>
+						    </div>
+						    <div class="clear"></div>
+						    <div class="form-actions modal-footer">
+								<span class="annuler close_lightbox" > Annuler </span>
+								<span class="button next_step" ><a>  Suivant  </a> </span>
+							</div>
+				  		</div>
+				  	<% end %>
+				  	
+				  </div>
+				
+				  
+				<% end %>
+
+		</div>
+	</div>
 
 
 <!--

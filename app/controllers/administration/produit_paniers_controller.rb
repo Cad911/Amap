@@ -1,5 +1,5 @@
 class Administration::ProduitPaniersController < InheritedResources::Base
-	load_and_authorize_resource
+	#load_and_authorize_resource
 	
 	#________ NEW ______________
 	def new
@@ -13,9 +13,9 @@ class Administration::ProduitPaniersController < InheritedResources::Base
 		@produit_stock_panier = ProduitPanier.where("stock_id = ? AND panier_id = ?", params[:produit_panier][:stock_id],params[:panier_id])
 		#__ SI EXIST __
 		if @produit_stock_panier[0]
-			@produit_panier = ProduitPanier.find(@produit_stock_panier[0].id)
-			@produit_panier.attributes = params[:produit_panier]
-			@message = "Le produit existait deja et, a donc etait modifie"
+			#@produit_panier = ProduitPanier.find(@produit_stock_panier[0].id)
+			#@produit_panier.attributes = params[:produit_panier]
+			@message = "Le produit existe deja" #et, a donc etait modifie"
 		else
 			@produit_panier = ProduitPanier.new(params[:produit_panier])
 			@message = "Produit ajoute au panier"
@@ -29,7 +29,15 @@ class Administration::ProduitPaniersController < InheritedResources::Base
 		
 		if @produit_panier.save
 			flash[:notice] = @message
-			redirect_to administration_user_panier_path(params[:user_id],params[:panier_id])
+			respond_to do |format|
+		  		format.json { render :json => { 
+		  				:produit_panier => @produit_panier
+		  				} 
+		  			}
+		  		format.html { render :show }
+		  	end
+			#render :controller => :Panier, :action => :get_one_product, :produit_panier_id => @produit_panier.id
+			#redirect_to administration_user_panier_path(params[:user_id],params[:panier_id])
 		else
 			flash[:notice] = "ERREUR"
 			render :new

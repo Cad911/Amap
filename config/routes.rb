@@ -101,9 +101,12 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       #_____ ROUTE POUR IMAGE PANIER _____
       
       match '/paniers/:panier_id/produit_stock_already_in' => 'paniers#produit_stock_already_in', :as => :produit_stock_already_in, :via => :post
-      match '/paniers/:panier_id/get_one_product' => 'paniers#get_one_product', :as => :get_one_product, :via => :post
+      match '/paniers/:panier_id/get_one_product/:produit_panier_id' => 'paniers#get_one_product', :as => :get_one_product, :via => :post
       match '/paniers/:panier_id/get_all_product' => 'paniers#get_all_product', :as => :get_all_product, :via => :get
+      #declinaison
       match '/paniers/create_declinaison' => 'paniers#create_declinaison', :as => :create_declinaison, :via => :post
+      match '/paniers/supp_declinaison/:declinaison_panier_id' => 'paniers#supp_declinaison', :as => :supp_declinaison, :via => :delete
+      #image panier
       match '/paniers/:panier_id/add_image' => 'paniers#add_image', :as => :panier_add_image, :via => :post
       match '/paniers/:panier_id/update_image/:image_id' => 'paniers#update_image', :as => :panier_update_image, :via => :put
       match '/paniers/:panier_id/delete_image/:image_id' => 'paniers#delete_image', :as => :panier_delete_image, :via => :delete

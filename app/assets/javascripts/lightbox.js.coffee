@@ -3,10 +3,54 @@ $(document).ready(->
 
     class window.Lightbox
         constructor : (@id_lightbox, @div_in_lightbox = false) ->
-            @event()
+            if $(@id_lightbox).length > 0
+            	@event()
+            else
+            	@is_built = true
+            	
+            	div_lightbox_wrapper = $(document.createElement('div'))
+            	div_lightbox_wrapper.addClass('lightbox_wrapper '+@id_lightbox.replace('.',''))
+            	div_lightbox = $(document.createElement('div'))
+            	div_lightbox.addClass('lightbox')
+            	
+            	div_header = $(document.createElement('div'))
+            	div_header.addClass('header')
+            	h1_title = $(document.createElement('div'))
+            	h1_title.addClass('title')
+            	div_header.append(h1_title)
+            	
+            	div_content = $(document.createElement('div'))
+            	div_content.addClass('content')
+            	h2_title = $(document.createElement('div'))
+            	h2_title.addClass('title')
+            	p_content = $(document.createElement('div'))
+            	div_content.append(h2_title)
+            	div_content.append(p_content)
+            	
+            	div_footer = $(document.createElement('div'))
+            	div_footer.addClass('footer')
+            	close_lightbox = $(document.createElement('span'))
+            	close_lightbox.addClass('button close_lightbox')
+            	a_close = $(document.createElement('a'))
+            	a_close.text('Merci pour l\'info')
+            	close_lightbox.append(a_close)
+            	div_footer.append(close_lightbox)
+            	
+            	div_lightbox.append(div_header)
+            	div_lightbox.append(div_content)
+            	div_lightbox.append(div_footer)
+            	div_lightbox_wrapper.append(div_lightbox)
+
+            	$('body').append(div_lightbox_wrapper)
+            	
+            	@event()
+            	
+        
+        is_built: false
         
         event: () ->
            that = this
+           #console.log(that.is_built)
            $('.annuler, .close_lightbox').bind('click',() ->
               that.hide()
               if that.div_in_lightbox != false
@@ -33,11 +77,12 @@ $(document).ready(->
            $('.login>span.sign_up').html(a_deconnexion)
         
         create_annuler: () ->
+            that = this
             span_annuler = $(document.createElement('span'))
             span_annuler.addClass('annuler close_lightbox')
             span_annuler.text('annuler')
             span_annuler.bind('click', ()->
-                window.light_box_information.hide()
+                that.hide()
             )
             return span_annuler
         header_html_content:(html_content)->
@@ -53,15 +98,21 @@ $(document).ready(->
              $(@id_lightbox+'>.lightbox>.content>p').text(texte)
         
         hide: () ->
-            $(@id_lightbox).css('display','none')
-            $('.overall_shadow').css('position','relative')
-            window.light_box_information.css({
-                'margin':'Opx',
-                top:'0px',
-                left:'0px',
-                position:'relative',
-                
-            })
+        	console.log(this)
+        	console.log(@is_built)
+        	if @is_built
+        		$(@id_lightbox).css('display','none')
+        		$(@id_lightbox).remove()
+        	else
+	            $(@id_lightbox).css('display','none')
+	            $('.overall_shadow').css('position','relative')
+	            window.light_box_information.css({
+	                'margin':'Opx',
+	                top:'0px',
+	                left:'0px',
+	                position:'relative',
+	                
+	            })
             
         show: () ->
             $(@id_lightbox).css('display','block')
