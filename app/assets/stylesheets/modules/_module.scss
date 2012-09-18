@@ -1033,8 +1033,20 @@ ul.dropdown_menu {
     @include single-box-shadow;
   }
 }
-
-
+.icon.icon-basket {
+  margin:0px 05px 0 0;
+  @include backoffice-sprite(basket_hover);
+  display: inline-block;
+  width: 19px;
+  height: 16px; 
+} 
+.icon.icon-product {
+  margin:0px 05px 0 0;
+  @include backoffice-sprite(product_hover);
+  display: inline-block;
+  width: 18px;
+  height: 26px; 
+}
 .icon {
   display: inline-block;
   width: 17px;

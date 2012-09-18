@@ -1,4 +1,40 @@
 .backoffice {
+	.deleted_p_c {
+		display: none;
+//			top: -10px;
+//			right: 7px;
+		z-index: 1000;
+	}
+	.has_corners_shadow, .picture {
+		&.is-editing {
+			.modify {
+				display:none;
+				position:absolute;
+				top:22px;
+				left:3px;						
+				background-color:#ffffff;
+				@include border-radius(5px);
+				color: $brown;
+				padding: 5px 6px 2px 6px;						
+				font-size: 12px;
+				&:hover {
+					color: $red;
+				}
+			}
+			&:hover {
+				cursor:pointer;
+				.modify {
+					display:block;					
+				}
+			}
+		}
+	}
+	.has_corners_shadow.is-editing, .picture.is-editing {
+		position: relative;
+		&:hover .deleted_p_c {
+			display: block;
+		}
+	}	
 	.user_profile {
 		.description, .title, .phone, .email, .location {
 			margin:5px 0 5px -10px;
@@ -21,47 +57,11 @@
 		.pictures {
 			width:220px;
 			float: left;
-			.has_corners_shadow {
-				position: relative;
-				&:hover .deleted_p_c {
-					display: block !important;
-				}
-			}
 			ul {
 				li {
 					display: block;
 					float: left;
 					margin:0 20px 20px 0px;
-				}
-			}
-			.deleted_p_c {
-				display: none;
-	//			top: -10px;
-	//			right: 7px;
-				z-index: 1000;
-			}
-			.has_corners_shadow {
-				&.is-editing {
-					.modify {
-						display:none;
-						position:absolute;
-						top:22px;
-						left:3px;						
-						background-color:#ffffff;
-						@include border-radius(5px);
-						color: $brown;
-						padding: 5px 6px 2px 6px;						
-						font-size: 12px;
-						&:hover {
-							color: $red;
-						}
-					}
-					&:hover {
-						cursor:pointer;
-						.modify {
-							display:block;					
-						}
-					}
 				}
 			}
 			.has_corners_shadow.is_medium {

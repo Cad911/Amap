@@ -81,9 +81,9 @@
         return window.light_box_information.show();
       },
       generate_form: function(attribut) {
-        var a, champ, data_, form, hidden_input, input, offset_lightbox_input, span, span_annuler, span_infos, valeur, _ref5;
+        var a, champ, data_, form, hidden_input, input, margin_bottom_control, margin_left, margin_top, offset_lightbox_input, padding_left, padding_top, span, span_annuler, span_infos, valeur, _ref5;
         window.light_box_information.html_content('');
-        window.light_box_information.header_content('');
+        window.light_box_information.header_html_content('');
         hidden_input = $(document.createElement(attribut['hidden_input']['balise']));
         hidden_input.attr('id', attribut['hidden_input']['id']);
         hidden_input.attr('name', attribut['hidden_input']['name']);
@@ -136,7 +136,14 @@
         span.append(a);
         span_annuler = window.light_box_information.create_annuler();
         offset_lightbox_input = $('.lightbox_wrapper.lightbox_information .form-horizontal .controls').position();
-        options.left += offset_lightbox_input.left;
+        margin_left = $('.lightbox_wrapper.lightbox_information').css('margin-left');
+        margin_top = $('.lightbox_wrapper.lightbox_information').css('margin-top');
+        margin_bottom_control = $('.lightbox_wrapper.lightbox_information .form-horizontal .control-group').css('margin-bottom');
+        console.log(margin_bottom_control);
+        padding_top = $('.lightbox_wrapper.lightbox_information .content').css('padding-left');
+        padding_left = $('.lightbox_wrapper.lightbox_information .content').css('padding-top');
+        options.left += offset_lightbox_input.left - parseInt(margin_left) - parseInt(padding_left) - 10;
+        options.top -= parseInt(margin_top) + parseInt(padding_top) - parseInt(margin_bottom_control);
         window.light_box_information.css({
           'margin': 'Opx',
           top: options.top + 'px',

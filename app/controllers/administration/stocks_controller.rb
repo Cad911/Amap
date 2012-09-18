@@ -1,5 +1,5 @@
 class Administration::StocksController < InheritedResources::Base
-protect_from_forgery :except => :add_image 
+protect_from_forgery :except => [:add_image, :delete_image] 
 
   #________________ INDEX ____________________________________________
   def index
@@ -298,6 +298,8 @@ protect_from_forgery :except => :add_image
   	@image_stock = PhotoStock.find(params[:image_id])
   	@image_stock.remove_image = true
   	@image_stock.destroy
+  	
+  	render :nothing => true
   end
 
 

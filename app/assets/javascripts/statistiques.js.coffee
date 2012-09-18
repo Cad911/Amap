@@ -4,8 +4,8 @@
 
 $(document).ready( () ->
     
-    statisitques = 
-        user_id : $('#id_user_stats').val()
+    window.statisitques = 
+        user_id : $('.user_id').val()
         init: () ->
             $('.page-header').tooltip({'trigger': 'hover', 'placement': 'left'})
             statisitques.data_month()
@@ -18,8 +18,8 @@ $(document).ready( () ->
                 format : "json",
                 success: (data) -> 
                     infos = data	
-                    data_pie = [infos.CA_product_ttc,infos.CA_abonnement_ttc]
-                    statisitques.create_pie(data_pie)
+                    #data_pie = [infos.CA_product_ttc,infos.CA_abonnement_ttc]
+                    statisitques.create_pie(data)
             )
         data_year : () ->
             $.ajax(
@@ -47,30 +47,46 @@ $(document).ready( () ->
                     
             )
         create_pie: (data) ->
-             r = Raphael('camembert')
-             camembert = r.piechart(320, 240, 100, data ,{legend: ["%%.%% - "+data[0]+" €","%%.%% - "+data[1]+" €"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
-             $('#camembert path').css("box-shadow", "1px 1px 1px solid black")
-             r.text(320, 100, "Chiffre d'affaire du mois").attr({ font: "20px sans-serif" });
-             camembert.hover( () ->
-                this.sector.stop();
-                this.sector.scale(1.1, 1.1, this.cx, this.cy);
-
-                if (this.label) 
-                    this.label[0].stop();
-                    this.label[0].attr({ r: 7.5 });
-                    this.label[1].attr({ "font-weight": 800 });
-             ,  
-             () ->
-                this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
-
-                if (this.label) 
-                    this.label[0].animate({ r: 5 }, 500, "bounce");
-                    this.label[1].attr({ "font-weight": 400 });
-                
-             )
+             console.log(data)
+             if data.CA_total_ttc == 0
+             	h2_chiffre = $(document.createElement('h2'))
+             	h2_chiffre.text('Aucun chiffre d\'affaire ce mois-ci')
+             	$('#camembert').append(h2_chiffre)
+             else
+	             r = Raphael('camembert')
+	             #AVEC CE PLUGIN VU QU IL N Y A QUE 2 INFOS, SI UNE VAUT 0 ALORS LE CAMEMBERT NE SE CONSTRUIT PAS, C'EST 
+	             #POUR CA QUE JE METS UNE VALEUR TENDANT VERS 0 AFIN QUE LE CAMEMBERT SE CREER
+	             if data.CA_product_ttc == 0
+	             	data_pie = [1/100000,data.CA_abonnement_ttc]
+	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["0% - 0 € (achat direct)","%%.%% - "+data_pie[1]+" € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             else if data.CA_abonnement_ttc == 0
+	             	data_pie = [data.CA_product_ttc,1/100000]
+	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["%%.%% - "+data_pie[0]+" € (achat direct) ","0% - 0 € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             else
+	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
+	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
+	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["%%.%% - "+data_pie[0]+" € ","%%.%% - "+data_pie[1]+" €"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             
+	             $('#camembert path').css("box-shadow", "1px 1px 1px solid black")
+	             camembert.hover( () ->
+	                this.sector.stop();
+	                this.sector.scale(1.1, 1.1, this.cx, this.cy);
+	
+	                if (this.label) 
+	                    this.label[0].stop();
+	                    this.label[0].attr({ r: 7.5 });
+	                    this.label[1].attr({ "font-weight": 800 });
+	             ,  
+	             () ->
+	                this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
+	
+	                if (this.label) 
+	                    this.label[0].animate({ r: 5 }, 500, "bounce");
+	                    this.label[1].attr({ "font-weight": 400 });
+	                
+	             )
           
         create_graph: (data_) ->  
-            console.log(data_)
             Morris.Line(
                 element: 'graph',
                 data: data_,
@@ -100,9 +116,15 @@ $(document).ready( () ->
             )
             
          
-
-
-    statisitques.init()
+        hide:()->
+        	$('#statistiques').slideUp(500)
+        show:()->
+        	$('#statistiques').slideDown(500)
+        clear_stats: ()->
+        	$('#camembert').html('')
+        	$('#graph').html('')
+        	
+    #statisitques.init()
     
 
 

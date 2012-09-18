@@ -1,10 +1,28 @@
 <div class="page-header">
    <h1>Listing paniers</h1>
    <ul class="buttons">
-    <li class="stats button"><span class="picture"></span></li>
-    <li class="add button"><span class="picture"></span></li>
-    <li class="help button"><span class="picture"></span></li>        
+    <li class="stats button"  title="statistiques"><span class="picture"></span></li>
+    <li class="add button" title="ajouter un panier"><span class="picture"></span></li>
+    <li class="help button button_active"  title="aide"><span class="picture"></span></li>        
 </ul>
+</div>
+
+<div id="statistiques">
+	<div id="div_graph">
+		<h3> Chiffre d'affaire de l'année </h3>
+		<div id="graph">
+		</div>
+	</div>
+	<div class="div_camembert">
+	<h3> Chiffre d'affaire du mois </h3>
+		<div id="camembert" >
+		</div>
+	</div>
+	<div class="clear"></div>
+	<ul class="legend">
+		<li class="basket"><span class="square"></span><span class="label">Vente en panier </span></li>
+		<li class="detail"><span class="square"></span><span class="label">Vente au détail</span></li>
+	</ul>
 </div>
 
 <div class="helper">
@@ -24,6 +42,7 @@
 <% end %>
 
 
+<!--
 <div class="lightbox_wrapper lightbox_information" style="display:block;">
   <div class="lightbox">
     <div class="header">
@@ -35,106 +54,111 @@
         <span class="button new-declinaision"><a href="">nouvelle</a></span>
         <div class="clear"></div>
     </div>
-    <div class="embosed-list basket-details">
-        <div class="raw">
-            <ul class="details">
-                <li class="detail detail_max">
-                    <span class="label">Max</span>
-                    <span class="number">100</span>
-                </li>
-                <li class="detail">
-                    <span class="label">Format</span>
-                    <ul class="number">
-                        <li> 2 </li>
-                        <li> 4 </li>
-                        <li> 6 </li>
-
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Durée</span>
-                    <ul class="number">
-                        <li> 3 </li>
-                        <li> 6 </li>
-                        <li> 9 </li>
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Prix</span>
-                    <span class="number">5€</span>
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <div class="close_square"></div>
-        </div>  <div class="raw">
-            <ul class="details">
-                <li class="detail detail_max">
-                    <span class="label">Max</span>
-                    <span class="number">100</span>
-                </li>
-                <li class="detail">
-                    <span class="label">Format</span>
-                    <ul class="number">
-                        <li> 2 </li>
-                        <li> 4 </li>
-                        <li> 6 </li>
-
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Durée</span>
-                    <ul class="number">
-                        <li> 3 </li>
-                        <li> 6 </li>
-                        <li> 9 </li>
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Prix</span>
-                    <span class="number">5€</span>
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <div class="close_square"></div>
-        </div>  <div class="raw">
-            <ul class="details">
-                <li class="detail detail_max">
-                    <span class="label">Max</span>
-                    <span class="number">100</span>
-                </li>
-                <li class="detail">
-                    <span class="label">Format</span>
-                    <ul class="number">
-                        <li> 2 </li>
-                        <li> 4 </li>
-                        <li> 6 </li>
-
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Durée</span>
-                    <ul class="number">
-                        <li> 3 </li>
-                        <li> 6 </li>
-                        <li> 9 </li>
-                    </ul>
-                </li>
-                <li class="detail">
-                    <span class="label">Prix</span>
-                    <span class="number">5€</span>
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <div class="close_square"></div>
-        </div> 
+    <div class="sous_content">
+	    <div class="embosed-list basket-details">
+	        <div class="raw">
+	            <ul class="details">
+	                <li class="detail detail_max">
+	                    <span class="label">Max</span>
+	                    <span class="number">100</span>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Format</span>
+	                    <ul class="number">
+	                        <li> 2 </li>
+	                        <li> 4 </li>
+	                        <li> 6 </li>
+	
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Durée</span>
+	                    <ul class="number">
+	                        <li> 3 </li>
+	                        <li> 6 </li>
+	                        <li> 9 </li>
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Prix</span>
+	                    <span class="number">5€</span>
+	                </li>
+	            </ul>
+	            <div class="clear"></div>
+	            <div class="close_square"></div>
+	        </div>  <div class="raw">
+	            <ul class="details">
+	                <li class="detail detail_max">
+	                    <span class="label">Max</span>
+	                    <span class="number">100</span>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Format</span>
+	                    <ul class="number">
+	                        <li> 2 </li>
+	                        <li> 4 </li>
+	                        <li> 6 </li>
+	
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Durée</span>
+	                    <ul class="number">
+	                        <li> 3 </li>
+	                        <li> 6 </li>
+	                        <li> 9 </li>
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Prix</span>
+	                    <span class="number">5€</span>
+	                </li>
+	            </ul>
+	            <div class="clear"></div>
+	            <div class="close_square"></div>
+	        </div>  
+	        <div class="raw">
+	            <ul class="details">
+	                <li class="detail detail_max">
+	                    <span class="label">Max</span>
+	                    <span class="number">100</span>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Format</span>
+	                    <ul class="number">
+	                        <li> 2 </li>
+	                        <li> 4 </li>
+	                        <li> 6 </li>
+	
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Durée</span>
+	                    <ul class="number">
+	                        <li> 3 </li>
+	                        <li> 6 </li>
+	                        <li> 9 </li>
+	                    </ul>
+	                </li>
+	                <li class="detail">
+	                    <span class="label">Prix</span>
+	                    <span class="number">5€</span>
+	                </li>
+	            </ul>
+	            <div class="clear"></div>
+	            <div class="close_square"></div>
+	        </div> 
+	    </div>
+	    
     </div>
 </div>
 <div class="footer">
-  <!-- <span class="annuler">annuler</span> -->
+  <!-- <span class="annuler">annuler</span>
   <span class="button close_lightbox"><a> Merci pour l'infos</a></span>
 </div>
 </div>
 </div>
+-->
 
 
 <!--
@@ -182,4 +206,6 @@
 
 <br />
 
-<%= link_to 'New Panier', new_administration_user_panier_path(params[:user_id]) %>
+<%= #link_to 'New Panier', new_administration_user_panier_path(params[:user_id]) 
+	
+%>

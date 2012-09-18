@@ -120,6 +120,16 @@
   }                
 }
 
+.has_corners_shadow .deleted_p_c{
+	display: none;
+}
+
+.has_corners_shadow:hover .deleted_p_c{
+	display: none;
+}
+.modify{
+	display: none;
+}
 .is-editing {
     border:rgba(255,255,255, 0) solid 1px;
     @include transition-property(all);

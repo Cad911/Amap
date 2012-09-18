@@ -303,7 +303,6 @@ class Morris.Line
         when 1 then $(circle['node']['parentElement']).attr('title',"#{@seriesLabels[index_color]} : #{@options.data[index_text].b}")
     $(circle['node']['parentElement']).attr('description','description')
     $(circle['node']['parentElement']).tool_tip()
-    console.log(index_text)
     
       
     return circle
@@ -317,7 +316,6 @@ class Morris.Line
       coords = @seriesCoords[i]
       if coords.length > 1
         path = @createPath coords, @options.marginTop, @left, @options.marginTop + @height, @left + @width
-        console.log(@r)
         
         @drawCircle(@seriesCoords[i][path.length - 1].x,@seriesCoords[i][path.length - 1].y,i,11)
         @drawPath(path,(path.length - 1),i)
@@ -455,7 +453,7 @@ class Morris.Line
 
   hideHover: ->
     @hoverSet.hide()
-    console.log(@hoverSet.hide())
+
 
   hilight: (index) =>
     if @prevHilight isnt null and @prevHilight isnt index

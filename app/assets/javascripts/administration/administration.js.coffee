@@ -5,7 +5,7 @@
 $(window).load(()->
     listing_tooltip = 
         listing:()->
-            $('.historique,.edit,.delete').tool_tip(1000)
+            $('.historique,.add,.help,.stats,.edit,.delete').tool_tip(1000)
     listing_tooltip.listing()
 )
 
@@ -13,31 +13,183 @@ $(document).ready( () ->
     #___________________________________________
     #___________________________________________
     #___________________________________________
-    #__________ ADD PHOTO STOCK ________________
+    #__________ SUPP PHOTO STOCK - USER ________________
     #___________________________________________
     #___________________________________________
     #___________________________________________
-    add_photo_stock = 
+#     supp_photo_stock
+    supp_photo_function = 
+        id_photo: ''
+        init:()->
+            $('.deleted_p_c').on('click', ()->
+                supp_photo_function.id_photo = '#'+$(this).attr('id')
+                if $(this).hasClass('photo_stock')
+                    entite_photo = 'photo_stock'
+                if $(this).hasClass('photo_user')
+                    entite_photo = 'photo_user'
+                
+                class_photo = $(this).attr('id')
+                id_photo_element = parseInt(class_photo.replace(entite_photo+'_',''))
+                
+                if $(this).hasClass('photo_stock')
+                    id_stock = $(this).parents('.left_area').next().children('.informations_card').children('.id_stock').val()
+                    supp_photo_function.supp_photo_stock(id_photo_element,id_stock)
+                
+                if $(this).hasClass('photo_user')
+                    #id_user = $(this).parents('.left_area').next().children('.informations_card').children('.id_stock').val()
+                    supp_photo_function.supp_photo_user(id_photo_element)
+                
+            )
+            
+        init_one_event:(element)->
+            $(element).on('click', ()->
+                class_photo = $(this).attr('id')
+                console.log(class_photo)
+                id_photo = parseInt(class_photo.replace('photo_stock_',''))
+                id_stock = $(this).parents('.left_area').next().children('.informations_card').children('.id_stock').val()
+                supp_photo_function.supp(id_photo,id_stock)
+            )
+        
+        supp_photo_user:(id_photo)->
+            xhr = new XMLHttpRequest();
+            xhr.open('DELETE','/administration/users/'+$('.user_id').val()+'/delete_image/'+id_photo)
+            
+            #form = new FormData();
+            #name = $(input).attr('name')
+            #input_radio_checked = $(input_radio).attr('name')
+            #form.append($(input_radio).attr('name'),$(input_radio).filter(':checked').val())
+            #console.log(input)
+            #fileInput = input[0]
+            #console.log(input)
+            #console.log(fileInput)        
+            #form.append(name,fileInput.files[0])
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    supp_photo_function.animation_supp(id_photo)
+            
+
+
+        supp_photo_stock:(id_photo,stock_id)->
+            xhr = new XMLHttpRequest();
+            xhr.open('DELETE','/administration/users/'+$('.user_id').val()+'/stocks/'+stock_id+'/delete_image/'+id_photo)
+            
+            #form = new FormData();
+            #name = $(input).attr('name')
+            #input_radio_checked = $(input_radio).attr('name')
+            #form.append($(input_radio).attr('name'),$(input_radio).filter(':checked').val())
+            #console.log(input)
+            #fileInput = input[0]
+            #console.log(input)
+            #console.log(fileInput)        
+            #form.append(name,fileInput.files[0])
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    supp_photo_function.animation_supp()
+            
+        animation_supp:()->
+            if $(supp_photo_function.id_photo).hasClass('photo_stock')
+                left_area = $(supp_photo_function.id_photo).parents('.picture').parents('div.left_area')
+                $(supp_photo_function.id_photo).parents('.picture').remove()
+                supp_photo_function.regenerate_class(left_area)
+            
+            if $(supp_photo_function.id_photo).hasClass('photo_user')
+                $(supp_photo_function.id_photo).parents('.is_small.has_corners_shadow').parents('li').remove()
+        
+        regenerate_class: (element)->
+            #element = left_area
+            i = 0
+            console.log(element)
+            $(element).children('.picture').each(()->
+                class_ = ''
+                if $(this).hasClass('is-editing')
+                    class_ = 'is-editing '
+                 
+                $(this).removeClass($(this).attr('class'))
+                #console.log(i)
+                
+                if i%2 == 0
+                    class_ += 'picture first_cloumn'
+                else
+                    class_ += 'picture'
+                
+                #console.log(class_)
+                $(this).addClass(class_)
+                i++
+            )
+        
+    if $('.photo_stock').length > 0 || $('.photo_user').length > 0
+        supp_photo_function.init()
+    
+    
+    
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ ADD PHOTO USER ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    add_photo_user = 
         card : ''
         init: ()->
-            $('.add.button.image').on('click', ()->
-               stock_id = $(this).attr('id').replace('stock_id_','')
-               add_photo_stock.card = $(this).parents('div').parents('li.card')
-               add_photo_stock.generate_form(stock_id)
+            $('.add.button.image.add_user_image').on('click', ()->
+               user_id = $(this).attr('id').replace('user_id_','')
+               add_photo_user.card = $(this).parents('li').parents('ul')
+               console.log(add_photo_user.card)
+               add_photo_user.generate_form(user_id)
             )
         
         init_one_element:(button)->
             $(button).on('click', ()->
-               stock_id = $(this).attr('id').replace('stock_id_','')
-               add_photo_stock.card = $(this).parents('div').parents('li.card')
-               add_photo_stock.generate_form(stock_id)
+               user_id = $(this).attr('id').replace('user_id_','')
+               add_photo_user.card = $(this).parents('li').parents('ul')
+               add_photo_user.generate_form(user_id)
             )
-        generate_form : (stock_id)->
+            
+        generate_form : (user_id)->
             window.light_box_information.html_content('')
-            input = $(document.createElement('input'))
-            input.attr('name','photo_stock[image]')
-            input.attr('id','photo_stock_image')
-            input.attr('type','file')
+            # input = $(document.createElement('input'))
+#             input.attr('name','photo_stock[image]')
+#             input.attr('id','photo_stock_image')
+#             input.attr('type','file')
+            
+            form = $(document.createElement('form'))
+            form.addClass('form-horizontal')
+            data_ = 
+                    type_element:'input'
+                    label:
+                        text:'Nouvelle photo'
+                    input:
+                        value: '' #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_user[image]'
+                        class: ''
+                        id: 'photo_user_image'
+                        other_attributes: [['type','file']]
+
+            div_input = window.global_functions.standard_input(data_)
+            
+            data_radio = 
+                    type_element:'radio'
+                    label:
+                        text:'First image'
+                    input:
+                        value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_user[first_image]'
+                        class: 'photo_user_first_image'
+                        id: 'photo_user_first_image_1'
+                        other_attributes: [['type','radio']]
+
+            div_input_radio = window.global_functions.standard_input(data_radio)
+            
+            
+            
+            
             
             #BUTTON FOOTER
             span = $(document.createElement('span'))
@@ -51,23 +203,271 @@ $(document).ready( () ->
            
             span_annuler = window.light_box_information.create_annuler()
             
+            form.append(div_input)
+            form.append(div_input_radio)
+            
             window.light_box_information.html_footer(span_annuler)
             window.light_box_information.append_footer(span)
-            window.light_box_information.title_header('Ajout photo')
-            window.light_box_information.append_content(input)
+            window.light_box_information.header_html_content('')
+            window.light_box_information.append_content(form)
             window.light_box_information.show()
+            
+            input = $(div_input).find('input')
+            input_radio = $(div_input_radio).find('input.photo_user_first_image')
+            
             span.on('click', ()->
-                add_photo_stock.upload_form(input,stock_id)
+                add_photo_user.upload_form(input,input_radio,user_id)
             )
             
-        upload_form : (input,stock_id)->
+        upload_form : (input,input_radio,user_id)->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+user_id+'/add_image')
+            
+            form = new FormData();
+            name = $(input).attr('name')
+            #input_radio_checked = $(input_radio).attr('name')
+            form.append($(input_radio).attr('name'),$(input_radio).filter(':checked').val())
+            console.log(input)
+            fileInput = input[0]
+            console.log(input)
+            console.log(fileInput)        
+            form.append(name,fileInput.files[0])
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    window.light_box_information.hide()
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    add_photo_user.create_photo(data['photo_user'])
+                    
+                    
+        create_photo: (data)->
+            # <li>
+#                 <div class="is_small has_corners_shadow">
+#                     <span id="photo_user_19" class="deleted_p_c photo_user"></span>
+#                     <img src="/uploads/photo_user/image/19/is_small_Capture_d_e_cran_2012-04-20_a__20.11.47.png" alt="Is_small_capture_d_e_cran_2012-04-20_a__20.11.47">
+#                 </div>
+#             </li>
+            
+            li = $(document.createElement('li'))
+            div = $(document.createElement('div'))
+            div.addClass('is_small has_corners_shadow')
+            
+            
+            img = $(document.createElement('img'))
+            img.attr('src',data['image']['is_small']['url'])
+            
+            span_deleted = $(document.createElement('span'))
+            span_deleted.addClass('deleted_p_c')
+            span_deleted.attr('id','photo_user_'+data['id'])
+            
+            supp_photo_function.init_one_event(span_deleted)
+            div.append(span_deleted)
+            div.append(img)
+            li.append(div)
+            
+            console.log(li)
+            $(add_photo_user.card).children('li').last().before(li)
+            
+        
+            if data['first_image'] == 1
+                new_image = $(add_photo_user.card).children('li').last().prev().children('div')
+                first_image = $(add_photo_user.card).parents('.pictures').children('div.has_corners_shadow.is_medium')
+                #console.log($(add_photo_user.card))
+                setTimeout(add_photo_user.animation_first_image, 200, first_image, new_image, data)
+        
+        animation_first_image: (actual_first_image, new_image, data)->
+            position_first_image = $(actual_first_image).position() 
+            position_new_image = $(new_image).position()
+            
+            class_new_image = $(new_image).attr('class')
+            width_new_image = parseInt($(new_image).css('width'))
+            height_new_image = parseInt($(new_image).css('height'))
+            margin_left_new_image = parseInt($(new_image).css('margin-left'))
+            margin_bottom_new_image = parseInt($(new_image).css('margin-bottom'))
+            padding_new_image = parseInt($(new_image).css('padding-top'))
+            
+            class_actual_first = $(actual_first_image).attr('class')
+            width_actual_first = parseInt($(actual_first_image).css('width'))
+            height_actual_first = parseInt($(actual_first_image).css('height'))
+            margin_top_first_image = parseInt($(actual_first_image).css('margin-top'))
+            padding_first_image = parseInt($(actual_first_image).css('padding-top'))
+            
+            position_first_image.top += margin_top_first_image
+        
+            console.log(position_new_image)
+            
+            position_first_image.top += 4
+            position_first_image.left -= 3
+            
+            div_wait = $(document.createElement('div'))
+            div_wait.addClass(class_new_image)
+            
+            console.log(width_actual_first)
+            $(new_image).css('position','absolute')
+            $(new_image).css('top',position_new_image.top)
+            $(new_image).css('left',position_new_image.left)
+            $(new_image).css('z-index','10000')
+            $(new_image).after(div_wait)
+            console.log(data)
+            $(new_image).children('img').attr('src',data['image']['is_medium']['url'])
+            #$(new_image).addClass('has_corners_shadow')
+            $(new_image).animate(
+                top: position_first_image.top+'px'
+                left: position_first_image.left+'px'
+                width: width_actual_first+'px'
+                height:height_actual_first+'px'
+                border: '1px solid #DCDCDC'
+            ,{
+                duration:2000,
+                complete:()->
+                    $(this).removeClass($(this).attr('class'))
+                    $(this).addClass(class_actual_first)
+                    $(this).css('position','relative')
+                    $(this).css('top','0px')
+                    $(this).css('left','0px')
+                    
+                    #On place l'element en premier (apres l'anim)
+                    $(actual_first_image).before(this)
+                    $(this).remove
+                    
+                    $(actual_first_image).css('position','absolute')
+                    $(actual_first_image).removeClass('has_corners_shadow')
+                    $(actual_first_image).css('margin-top','Opx')
+                    $(actual_first_image).css('padding','Opx')
+                    $(actual_first_image).css('margin-left',margin_left_new_image+'px')
+                    $(actual_first_image).css('margin-bottom',margin_bottom_new_image+'px')
+                    $(actual_first_image).css('z-index','10000')
+                    #$(actual_first_image).css('border','3px solid #FFFFFF')
+                    $(actual_first_image).animate(
+                        top: position_new_image.top+'px'
+                        left: position_new_image.left+'px'
+                        width: width_new_image+'px'
+                        height:height_new_image+'px'
+                        padding:padding_new_image+'px'
+                    ,{
+                        duration:2000,
+                        complete:()->
+                            $(this).removeClass($(this).attr('class'))
+                            $(this).addClass(class_new_image)
+                            $(this).css('position','relative')
+                            $(this).css('top','0px')
+                            $(this).css('left','0px')
+                            
+                            #console.log($(add_photo_stock.card).children('.left_area').children('div').last())
+                            console.log(div_wait)
+                            div_wait.remove()
+                            $(add_photo_user.card).children('li').last().prev().append(this)
+                            $(this).remove
+                            
+                    })
+                    
+            })
+        
+    add_photo_user.init()
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ ADD PHOTO STOCK ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+
+    
+    add_photo_stock = 
+        card : ''
+        init: ()->
+            $('.add.button.image.add_stock_image').on('click', ()->
+               stock_id = $(this).attr('id').replace('stock_id_','')
+               add_photo_stock.card = $(this).parents('div').parents('li.card')
+               add_photo_stock.generate_form(stock_id)
+            )
+        
+        init_one_element:(button)->
+            $(button).on('click', ()->
+               stock_id = $(this).attr('id').replace('stock_id_','')
+               add_photo_stock.card = $(this).parents('div').parents('li.card')
+               add_photo_stock.generate_form(stock_id)
+            )
+        generate_form : (stock_id)->
+            window.light_box_information.html_content('')
+            # input = $(document.createElement('input'))
+#             input.attr('name','photo_stock[image]')
+#             input.attr('id','photo_stock_image')
+#             input.attr('type','file')
+            
+            form = $(document.createElement('form'))
+            form.addClass('form-horizontal')
+            data_ = 
+                    type_element:'input'
+                    label:
+                        text:'Nouvelle photo'
+                    input:
+                        value: '' #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_stock[image]'
+                        class: ''
+                        id: 'photo_stock_image'
+                        other_attributes: [['type','file']]
+
+            div_input = window.global_functions.standard_input(data_)
+            
+            data_radio = 
+                    type_element:'radio'
+                    label:
+                        text:'First image'
+                    input:
+                        value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_stock[first_image]'
+                        class: 'photo_stock_first_image'
+                        id: 'photo_stock_first_image_1'
+                        other_attributes: [['type','radio']]
+
+            div_input_radio = window.global_functions.standard_input(data_radio)
+            
+            
+            
+            
+            
+            #BUTTON FOOTER
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            
+            a = $(document.createElement('a'))
+            a.addClass('test')
+            a.text('Ajouter')
+            
+            span.append(a)                        
+           
+            span_annuler = window.light_box_information.create_annuler()
+            
+            form.append(div_input)
+            form.append(div_input_radio)
+            
+            window.light_box_information.html_footer(span_annuler)
+            window.light_box_information.append_footer(span)
+            window.light_box_information.header_html_content('')
+            window.light_box_information.append_content(form)
+            window.light_box_information.show()
+            
+            input = $(div_input).find('input')
+            input_radio = $(div_input_radio).find('input.photo_stock_first_image')
+            
+            span.on('click', ()->
+                add_photo_stock.upload_form(input,input_radio,stock_id)
+            )
+            
+        upload_form : (input,input_radio,stock_id)->
             data = {}
             xhr = new XMLHttpRequest();
             xhr.open('POST','/administration/users/'+$('.user_id').val()+'/stocks/'+stock_id+'/add_image')
             
             form = new FormData();
             name = $(input).attr('name')
-            form.append('photo_stock[first_image]','0')
+            #input_radio_checked = $(input_radio).attr('name')
+            form.append($(input_radio).attr('name'),$(input_radio).filter(':checked').val())
             console.log(input)
             fileInput = input[0]
             console.log(input)
@@ -99,16 +499,113 @@ $(document).ready( () ->
             img = $(document.createElement('img'))
             img.attr('src',data['image']['is_small']['url'])
             
+            span_deleted = $(document.createElement('span'))
+            span_deleted.addClass('deleted_p_c')
+            span_deleted.attr('id','photo_stock_'+data['id'])
+            
+            supp_photo_function.init_one_event(span_deleted)
+            div.append(span_deleted)
             div.append(img)
             
             
             if $(add_photo_stock.card).children('.left_area').children('.picture').length > 0
                 $(add_photo_stock.card).children('.left_area').children('.picture').last().after(div)
             else
-                $(add_photo_stock.card).children('.left_area').children('.is_small').last().after(div)
+                $(add_photo_stock.card).children('.left_area').children('.is_small.has_corners_shadow').after(div)
             
-
-
+						
+            if data['first_image'] == 1
+                new_image = $(add_photo_stock.card).children('.left_area').children('div').last()
+                #console.log(new_image)
+                setTimeout(add_photo_stock.animation_first_image, 200, $(add_photo_stock.card).children('.left_area').children('.is_small.has_corners_shadow'), new_image)
+        
+        animation_first_image: (actual_first_image, new_image)->
+            position_first_image = $(actual_first_image).position() 
+            position_new_image = $(new_image).position()
+            
+            class_new_image = $(new_image).attr('class')
+            width_new_image = parseInt($(new_image).css('width'))
+            height_new_image = parseInt($(new_image).css('height'))
+            margin_left_new_image = parseInt($(new_image).css('margin-left'))
+            margin_bottom_new_image = parseInt($(new_image).css('margin-bottom'))
+            padding_new_image = parseInt($(new_image).css('padding-top'))
+            
+            width_actual_first = parseInt($(actual_first_image).css('width'))
+            height_actual_first = parseInt($(actual_first_image).css('height'))
+            margin_top_first_image = parseInt($(actual_first_image).css('margin-top'))
+            padding_first_image = parseInt($(actual_first_image).css('padding-top'))
+            
+            position_first_image.top += margin_top_first_image
+        
+            console.log(position_new_image)
+            if $(new_image).hasClass('first_cloumn')
+                position_first_image.top += 4 #le "+4" c'est pour le padding
+                position_first_image.left += 3 #le "-4" c'est pour le padding - 1 px de border
+            else
+                position_first_image.top += 4
+                position_first_image.left -= 3
+            div_wait = $(document.createElement('div'))
+            div_wait.addClass(class_new_image)
+            
+            $(new_image).css('position','absolute')
+            $(new_image).css('top',position_new_image.top)
+            $(new_image).css('left',position_new_image.left)
+            $(new_image).css('z-index','10000')
+            $(new_image).after(div_wait)
+            #$(new_image).addClass('has_corners_shadow')
+            $(new_image).animate(
+                top: position_first_image.top+'px'
+                left: position_first_image.left+'px'
+                width: width_actual_first+'px'
+                height:height_actual_first+'px'
+                border: '1px solid #DCDCDC'
+            ,{
+                duration:2000,
+                complete:()->
+                    $(this).removeClass($(this).attr('class'))
+                    $(this).addClass('is_small has_corners_shadow')
+                    $(this).css('position','relative')
+                    $(this).css('top','0px')
+                    $(this).css('left','0px')
+                    
+                    #On place l'element en premier (apres l'anim)
+                    $(actual_first_image).before(this)
+                    $(this).remove
+                    
+                    $(actual_first_image).css('position','absolute')
+                    $(actual_first_image).removeClass('has_corners_shadow')
+                    $(actual_first_image).css('margin-top','Opx')
+                    $(actual_first_image).css('padding','Opx')
+                    $(actual_first_image).css('margin-left',margin_left_new_image+'px')
+                    $(actual_first_image).css('margin-bottom',margin_bottom_new_image+'px')
+                    $(actual_first_image).css('z-index','10000')
+                    $(actual_first_image).css('border','3px solid #FFFFFF')
+                    $(actual_first_image).animate(
+                        top: position_new_image.top+'px'
+                        left: position_new_image.left+'px'
+                        width: width_new_image+'px'
+                        height:height_new_image+'px'
+                        padding:padding_new_image+'px'
+                    ,{
+                        duration:2000,
+                        complete:()->
+                            $(this).removeClass($(this).attr('class'))
+                            $(this).addClass(class_new_image)
+                            $(this).css('position','relative')
+                            $(this).css('top','0px')
+                            $(this).css('left','0px')
+                            
+                            #console.log($(add_photo_stock.card).children('.left_area').children('div').last())
+                            console.log(div_wait)
+                            div_wait.remove()
+                            $(add_photo_stock.card).children('.left_area').children('span').last().before(this)
+                            $(this).remove
+                            
+                    })
+                    
+            })
+        
+        
         
     add_photo_stock.init()
         
@@ -404,13 +901,28 @@ $(document).ready( () ->
             functions.edit_button()
             functions.help_button()
             functions.event_close()
+            functions.stats_button()
         
         
         heigth_help_div: '0px' 
         event_close: ()->
             $('.helper>.close').on('click',()->
                 functions.close_help('.buttons>li.help')
-            )   
+            ) 
+        
+        stats_button: ()->
+            if $('.buttons>li.stats').length > 0
+                $('.buttons>li.stats').on('click', ()->
+                    if $(this).hasClass('button_active')
+                        $(this).removeClass('button_active')
+                        window.statisitques.hide()
+                        window.statisitques.clear_stats()
+                                                
+                    else
+                        $(this).addClass('button_active')
+                        window.statisitques.show()
+                        window.statisitques.init()
+                )  
         help_button: ()->
             if $('.buttons>li.help').length > 0
                 functions.heigth_help_div = $('.helper').css('height')
@@ -501,6 +1013,7 @@ $(document).ready( () ->
                 )
         
         remove_editing_class:(element = 'body')->
+            #element = li.card
             if $('.user_profile').length > 0
                 $('.user_profile>.content>p').removeClass('is-editing')
                 $('.user_profile>.pictures>div').removeClass('is-editing')
@@ -510,6 +1023,8 @@ $(document).ready( () ->
                $(element).children('.right_area').children('.header').children('.title').removeClass('is-editing')
                $(element).children('.right_area').children('.body').children('.description').removeClass('is-editing')
                $(element).children('.right_area').children('.footer').children('ul').children('li').removeClass('is-editing')
+               $(element).children('.left_area').children('.has_corners_shadow').removeClass('is-editing')
+               $(element).children('.left_area').children('.picture').removeClass('is-editing')
             
             if $('.card_stack').length > 0
                 $(element).children('.packaging').children('.header').children('.title').removeClass('is-editing')
@@ -522,7 +1037,7 @@ $(document).ready( () ->
             #pour user profile
             if $('.user_profile').length > 0
                 $('.user_profile>.content>p').addClass('is-editing')
-                $('.user_profile>.pictures>div').addClass('is-editing')
+                $('.user_profile>.pictures>ul>li>div.is_small').addClass('is-editing')
             
             #pour produit
             if $('.cards').length > 0
@@ -530,6 +1045,8 @@ $(document).ready( () ->
                $(element).children('.right_area').children('.header').children('.title').addClass('is-editing')
                $(element).children('.right_area').children('.body').children('.description').addClass('is-editing')
                $(element).children('.right_area').children('.footer').children('ul').children('li').addClass('is-editing')
+               $(element).children('.left_area').children('.has_corners_shadow').addClass('is-editing')
+               $(element).children('.left_area').children('.picture').addClass('is-editing')
             
             #Pour panier
             if $('.card_stack').length > 0
@@ -579,18 +1096,25 @@ $(document).ready( () ->
 #         url_get_infos:['user','panier']
 #     )
 
-    
+    #--------------------------------------------
+    #--------------------------------------------
+    #-------------------------------------------
     #FUNCTIONS POUR AJOUTER DES DECLINAISON
+    #------------------------------------------
+    #------------------------------------------
+    
     change_infos_panier = 
         panier_id: 0
+        div_list:$('')
         div_form: $('')
+        div_sous_content:$('')
         init:()->
             $('div.card_stack>.packaging ul.details').on( 'click', ()->
                 if ($(this).hasClass('is-editing'))
                      #generate box
                      change_infos_panier.generate_box()
                      change_infos_panier.add_select()
-                     change_infos_panier.div_form.css('display','none')
+                     #change_infos_panier.div_form.css('display','none')
                      change_infos_panier.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
                      change_infos_panier.get_panier()
 
@@ -606,12 +1130,15 @@ $(document).ready( () ->
             
             xhr.onreadystatechange = ()->
                 if xhr.readyState == xhr.DONE
-                    console.log(xhr.responseText)
+                    
                     data = JSON.parse(xhr.responseText)
-                    
+                    console.log(data)
+                    nombre_declinaison = data['panier']['nb_pack']
                     for champ, valeur of data['declinaison_panier']
-                        window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
-                    
+                        change_infos_panier.div_list.append(change_infos_panier.create_fiche_declinaison(valeur))
+                        nombre_declinaison += valeur['nb_pack']
+                        #window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
+                    $('.header-list>p   ').text(nombre_declinaison+' declinaisons')
 
             
         li_detail:(data)->
@@ -643,8 +1170,42 @@ $(document).ready( () ->
             return li_max
                     
         create_fiche_declinaison: (declinaison_panier)->
-            div_card = $(document.createElement('div'))
-            div_card.addClass('card_stack')
+#             
+#              <div class="raw">
+#                 <ul class="details">
+#                     <li class="detail detail_max">
+#                         <span class="label">Max</span>
+#                         <span class="number">100</span>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Format</span>
+#                         <ul class="number">
+#                             <li> 2 </li>
+#                             <li> 4 </li>
+#                             <li> 6 </li>
+#     
+#                         </ul>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Durée</span>
+#                         <ul class="number">
+#                             <li> 3 </li>
+#                             <li> 6 </li>
+#                             <li> 9 </li>
+#                         </ul>
+#                     </li>
+#                     <li class="detail">
+#                         <span class="label">Prix</span>
+#                         <span class="number">5€</span>
+#                     </li>
+#                 </ul>
+#                 <div class="clear"></div>
+#                 <div class="close_square"></div>
+#             </div>
+#         
+        
+            div_raw = $(document.createElement('div'))
+            div_raw.addClass('raw')
             
             ul_details = $(document.createElement('ul'))
             ul_details.addClass('details')
@@ -676,33 +1237,106 @@ $(document).ready( () ->
             ul_details.append(li_format)
             ul_details.append(li_duree)
             
-            div_card.append(ul_details)
-            return div_card
+            div_close = $(document.createElement('div'))
+            div_close.addClass('close_square')
+            
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+
+            div_raw.append(ul_details)
+            div_raw.append(div_close)
+            div_raw.append(div_clear)
+            return div_raw
                                     
         generate_box: ()->
-            window.light_box_information.html_content(change_infos_panier.button_add_select())
+            window.light_box_information.html_content('')
+            change_infos_panier.div_sous_content = $(document.createElement('div'))
+            change_infos_panier.div_sous_content.addClass('sous_content')
+            
+            change_infos_panier.div_sous_content.append(change_infos_panier.header_list())
+            
+            change_infos_panier.div_list = $(document.createElement('div'))
+            change_infos_panier.div_list.addClass('embosed-list basket-details')
+            
+            change_infos_panier.div_sous_content.append(change_infos_panier.div_list)
+            window.light_box_information.append_content(change_infos_panier.div_sous_content)
+            
             window.light_box_information.title_header('titre')
             span_annuler = window.light_box_information.create_annuler()
             window.light_box_information.html_footer(span_annuler)
             #change_infos_panier.add_select()
             window.light_box_information.show()
         
-        button_add_select: ()->
-            span = $(document.createElement('span'))
-            a = $(document.createElement('a'))
-            a.text('Ajoutez declinaison')
-            span.addClass('button')
+        header_list:()->
+#             <div class="header-list">
+#                 <p>17 déclinaisons</p>
+#                 <span class="button new-declinaision"><a href="">nouvelle</a></span>
+#                 <div class="clear"></div>
+#             </div>
+        
+        
+            div_header = $(document.createElement('div'))
+            div_header.addClass('header-list')
             
-            a.on('click',()->
-                change_infos_panier.div_form.slideDown(1000)
+            nombre_decli = $(document.createElement('p'))
+            nombre_decli.text('18 déclinaisons')
+            
+            span_new = $(document.createElement('span'))
+            span_new.addClass('button new-declinaision button_declinaion')
+            
+            a  = $(document.createElement('a'))
+            a.text('nouvelle')
+            span_new.append(a)
+            a.on('click', ()->
+                   change_infos_panier.animate_for_form(1000)
             )
             
-            span.append(a)
+            span_retour = $(document.createElement('span'))
+            span_retour.addClass('back-declinaison button_declinaion')
+            span_retour.text('retour')
             
-            return span 
+            span_retour.on('click', ()->
+                   change_infos_panier.animate_for_tab(1000)
+            )
+            
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+            
+            div_header.append(nombre_decli)
+            div_header.append(span_new)
+            div_header.append(span_retour)
+            div_header.append(div_clear)
+            
+            return div_header
         
+        # button_add_select: ()->
+#             span = $(document.createElement('span'))
+#             a = $(document.createElement('a'))
+#             a.text('Ajoutez declinaison')
+#             span.addClass('button')
+#             
+#             a.on('click',()->
+#                 change_infos_panier.div_form.slideDown(1000)
+#             )
+#             
+#             span.append(a)
+#             
+#             return span 
+#       
+        animate_for_tab: (time)->
+            change_infos_panier.div_sous_content.animate(
+                'margin-left': '0px'
+            )
+
+        animate_for_form: (time)->
+            change_infos_panier.div_sous_content.animate(
+                'margin-left': '-600px'
+            )
         add_select:()->
             div_form = $(document.createElement('div'))
+            div_form.addClass('form_add_decli')
+            div_form.css('float','right')
+            div_form.css('display','block')
             #div_card.addClass('card_stack')
             
             #max
@@ -771,7 +1405,8 @@ $(document).ready( () ->
             div_form.append(span_add)
             
             change_infos_panier.div_form = div_form
-            window.light_box_information.prepend_content(div_form)
+            change_infos_panier.div_sous_content.prepend(div_form)
+            #window.light_box_information.append_content(div_form)
             
             
         
@@ -798,7 +1433,7 @@ $(document).ready( () ->
                     if data['status'] == 'error'
                         window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
                     else
-                       change_infos_panier.div_form.slideUp(1000)
+                       #change_infos_panier.div_form.slideUp(1000)
                        window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(data_))
                     #add_photo_stock.create_photo(data['photo_stock'])
 
@@ -1032,6 +1667,9 @@ $(document).ready( () ->
             class:'update_email'
             text_update:'Modifier l\'email'
     )
+    
+    
+    
     #-----------------------------------
     #-----------------------------------
     #-----------------------------------
@@ -1352,6 +1990,7 @@ $(document).ready( () ->
                     )
             )#A FAIRE
 
+    form_plugin_element.init()
 
 
     
