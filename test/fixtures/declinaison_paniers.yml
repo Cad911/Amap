@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  panier_id: 1
+  nb_pack: 1
+  duree: 1
+  nombre_personne: 1
+  prix_panier_ht: 1.5
+  prix_panier_ttc: 1.5
+
+two:
+  panier_id: 1
+  nb_pack: 1
+  duree: 1
+  nombre_personne: 1
+  prix_panier_ht: 1.5
+  prix_panier_ttc: 1.5

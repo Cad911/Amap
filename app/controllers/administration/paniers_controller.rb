@@ -1,6 +1,6 @@
 class Administration::PaniersController < InheritedResources::Base
 #load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
+protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
@@ -23,7 +23,7 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 		@photo_panier = PhotoPanier.new
 		@panier = Panier.find(params[:id])
 		
-		@declinaison_panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ? ', @panier.panier_autorise_id , @panier.revendeur_id )
+		@declinaison_panier = DeclinaisonPanier.where('panier_id = ?', @panier.id )
 		#@panier_correspondant.push(@panier)
 	  	
 	  	@panier_produit_panier = {
@@ -31,7 +31,7 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 			  	:id => @panier.id,
 			  	:user_id => @panier.revendeur_id,
 			  	:categorie_id => @panier.categorie_id,
-			  	:nb_pack => @panier.nb_pack,
+			  	:nb_pack_total => @panier.regroup_max,
 			  	:titre => @panier.titre,
 			  	:description => @panier.description,
 		  	},
@@ -117,11 +117,11 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 		#_______ CONDITION CAN STOCK AR ______ 
   		if current_user.can_stock_ar
   			@panier_autorise = PanierAutorise.find(params[:panier][:panier_autorise_id])
-  			@panier.titre = @panier_autorise.titre
-  			@panier.description = @panier_autorise.description
+  			#@panier.titre = @panier_autorise.titre
+  			#@panier.description = @panier_autorise.description
   			@panier.categorie_id = @panier_autorise.categorie_id
-  			@panier.prix_unite_ht = @panier_autorise.prix_panier_ht
-  			@panier.prix_unite_ttc = @panier_autorise.prix_panier_ttc
+  			#@panier.prix_unite_ht = @panier_autorise.prix_panier_ht
+  			#@panier.prix_unite_ttc = @panier_autorise.prix_panier_ttc
 
   		#_______ CAN STOCK SR _______
   		elsif current_user.can_stock_sr
@@ -133,7 +133,8 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 			
 			if @panier.save
 				flash[:notice] = "Panier ajoute"
-				redirect_to administration_user_panier_path(params[:user_id],@panier)
+				render :partial => 'card_panier', :locals => {:panier => @panier}
+				#redirect_to administration_user_panier_path(params[:user_id],@panier)
 			else
 				flash[:notice] = "ERREUR"
 				render :new
@@ -144,32 +145,29 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 	#_______ CREATE DECLINAISON________
 	def create_declinaison
 		@panier_model = Panier.find(params[:panier][:id])
-		@declinaison_panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', @panier_model.panier_autorise_id, @panier_model.revendeur_id)
+		@declinaison_panier = DeclinaisonPanier.where('panier_id = ?', @panier_model.id)
 		@declinaison_exist = false
 		@declinaison_panier.each do |panier_|
-			if panier_.nombre_personne.to_i == params[:panier][:nombre_personne].to_i && panier_.duree.to_i == params[:panier][:duree].to_i 
+			if panier_.nombre_personne.to_i == params[:declinaison_panier][:nombre_personne].to_i && panier_.duree.to_i == params[:declinaison_panier][:duree].to_i 
 				@declinaison_exist = true
 			end
 		end
 		
 		
 		if @declinaison_exist == false
-			@panier = Panier.new()
-			@panier.titre = @panier_model.titre
-			@panier.description = @panier_model.description
-			@panier.prix_unite_ht = @panier_model.prix_unite_ht
-			@panier.prix_unite_ttc = @panier_model.prix_unite_ttc
-			@panier.panier_autorise_id = @panier_model.panier_autorise_id
-			@panier.revendeur_id = @panier_model.revendeur_id
-			@panier.categorie_id = @panier_model.categorie_id
-			@panier.nb_pack = params[:panier][:nb_pack]
-			@panier.nombre_personne = params[:panier][:nombre_personne]
-			@panier.duree = params[:panier][:duree]
-			if @panier.save
+			@declinaison_panier = DeclinaisonPanier.new()
+			@declinaison_panier.panier_id = @panier_model.id
+			@declinaison_panier.prix_panier_ht = params[:declinaison_panier][:prix_panier_ht]
+			@declinaison_panier.prix_panier_ttc = params[:declinaison_panier][:prix_panier_ttc]
+			@declinaison_panier.nb_pack = params[:declinaison_panier][:nb_pack]
+			@declinaison_panier.nombre_personne = params[:declinaison_panier][:nombre_personne]
+			@declinaison_panier.duree = params[:declinaison_panier][:duree]
+			if @declinaison_panier.save
 				respond_to do |format|
 			  		format.json { render :json => {
 				  		:status => "OK",
-				  		:error => 'Declinaison ajoute'
+				  		:error => 'Declinaison ajoute',
+				  		:declinaison_panier => @declinaison_panier
 				  		} 
 				  	}
 			  		format.html { 
@@ -194,7 +192,39 @@ protect_from_forgery :except => [:create_declinaison,:produit_stock_already_in] 
 		end	
 	end
 	
+	#DELETE DECLINAISON
+	def supp_declinaison
+		declinaison_panier = DeclinaisonPanier.find(params[:declinaison_panier_id])
+		count_declinaison = DeclinaisonPanier.where(:panier_id => declinaison_panier.panier_id).count
+		if count_declinaison > 1
+			declinaison_panier.destroy
+			respond_to do |format|
+					format.json { render :json => {
+							  		:status => "OK",
+							  		:error => 'Declinaison supprime'
+							  		} 
+							  	}
+			end
+		else
+			respond_to do |format|
+					format.json { render :json => {
+							  		:status => "error",
+							  		:error => 'Il doit y avoir au moins une declinaison'
+							  		} 
+							  	}
+			end
+		end
+			
+	end
 	
+	
+	
+	
+	
+	
+	
+	
+	#GET PRODUIT FOR PANIER (AFFICHAGE DANS UNE BOX
 	def get_all_product
 		@produit_panier = ProduitPanier.where(:panier_id => params[:panier_id])
 		

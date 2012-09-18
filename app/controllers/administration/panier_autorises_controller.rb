@@ -6,7 +6,16 @@ load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE 
   	@panier_autorises = PanierAutorise.where(:user_id => params[:user_id])
     authorize! :manage, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
   end
-  
+ 
+#__________________ SHOW __________________________________________
+  def show
+  	@panier_autorise = PanierAutorise.find(params[:id])
+  	
+  	respond_to do |format|
+  		format.json { render :json => @panier_autorise }
+  		format.html { render :show }
+  	end
+  end
 #________________ CREATE ____________________________________________
   def create
   	@panier_autorise = PanierAutorise.new(params[:panier_autorise])

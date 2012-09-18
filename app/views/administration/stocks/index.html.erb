@@ -209,7 +209,12 @@
 						</div>
 						<div class="clear"></div>
 						<div class="form-actions modal-footer">
-							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
+							
+							<span class="annuler close_lightbox" > Annuler </span>
+							<span class="button next_step" ><a>  Suivant  </a> </span>
+							<%= #f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  
+								
+							%>
 						</div>
 					</div>
 
@@ -220,8 +225,11 @@
 						</div>
 						<div class="clear"></div>
 						<div class="form-actions modal-footer">
-							<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  %>
-							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
+							<span class="previous_step " >  Retour </span>
+							<span class="button next_step" ><a>  Suivant  </a> </span>
+							<%= #f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  
+								 #f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  
+							%>
 						</div>
 
 					</div>
@@ -245,8 +253,11 @@
 						</div>
 						<div class="clear"></div>
 						<div class="form-actions modal-footer">
-							<%= f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  %>
-							<%= f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  %>
+							<span class="previous_step " >  Retour </span>
+							<span class="button next_step" ><a>  Suivant  </a> </span>
+							<%= #f.button :submit, :type => :button,:value => "Retour", :class => "previous_step btn"  
+								#f.button :submit, :type => :button,:value => "Suivant",:class => "next_step btn-primary"  
+							 %>
 						</div>
 					</div>
 					<% end %>
@@ -294,8 +305,11 @@
 					</div>
 					<div class="clear"></div>
 					<div class="form-actions modal-footer">
-						<%= f.button :submit, :type => :button, :value => "Retour", :class => "previous_step btn"  %>
-						<%= f.button :submit, :type => :button, :value => "Ajouter", :class => "next_step btn-primary" %>
+						<span class="previous_step " >  Retour </span>
+							<span class="button next_step" ><a>  Ajouter  </a> </span>
+						<%= #f.button :submit, :type => :button, :value => "Retour", :class => "previous_step btn" 
+						 #f.button :submit, :type => :button, :value => "Ajouter", :class => "next_step btn-primary"
+						  %>
 					</div>
 
 				</div>

@@ -45,6 +45,7 @@ class UserAbility
 	  		can :create, ProduitVenteLibre
 	  		
 	  		can :show, ProduitAutorise, :user_id => user.direction.id #POUR LE JS, PRE REMPLISSAGE DES INPUT
+	  		can :show, PanierAutorise, :user_id => user.direction.id #POUR LE JS, PRE REMPLISSAGE DES INPUT
 	  		
 	  		can :manage, Panier, :revendeur_id => user.id
 	  		can [:create, :create_declinaison], Panier

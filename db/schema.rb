@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904142220) do
+ActiveRecord::Schema.define(:version => 20120917195105) do
 
   create_table "abonnements", :force => true do |t|
     t.integer  "client_id"
@@ -20,12 +20,15 @@ ActiveRecord::Schema.define(:version => 20120904142220) do
     t.date     "date_fin"
     t.integer  "duree"
     t.integer  "deleted"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "session_id"
     t.string   "etat"
     t.integer  "quantite"
     t.integer  "point_relai_id"
+    t.integer  "nombre_personne"
+    t.float    "prix_ht"
+    t.float    "prix_ttc"
   end
 
   create_table "active_admin_comments", :force => true do |t|
@@ -118,6 +121,28 @@ ActiveRecord::Schema.define(:version => 20120904142220) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "declinaison_panier_autorises", :force => true do |t|
+    t.integer  "panier_autorise_id"
+    t.integer  "duree"
+    t.integer  "nombre_personne"
+    t.integer  "prix_panier_ht"
+    t.integer  "prix_panier_ttc"
+    t.integer  "deleted"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "declinaison_paniers", :force => true do |t|
+    t.integer  "panier_id"
+    t.integer  "nb_pack"
+    t.integer  "duree"
+    t.integer  "nombre_personne"
+    t.float    "prix_panier_ht"
+    t.float    "prix_panier_ttc"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "droits", :force => true do |t|
     t.integer  "has_revendeur"
     t.integer  "autorisation_produit"
@@ -142,28 +167,21 @@ ActiveRecord::Schema.define(:version => 20120904142220) do
     t.integer  "categorie_id"
     t.string   "titre"
     t.text     "description"
-    t.float    "prix_panier_ht"
-    t.float    "prix_panier_ttc"
     t.integer  "deleted"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "paniers", :force => true do |t|
     t.integer  "revendeur_id"
     t.string   "titre"
     t.text     "description"
-    t.integer  "nb_pack"
-    t.float    "prix_unite_ht"
-    t.float    "prix_unite_ttc"
     t.integer  "alaune"
     t.integer  "deleted"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "categorie_id"
     t.integer  "panier_autorise_id"
-    t.integer  "nombre_personne"
-    t.integer  "duree"
   end
 
   create_table "photo_paniers", :force => true do |t|

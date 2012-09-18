@@ -6,6 +6,7 @@ class Panier < ActiveRecord::Base
     
     has_many :produit_paniers
     has_many :abonnements
+    has_many :declinaison_panier
     
     has_many :photo_paniers
     
@@ -13,8 +14,18 @@ class Panier < ActiveRecord::Base
     
     
     #pour administration
+    def regroup_max
+    	@panier = DeclinaisonPanier.where('panier_id = ?', self.id)
+    	@max = 0
+    	@panier.each do |panier|
+    		@max += panier.nb_pack
+    	end
+    	
+    	return @max
+    end
+    
     def regroup_nombre_personne
-    	@panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', self.panier_autorise_id, self.revendeur_id)
+    	@panier = DeclinaisonPanier.where('panier_id = ?', self.id)
     	@nb_personne = []
     	@panier.each do |panier|
     		@nb_personne.push(panier.nombre_personne)
@@ -25,7 +36,7 @@ class Panier < ActiveRecord::Base
     
     #pour administration
     def regroup_duree
-    	@panier = Panier.where('panier_autorise_id = ? AND revendeur_id = ?', self.panier_autorise_id, self.revendeur_id)
+    	@panier = DeclinaisonPanier.where('panier_id = ?', self.id)
     	@duree = []
     	@panier.each do |panier|
     		@duree.push(panier.duree)
