@@ -1,6 +1,6 @@
 class Administration::PaniersController < InheritedResources::Base
 #load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
+protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in,:all_produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
@@ -254,6 +254,36 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		end
 		
 	end
+	
+	def all_produit_stock_already_in
+		@produit_in = ProduitPanier.where('panier_id = ?', params[:panier_id])
+		@stock_user = Stock.where('user_id = ?', params['user_id'])
+		@count_stock = Stock.where('user_id = ?', params['user_id']).count
+		@count_produit_in = 0
+		@stock_user.each do |stock|
+			@produit_in.each do |produit_panier|
+				if produit_panier.stock_id == stock.id
+					@count_produit_in += 1
+				end
+			end
+		end
+		
+		if @count_produit_in == @count_stock
+			@status = 'error'
+		else
+			@status = 'OK'
+		end
+		
+		respond_to do |format|
+		  		format.json { render :json => {
+			  		:status => @status,
+			  		:error => @error
+			  		} 
+			  	}
+		end
+		
+	end
+	
 #   def delete
 # 	
 # 	end
