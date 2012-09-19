@@ -1,6 +1,5 @@
 <div class="other_products">
   <% if produit_panier.count != 0 %>
-    <h3> Produits du panier </h3>
     <ul>
       <% produit_panier.each do |produit_panier_| %>      	
       	<%= render :partial => "get_one_product", :locals => {:product => produit_panier_} %>

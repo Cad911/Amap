@@ -205,7 +205,23 @@
 		top: 17px;
 	}
 }
+.form_add_product {
+	.back-declinaison:hover {
+		cursor: pointer;
+	}
+}
 .other_products {
+  .l_photo_description {
+		position: relative;
+  }
+  li {
+  	width: 420px;
+  }
+  .close_square {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+  }
 	li {
 		padding-bottom: 20px;
 		border-bottom:solid 1px $embossed_dark; 
