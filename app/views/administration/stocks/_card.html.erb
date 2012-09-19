@@ -82,6 +82,10 @@
 							<%	end %>
 						</span>
 					</li>
+					<li class="details stock_total">
+						<span class="label">Stock total:</span>
+						<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic info_unite_mesure_id">(<%= stock.unite_mesure.nom %>)</span></span>
+					</li>
 					<li class="details nombre_pack">
 						<span class="label">Lots en boutique:</span>
 						<span class="value"> 
@@ -91,10 +95,6 @@
 							Aucun lot en vente actuellement
 							<%	end %>
 						</span>
-					</li>
-					<li class="details stock_total">
-						<span class="label">Stock total:</span>
-						<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic info_unite_mesure_id">(<%= stock.unite_mesure.nom %>)</span></span>
 					</li>
 					<div class="clear"></div>
 				</ul>
