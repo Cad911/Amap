@@ -4,15 +4,9 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
-		@panier_ = Panier.where(:revendeur_id => params[:user_id]).order('panier_autorise_id')
-		@panier_autorise = 0
-		@paniers = []
-		@panier_.each do |panier|
-				if @panier_autorise != panier.panier_autorise_id
-					@paniers.push(panier)	
-				end
-				@panier_autorise = panier.panier_autorise_id
-		end
+		@paniers = Panier.where(:revendeur_id => params[:user_id]).order('panier_autorise_id')
+
+
 		authorize! :update, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
 	end
 	
@@ -226,14 +220,14 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	
 	#GET PRODUIT FOR PANIER (AFFICHAGE DANS UNE BOX
 	def get_all_product
-		@produit_panier = ProduitPanier.where(:panier_id => params[:panier_id])
+		@produit_panier = ProduitPanier.where(:panier_id => params[:panier_id]).order('created_at DESC')
 		
 		render :partial => 'get_all_product', :locals => {:produit_panier => @produit_panier}
 	end
 	
 	def get_one_product
 		@produit_panier = ProduitPanier.find(params[:produit_panier_id])
-		render :partial => 'get_one_product', :locals => {:produit_panier => @produit_panier}
+		render :partial => 'get_one_product', :locals => {:product => @produit_panier}
 	end
 	
 	def produit_stock_already_in

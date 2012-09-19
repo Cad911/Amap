@@ -1,6 +1,6 @@
 class Administration::ProduitPaniersController < InheritedResources::Base
 	#load_and_authorize_resource
-	
+	protect_from_forgery :except => [:destroy,:create] 
 	#________ NEW ______________
 	def new
 		@produit_panier = ProduitPanier.new
@@ -69,4 +69,27 @@ class Administration::ProduitPaniersController < InheritedResources::Base
 			render :edit		
 		end
 	end
+	
+	
+  def destroy
+  	produit_panier = ProduitPanier.find(params[:id])
+  	
+  	if produit_panier.destroy
+		respond_to do |format|
+	  		format.json { render :json => { 
+	  				:status => 'OK'
+	  				} 
+	  			}
+	  		#format.html { render :show }
+		 end
+	else
+		respond_to do |format|
+	  		format.json { render :json => { 
+	  				:status => 'error'
+	  				} 
+	  			}
+	  		#format.html { render :show }
+		 end
+	end
+  end
 end

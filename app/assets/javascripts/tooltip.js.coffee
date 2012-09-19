@@ -2,28 +2,28 @@
 	jQuery.fn.tool_tip = (timeout = 0) ->
 	    test = 'test'
 	    this.each( () ->
-	        if $(this).attr('title') != '' && $(this).attr('title') != undefined
+	        if $(this).attr('tool_tip') != '' && $(this).attr('tool_tip') != undefined
 	        
 	        else
-	            $(this).attr('title', 'titre')
+	            $(this).attr('tool_tip', 'tool_tip')
 	        
 	        
 	        
 	        $(this).on('mouseover', () ->
 	            #create tooltip
-	            my_tooltip = $(document.createElement('div'))
-	            my_tooltip.addClass('my_tooltip')
-	            
-	            tooltip_body = $(document.createElement('div'))
-	            tooltip_body.addClass('tooltip_body')
-	            
-	            tooltip_fleche = $(document.createElement('div'))
-	            tooltip_fleche.addClass('tooltip_fleche')
-	            
-	            my_tooltip.append(tooltip_body)
-	            my_tooltip.append(tooltip_fleche)
-	            
-	            tooltip_body.text($(this).attr('title'))
+	            # my_tooltip = $(document.createElement('div'))
+# 	            my_tooltip.addClass('my_tooltip')
+# 	            
+# 	            tooltip_body = $(document.createElement('div'))
+# 	            tooltip_body.addClass('tooltip_body')
+# 	            
+# 	            tooltip_fleche = $(document.createElement('div'))
+# 	            tooltip_fleche.addClass('tooltip_fleche')
+# 	            
+# 	            my_tooltip.append(tooltip_body)
+# 	            my_tooltip.append(tooltip_fleche)
+# 	            
+# 	            tooltip_body.text($(this).attr('tool_tip'))
 	            
 	            if timeout == 0
 	                tooltip.generate(this)
@@ -55,7 +55,7 @@
 	            
 	            tooltip_body = $(document.createElement('div'))
 	            tooltip_body.addClass('tooltip_body')
-	            tooltip_body.text($(element).attr('title'))
+	            tooltip_body.text($(element).attr('tool_tip'))
 	            
 	            tooltip_fleche = $(document.createElement('div'))
 	            tooltip_fleche.addClass('tooltip_fleche')
