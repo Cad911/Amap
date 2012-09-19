@@ -78,30 +78,18 @@
 
       <div class="l_nav_element l_single_sign">
         <div class="dropdown">
-          <a href="" class="l_link farmer" data-toggle="dropdown"><span></span>Agriculteur</a>
-          <ul class="dropdown-menu dropdown_menu">
-            <li><%= link_to "Tous",page_revendeur_index_path %></li>
-            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
-          </ul>
+          <%= link_to page_revendeur_index_path, :class => "l_link farmer" do %>
+            <span></span>Agriculteur
+          <% end %>
         </div>
       </div>
 
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
           <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown"><span></span>Le Blog</a>
-          <ul class="dropdown-menu dropdown_menu">
-            <li><a> Fruit et legumes </a> </li>
-            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
-            <li><a> Laitier </a> </li>
-          </ul>
         </div>
         <div class="dropdown">
           <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown"><span></span>Nous</a>
-          <ul class="dropdown-menu dropdown_menu">
-            <li> <a> Fruit et legumes </a> </li>
-            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
-            <li> <a> Laitier </a> </li>
-          </ul>
         </div>
       </div>
 
@@ -112,7 +100,7 @@
 
 
 
-    <div class="box">
+    <div class="box box-login">
       <div class="login">
         <span class="user"></span>
         <% if current_client.nil? %>

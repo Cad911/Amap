@@ -1,9 +1,11 @@
 		 <div class="page-header">
 		 	<h1> <%= @title_user %> </h1>
 		 	<ul class="buttons">
-		 		<li class="help button button_active"  title="aide"><span class="picture"></span></li>
+				<li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+				<li class="separator"></li>		 		
+		 		<li class="help button button_active"  tool_tip="aide"><span class="picture"></span></li>
 				<li class="separator"></li>
-		 		<li class="edit button" title="modifier mon profil"><span class="picture"></span></li>
+		 		<li class="edit button" tool_tip="modifier mon profil"><span class="picture"></span></li>
 		 	</ul>		 	
 		 </div>
 
@@ -47,7 +49,7 @@
 							<li><div class="is_small has_corners_shadow"><span class="deleted_p_c photo_user" id="photo_user_<%= image.id %>"></span><%= image_tag image.image_url(:is_small)%></div></li>
 		 				<% end %>
 		 			<% end %>
-		 			<li><span class="add button image add_user_image" id="user_id_<%= @user.id %>" title="Ajouter une image"><span class="picture"></span></span></li>
+		 			<li><span class="add button image add_user_image" id="user_id_<%= @user.id %>" tool_tip="Ajouter une image"><span class="picture"></span></span></li>
 		 		</ul>
 
 		 	</div>
