@@ -401,6 +401,14 @@ body .backoffice {
 							@include ui-sprite(stats_active);							
 					}
 				}
+				.button_active.logoff
+				{
+					background:$red;
+				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+				    span.picture {
+							@include ui-sprite(logoff);							
+					}
+				}				
 				.button_active.help
 				{
 					background:$red;
@@ -463,6 +471,24 @@ body .backoffice {
 						height:16px;						
 					}
 				}
+				.logoff {
+					&:hover {
+						span {
+							@include ui-sprite(logoff_hover);							
+						}
+					}	
+					&:active {
+						span.picture {
+							@include ui-sprite(logoff_active);							
+						}
+					}										
+					span {
+						@include ui-sprite(logoff);
+						display:block;
+						width:14px;
+						height:16px;						
+					}
+				}				
 				.tables {
 					&:hover {
 						span {

@@ -1828,11 +1828,16 @@ $(document).ready( () ->
         div_list:$('')
         ul_listing_produit: $('')
         value_id_actual_stock: 0
+        select_stock: $('')
+        number_product:0
+        li_number_product:$('')
         init: ()->
             $('div.card_stack>.packaging ul.main-informations>.product_number').on( 'click', ()->
                 if ($(this).hasClass('is-editing'))
                      #generate box
                      function_product_in_basket.panier_id = $(this).parents('div.footer').prevAll('div.informations_card').children('.id_panier').val()
+                     function_product_in_basket.number_product = parseInt($(this).children('.number').text())
+                     function_product_in_basket.li_number_product = this
                      function_product_in_basket.generate_box()
                      function_product_in_basket.all_product()
                      function_product_in_basket.get_own_stock()
@@ -1872,7 +1877,7 @@ $(document).ready( () ->
             div_header.addClass('header-list')
             
             nombre_decli = $(document.createElement('p'))
-            nombre_decli.text('2 produits dans le panier')
+            nombre_decli.text(function_product_in_basket.number_product+' produits dans le panier')
             
             span_new = $(document.createElement('span'))
             span_new.addClass('button new-declinaision button_declinaion')
@@ -1909,9 +1914,20 @@ $(document).ready( () ->
             ,time)
 
         animate_for_form: (time)->
-            function_product_in_basket.div_sous_content.animate(
-                'margin-left': '-600px'
-            ,time)
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/all_produit_stock_already_in')
+            xhr.setRequestHeader('Accept','application/json')
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    data = JSON.parse(xhr.responseText)
+                    if data['status'] == 'error'
+                        window.message_information.message_error('.lightbox .header','erreur','Tous les produits du stock sont dans le panier',2000)
+                    else
+                        function_product_in_basket.div_sous_content.animate(
+                            'margin-left': '-600px'
+                        ,time)
         
 
         all_product: ()->
@@ -1960,6 +1976,8 @@ $(document).ready( () ->
                     class:''
                     id:''
             )
+            
+            function_product_in_basket.select_stock = element_produit.find('select')
             element_produit.find('select').on('mouseenter',()->
                 function_product_in_basket.value_id_actual_stock = $(this).val()
                 console.log(function_product_in_basket.value_id_actual_stock)
@@ -2004,6 +2022,8 @@ $(document).ready( () ->
             function_product_in_basket.div_sous_content.prepend(div_form)
             #window.light_box_information.append_content(form)
         
+                        
+        
         verif_stock: (id_stock,select)-> 
             xhr = new XMLHttpRequest();
             xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/produit_stock_already_in')
@@ -2016,8 +2036,11 @@ $(document).ready( () ->
                 if xhr.readyState == xhr.DONE
                     data = JSON.parse(xhr.responseText)
                     if data['status'] == 'error'
-                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
+                        window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],2000)
                         $(select).val(function_product_in_basket.value_id_actual_stock)
+                        return true
+                    else
+                        return false
                         
             
         get_own_stock:()->
@@ -2058,6 +2081,8 @@ $(document).ready( () ->
                         window.message_information.message_error('.lightbox_wrapper .header','erreur',data['error'],5000)
                     else
                         function_product_in_basket.fiche_product(data)
+                        function_product_in_basket.number_product += 1
+                        $(function_product_in_basket.li_number_product).children('.number').text(function_product_in_basket.number_product)
                         #function_product_in_basket.ul_listing_produit.append(data)
                     #add_photo_stock.create_photo(data['photo_stock'])
 
