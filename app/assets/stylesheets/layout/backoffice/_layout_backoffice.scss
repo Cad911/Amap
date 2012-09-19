@@ -340,23 +340,23 @@ body .backoffice {
 				.group_button {
 					.button {
 						margin:0 -1px 0 0;
-				    @include borderradius(0);
-				    &:first-child {
-				      -webkit-border-top-left-radius: 5px;
-				      -webkit-border-bottom-left-radius: 5px;
-				      -moz-border-radius-topleft: 5px;
-				      -moz-border-radius-bottomleft: 5px;
-				      border-top-left-radius: 5px;
-				      border-bottom-left-radius: 5px;
-				    }
-				    &:last-child {
-				      -webkit-border-top-right-radius: 5px;
-				      -webkit-border-bottom-right-radius: 5px;
-				      -moz-border-radius-topright: 5px;
-				      -moz-border-radius-bottomright: 5px;
-				      border-top-right-radius: 5px;
-				      border-bottom-right-radius: 5px;      
-				    }						
+						@include borderradius(0);
+						&:first-child {
+							-webkit-border-top-left-radius: 5px;
+							-webkit-border-bottom-left-radius: 5px;
+							-moz-border-radius-topleft: 5px;
+							-moz-border-radius-bottomleft: 5px;
+							border-top-left-radius: 5px;
+							border-bottom-left-radius: 5px;
+						}
+						&:last-child {
+							-webkit-border-top-right-radius: 5px;
+							-webkit-border-bottom-right-radius: 5px;
+							-moz-border-radius-topright: 5px;
+							-moz-border-radius-bottomright: 5px;
+							border-top-right-radius: 5px;
+							border-bottom-right-radius: 5px;      
+						}						
 					}
 				}
 				.button {
@@ -380,79 +380,79 @@ body .backoffice {
 					}
 					&:active {
 						background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
+						@include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);	
 					}
 				}
 				//FOR BUTTON SI CLICK ON
 				.button_active.edit
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-				    span.picture {
-							@include ui-sprite(edit_active);							
+					@include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+					span.picture {
+						@include ui-sprite(edit_active);							
 					}
 				}
 				//FOR BUTTON SI CLICK ON
 				.button_active.stats
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-				    span.picture {
-							@include ui-sprite(stats_active);							
+					@include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+					span.picture {
+						@include ui-sprite(stats_active);							
 					}
 				}
 				.button_active.logoff
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-				    span.picture {
-							@include ui-sprite(logoff);							
+					@include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+					span.picture {
+						@include ui-sprite(logoff);							
 					}
 				}				
 				.button_active.help
 				{
 					background:$red;
-				    @include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-				    span.picture {
-							@include ui-sprite(help_active);							
+					@include box-shadow(rgba(0,0,0, 0.5) 0px 1px 2px 1px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+					span.picture {
+						@include ui-sprite(help_active);							
 					}
 				}
 				.help {
-		      &:hover {
-		        span {
-		          @include ui-sprite(help_hover);              
-		        }
-		      } 
+					&:hover {
+						span {
+							@include ui-sprite(help_hover);              
+						}
+					} 
 					&:active {
 						span.picture {
 							@include ui-sprite(help_active);							
 						}
 					}				      
-		      span {
-		        @include ui-sprite(help);
-		        display:block;
-		        width:18px;
-		        height:18px;            
-		      }					
+					span {
+						@include ui-sprite(help);
+						display:block;
+						width:18px;
+						height:18px;            
+					}					
 				}
-		    .edit {
-		      &:hover {
-		        span {
-		          @include ui-sprite(edit_hover);              
-		        }
-		      } 
+				.edit {
+					&:hover {
+						span {
+							@include ui-sprite(edit_hover);              
+						}
+					} 
 					&:active {
 						span.picture {
 							@include ui-sprite(edit_active);							
 						}
 					}				      
-		      span {
-		        @include ui-sprite(edit);
-		        display:block;
-		        width:18px;
-		        height:18px;            
-		      }
-		    }  				
+					span {
+						@include ui-sprite(edit);
+						display:block;
+						width:18px;
+						height:18px;            
+					}
+				}  				
 				.stats {
 					&:hover {
 						span {
@@ -546,4 +546,119 @@ body .backoffice {
 			}
 		}
 	}
+}
+.box {
+	width:200px;
+	position:absolute;
+	top:0;
+	right:0;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	.social {
+		ul {
+			padding:0;
+			margin:0;
+			li {
+				float:left;
+				width:40px;
+				height:48px;
+				@include nav-sprite(social_sign);
+				margin:-1px 5px 0 5px;
+				&:active {
+					margin-top:0;
+				}
+				&.facebook {
+					a {
+						display:block;
+						width:35px;
+						height:35px;
+						padding-top:10px;
+						span {
+							display:block;                  
+							@include nav-sprite(facebook);
+							width:15px;
+							height:18px;     
+							margin-top:11px;
+							margin-left:11px;                                   
+						}
+					}
+				}  
+				&.twitter {
+					a {
+						display:block;
+						width:35px;
+						height:35px;
+						padding-top:10px;                  
+						span {
+							display:block;
+							@include nav-sprite(twitter);
+							width:22px;
+							height:18px; 
+							margin-top:10px;
+							margin-left:9px;                                                         
+						}
+					}
+				}  
+				&.googleplus {
+					a {
+						display:block;
+						width:35px;
+						height:35px;
+						padding-top:10px;                  
+						span {
+							display:block;                  
+							@include nav-sprite(googleplus);
+							width:15px;
+							height:22px;      
+							margin-top:10px;
+							margin-left:12px;                      
+						}                              
+					}
+				}  
+				&.newsletter {
+					a {
+						display:block;
+						width:35px;
+						height:35px;
+						padding-top:10px;                  
+						span {
+							display:block;                  
+							@include nav-sprite(newsletter);
+							width:22px;
+							height:22px;   
+							margin-top:8px;
+							margin-left:10px;                                                       
+						}
+					}
+				}                            
+			}
+		}
+	} 
+	.login {
+		@include nav-sprite(user_sign);          
+		height:25px;
+		padding-top:6px;
+		text-align:center;
+		color:$brown;
+		span:hover {
+			cursor:pointer;
+		}
+		.user {
+			width:16px;
+			height:16px;
+			display:inline-block;
+			margin-bottom:-4px;
+			@include nav-sprite(user);
+		}
+		a {
+			color:$brown;
+			&:hover {
+				color:$red;
+			}
+		}
+	}       
 }
