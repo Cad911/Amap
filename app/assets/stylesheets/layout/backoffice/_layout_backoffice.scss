@@ -1,12 +1,14 @@
 @import "layouts/profile.scss";
 @import "layouts/parameters.scss";
 
-body .backoffice {
-	margin-top:50px;
+.ground_top.backoffice {
+	top: -20px;
+}
 
+body .backoffice {
 	.l_main_gutter {
 		min-height: 650px;		
-		margin-bottom:50px;	
+		margin-bottom:20px;	
 	}
 	.l_wrapper {
 		#statistiques {
@@ -82,7 +84,7 @@ body .backoffice {
 				}
 			}
 		}
-		margin-bottom:50px;
+		margin:0 auto 20px auto;
 		div#statistiques {
 			display: none;
 		}
@@ -310,7 +312,7 @@ body .backoffice {
 			border-bottom:solid 1px #ffffff;
 			background:url(/../images/bg_darkener.png);
 			h1 {
-				width:480px;
+				width:470px;
 				border-bottom:solid 1px $embossed_dark;
 				padding:14px 20px 6px 20px;
 				margin:0;
@@ -319,10 +321,10 @@ body .backoffice {
 			}
 			.buttons {
 				border-bottom:solid 1px $embossed_dark;
-				width:146px;
+				width:186px;
 				height:40px;
 				float:left;
-				padding:10px 20px 0 51px;
+				padding:10px 20px 0 21px;
 				margin:0;
 				li.separator {
 					display: block;
