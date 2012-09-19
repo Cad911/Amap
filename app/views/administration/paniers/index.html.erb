@@ -65,12 +65,16 @@
 			<div class="content">
 				<ul class="navigation">
 					<li><span class="current"><span class="number">1</span> Description</span></li>
+<!--
 					<li><span><span class="number">2</span> Stock</span></li>
 					<li><span><span class="number">3</span> En rayon</span></li>
+-->
 				</ul>
 				<h2 class="title title_1"> Description </h2>
+<!--
 				<h2 class="title title_2"> Stock </h2>
 				<h2 class="title title_3"> En rayon </h2>
+-->
 				<%= simple_form_for([:administration,User.find(params[:user_id]),Panier.new],:html => {:class => 'form-horizontal' }) do |f| %>
 				  <%= f.error_notification %>
 				
@@ -89,41 +93,6 @@
 								<span class="button next_step" ><a>  Suivant  </a> </span>
 							</div>
 				  		</div>
-				  		
-				  		<div class="formulaire_add etape_2">
-							<div class="modal-body">
-						    	<%= #f.input :nombre_personne 
-							    	
-						    	%>
-						    	<%= #f.input :duree 
-							    	
-						    	%>
-						    </div>
-						    <div class="clear"></div>
-						    <div class="form-actions modal-footer">
-								<span class="annuler close_lightbox" > Annuler </span>
-								<span class="button next_step" ><a>  Suivant  </a> </span>
-							</div>
-				  		</div>
-						
-						<div class="formulaire_add etape_3">
-							<div class="modal-body">
-								<%= #f.input :nb_pack 
-									
-								%>
-						    	<%= #f.input :prix_unite_ht 
-							    	
-						    	%>
-						    	<%= #f.input :prix_unite_ttc 
-							    	
-						    	%>
-						    </div>
-						    <div class="clear"></div>
-						    <div class="form-actions modal-footer">
-								<span class="annuler close_lightbox" > Annuler </span>
-								<span class="button next_step" ><a>  Suivant  </a> </span>
-							</div>
-				  		</div>
 				  	<% elsif current_user.can_stock_ar %>
 				  		<div class="formulaire_add etape_1">
 							<div class="modal-body">
@@ -133,40 +102,6 @@
 				  			</div>
 				  			<div class="clear"></div>
 				  			<div class="form-actions modal-footer">
-								<span class="annuler close_lightbox" > Annuler </span>
-								<span class="button next_step" ><a>  Suivant  </a> </span>
-							</div>
-				  		</div>
-				  		
-				  		<div class="formulaire_add etape_2">
-							<div class="modal-body">
-						  		<%= #f.input :nombre_personne
-						  		 %>
-						  		<%= #f.input :duree 
-							  		
-						  		%>
-						  	</div>
-						  	<div class="clear"></div>
-						  	<div class="form-actions modal-footer">
-								<span class="annuler close_lightbox" > Annuler </span>
-								<span class="button next_step" ><a>  Suivant  </a> </span>
-							</div>
-				  		</div>
-						 
-						<div class="formulaire_add etape_3">
-							<div class="modal-body">
-								<%=# f.input :nb_pack 
-									
-								%>
-						  		<%= #f.input :prix_unite_ht 
-							  		
-						  		%>
-						    	<%= #f.input :prix_unite_ttc 
-							    	
-						    	%>
-						    </div>
-						    <div class="clear"></div>
-						    <div class="form-actions modal-footer">
 								<span class="annuler close_lightbox" > Annuler </span>
 								<span class="button next_step" ><a>  Suivant  </a> </span>
 							</div>

@@ -24,9 +24,9 @@
             <ul class="main-informations">
                 <li><span class="number is_bold"><%= panier.customer_number %></span><span class="icon members"></span></li>
                 <li><span class="number is_bold">4</span><span class="icon pictures"></span></li>
-                <li class="product_number"><span class="number is_bold"><%= panier.product_number %></span><span class="icon products"></span></li>
+                <li class="product_number"  tool_tip="Les produits" ><span class="number is_bold"><%= panier.product_number %></span><span class="icon products"></span></li>
             </ul>
-            <ul class="details">
+            <ul class="details" tool_tip="Les déclinaisons">
                 <li class="detail detail_max">
                     <span class="label">Max</span>
                     <span class="number"><%= panier.regroup_max %></span>
