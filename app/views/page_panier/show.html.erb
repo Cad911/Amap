@@ -39,7 +39,7 @@
 			<p> Description :<%= @panier.description %> </p>
 
 			<div class="price_button">
-				<p class="price is_bold"> <%= @panier.min_price %>€ <span class="note is_italic">le kilo</span></p>
+				<p class="price is_bold"> <%= @panier.min_price %> € <span class="note is_italic">le kilo</span></p>
 				<br class="clear">
 				<span id="add_product" class="button add_basket_link"><a>ajouter à ma cagette</a></span>
 			</div>
@@ -49,6 +49,8 @@
 		<%= #f.input :declinaison_id, :collection => (1..12).map, :include_blank => false 
 			
 		%>
+		
+		
 		<div class="control-group select optional">
 			<label class="select optional control-label" for="panier_declinaison_id"> Declinaison</label>
 			<div class="controls">
