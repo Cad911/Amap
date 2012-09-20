@@ -718,6 +718,7 @@ $(document).ready( () ->
                     declinaison_div.trigger('mouseover')
                     number_product_li.toggleClass('is-editing-over')
                     declinaison_div.toggleClass('is-editing-over')
+                    console.log(declinaison_div)
                     
                     setTimeout(()->
                         number_product_li.removeClass('is-editing-over')
@@ -1466,7 +1467,7 @@ $(document).ready( () ->
                         #nombre_declinaison += valeur['nb_pack']
                         #window.light_box_information.append_content(change_infos_panier.create_fiche_declinaison(valeur))
                     change_infos_panier.nombre_declinaison_actuel = nombre_declinaison
-                    $('.header-list>p   ').text(nombre_declinaison+' declinaisons')
+                    $('.header-list>p   ').text(nombre_declinaison+' paniers en ligne')
 
             
         li_detail:(data)->
@@ -1626,7 +1627,7 @@ $(document).ready( () ->
             span_new.addClass('button new-declinaision button_declinaion')
             
             a  = $(document.createElement('a'))
-            a.text('nouvelle')
+            a.text('nouvelle déclinaison')
             span_new.append(a)
             a.on('click', ()->
                    change_infos_panier.animate_for_form(1000)
@@ -1978,7 +1979,7 @@ $(document).ready( () ->
             span_new.addClass('button new-declinaision button_declinaion')
             
             a  = $(document.createElement('a'))
-            a.text('nouvelle')
+            a.text('Ajouter un produit')
             span_new.append(a)
             
             a.on('click', ()->

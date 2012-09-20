@@ -40,7 +40,7 @@
 			        <div class="content">
 			          <p class="title"> <%= link_to @first_huge_panier.titre, page_panier_show_path(@first_huge_panier.revendeur_id,@first_huge_panier), :class => "title" %></p>
 			          <p class="description"><%= @first_huge_panier.description %></p>
-			          <span class="price "><%= @first_huge_panier.prix_unite_ttc %> € <span class="is_italic">pour  <%= "#{@first_huge_panier.nombre_personne} personnes"  %></span></span>
+			          <span class="price ">A partir de <%= @first_huge_panier.min_price  %> € <span class="is_italic"> dès  <%= "#{@first_huge_panier.min_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
     		</li>
@@ -57,7 +57,7 @@
 			        <div class="content">
 			          <p class="title"> <%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
 			          <p class="description"><%= p.description %></p>
-			          <span class="price "><%= p.prix_unite_ttc %>€ <span class="is_italic"> pour <%= "#{p.nombre_personne} personnes"  %></span></span>
+			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic"> dès <%= "#{p.min_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
 			    </li>
@@ -69,26 +69,34 @@
 <!-- _______________________ middle block ________________________________________-->
 	<% if @paniers_middle_block.count > 0 %>
 		<ul class="l_product_list" style=" min-height: 310px;">
+			<% i = 0 %>
 			<% @paniers_middle_block.each do |p| %>
-				<li>
-			      <div class="l_photo_description is_medium is_vertical">
-			        <div class="image">
-			          <div class="has_corners_shadow is_medium">
-			          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
-			          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
-			          		<% end %>
-			          </div>
-			        </div>
-			        <div class="content">
-			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
-			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.nombre_personne} personnes"  %></span></span>
-			        </div>
-			      </div>
-			    </li>
+				<% if i%4 == 0 %>
+					<ul class="l_product_list" style=" min-height: 310px;">
+				<% end %>
+							<li>
+						      <div class="l_photo_description is_medium is_vertical">
+						        <div class="image">
+						          <div class="has_corners_shadow is_medium">
+						          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
+						          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
+						          		<% end %>
+						          </div>
+						        </div>
+						        <div class="content">
+						          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
+						          <p class="description"><%= p.description %></p>
+						          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
+						        </div>
+						      </div>
+						    </li>
+			    <% if (i+1)%4 == 0 %>
+			    	<br class="clear"/>
+			    	</ul>
+			    <% end %>
+			    <% i += 1 %>
 			<% end %>
-			<br class="clear"/>
-		</ul>
+			
 	<% end %>
 
 
@@ -107,7 +115,7 @@
 		        <div class="content">
 		          <p class="title"><%= link_to @last_huge_panier.titre, page_panier_show_path(@last_huge_panier.revendeur_id,@last_huge_panier), :class => "title" %></p>
 		          <p class="description"><%= @last_huge_panier.description %></p>
-		          <span class="price "><%= @last_huge_panier.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@last_huge_panier.nombre_personne} personnes"  %></span></span>
+		          <span class="price ">A partir de <%= @last_huge_panier.min_price %>€ <span class="is_italic">dès <%= "#{@last_huge_panier.min_personne} personnes"  %></span></span>
 		        </div>
 		      </div>
 		    </li>
@@ -125,7 +133,7 @@
 			        <div class="content">
 			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
 			          <p class="description"><%= p.description %></p>
-			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{@last_huge_product.nombre_personne} personnes"  %></span></span>
+			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
 			    </li>

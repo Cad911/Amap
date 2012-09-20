@@ -39,7 +39,7 @@
 				<tr class="row">
 					<td class="first_column">Montant</td>
 					<td class="info_column">
-						<span><%= @ma_commande.total if !@ma_commande.nil? %> <%= @mon_abonnement.panier.prix_unite_ttc if !@mon_abonnement.nil? %></span>
+						<span><%= @ma_commande.total if !@ma_commande.nil? %> <%= @mon_abonnement.prix_ttc if !@mon_abonnement.nil? %></span>
 					</td>
 				</tr>
 			</table>

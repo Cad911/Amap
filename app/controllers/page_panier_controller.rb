@@ -47,7 +47,7 @@ class PagePanierController < ApplicationController
 	  	#_____ PAS DE LAST BLOCK ___________
   		else
   			(5..@paniers.count-1).each do |i|
-	  			@panier_middle_block << @paniers[i]
+	  			@paniers_middle_block << @paniers[i]
 	  		end
   		end
   	end

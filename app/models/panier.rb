@@ -10,8 +10,49 @@ class Panier < ActiveRecord::Base
     
     has_many :photo_paniers
     
-    #attr_accessor :duree
+    attr_accessor :declinaison_id
     
+    
+    #min_duree
+    def min_duree
+    
+    end
+    
+    #get min personne of declinaison
+    def min_personne
+    	@declinaison = DeclinaisonPanier.where('panier_id = ?', self.id)
+    	if @declinaison.count > 0
+    		@min = @declinaison[0].nombre_personne
+    		@declinaison.each do |decli|
+	    		if decli.nombre_personne  < @min
+	    			@min = decli.nombre_personne
+	    		end
+	    	end
+	    	
+	    	return @min
+	    else
+	    	return 0
+    	end
+    end
+    
+    
+    #get min price of declinaison
+    def min_price
+    	@declinaison = DeclinaisonPanier.where('panier_id = ?', self.id)
+    	if @declinaison.count > 0
+    		@min = @declinaison[0].prix_panier_ttc
+    		@declinaison.each do |decli|
+	    		if decli.prix_panier_ttc  < @min
+	    			@min = decli.prix_panier_ttc
+	    		end
+	    	end
+	    	
+	    	return @min
+	    else
+	    	return 0
+    	end
+    	
+    end
     
     #pour administration
     def regroup_max

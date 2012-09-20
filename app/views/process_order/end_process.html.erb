@@ -6,7 +6,7 @@
 		<li> Abonnement au panier <%= @mon_abonnement.panier.titre %> de  <%= @mon_abonnement.panier.user.prenom %> </li>
 		<li> Duree: <%= @mon_abonnement.duree %> mois (A partir d'aujourd'hui : <%= @mon_abonnement.date_debut %> )</li>
 		<li> Date de fin <%= @mon_abonnement.date_fin %> </li>
-		<li> Total = <%= @mon_abonnement.panier.prix_unite_ttc %></li>
+		<li> Total = <%= @mon_abonnement.prix_ttc %></li>
 	</ul>
 
 <% else %>
