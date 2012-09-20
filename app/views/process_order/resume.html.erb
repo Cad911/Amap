@@ -32,13 +32,14 @@
 							<div class="has_corners_shadow is_small"></div>
 						</div>
 						<div class="content">
-							<p class="is_bold title"> <%= @abonnement_panier.panier.titre %>  <span class="note is_italic"> pour <%= @abonnement_panier.panier.nombre_personne %> personne(s)</span></p>						
+							<p class="is_bold title"> <%= @abonnement_panier.panier.titre %>  <span class="note is_italic"> pour <%= @abonnement_panier.nombre_personne %> personne(s)</span></p>						
 							<p class="descritpion">Lorem ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet ipsum dolor et sit amet</p>
 						</div>
 						<div class="quantity">
-							<span class="minus"></span>
+							<!-- <span class="minus"></span> -->
 							<span class="sum"><%= @abonnement_panier.duree %></span>
-							<span class="plus"></span>
+							<!--
+<span class="plus"></span>
 							<p style="display:block;position:absolute;top:-60px;left:0;"> 
 				        	    <select name="panier[duree]" id="panier_duree" class="select optional">
 				        	    <% (1..12).each do |i| %>
@@ -46,10 +47,11 @@
 				        	    <% end %>
 								</select>
 			        	    </p>
+-->
 
 						</div>						
 						<div class="price">
-							<span class="sum"> <%= @abonnement_panier.panier.prix_unite_ttc %> €</span>
+							<span class="sum"> <%= @abonnement_panier.prix_ttc %> €</span>
 							<div class="close_square"></div>
 						</div>
 					</div>

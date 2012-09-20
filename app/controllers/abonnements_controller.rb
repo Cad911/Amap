@@ -31,11 +31,16 @@ class AbonnementsController < InheritedResources::Base
   			end
   		end
 		@date_debut = Date.current
-	
+		
+		@declinaison_panier = DeclinaisonPanier.find(params[:panier][:declinaison_panier_id])
+		
   		@abonnement = Abonnement.new
   		@abonnement.session_id = session[:abonnement_id]
   		@abonnement.panier_id = params[:panier][:id]
-  		@abonnement.duree = params[:panier][:duree].to_i #EN MOIS
+  		@abonnement.duree = @declinaison_panier.duree.to_i #EN MOIS
+  		@abonnement.nombre_personne = @declinaison_panier.nombre_personne.to_i
+  		@abonnement.prix_ht = @declinaison_panier.prix_panier_ht
+  		@abonnement.prix_ttc = @declinaison_panier.prix_panier_ttc
   		@abonnement.etat = 'en_cours'
   		@abonnement.quantite = 1
   		@abonnement.date_debut = @date_debut
@@ -67,13 +72,18 @@ class AbonnementsController < InheritedResources::Base
   				@cageot.save
   			end
   		end
-
+  		
+  		@declinaison_panier = DeclinaisonPanier.find(params[:panier][:declinaison_panier_id])
+  		
 		@date_debut = Date.current
 	
   		@abonnement = Abonnement.new
   		@abonnement.client_id = current_client.id
   		@abonnement.panier_id = params[:panier][:id]
-  		@abonnement.duree = params[:panier][:duree].to_i #EN MOIS
+  		@abonnement.duree = @declinaison_panier.duree.to_i #EN MOIS
+  		@abonnement.nombre_personne = @declinaison_panier.nombre_personne.to_i
+  		@abonnement.prix_ht = @declinaison_panier.prix_panier_ht
+  		@abonnement.prix_ttc = @declinaison_panier.prix_panier_ttc
   		@abonnement.etat = 'en_cours'
   		@abonnement.date_debut = @date_debut
   		@abonnement.date_fin = @date_debut.months_since(params[:panier][:duree].to_i)

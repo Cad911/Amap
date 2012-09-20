@@ -26,11 +26,11 @@ class Administration::StatistiquesController < ApplicationController
 	  	
 	  	all_abonnement_month.each do |abonnement|
 		  	if abonnement.panier.user.id == current_user.id
-			  	@CA[:CA_abonnement_ttc] += abonnement.panier.prix_unite_ttc
-	  	        @CA[:CA_abonnement_ht] += abonnement.panier.prix_unite_ht
+			  	@CA[:CA_abonnement_ttc] += abonnement.prix_ttc
+	  	        @CA[:CA_abonnement_ht] += abonnement.prix_ht
 	  	        
-	  	        @CA[:CA_total_ttc] += abonnement.panier.prix_unite_ttc
-	  			@CA[:CA_total_ht] += abonnement.panier.prix_unite_ht
+	  	        @CA[:CA_total_ttc] += abonnement.prix_ttc
+	  			@CA[:CA_total_ht] += abonnement.prix_ht
 		  	end
 	  	end
 	  	
@@ -67,8 +67,8 @@ class Administration::StatistiquesController < ApplicationController
 	  	all_abonnement_month.each do |abonnement|
 		  	if abonnement.panier.user.id == current_user.id
 		  	    month_abonnnement = (abonnement.updated_at).month
-			  	@CA_by_month[month_abonnnement][:CA_abonnement_ttc] += abonnement.panier.prix_unite_ttc
-	  	        @CA_by_month[month_abonnnement][:CA_abonnement_ht] += abonnement.panier.prix_unite_ht
+			  	@CA_by_month[month_abonnnement][:CA_abonnement_ttc] += abonnement.prix_ttc
+	  	        @CA_by_month[month_abonnnement][:CA_abonnement_ht] += abonnement.prix_ht
 		  	end
 	  	end
 	  	

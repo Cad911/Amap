@@ -16,7 +16,7 @@ class ProcessOrderController < ApplicationController
   	if @abonnement_exist.count > 0
   		@titre = "Resume abonnement"
   		@abonnement_panier = Abonnement.find(@abonnement_exist[0].id)
-  		@total = @abonnement_panier.panier.prix_unite_ttc
+  		@total = @abonnement_panier.prix_ttc
   	#__ SI ABONNEMENT EXISTE PAS
   	else
   		@titre = "Resume cageot"

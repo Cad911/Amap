@@ -186,6 +186,15 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		end	
 	end
 	
+	#
+	def get_declinaison
+		@declinaison = DeclinaisonPanier.find(params[:declinaison_id])
+		
+		render :json => {
+			:declinaison_panier => @declinaison
+		}
+	end
+	
 	#DELETE DECLINAISON
 	def supp_declinaison
 		declinaison_panier = DeclinaisonPanier.find(params[:declinaison_panier_id])

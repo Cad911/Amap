@@ -58,10 +58,10 @@ $(document).ready( () ->
 	             #POUR CA QUE JE METS UNE VALEUR TENDANT VERS 0 AFIN QUE LE CAMEMBERT SE CREER
 	             if data.CA_product_ttc == 0
 	             	data_pie = [1/100000,data.CA_abonnement_ttc]
-	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["0% - 0 € (achat direct)","%% - "+data_pie[1]+" € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["0% - 0 € ","%% - "+data_pie[1]+" € "],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
 	             else if data.CA_abonnement_ttc == 0
 	             	data_pie = [data.CA_product_ttc,1/100000]
-	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["%% - "+data_pie[0]+" € (achat direct) ","0% - 0 € (abonnement)"],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
+	             	camembert = r.piechart(320, 240, 70, data_pie ,{legend: ["%% - "+data_pie[0]+" € ","0% - 0 € "],legendpos: "est", colors: ["#59a494","#ea9d6e"]})
 	             else
 	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
 	             	data_pie = [data.CA_product_ttc,data.CA_abonnement_ttc]
@@ -84,6 +84,17 @@ $(document).ready( () ->
 	                    this.label[0].animate({ r: 5 }, 500, "bounce");
 	                    this.label[1].attr({ "font-weight": 400 });
 	                
+	             )
+	             i = 0
+	             $('body .backoffice .l_wrapper #camembert svg text').each(()->
+	             	x_ = parseInt($(this).attr('x'))
+	             	x_ -= 25
+	             	$(this).attr('x', x_)
+	             	if i == 0
+	             		$(this).attr('fill','#59a494')
+	             	else
+	             		$(this).attr('fill','#ea9d6e')
+	             	i++
 	             )
           
         create_graph: (data_) ->  

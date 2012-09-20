@@ -1,5 +1,7 @@
 ECommerce::Application.routes.draw do
  
+
+
   get "blog/article/index"
 
   get "villes/index"
@@ -98,6 +100,11 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
        	resources :produit_paniers
       end
       
+      
+      
+      #ROUTE ADMIN BLOG
+        match 'blog/index' => 'blog#index', :as => :blog_index, :via => :get
+        match 'blog/new_article' => 'blog#new_article', :as => :new_article, :via => :get
       #_____ ROUTE POUR IMAGE PANIER _____
       
       match '/paniers/:panier_id/all_produit_stock_already_in' => 'paniers#all_produit_stock_already_in', :as => :all_produit_stock_already_in, :via => :post
@@ -105,6 +112,8 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       match '/paniers/:panier_id/get_one_product/:produit_panier_id' => 'paniers#get_one_product', :as => :get_one_product, :via => :post
       match '/paniers/:panier_id/get_all_product' => 'paniers#get_all_product', :as => :get_all_product, :via => :get
       #declinaison
+      
+      match '/paniers/:panier_id/get_declinaison/:declinaison_id' => 'paniers#get_declinaison', :as => :get_declinaison, :via => :get
       match '/paniers/create_declinaison' => 'paniers#create_declinaison', :as => :create_declinaison, :via => :post
       match '/paniers/supp_declinaison/:declinaison_panier_id' => 'paniers#supp_declinaison', :as => :supp_declinaison, :via => :delete
       #image panier

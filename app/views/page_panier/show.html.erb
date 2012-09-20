@@ -39,13 +39,26 @@
 			<p> Description :<%= @panier.description %> </p>
 
 			<div class="price_button">
-				<p class="price  is_bold"><%= @panier.prix_unite_ht %> € <span class="note is_italic">le kilo</span></p>
+				<p class="price is_bold"> <%= @panier.min_price %>€ <span class="note is_italic">le kilo</span></p>
 				<br class="clear">
 				<span id="add_product" class="button add_basket_link"><a>ajouter à ma cagette</a></span>
 			</div>
 		<%= simple_form_for(@panier, :url => sabonner_path, :method => "post") do |f| %>
 		<%= f.input :id, :as => :hidden %>
-		<%= f.input :duree, :collection => (1..12).map, :include_blank => false %>
+		<%= f.input :revendeur_id, :as => :hidden %>
+		<%= #f.input :declinaison_id, :collection => (1..12).map, :include_blank => false 
+			
+		%>
+		<div class="control-group select optional">
+			<label class="select optional control-label" for="panier_declinaison_id"> Declinaison</label>
+			<div class="controls">
+				<select class="select optional" id="panier_declinaison_id" name="panier[declinaison_id]">
+					<% (@panier.declinaison_panier.order('prix_panier_ttc')).each do |decli|%>
+						<option value="<%= decli.id %>"> <%= decli.nombre_personne %> personnes pour <%= decli.duree %> mois</option>
+					<% end %>
+				</select>
+			</div>
+		</div>
 		
 		<p> <input type="submit" value="S'abonner" class="btn btn-info"/></p>
 		<% end %>
@@ -99,7 +112,7 @@
 						</div>
 						<div class="content">
 							<p class="note is_bold title"> <%= link_to other_panier.titre, page_panier_show_path(@panier.user,other_panier) %></p>
-							<p class="note "><%= other_panier.prix_unite_ttc %> € <span class="is_italic">le <%= other_panier.nombre_personne %></span></p>
+							<p class="note ">A partir de <%= other_panier.min_price %> € <span class="is_italic"> dès <%= other_panier.min_personne %></span></p>
 						</div>
 					</div>
 				</li>

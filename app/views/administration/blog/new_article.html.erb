@@ -1,0 +1,8 @@
+<h1>Administration::Blog#new_article</h1>
+<p>Find me in app/views/administration/blog/new_article.html.erb</p>
+
+<%= simple_form_for([:administration, User.find(7)], :html => {:class => 'form-horizontal well' }) do |f| %>
+	
+	<%= f.text_area :nom %>
+
+<% end %>
