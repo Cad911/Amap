@@ -99,7 +99,7 @@
 						</div>
 						<div class="content">
 							<p class="note is_bold title"> <%= link_to other_panier.titre, page_panier_show_path(@panier.user,other_panier) %></p>
-							<p class="note "><%= other_panier.prix_unite_ttc %> € <span class="is_italic">le <%= other_panier.nombre_personne %></span></p>
+							<p class="note "><%= other_panier.min_price %> € <span class="is_italic">le <%= other_panier.min_personne %></span></p>
 						</div>
 					</div>
 				</li>
