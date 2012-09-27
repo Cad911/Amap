@@ -1,0 +1,62 @@
+
+<div class="card_stack">
+
+    <div class="packaging">
+        <div class="informations_card">
+				<input type="hidden" class="user_id" value="<%= current_user.id %>" />
+				<input type="hidden" class="id_panier_autorise" value="<%= panier_autorise.id %>" />
+			</div>
+        <div class="header">
+            <span class="truncate-wrap"><h2 class="title is-truncated"> <%= (panier_autorise.titre != '') ? panier_autorise.titre : 'Aucun titre' %> </h2></span>
+            <ul class="buttons_card">
+
+                <li class="edit button" tool_tip="modifier"><span class="picture"></span></li>
+
+                <li class="delete button" tool_tip="supprimer"><span class="picture"></span></li>
+
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="body">
+            <span class="truncate-wrap"><p class="description is-truncated"><%= (panier_autorise.description != '') ? panier_autorise.description : 'Aucune description' %></p></span> 
+        </div>
+        <div class="footer">
+            <ul class="main-informations">
+                <li><span class="number is_bold"><%= panier_autorise.categorie.nom %></span><span class="icon members"></span></li>
+            </ul>
+            <ul class="details" tool_tip="Les déclinaisons">
+                <li class="detail detail_format">
+                    <span class="label">Format</span>
+                    <ul class="number">
+
+                    	<li <% if (panier_autorise.regroup_nombre_personne.include?(2))%> class="check" <%end%>> 2 </li>
+                    	<li <% if (panier_autorise.regroup_nombre_personne.include?(4))%> class="check" <%end%>> 4 </li>
+                    	<li <% if (panier_autorise.regroup_nombre_personne.include?(6))%> class="check" <%end%>> 6 </li>
+
+                  
+                    </ul>
+                </li>
+                <li class="detail detail_duree">
+                    <span class="label">Durée</span>
+                    <ul class="number">
+	                    <li <% if (panier_autorise.regroup_duree.include?(3))%> class="check" <%end%>> 3 </li>
+                    	<li <% if (panier_autorise.regroup_duree.include?(6))%> class="check" <%end%>> 6 </li>
+                    	<li <% if (panier_autorise.regroup_duree.include?(9))%> class="check" <%end%>> 9 </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card fade in one"><div class="left_area"></div><div class="right_area"></div></div>
+    <div class="card fade in two"><div class="left_area"></div><div class="right_area"></div></div>
+    <div class="card fade in three">
+        <div class="left_area">
+            <div class="is_small has_corners_shadow"  style="opacity:0;" ></div>
+        </div>
+        <div class="right_area">
+        </div>
+    </div>
+
+</div>

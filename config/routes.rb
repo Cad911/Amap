@@ -13,7 +13,8 @@ ECommerce::Application.routes.draw do
   resources :rel_commande_produits
 
   resources :commandes
-
+  
+  match '/a_propos' => "page_front#a_propos", :via => :get
   match '/' => "page_front#index", :via => :get
 
 #______ PROCESS ORDER _________________________________________________________________________________________________
@@ -103,13 +104,23 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       
       
       #ROUTE ADMIN BLOG
-        match 'blog/index' => 'blog#index', :as => :blog_index, :via => :get
-        match 'blog/new_article' => 'blog#new_article', :as => :new_article, :via => :get
+	  match 'blog/index' => 'blog#index', :as => :blog_index, :via => :get
+	  match 'blog/new_article' => 'blog#new_article', :as => :new_article, :via => :get
+	  match 'blog/upload_image' => 'blog#upload_image', :as => :upload_image, :via => :post
+	  
+	  #declinaison panier autorise
+      match '/panier_autorises/:panier_id/get_declinaison/:declinaison_id' => 'panier_autorises#get_declinaison', :as => :get_declinaison, :via => :get
+      match '/panier_autorises/create_declinaison' => 'panier_autorises#create_declinaison', :as => :create_declinaison, :via => :post
+      match '/panier_autorises/supp_declinaison/:declinaison_panier_autorise_id' => 'panier_autorises#supp_declinaison', :as => :supp_declinaison, :via => :delete
+	  
+	  
+	  
+	  
       #_____ ROUTE POUR IMAGE PANIER _____
       
       match '/paniers/:panier_id/all_produit_stock_already_in' => 'paniers#all_produit_stock_already_in', :as => :all_produit_stock_already_in, :via => :post
       match '/paniers/:panier_id/produit_stock_already_in' => 'paniers#produit_stock_already_in', :as => :produit_stock_already_in, :via => :post
-      match '/paniers/:panier_id/get_one_product/:produit_panier_id' => 'paniers#get_one_product', :as => :get_one_product, :via => :post
+      match '/paniers/:panier_id/get_one_product/:produit_panier_id' => 'paniers#get_one_product', :as => :get_one_product, :via => :get
       match '/paniers/:panier_id/get_all_product' => 'paniers#get_all_product', :as => :get_all_product, :via => :get
       #declinaison
       
@@ -155,6 +166,9 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       
       #UNITE_MESURE
       match '/get_unite_mesure' => 'unite_mesures#get_unite_mesure', :as => :get_unite_mesure, :via => :post
+      
+      #Categorie
+      match '/get_all_categorie' => 'Categorie#get_all_categorie', :as => :get_all_categorie, :via => :post
     end
   end
 	

@@ -13,10 +13,12 @@ gem 'thin'
 gem 'activeadmin'
 gem 'cancan'
 gem 'simple_form'
+gem "formtastic", "~> 2.1.1"
 gem 'carrierwave'
 gem "mini_magick", "~> 3.4"
 gem "rmagick"
 gem "heroku"
+#gem "bootstrap-wysihtml5-rails"
 #gem "ckeditor", "3.7.1"
 
 # Gems used only for assets and not required

@@ -9,6 +9,7 @@ class PageProduitController < ApplicationController
   
   #__________________________________________________________ LISTING TOUS LES PRODUITS ____________________________________________
   def index
+  	@all_categorie = Categorie.all
   	@titre = "Tous les produits"
   	@produits = ProduitVenteLibre.all
   	@produits_first_block = []

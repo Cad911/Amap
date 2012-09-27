@@ -1,0 +1,13 @@
+<%= simple_form_for([:administration, current_user ,produit_autorise], :html => {:class => 'form-horizontal' },:remote => true) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :categorie, :collection => Categorie.all.map{ |c| [c.nom,c.id]}, :label => "Catégorie", :include_blank => false %>
+    <%= f.input :titre %>
+    <%= f.input :description %>
+  </div>
+
+  <div class="form-actions modal-footer">
+    <span class="button next_step" ><a>  Suivant  </a> </span>
+  </div>
+<% end %>

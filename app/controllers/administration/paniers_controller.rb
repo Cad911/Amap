@@ -1,5 +1,5 @@
 class Administration::PaniersController < InheritedResources::Base
-#load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
+load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
 protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in,:all_produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
 	#_______ INDEX _________
 	def index
@@ -232,11 +232,14 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		@produit_panier = ProduitPanier.where(:panier_id => params[:panier_id]).order('created_at DESC')
 		
 		render :partial => 'get_all_product', :locals => {:produit_panier => @produit_panier}
+		#authorize! :update, Panier.find(params[:panier_id]) #AUTORISATION POUR LA PRODUITS
 	end
 	
 	def get_one_product
 		@produit_panier = ProduitPanier.find(params[:produit_panier_id])
 		render :partial => 'get_one_product', :locals => {:product => @produit_panier}
+		
+		#authorize! :update, Panier.find(@produit_panier.panier_id) #AUTORISATION POUR LA PRODUITS
 	end
 	
 	def produit_stock_already_in

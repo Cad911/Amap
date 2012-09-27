@@ -344,7 +344,7 @@ $.fn.form_plugin = (optn)->
                 #options.left += 'px'
                 console.log(options)
                 #url level to update
-                if optn.url_to_update == undefined
+                if optn.url_to_update == undefined || optn.url_to_update == ''
                     optn.url_to_update = optn.url_get_infos 
                      
                 #init table
