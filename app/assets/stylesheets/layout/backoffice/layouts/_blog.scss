@@ -1,0 +1,30 @@
+.billet {
+	width: 697px;
+	height: 202px;
+	@include backoffice-sprite(billet);
+	.details {
+		padding: 0 0 10px 0;	
+		margin: -5px 0 0 0;
+	}
+	.detail {
+		margin: 0 15px 0 0;
+		.icon {
+			margin-right: 5px;
+		}
+	}
+	.date {
+		.icon {
+			@include ui-sprite(date);
+		}
+	}
+	.comments {
+		.icon {
+			@include ui-sprite(comments);	
+		}
+	}
+	.tags {
+		.icon {
+			@include ui-sprite(tags);
+		}
+	}
+}

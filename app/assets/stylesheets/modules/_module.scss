@@ -167,6 +167,12 @@
   border:$embossed_dark solid 1px;
   @include border-radius(5px);
   background-color:rgba($brown, 0.05);
+  ul {
+    li {
+      list-style: disc;
+      margin:10px 0 0 40px;
+    }
+  }
   .title {
     padding:0 20px 0 0;
     margin:0;
