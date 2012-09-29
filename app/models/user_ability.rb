@@ -29,7 +29,7 @@ class UserAbility
 	  		can :create, ProduitAutorise
 	  		
 	  		can :manage, PanierAutorise, :user_id => user.id
-	  		can :create, PanierAutorise
+	  		can [:create, :create_declinaison], PanierAutorise
 	  	end
 	  	
 	  	# ______________________________________ VENDRE AVEC RESTRICTION ___________________________________
@@ -49,6 +49,8 @@ class UserAbility
 	  		
 	  		can :manage, Panier, :revendeur_id => user.id
 	  		can [:create, :create_declinaison], Panier
+	  		can :get_one_product, Panier
+	  		can :get_all_product, Panier
 	  		#can :create_declinaison, Panier
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
@@ -57,7 +59,7 @@ class UserAbility
 	  		can :indexForRevendeur,PointRelai
 	  		can :show, PointRelai, :user_id => user.direction_id
 	  		
-	  		can [:add_image,:update_image], User, :user_id => user.id 
+	  		can [:add_image,:update_image], User, :user_id => user.id
 	  	end
 	  	
 	  	# ______________________________________ VENDRE AVEC RESTRICTION ___________________________________
@@ -74,6 +76,8 @@ class UserAbility
 	  		
 	  		can :manage, Panier, :revendeur_id => user.id
 	  		can [:create, :create_declinaison], Panier
+	  		can :get_all_product, Panier
+	  		can :get_one_product, Panier
 	  		
 	  		can :manage, ProduitPanier, :panier => {:revendeur_id => user.id}
 	  		can :create, ProduitPanier

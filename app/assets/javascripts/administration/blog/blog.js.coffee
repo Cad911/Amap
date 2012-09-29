@@ -1,37 +1,69 @@
 $(document).ready(()->
-    $('textarea#user_nom').tinymce({
-                        # Location of TinyMCE script
-                        script_url : '/assets/tiny_mce/tiny_mce.js',
+    wysiwyg_function = 
+        init:()->
+            wysihtml5ParserRules =
+                tags:
+                    "img":
+                        "check_attributes":
+                            "width":200
+                            "alt":"alt"
+                            "src":"src"
+                            "height":""
+                            
+            editor = new wysihtml5.Editor("user_nom",{
+              toolbar: "toolbar-edit"
+              parserRules: wysihtml5ParserRules
+            })
+            this.event()
 
-                        # General options
-                        theme : "advanced",
-                        plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+        event:()->
+            that = this
+            $('.button_insert_image').on('click',()->
+                $('.lightbox_insert_image').css('display','block')
+            )
+            
+            $('.input_image').bind('change',()->
+                file = this.files[0]; 				
+                if ( window.FileReader )  
+                    reader = new FileReader();
+                    total = 0;
+                    reader.onloadend  = (evt)->
+                        $('.apercu_image').attr("src",evt.target.result);
+                    
+                    # reader.onloadstart = (evt)->
+    #                     total = evt.total;
+    #                     $('#progress_modif_img').css('display','block');
+    #                 
+    #                 reader.onprogress = (evt)->
+    #                     var width = evt.loaded*100/total;
+    #                     $('#progress_modif_img div').css('width',width+'%');
+                    
+                    reader.readAsDataURL(file)
+                
+            )
+            $('.button_add_image').on('click',()->
+                that.upload_image()
+            )
+        upload_image:()->
+            xhr = XMLHttpRequest()
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/blog/upload_image')
+            
+            form = new FormData()
+            fileInput = $('.input_image')[0]    
+            form.append('image_blog',fileInput.files[0])
+            console.log(form)  
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    $('.input_wysihtml5_image').val(data['path'])
+                    $('.button_wysihtml5_save_image').trigger('click')
+            
 
-                        # Theme options
-                        theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-                        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-                        theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-                        theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
-                        theme_advanced_toolbar_location : "top",
-                        theme_advanced_toolbar_align : "left",
-                        theme_advanced_statusbar_location : "bottom",
-                        theme_advanced_resizing : true,
-
-                        # Example content CSS (should be your site CSS)
-                        content_css : "css/content.css",
-
-                        # Drop lists for link/image/media/template dialogs
-                        template_external_list_url : "lists/template_list.js",
-                        external_link_list_url : "lists/link_list.js",
-                        external_image_list_url : "lists/image_list.js",
-                        media_external_list_url : "lists/media_list.js",
-
-                        # Replace values for the template plugin
-                        template_replace_values : {
-                                username : "Some User",
-                                staffid : "991234"
-                        }
-                });
-
-
+      
+    wysiwyg_function.init()
+    #editor.composer.commands.exec("insertImage", { src: "http://url.com/foo.jpg", alt: "this is an image" });
+    #http://lemalesaint.fr/wp-content/uploads/2012/09/tumblr_max4nsgJXG1qbih6so1_500.jpg
 )

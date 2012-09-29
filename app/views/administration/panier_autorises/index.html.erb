@@ -1,41 +1,89 @@
 <div class="page-header">
-   	<h1>Liste panier autorises</h1>
+   <h1>Listing paniers</h1>
+   <ul class="buttons">
+	<li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+	<li class="separator"></li>   	
+<!--     <li class="stats button"  tool_tip="statistiques"><span class="picture"></span></li> -->
+    <li class="help button button_active"  tool_tip="aide"><span class="picture"></span></li>        
+	<li class="separator"></li>    
+    <li class="add button" tool_tip="ajouter un panier"><span class="picture"></span></li>
+</ul>
 </div>
 
 
+<div class="helper">
+    <p class="title is_bold"><i class="icon ui-help_hover"></i>Gérer vos paniers</p>
+    <span class="close"><i class="icon-remove"></i></span>
+    <p class="content">Modifier chaque éléments d'un panier en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
+</div>
 
+<% if @panier_autorises.nil? %>
 
-<table class="table table-striped">
-  <tr>
-    <th>Id</th>
-    <th> Dirigé par </th>
-    <th>Categorie</th>
-    <th>Titre</th>
-    <th>Description</th>
-    <th>Prix panier ht</th>
-    <th>Prix panier ttc</th>
-    <th>Deleted</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<% else %>
 
-<% @panier_autorises.each do |panier_autorise| %>
-  <tr>
-    <td><%= panier_autorise.id %></td>
-    <td><%= panier_autorise.user.nom %></td>
-    <td><%= panier_autorise.categorie.nom %></td>
-    <td><%= panier_autorise.titre %></td>
-    <td><%= panier_autorise.description %></td>
-    <td><%= panier_autorise.prix_panier_ht %></td>
-    <td><%= panier_autorise.prix_panier_ttc %></td>
-    <td><%= link_to 'Plus d\'info', administration_user_panier_autorise_path(params[:user_id],panier_autorise),:class => "btn btn-primary" %></td>
-    <td><%= link_to 'Modifier', edit_administration_user_panier_autorise_path(params[:user_id],panier_autorise),:class => "btn"%> </td>
-    <td><%= link_to 'Supprimer', administration_user_panier_autorise_path(params[:user_id],panier_autorise), confirm: 'Are you sure?', method: :delete,:class => "btn btn-warning"%> </td>
-  </tr>
+	<% @panier_autorises.each do |panier_autorises| %>
+		<%= render :partial => "card_panier", :locals => {:panier_autorise => panier_autorises} %>
+	<% end %>
+
 <% end %>
-</table>
+
+<div class="lightbox_wrapper new_panier_autorise has-menu">
+	<!-- _______________ form for connexion ____________ -->
+	<div class="lightbox lightbox_form_new_basket">
+		<div class="header">
+			<h1 class="title"> Nouveau panier </h1>
+		</div>
+		<div class="loggin" id="">
+			<style>
+			.formulaire_add
+			{
+
+			}
+			.etape_2,.etape_3,.title_2,.title_3
+			{
+				display: none;
+			}
+			</style>
+			<div class="content">
+				<ul class="navigation">
+					<li><span class="current"><span class="number">1</span> Description</span></li>
+<!--
+					<li><span><span class="number">2</span> Stock</span></li>
+					<li><span><span class="number">3</span> En rayon</span></li>
+-->
+				</ul>
+				<h2 class="title title_1"> Description </h2>
+<!--
+				<h2 class="title title_2"> Stock </h2>
+				<h2 class="title title_3"> En rayon </h2>
+-->
+				<%= simple_form_for([:administration,User.find(params[:user_id]),PanierAutorise.new],:html => {:class => 'form-horizontal' }) do |f| %>
+				  <%= f.error_notification %>
+				
+					  <div class="form-inputs">
+					  	
+					  		<div class="formulaire_add etape_1">
+								<div class="modal-body">
+					  				<%= f.association :categorie, :collection => Categorie.all.map{|c| [c.nom, c.id]} %>
+					  				<%= f.input :titre %>
+					  				<%= f.input :description %>
+								</div>
+								<div class="clear"></div>
+								<div class="form-actions modal-footer">
+									<span class="annuler close_lightbox" > Annuler </span>
+									<span class="button next_step" ><a>  Suivant  </a> </span>
+								</div>
+					  		</div>				  	
+					  </div>
+				
+				  
+				<% end %>
+
+		</div>
+	</div>
+
+
+
+
 
 <br />
-
-<%= link_to 'Nouveau Panier autorise', new_administration_user_panier_autorise_path %>

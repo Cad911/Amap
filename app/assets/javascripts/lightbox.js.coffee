@@ -56,7 +56,9 @@ $(document).ready(->
               if that.div_in_lightbox != false
                   that.hide_sous_div()
            )
-        
+        css_lightbox: (attribut)->
+        	for champ, valeur of attribut
+        		$(@id_lightbox).css(champ, valeur)
         css: (attribut)->
         	for champ, valeur of attribut
         		$(@id_lightbox+'>.lightbox').css(champ, valeur)
@@ -135,6 +137,9 @@ $(document).ready(->
             $(@id_lightbox+'>.lightbox>.footer').html(data)
         append_footer: (data)->
             $(@id_lightbox+'>.lightbox>.footer').append(data)
+        
+        remove_footer: ()->
+        	$(@id_lightbox+'>.lightbox>.footer').remove()
             
         
             

@@ -1,15 +1,29 @@
-<%= simple_form_for([:administration,current_user,@panier_autorise], :html => {:class => 'form-horizontal well' }) do |f| %>
+<%= simple_form_for([:administration,User.find(params[:user_id]),@panier],:html => {:class => 'form-horizontal well' }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :categorie, :collection => Categorie.all.map{ |c| [c.nom,c.id]}, :label => "Catégorie", :include_blank => false %>
-    <%= f.input :titre %>
-    <%= f.input :description %>
-    <%= f.input :prix_panier_ht %>
-    <%= f.input :prix_panier_ttc %>
+  	
+  	<% if current_user.can_stock_sr %>
+  		<%= f.association :categorie, :collection => Categorie.all.map{|c| [c.nom, c.id]} %>
+    	<%= f.input :titre %>
+    	<%= f.input :description %>
+    	<%= f.input :nb_pack %>
+    	<%= f.input :nombre_personne %>
+    	<%= f.input :duree %>
+    	<%= f.input :prix_unite_ht %>
+    	<%= f.input :prix_unite_ttc %>
+  	<% elsif current_user.can_stock_ar %>
+  		<%= f.association :panier_autorise, :collection => PanierAutorise.where(:user_id => current_user.direction.id).map{ |pa| [pa.titre, pa.id] } %>
+  		<%= f.input :nb_pack %>
+  		<%= f.input :nombre_personne %>
+  		<%= f.input :duree %>
+  		<%= f.input :prix_unite_ht %>
+    	<%= f.input :prix_unite_ttc %>
+  	<% end %>
+  	
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, :value => "Créer panier" %>
+    <%= f.button :submit %>
   </div>
 <% end %>

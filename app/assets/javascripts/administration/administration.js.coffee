@@ -377,8 +377,7 @@ $(document).ready( () ->
     #___________________________________________
     #___________________________________________
     #___________________________________________
-
-    
+ 
     add_photo_stock = 
         card : ''
         init: ()->
@@ -2222,7 +2221,7 @@ $(document).ready( () ->
         
         fiche_product: (produit_panier)->
             xhr = new XMLHttpRequest();
-            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/get_one_product/'+produit_panier.id)
+            xhr.open('GET','/administration/users/'+$('.user_id').val()+'/paniers/'+function_product_in_basket.panier_id+'/get_one_product/'+produit_panier.id)
             #xhr.setRequestHeader('Accept','application/json')
             xhr.send(null)
             

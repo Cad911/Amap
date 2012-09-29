@@ -1,8 +1,71 @@
 <h1>Administration::Blog#new_article</h1>
 <p>Find me in app/views/administration/blog/new_article.html.erb</p>
-
-<%= simple_form_for([:administration, User.find(7)], :html => {:class => 'form-horizontal well' }) do |f| %>
+<input type="hidden" class="user_id" value="<%= current_user.id %>" />
+<div class="wysiwig_admin">
+	<div id="toolbar-edit">
+		<a class="button" data-wysihtml5-command="bold"> <span> G </span></a>
+		<a class="button" data-wysihtml5-command="italic"> <span> I </span></a>
+		
+		<a class="button" data-wysihtml5-command="justifyCenter"> <span> Lien </span></a>
+		
+		<a class="button" data-wysihtml5-command="createLink"> <span> Lien </span></a>
+		
+		
+		<a class="button button_insert_image" data-wysihtml5-command="insertImage"> <span> Image </span></a>
+		<br class="clear" />
+		<div class="div_add_link" data-wysihtml5-dialog="createLink">
+			<label>
+				Lien :
+				<input data-wysihtml5-dialog-field="href" value="http://" />
+			</label>
+			<a class="button" data-wysihtml5-dialog-action="save"> <span> Save </span></a>
+			<a class="button" data-wysihtml5-dialog-action="cancel"> <span> Annuler </span></a>
+		</div>
+		<br class="clear" />
+		
+		<div class="lightbox_wrapper lightbox_insert_image has-menu" >
+			<!-- _______________ form for connexion ____________ -->
+			<div class="lightbox " data-wysihtml5-dialog="insertImage">
+				<!-- ________UTILE POUR CHARGER IMAGE DANS BOX____________________ -->
+				<div class="loggin" style="display:none;">
+					<div class="content">
+						<div class="div_add_link">
+						  <label>
+						    Image:
+						    <input class="input_wysihtml5_image" data-wysihtml5-dialog-field="src" value="http://">
+						  </label>
+						  <a class="button_wysihtml5_save_image" data-wysihtml5-dialog-action="save">OK</a>
+						  <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+						</div>
+					</div>
+				</div>
+			<!-- _______________________________________________________ -->
+				
+				<div class="header">
+					<h1 class="title"> Nouvelle image </h1>
+				</div>
+				
+				<div class="content">
+					<img src="" class="apercu_image" width="200px"/>
+					<form>
+						<input type="file" class="input_image" name="input_image"/>
+						
+					</form>
+				</div>
+				
+				<div class="footer">
+					<span class="button button_add_image"> <a> Ajoutez </a> </span>
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
 	
-	<%= f.text_area :nom %>
-
-<% end %>
+	
+	<%= simple_form_for([:administration, User.find(7)], :html => {:class => 'form-horizontal' }) do |f| %>
+		
+		<%= f.text_area :nom, :cols => 100, :rows => 100, :style => 'width:700px;'  %>
+	
+	<% end %>
+</div>
