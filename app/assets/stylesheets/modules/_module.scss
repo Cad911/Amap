@@ -182,30 +182,63 @@
     }
   }
 }
+//JUST A MARGIN FOR ALIGN WITH OTHER FILTER
+.activation
+{
+	margin: -2px 5px 0 15px;
+}
 // applique une style bouton-switch
-.toggle {
-  @include borderradius(50px);
-  @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-  border:solid 1px $light_brown;
-  color:#ffffff !important; 
-  text-shadow:none;
-  padding: 2px 8px 0px 20px;
-  background-color:$red; 
-  position:relative;
-  .switch {
-    position:absolute;
-    top:-4px;
-    left:-4px;
-  }
-  &.off {
-    padding: 2px 20px 0px 8px;
-    background-color:$light_bg_color;
-    color:$brown !important
-    ;
-    .switch {
-      left:30px;      
+.toggle_switch{
+	position: relative;
+	display: inline-block;
+	vertical-align: -7px;
+	.switch {
+		    position:absolute;
+		    top:-1px;
+		    left:33px;
+		    z-index: 100;
     }
-  }
+	.toggles{
+		  @include borderradius(50px);
+		  @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+		  border:solid 1px $light_brown;
+		  color:#ffffff !important; 
+		  text-shadow:none;
+	/* 	  padding: 2px 8px 0px 20px; */
+		  /* background-color:$red;  */
+		  position:relative;	
+		  overflow: hidden;
+		  display: inline-block;
+		  width: 45px;
+		  height: 20px;
+		  z-index: 99;
+		
+		.toggle_on_off
+		{
+			position: absolute;
+			left: 0;
+			top:-2px;
+			.toggle {
+			  @include borderradius(50px);
+			  @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+			  border:solid 1px $light_brown;
+			  color:#ffffff !important; 
+			  text-shadow:none;
+			  padding: 2px 8px 0px 20px;
+			  background-color:$red; 
+			  position:absolute;
+			  left:24px;
+			  &.off {
+			    padding: 2px 20px 0px 8px;
+			    background-color:$light_bg_color;
+			    color:$brown !important;
+			    left:0;
+			    margin-left: 0!important;
+			  }
+			  
+			}
+		}
+	}
 }
 
 // Bouton basique
