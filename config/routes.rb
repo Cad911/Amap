@@ -65,7 +65,8 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   match "page_produit/index" => 'page_produit#index', :as => :page_produit_index #ALL
   match "page_produit/index/user/:user_id" => 'page_produit#index_by_revendeur', :as => :page_produit_index_by_revendeur #PAR REVENDEUR / AGRICULTEUR_
   match "page_produit/index/amap/:direction_id" => 'page_produit#index_by_directeur', :as => :page_produit_index_by_directeur #PAR DIRECTION / AMAP___
-  match "page_produit/index/categorie/:categorie_id" => 'page_produit#index_by_categorie', :as => :page_produit_index_by_categorie #PAR CATEGORIE______
+  match "page_produit/index/categorie/:categorie_id" => 'page_produit#index_by_categorie', :as => :page_produit_index_by_categorie, :via => :get #PAR CATEGORIE______
+  match "page_produit/index/categorie" => 'page_produit#index_by_categorie', :as => :page_produit_index_by_categorie, :via => :post #PAR CATEGORIE______
   #SHOW
   match "page_produit/show/:user_id/:product_id" => 'page_produit#show', :as => :page_produit_show
   #FILTER
@@ -76,7 +77,8 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   match "page_panier/index" => 'page_panier#index', :as => :page_panier_index #ALL
   match "page_panier/index/user/:user_id" => 'page_panier#index_by_revendeur', :as => :page_panier_index_by_revendeur #PAR REVENDEUR / AGRICULTEUR_
   match "page_panier/index/amap/:direction_id" => 'page_panier#index_by_directeur', :as => :page_panier_index_by_directeur #PAR DIRECTION / AMAP___
-  match "page_panier/index/categorie/:categorie_id" => 'page_panier#index_by_categorie', :as => :page_panier_index_by_categorie #PAR CATEGORIE______
+  match "page_panier/index/categorie/:categorie_id" => 'page_panier#index_by_categorie', :as => :page_panier_index_by_categorie, :via => :get#PAR CATEGORIE______
+  match "page_panier/index/categorie" => 'page_panier#index_by_categorie', :as => :page_panier_index_by_categorie, :via => :post#PAR CATEGORIE______
   #SHOW
   match "page_panier/show/:user_id/:panier_id" => 'page_panier#show', :as => :page_panier_show 
   #FILTER

@@ -98,68 +98,108 @@ class PageProduitController < ApplicationController
   
   #_________________________________________________________ LISTING BY CATEGORIE _______________________________________________
   def index_by_categorie
-  	@categorie = Categorie.find(params[:categorie_id])
-  	if @categorie.nil?
-  		@titre = "Cette categorie n'existe pas"
-  	else
   	
-	  	@titre = "Produit de la categorie : #{@categorie.nom}"
-	    @stocks = Stock.where(:categorie_id => params[:categorie_id])
-	    @produits = []
-	    #__ SI STOCK A CATEGORIE
-	    if @stocks.count != 0
-	    	@stocks.each do |stock|
-	    		@produit_vente_libre = ProduitVenteLibre.where(:stock_id => stock.id)
-	    		#__ SI PRODUIT EST EN VENTE LIBRE
-	    		if @produit_vente_libre.count != 0
-	    			@produit_vente_libre.each do |produit|
-	    				@produits << produit	
-	    			end
-	    			
-	    			@produits_first_block = []
-				  	@produit_middle_block = []
-				  	@produit_last_block = []
-				  	
-				  	if @produits.count < 5
-				  		@produit_middle_block = @produits
-				  	elsif @produits.count == 5
-				  		@first_huge_product = @produits[0]
-				  		(1..4).each do |i|
-				  			@produits_first_block << @produits[i]
-				  		end
-				  	elsif 5 < @produits.count
-				  		@first_huge_product = @produits[0]
-				  		(1..4).each do |i|
-				  			@produits_first_block << @produits[i]
-				  		end
-				  		
-				  		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
-					  		(5..@produits.count-6).each do |i|
-					  			@produit_middle_block << @produits[i]
-					  		end
-						 
-					  		(@produits.count-5..@produits.count-2).each do |i|
-					  			@produit_last_block << @produits[i]
-					  		end
-					  		@last_huge_product = @produits[@produits.count-1] 
-				  		else
-				  			(5..@produits.count-1).each do |i|
-					  			@produit_middle_block << @produits[i]
-					  		end
-				  		end
-				  	end
+  	if !params[:categorie_id].kind_of?(Array) && !params[:categorie_id].nil? && params[:categorie_id] != ""
+  		begin
+  			@categorie = Categorie.find(params[:categorie_id])
+  		rescue
+  			@categorie = nil
+  		end
+  	else
+  		@categorie = nil
+  	end
+  	
+  	@all_categorie = Categorie.all
+	
+	if params[:categorie_id].kind_of?(Array) && (params[:categorie_id].nil? || params[:categorie_id] == "")
+  		@titre = "Toutes les  categories"
+  		@stocks = Stock.all
+  	else
+  		if @categorie.nil? && !params[:categorie_id].kind_of?(Array)
+  			@titre = "Toutes les  categories"
+  			@stocks = Stock.all
+  		else
+  			if !params[:categorie_id].kind_of?(Array)
+  				@titre = "Produit de la categorie : #{@categorie.nom}"
+  			end 
+  			
+  			@stocks = Stock.where(:categorie_id => params[:categorie_id])
+  		end
+    end
 
-	    		end   	
-	    	end
-	    end
+    
+    @produits = Array.[]
+    @produits_first_block = Array.[]
+	@produit_middle_block = Array.[]
+	@produit_last_block = Array.[]
+    #__ SI STOCK A CATEGORIE
+    if @stocks.count != 0
+    	@stocks.each do |stock|
+    		@produit_vente_libre = ProduitVenteLibre.where(:stock_id => stock.id)
+    		#__ SI PRODUIT EST EN VENTE LIBRE
+    		if @produit_vente_libre.count != 0
+    			@produit_vente_libre.each do |produit|
+    				@produits << produit	
+    			end
+    			
+    			# @produits_first_block = Array.[]
+# 				  	@produit_middle_block = Array.[]
+# 				  	@produit_last_block = Array.[]
+			  	
+			  	if @produits.count < 5
+			  		@produit_middle_block = @produits
+			  	elsif @produits.count == 5
+			  		@first_huge_product = @produits[0]
+			  		(1..4).each do |i|
+			  			@produits_first_block << @produits[i]
+			  		end
+			  	elsif 5 < @produits.count
+			  		@first_huge_product = @produits[0]
+			  		(1..4).each do |i|
+			  			@produits_first_block << @produits[i]
+			  		end
+			  		
+			  		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
+				  		(5..@produits.count-6).each do |i|
+				  			@produit_middle_block << @produits[i]
+				  		end
+					 
+				  		(@produits.count-5..@produits.count-2).each do |i|
+				  			@produit_last_block << @produits[i]
+				  		end
+				  		@last_huge_product = @produits[@produits.count-1] 
+			  		else
+			  			(5..@produits.count-1).each do |i|
+				  			@produit_middle_block << @produits[i]
+				  		end
+			  		end
+			  	end
+
+    		end   	
+    	end
 	end
     
-    #__FIL D'ARIANNE__
-   	@tab_breadcrumb.push({:path => page_produit_index_by_directeur_path(params[:categorie_id]), :title => @categorie.nom})
-    #_________________
+    if !params[:categorie_id].kind_of?(Array) && !params[:categorie_id].nil? && params[:categorie_id] != "" && @categorie != nil
+	    #__FIL D'ARIANNE__
+	   	@tab_breadcrumb.push({:path => page_produit_index_by_directeur_path(params[:categorie_id]), :title => @categorie.nom})
+	    #_________________
+	else
+	
+	end
     
-    
-    render :index
+    respond_to do |format|
+  		format.json { render :partial => "list", :locals => { 
+  			#render :json => {
+  				:produits => @produits, 
+  				:produits_first_block => @produits_first_block,
+  				:first_huge_product =>  @first_huge_product,
+  				:produit_middle_block => @produit_middle_block,
+  				:produit_last_block => @produit_last_block,
+  				:last_huge_product => @last_huge_product	
+  				}
+  		}
+  		format.html { render :index }
+  	end
   end
   
   

@@ -113,7 +113,7 @@
     @include box-shadow(rgba(255,255,255, 1) 0px 1px 1px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
     @include background-image(linear-gradient(rgba(255, 255, 255, 0.2), rgba(000, 000, 000, 0.05)));
   }
-  &:active {
+  &:active,&.is_click {
     color:#ffffff;
     text-shadow:none;
     background-color: transparentize($border-color, 0.7);
