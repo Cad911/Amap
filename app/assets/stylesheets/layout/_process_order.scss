@@ -33,7 +33,7 @@
 		.l_photo_description {
 			.image {
 				.radio{
-					background-position:0px -26px;
+					@include ui-sprite(radio_active);
 				}					
 			}
 		}

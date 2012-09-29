@@ -859,6 +859,7 @@ ul.dropdown_menu {
   display:inline-block;
   width:16px;
   height:16px;
+  min-height:inherit;
   @include ui-sprite(radio);
   &:hover {
     cursor:pointer;
