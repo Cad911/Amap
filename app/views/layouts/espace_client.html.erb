@@ -49,8 +49,120 @@
 
 </head>
 <body>
+<header>
 
-<div class="ground_top backoffice"></div>
+  <div class="l_header_wrapper">
+
+
+    <div class="logo"><div class="link"><%= link_to "",root_path %></div></div>
+
+    
+    <div class="l_nav">
+
+      <div class="l_nav_element l_dual_sign">
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link basket" data-toggle="dropdown"><span></span>Paniers</a>
+          <ul class="dropdown-menu dropdown_menu">
+            <li> <%= link_to "Tous",page_panier_index_path %> </li>
+            <%  Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+              <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="dropdown product">
+          <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown"><span></span>Produits</a>
+          <ul class="dropdown-menu dropdown_menu">
+          <li> <%= link_to "Tous",page_produit_index_path %> </li>
+            <% Categorie.all.each do |categorie| %>
+            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+              <li> <%= link_to categorie.nom,page_produit_index_by_categorie_path(categorie.id) %> </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="l_nav_element l_single_sign">
+        <div class="dropdown">
+          <%= link_to page_revendeur_index_path, :class => "l_link farmer" do %>
+            <span></span>Agriculteur
+          <% end %>
+        </div>
+      </div>
+
+      <div class="l_nav_element l_dual_sign">
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown"><span></span>Le Blog</a>
+        </div>
+        <div class="dropdown">
+          <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown"><span></span>Nous</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sunshine"><span class="ray_of_sunshine"></span><span class="round_of_sunshine"></span></div>
+
+
+
+
+    <div class="box box-login">
+      <div class="login">
+        <span class="user"></span>
+        <% if current_client.nil? %>
+          <span class="sign_in"><a>connexion</a></span>&nbsp;/&nbsp;<span class="sign_up"><a>inscription</a></span>
+        <% else %>
+          <span class="sign_in connected"><%= link_to "Mes infos" , espace_client_client_path(current_client.id) %></span>&nbsp;/&nbsp;
+          <span class="sign_up connected"><%= link_to "deconnexion", client_logout_path() , :method => 'delete' %></span>
+        <% end %>
+       
+      </div>
+
+      <div class="social">
+        <ul>
+          <li class="facebook"><a href=""><span></span></a></li>
+          <li class="twitter"><a href=""><span></span></a></li>
+          <li class="googleplus"><a href=""><span></span></a></li>
+          <li class="newsletter"><a href=""><span></span></a></li>
+          <br class="clear">
+        </ul>  
+      </div>
+    </div>
+
+
+  </div>
+ 
+
+
+  <!-- <% if !current_client.nil? %>
+      <% if can? :update, Client.find(current_client.id) %>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown"> Espace Client <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li> <%= link_to "Mes infos",espace_client_client_path(current_client.id) %> </li>
+            <li> <%= link_to "Se deconnecter", client_logout_path(), :method => 'delete' %> </li>
+          </ul>
+        </li>
+      <% end %>
+    <% else %>
+      <li> <%= link_to "Se connecter",new_client_session_path() %> </li>
+    <% end %>-->
+
+  <div class="grass"></div>
+
+    <div class="clouds">
+      <div class="little_clouds">
+        <!--<span class="cloud one"></span>-->
+        <!--<span class="cloud two"></span>-->
+      </div>
+      <div class="big_clouds">
+        <!--<span class="cloud one"></span>-->
+      </div>
+    </div>
+
+</header>
+
+<div class="ground_top "></div>
 
 <div class="lightbox_wrapper lightbox_information">
   <div class="lightbox">
@@ -122,7 +234,7 @@
 		<% if current_user %>
 			<div class="side_navigation">
 				<ul class="pannels">
-					<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
+					<li class="archive top"><span class="picture"></span><span class="link">Historique</span></li>
 					<%= link_to administration_user_path(current_user) do %>
 					<li class="settings bottom"><span class="picture"></span><span class="link">Paramètres</span></li>
 <!-- 					<li> <%= link_to "deconnexion", user_logout_path() , :method => 'delete' %> </li> -->

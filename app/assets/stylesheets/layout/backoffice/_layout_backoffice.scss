@@ -769,4 +769,11 @@ body .backoffice {
 		}
 	}
 }
+.table th, .table td {
+	line-height:17px;
+}
+.backoffice .commandes table tr td:first-child {
+	width: inherit;
+}
+
 
