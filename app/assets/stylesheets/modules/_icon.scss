@@ -1,0 +1,219 @@
+@mixin icon($name) {
+  display:block;
+
+  @if $name == 'basket' {
+    width:40px;
+    height:42px;
+  }
+  @if $name == 'basket_hover' {
+    width:40px;
+    height:42px;
+  }
+
+  @if $name == 'product' {
+    width:28px;
+    height:38px;  
+  }
+  @if $name == 'product_hover'{
+    width:28px;
+    height:38px;  
+  }
+
+  @if $name == 'farmer' {
+    width:33px;
+    height:34px;
+  }
+  @if $name == 'farmer_hover'{
+    width:33px;
+    height:34px;  
+  }  
+
+  @if $name == 'blog' {
+    width:26px;
+    height:38px;
+  }
+  @if $name == 'blog_hover' {
+    width:26px;
+    height:38px;
+  }
+
+  @if $name == 'logo'  {
+    width:35px;
+    height:35px;  
+  }
+  @if $name == 'logo_hover' {
+    width:35px;
+    height:35px;  
+  }
+  @if $name == 'close_cross' {
+    width:25px;
+    height:25px;  
+  }
+  @if $name == 'close_cross_hover' {
+    width:25px;
+    height:25px;  
+  }     
+
+
+  @if $name == #{$name} + _hover {
+    @include nav-sprite(#{$name});     
+  }  
+  @else {
+    @include nav-sprite($name);    
+  }
+
+}
+.icon.icon-basket {
+  margin:0px 05px 0 0;
+  @include backoffice-sprite(basket_hover);
+  display: inline-block;
+  width: 19px;
+  height: 16px; 
+} 
+.icon.icon-product {
+  margin:0px 05px 0 0;
+  @include backoffice-sprite(product_hover);
+  display: inline-block;
+  width: 18px;
+  height: 26px; 
+}
+.icon.icon-bold {
+  @include ui-sprite(bold);
+  display: inline-block;
+  width: 12px;
+  height: 13px; 
+}
+.icon.icon-italic {
+  @include ui-sprite(italic);
+  display: inline-block;
+  width: 5px;
+  height: 13px; 
+}
+.icon.icon-h1 {
+  @include ui-sprite(h1);
+  display: inline-block;
+  width: 20px;
+  height: 13px; 
+}
+.icon.icon-h2 {
+  @include ui-sprite(h2);
+  display: inline-block;
+  width: 21px;
+  height: 13px; 
+}
+.icon.icon-list_blog {
+  @include ui-sprite(list_blog);
+  display: inline-block;
+  width: 14px;
+  height: 13px; 
+}
+.icon.icon-picture {
+  @include ui-sprite(picture);
+  display: inline-block;
+  width: 14px;
+  height: 13px; 
+}
+.icon.icon-link {
+  @include ui-sprite(link);
+  display: inline-block;
+  width: 12px;
+  height: 13px; 
+}
+.icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  @include ui-sprite(help_hover);
+}
+
+.icon-puce {@include ui-sprite(circle);width:6px;height:6px;margin-right:10px;}
+
+.close_cross {
+  display:block;
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  width:25px;
+  height:25px;
+  @include ui-sprite(close_cross);
+  &:hover {
+    cursor:pointer;
+  }
+}
+.deleted_p_c { @extend .close_cross; }
+
+.close_square {
+  display:inline-block;
+  height:29px;
+  width:32px;
+  @include ui-sprite(close_square);
+  &:hover {
+    cursor:pointer;
+  }
+  &:active {
+    @include ui-sprite(close_square_active);  
+    cursor:pointer;
+  }
+}
+
+.radio {
+  display:inline-block;
+  width:16px;
+  height:16px;
+  min-height:inherit;
+  @include ui-sprite(radio);
+  &:hover {
+    cursor:pointer;
+  }
+  &.active {
+    @include ui-sprite(radio_active);
+  }
+}
+
+.minus {
+  display:inline-block;
+  width:25px;
+  height:25px;
+  @include ui-sprite(minus);
+  &:hover {
+    cursor:pointer;
+  }
+}
+
+.plus {
+  display:inline-block;
+  width:25px;
+  height:25px;
+  @include ui-sprite(plus);
+  &:hover {
+    cursor:pointer;
+  }
+}
+
+.right_arrow {
+  display:inline-block;
+  width:28px;
+  height:152px;
+  @include ui-sprite(right_arrow);
+}
+
+.switch {
+  display:inline-block;
+  width:22px;
+  height:25px;
+  @include ui-sprite(switch);
+  &:hover {
+    cursor:pointer;
+  }  
+}
+
+.down_arrow {
+  display:inline-block;
+  width:9px;
+  height:11px;
+  @include ui-sprite(down_arrow);
+  &:hover {
+    cursor:pointer;
+  }  
+}
