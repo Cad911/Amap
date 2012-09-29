@@ -1,6 +1,33 @@
-<h1>Administration::Blog#new_article</h1>
-<p>Find me in app/views/administration/blog/new_article.html.erb</p>
+<div class="page-header">
+	<h1>Nouvel article</h1>
+	<ul class="buttons">
+		<li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+		<li class="separator"></li>
+		<li class="help button button_active" tool_tip="aide"><span class="picture"></span></li>        
+	</ul>
+</div>	
+<div class="helper">
+	<p class="title is_bold"><i class="icon ui-help_hover"></i>Rédaction d'articles</p>
+	<span class="close"><i class="icon-remove"></i></span>
+	<ul class="content">
+		<li><span class="is_bold">Créer un article</span> depuis la barre d'action située en haut de la page, en cliquant sur le bouton ajouter.</li>
+		<li><span class="is_bold">Modifier un article</span> depuis son billet, en cliquant sur le bouton au crayon.</li>
+		<li><span class="is_bold">Supprimer un article</span> depuis son billet, en cliquant sur le bouton rouge à la corbeille.</li>
+	</ul>
+</div>
 <input type="hidden" class="user_id" value="<%= current_user.id %>" />
+<div class="title-bar blog">
+	<ul>
+		<li class="filter bold"><i class="icon icon-bold "></i></li>
+		<li class="filter italic"><i class="icon icon-italic"></i></li>
+		<li class="filter list_blog"><i class="icon icon-list_blog"></i></li>
+		<li class="filter picture"><i class="icon icon-picture"></i></li>
+		<li class="filter h1"><i class="icon icon-h1"></i></li>
+		<li class="filter h2"><i class="icon icon-h2"></i></li>
+		<li class="filter link"><i class="icon icon-link"></i></li>
+	</ul>
+</div>
+<br><br>
 <div class="wysiwig_admin">
 	<div id="toolbar-edit">
 		<a class="button" data-wysihtml5-command="bold"> <span> G </span></a>

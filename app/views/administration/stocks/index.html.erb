@@ -34,19 +34,6 @@
 	<p class="content">Modifier chaque éléments d'un produit en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 </div>
 
-<div class="title-bar blog">
-	<ul>
-		<li class="filter bold"><i class="icon icon-bold "></i></li>
-		<li class="filter italic"><i class="icon icon-italic"></i></li>
-		<li class="filter list_blog"><i class="icon icon-list_blog"></i></li>
-		<li class="filter picture"><i class="icon icon-picture"></i></li>
-		<li class="filter h1"><i class="icon icon-h1"></i></li>
-		<li class="filter h2"><i class="icon icon-h2"></i></li>
-		<li class="filter link"><i class="icon icon-link"></i></li>
-	</ul>
-</div>
-<br><br>
-
 <ul class="cards">
 	<% @stocks.each do |stock| %>
 	<%= render :partial => 'card', :locals => {:stock => stock} %>
