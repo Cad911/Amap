@@ -33,7 +33,7 @@
 		.l_photo_description {
 			.image {
 				.radio{
-					background-position:0px -26px;
+					@include ui-sprite(radio_active);
 				}					
 			}
 		}
@@ -357,5 +357,15 @@
 				}
 			}
 		}	
+	}
+}
+.l_process_order.step_4 {
+	text-align: center;
+	.helper {
+		width:400px;
+		margin:0 auto;
+	}
+	h2 {
+
 	}
 }

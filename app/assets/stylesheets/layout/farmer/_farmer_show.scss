@@ -59,61 +59,6 @@ body .l_wrapper.frontoffice .l_main_gutter.farmer_show {
 			}
 		}
 	}
-	.bar {
-		display:block;
-		width:880px;
-		height:41px;
-		padding:5px 45px 0 45px;
-		margin-left:-5px;
-		border:solid $light_brown 1px;
-		@include box-shadow(rgba(0,0,0, 0.5) 0px 3px 5px);
-		position:relative;
-		z-index:90;		
-		background-image:url(../images/bar.png);
-		span {
-			color:$brown;
-		}
-		.proposing {
-			display:inline-block;
-			margin-right:40px;
-			.title {
-				margin:9px 0 0 0;
-				@include title(1,15);
-			}			
-		}
-		.filter {
-			@include embossed_button($light_brown);
-		}
-		//MY MODIF
-		.filter_active{
-		    color:#ffffff;
-		    text-shadow:none;
-		    background-color: transparentize($light_brown, 0.7);
-		    border:solid 1px darken($light_brown, 5%);
-		    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
-		}
-		.shadow_photo {
-			width:172px;
-			height:172px;
-			padding:8px 7px 0 7px;
-			margin-top:-153px;			
-			background-image:url(../images/photo_shadow.png);			
-			background-repeat:no-repeat;
-			float:right;
-			.photo {
-				display:block;
-				padding:10px;
-				width:150px;
-				height:150px;
-				background-color:#fcfcfc;
-				border:solid 1px #ffffff;
-				img {
-					width:150px;
-					height:150px;
-				}
-			}
-		}
-	}
 	ul.farmers_products {
 		position:relative;
 		z-index:89;
@@ -181,3 +126,58 @@ body .l_wrapper.frontoffice .l_main_gutter.farmer_show {
 		}
 	}
 }
+.title-bar {
+		display:block;
+		width:880px;
+		height:41px;
+		padding:5px 45px 0 45px;
+		margin-left:-5px;
+		border:solid $light_brown 1px;
+		@include box-shadow(rgba(0,0,0, 0.5) 0px 3px 5px);
+		position:relative;
+		z-index:90;		
+		background-image:url(../images/bar.png);
+		span {
+			color:$brown;
+		}
+		.proposing {
+			display:inline-block;
+			margin-right:40px;
+			.title {
+				margin:9px 0 0 0;
+				@include title(1,20px);
+			}			
+		}
+		.filter {
+			@include embossed_button($light_brown);
+		}
+		//MY MODIF
+		.filter_active{
+		    color:#ffffff;
+		    text-shadow:none;
+		    background-color: transparentize($light_brown, 0.7);
+		    border:solid 1px darken($light_brown, 5%);
+		    @include box-shadow(rgba(0,0,0, 0.4) 0px 0px 3px 0px inset, rgba(255,255,255, 1) 0px 1px 1px 0px);
+		}
+		.shadow_photo {
+			width:172px;
+			height:172px;
+			padding:8px 7px 0 7px;
+			margin-top:-153px;			
+			background-image:url(../images/photo_shadow.png);			
+			background-repeat:no-repeat;
+			float:right;
+			.photo {
+				display:block;
+				padding:10px;
+				width:150px;
+				height:150px;
+				background-color:#fcfcfc;
+				border:solid 1px #ffffff;
+				img {
+					width:150px;
+					height:150px;
+				}
+			}
+		}
+	}

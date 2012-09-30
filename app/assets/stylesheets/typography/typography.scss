@@ -1,0 +1,18 @@
+// Définition des polices en CSS3
+@font-face {
+	font-family: bellopro;
+	src: url('/../fonts/bellopro.otf');
+	font-weight:normal !important;
+}
+@font-face {
+	font-family: helveticaneue;
+	src: url('/../fonts/HelveticaNeueLTStd-Roman.otf');
+}
+@font-face {
+	font-family: helveticaneue-italic;
+	src: url('/../fonts/HelveticaNeueLTStd-It.otf');
+}
+@font-face {
+	font-family: helveticaneue-bold;
+	src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
+}

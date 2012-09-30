@@ -34,148 +34,9 @@
 	<p class="content">Modifier chaque éléments d'un produit en cliquant simplement dessus. Une boite de modification apparatitra alors.</p>
 </div>
 
-<!-- <div class="table">
-    <table class="">
-      <tr>
-    <!--     <th>Id</th>
-     --><!--     <th>User</th> 
-        <th>Titre</th>
-        <!-- <th>Categorie</th> 
-        <th> Mis en Rayon</th>
-        <th>Description</th>
-        <!-- <th>Deleted</th> 
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    
-    <% @stocks.each do |stock| %>
-      <tr>
-    <!--     <td><%= stock.id %></td>
-     --><!--     <td><%= stock.user_id %></td>
-
-        <td><%= stock.titre %> <span class="type is_italic">(<%= stock.unite_mesure.abbreviation %>)</span></td>
-    <!--     <td><%= stock.categorie_id %></td> 
-        <td> <%= stock.quantiteProduitVente.to_int %> / <%= stock.quantite.to_int %> </td>
-        <td><%= stock.description %></td>
-        <!-- <td><%= stock.deleted %></td> 
-        <td class="action">
-          <ul class="buttons_card">
-            
-            <%= link_to administration_user_stock_path(params[:user_id],stock) do %>
-            	<li class="historique button" tool_tip="historique"><span class="picture"></span></li>
-            <% end %>
-            
-            <%= link_to edit_administration_user_stock_path(params[:user_id],stock) do %> 
-              <li class="edit button" tool_tip="modifier"><span class="picture"></span></li>
-            <% end %>            
-            
-            <%= link_to administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete do %>
-            	<li class="delete button" tool_tip="supprimer"><span class="picture"></span></li>
-            <% end %>
-          </ul>          
-        </td>
-      </tr>
-    <% end %>
-    </table>
-</div> -->
-
-<%#= link_to 'Nouveau Stock', new_administration_user_stock_path %>
-
-
 <ul class="cards">
 	<% @stocks.each do |stock| %>
 	<%= render :partial => 'card', :locals => {:stock => stock} %>
-	<!--
-<li class="card fade in">
-		<div class="left_area">
-			<div class="is_small has_corners_shadow"></div>
-			<div class="picture first_cloumn"></div> 
-			<div class="picture"></div>
-			<div class="picture first_cloumn"></div>
-			<div class="picture"></div>
-		</div>
-		<div class="right_area">
-			<div class="informations_card">
-				<input type="hidden" class="user_id" value="<%= current_user.id %>" />
-				<input type="hidden" class="id_stock" value="<%= stock.id %>" />
-				<input type="hidden" class="id_produit_vente_libre" value="<%= stock.produit_vente_libre.id if stock.produit_vente_libre %>" />
-			</div>
-			<div class="header">
-				<h2 class="title"><%= stock.titre %></h2>
-				<ul class="buttons_card">
-					<%= link_to administration_user_stock_path(params[:user_id],stock) do %>
-					<li class="historique button" tool_tip="historique"><span class="picture"></span></li>
-					<% end %>
-
-					
-					<li class="edit button" tool_tip="modifier"><span class="picture"></span></li>
-					
-
-					<%= link_to administration_user_stock_path(params[:user_id],stock), confirm: 'Are you sure?', method: :delete do %>
-					<li class="delete button" tool_tip="supprimer"><span class="picture"></span></li>
-					<% end %>
-				</ul>
-				<div class="clear"></div>
-			</div>
-			<div class="body">
-				<p class="description"><%= stock.description %></p>          
-			</div>
-			<div class="footer">
-				<ul>
-					<li class="details prix">
-						<span class="label">Prix:</span>
-						<span class="value"> 
-							<% if stock.produit_vente_libre %>
-							<% if (stock.produit_vente_libre.prix_unite_ttc).to_int == (stock.produit_vente_libre.prix_unite_ttc) %>
-							<%= ((stock.produit_vente_libre.prix_unite_ttc).to_int).to_s %> <span class='is_italic'> € </span>
-							<% else %>
-							<%= ((stock.produit_vente_libre.prix_unite_ttc)).to_s %> <span class='is_italic'> € </span>
-							<% end %>
-							<% else  %>
-							Aucun prix defini
-							<% end %>
-
-						</span>
-					</li>
-					<li class="details unite_mesure">
-						<span class="label">Unité:</span>
-						<span class="value"> 
-							<%= stock.unite_mesure.nom %> 
-						</span>
-					</li>
-					<li class="details quantite_lot">
-						<span class="label">Vendu par lots de :</span>
-						<span class="value">
-							<% if stock.produit_vente_libre %>
-							<%= (stock.produit_vente_libre.quantite).to_int %> <span class="is_italic info_unite_mesure_id">( <%= stock.unite_mesure.nom %>)</span> 
-							<%	else %>
-							Aucun lot en vente actuellement
-							<%	end %>
-						</span>
-					</li>
-					<li class="details nombre_pack">
-						<span class="label">Lots en boutique:</span>
-						<span class="value"> 
-							<% if stock.produit_vente_libre %>
-							<%= (stock.produit_vente_libre.nombre_pack) %> <span class="is_italic">/ <%= (stock.produit_vente_libre.lotPossibleMax) %> (max)</span> 
-							<%	else %>
-							Aucun lot en vente actuellement
-							<%	end %>
-						</span>
-					</li>
-					<li class="details stock_total">
-						<span class="label">Stock total:</span>
-						<span class="value"> <%= (stock.quantite).to_int %> <span class="is_italic info_unite_mesure_id">(<%= stock.unite_mesure.nom %>)</span></span>
-					</li>
-					<div class="clear"></div>
-				</ul>
-			</div>
-		</div>
-		<div class="clear"></div>
-	</li>
-	<div class="clear"></div>
--->
 <% end %>
 </ul>
 
@@ -297,15 +158,6 @@
 									<%= text_field(:produit_vente_libre, :nombre_pack) %>
 								</div>
 							</div>
-
-					    	<!--
-<div class="control-group float optional">
-					    		<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  prix unite ht </label>
-					    			<div class="controls">
-					    				<%= text_field(:produit_vente_libre, :prix_unite_ht) %>
-					    			</div>
-					    	</div>
-					    -->
 
 					    <div class="control-group float optional">
 					    	<label class="float optional control-label" for="produit_vente_libre_prix_unite_ht">  Prix unite ttc </label>

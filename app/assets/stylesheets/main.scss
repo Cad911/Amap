@@ -14,93 +14,6 @@ $dark_bg_color:#f0ede6;
 
 $embossed_dark:#C8C5BF;
 
-// Définition des polices en CSS3
-@font-face {
-	font-family: bellopro;
-	src: url('/../fonts/bellopro.otf');
-	font-weight:normal !important;
-}
-@font-face {
-	font-family: helveticaneue;
-	src: url('/../fonts/HelveticaNeueLTStd-Roman.otf');
-}
-@font-face {
-	font-family: helveticaneue-italic;
-	src: url('/../fonts/HelveticaNeueLTStd-It.otf');
-}
-@font-face {
-	font-family: helveticaneue-bold;
-	src: url('/../public/fonts/HelveticaNeueLTStd-Bd.otf');
-}
-
-// Style de titre
-@mixin title($style, $taille) {
-	* {
-		@if $style == 1 {
-			font-family: bellopro, Lobster;
-			color:$brown;
-			font-weight:normal !important
-			;
-		}
-		@else if $style == 2 {
-			font-family: helveticaneue-bold, helvetica;
-			font-weight:bold;
-			color: $red;
-		}
-		text-shadow:1px 1px 1px #ffffff;
-		font-size: $taille;
-	}
-	@if $style == 1 {
-		font-family: bellopro, Lobster;
-		color:$brown;
-		font-weight:normal !important
-		;
-	}
-	@else if $style == 2 {
-		font-family: helveticaneue-bold, helvetica;
-		font-weight:bold;
-		color: $red;
-	}
-	text-shadow:1px 1px 1px #ffffff;
-	font-size: $taille;	
-}
-
-// Coins arrondis
-@mixin borderradius($arrdondis) {
-	-webkit-border-radius: $arrdondis;
-	-moz-border-radius: $arrdondis;
-	border-radius: $arrdondis;
-}
-@mixin box {
-	@include borderradius(5px); 
-	@include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
-	border: solid 1px #ffffff;
-	background:#fafafa url(/../images/patterns/paper.png) repeat;
-}
-
-@mixin margin {
-	margin-left:auto;
-	margin-right:auto;
-}
-
-
-// Box shadow
-@mixin boxshadow($x, $y, $blur, $spread, $color) {
-	-webkit-box-shadow: $x $y $blur $spread $color;
-	-moz-box-shadow: $x $y $blur $spread $color;
-	box-shadow: $x $y $blur $spread $color;
-}
-
-
-@-webkit-keyframes rotate {
-		from {
-				-webkit-transform: rotate(0deg);
-		}
-		to {
-				-webkit-transform: rotate(360deg);
-		}
-}
-
 //Définitions des Sprites
 @import "compass/css3"; //necessaire pour les sprites
 
@@ -128,79 +41,14 @@ $backoffice-layout:smart;
 @import "backoffice/*.png";
 @include all-ui-sprites;
 
-// fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
-@mixin sunshine {
-	position:absolute;
-	display:block;
-	width:257px;
-	height:257px;
-	top:-40px;
-	left:0;
-	.round_of_sunshine {
-		display:block;
-		width: 115px;
-		height: 115px;
-		background-image:url('/../images/sunshine_sprite_small.png');
-		background-position: center top;
-		z-index:100;
-		top:0;
-		left:0;
-	}
-	.ray_of_sunshine {
-		position:absolute;
-		top:-71px;
-		left:-71px;
-		display:block;
-		width: 257px;
-		height: 257px;
-		background-image:url('/../images/sunshine_sprite_small.png');
-		background-position: center bottom;
-		z-index:-1;
-		-webkit-animation-name:             rotate;
-		-webkit-animation-duration:         100s;
-		-webkit-animation-iteration-count:  infinite;
-		-webkit-transition-timing-function: linear;
-	}
-}
-
-// Nuages
-@mixin clouds {
-	width:100%;
-	position:absolute;
-	top:0;
-	.big_clouds {
-		.cloud {
-			display:block;
-			width:133px;
-			height:41px;       
-			@include nav-sprite(cloud);
-		}
-	}
-	.little_clouds {
-		.cloud{
-			 display:block;    
-			 width:100px;
-			 height:32px;      
-			 @include nav-sprite(cloud_little);
-		} 
-	}
-}
-
-// Ajoute un fond pour créer une colonne "fictive" à la div l_main_gutter {
-.has_column {
-	background: url(/../images/bg_column.png) repeat;
-}
-.has_dark_bg {
-	background: url(/../images/bg_darkener.png) repeat;  
-}
-
 
 // Inclusion de fichier .scss
 @import "base/normalize";
 @import "compass/utilities";
+@import "typography/typography";
+@import "modules/module";
 @import "compass/css3/transform";
 @import "base/base";
-@import "modules/module";
 @import "layout/layout";
 @import "state/state";
 @import url(http://fonts.googleapis.com/css?family=Lobster);     // police google web-fond alternative de Bello Pro

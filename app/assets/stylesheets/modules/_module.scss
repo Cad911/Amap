@@ -1,9 +1,140 @@
+@import "icon";
+
 // Texte alternatif, a 2 états
 .note {
   font-size: 13px;
   color:#B2B2B2;
 }
 
+// Style de titre
+@mixin title($style, $taille) {
+  * {
+    @if $style == 1 {
+      font-family: bellopro, Lobster;
+      color:$brown;
+      font-weight:normal !important
+      ;
+    }
+    @else if $style == 2 {
+      font-family: helveticaneue-bold, helvetica;
+      font-weight:bold;
+      color: $red;
+    }
+    text-shadow:1px 1px 1px #ffffff;
+    font-size: $taille;
+  }
+  @if $style == 1 {
+    font-family: bellopro, Lobster;
+    color:$brown;
+    font-weight:normal !important
+    ;
+  }
+  @else if $style == 2 {
+    font-family: helveticaneue-bold, helvetica;
+    font-weight:bold;
+    color: $red;
+  }
+  text-shadow:1px 1px 1px #ffffff;
+  font-size: $taille; 
+}
+
+// Coins arrondis
+@mixin borderradius($arrdondis) {
+  -webkit-border-radius: $arrdondis;
+  -moz-border-radius: $arrdondis;
+  border-radius: $arrdondis;
+}
+@mixin box {
+  @include borderradius(5px); 
+  @include box-shadow(rgba(0,0,0, 0.3) 0px 0px 10px 2px);
+  border: solid 1px #ffffff;
+  background:#fafafa url(/../images/patterns/paper.png) repeat;
+}
+// fonction créant le soleil, définie ici pour être appelée à la fin (permet de charger les autres images d'abord)
+@mixin sunshine {
+  position:absolute;
+  display:block;
+  width:257px;
+  height:257px;
+  top:-40px;
+  left:0;
+  .round_of_sunshine {
+    display:block;
+    width: 115px;
+    height: 115px;
+    background-image:url('/../images/sunshine_sprite_small.png');
+    background-position: center top;
+    z-index:100;
+    top:0;
+    left:0;
+  }
+  .ray_of_sunshine {
+    position:absolute;
+    top:-71px;
+    left:-71px;
+    display:block;
+    width: 257px;
+    height: 257px;
+    background-image:url('/../images/sunshine_sprite_small.png');
+    background-position: center bottom;
+    z-index:-1;
+    -webkit-animation-name:             rotate;
+    -webkit-animation-duration:         100s;
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-transition-timing-function: linear;
+  }
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+// Nuages
+@mixin clouds {
+  width:100%;
+  position:absolute;
+  top:0;
+  .big_clouds {
+    .cloud {
+      display:block;
+      width:133px;
+      height:41px;       
+      @include nav-sprite(cloud);
+    }
+  }
+  .little_clouds {
+    .cloud{
+       display:block;    
+       width:100px;
+       height:32px;      
+       @include nav-sprite(cloud_little);
+    } 
+  }
+}
+
+// Ajoute un fond pour créer une colonne "fictive" à la div l_main_gutter {
+.has_column {
+  background: url(/../images/bg_column.png) repeat;
+}
+.has_dark_bg {
+  background: url(/../images/bg_darkener.png) repeat;  
+}
+// Box shadow
+@mixin boxshadow($x, $y, $blur, $spread, $color) {
+  -webkit-box-shadow: $x $y $blur $spread $color;
+  -moz-box-shadow: $x $y $blur $spread $color;
+  box-shadow: $x $y $blur $spread $color;
+}
+
+@mixin margin {
+  margin-left:auto;
+  margin-right:auto;
+}
 
 // Ombre 2 coins pliés, a 2 états
 .has_corners_shadow {
@@ -36,6 +167,12 @@
   border:$embossed_dark solid 1px;
   @include border-radius(5px);
   background-color:rgba($brown, 0.05);
+  ul {
+    li {
+      list-style: disc;
+      margin:10px 0 0 40px;
+    }
+  }
   .title {
     padding:0 20px 0 0;
     margin:0;
@@ -230,7 +367,7 @@
 		  position:relative;	
 		  overflow: hidden;
 		  display: inline-block;
-		  width: 45px;
+		  width: 47px;
 		  height: 20px;
 		  z-index: 99;
 		
@@ -651,161 +788,10 @@ ul.dropdown_menu {
 
 
 // Classes réutilisables
-@mixin icon($name) {
-  display:block;
 
-  @if $name == 'basket' {
-    width:40px;
-    height:42px;
-  }
-  @if $name == 'basket_hover' {
-    width:40px;
-    height:42px;
-  }
-
-  @if $name == 'product' {
-    width:28px;
-    height:38px;  
-  }
-  @if $name == 'product_hover'{
-    width:28px;
-    height:38px;  
-  }
-
-  @if $name == 'farmer' {
-    width:33px;
-    height:34px;
-  }
-  @if $name == 'farmer_hover'{
-    width:33px;
-    height:34px;  
-  }  
-
-  @if $name == 'blog' {
-    width:26px;
-    height:38px;
-  }
-  @if $name == 'blog_hover' {
-    width:26px;
-    height:38px;
-  }
-
-  @if $name == 'logo'  {
-    width:35px;
-    height:35px;  
-  }
-  @if $name == 'logo_hover' {
-    width:35px;
-    height:35px;  
-  }
-  @if $name == 'close_cross' {
-    width:25px;
-    height:25px;  
-  }
-  @if $name == 'close_cross_hover' {
-    width:25px;
-    height:25px;  
-  }     
-
-
-  @if $name == #{$name} + _hover {
-    @include nav-sprite(#{$name});     
-  }  
-  @else {
-    @include nav-sprite($name);    
-  }
-
-}
 
 // BOUTONS
 
-.close_cross {
-  display:block;
-  position:absolute;
-  top:-8px;
-  right:-8px;
-  width:25px;
-  height:25px;
-  @include ui-sprite(close_cross);
-  &:hover {
-    cursor:pointer;
-  }
-}
-.deleted_p_c { @extend .close_cross; }
-
-.close_square {
-  display:inline-block;
-  height:29px;
-  width:32px;
-  @include ui-sprite(close_square);
-  &:hover {
-    cursor:pointer;
-  }
-  &:active {
-    @include ui-sprite(close_square_active);  
-    cursor:pointer;
-  }
-}
-
-.radio {
-  display:inline-block;
-  width:16px;
-  height:16px;
-  @include ui-sprite(radio);
-  &:hover {
-    cursor:pointer;
-  }
-  &.active {
-    @include ui-sprite(radio_active);
-  }
-}
-
-.minus {
-  display:inline-block;
-  width:25px;
-  height:25px;
-  @include ui-sprite(minus);
-  &:hover {
-    cursor:pointer;
-  }
-}
-
-.plus {
-  display:inline-block;
-  width:25px;
-  height:25px;
-  @include ui-sprite(plus);
-  &:hover {
-    cursor:pointer;
-  }
-}
-
-.right_arrow {
-  display:inline-block;
-  width:28px;
-  height:152px;
-  @include ui-sprite(right_arrow);
-}
-
-.switch {
-  display:inline-block;
-  width:22px;
-  height:25px;
-  @include ui-sprite(switch);
-  &:hover {
-    cursor:pointer;
-  }  
-}
-
-.down_arrow {
-  display:inline-block;
-  width:9px;
-  height:11px;
-  @include ui-sprite(down_arrow);
-  &:hover {
-    cursor:pointer;
-  }  
-}
 
 @mixin vertical_devider($height) {
   display:inline-block;
@@ -1087,29 +1073,7 @@ ul.dropdown_menu {
     @include single-box-shadow;
   }
 }
-.icon.icon-basket {
-  margin:0px 05px 0 0;
-  @include backoffice-sprite(basket_hover);
-  display: inline-block;
-  width: 19px;
-  height: 16px; 
-} 
-.icon.icon-product {
-  margin:0px 05px 0 0;
-  @include backoffice-sprite(product_hover);
-  display: inline-block;
-  width: 18px;
-  height: 26px; 
-}
-.icon {
-  display: inline-block;
-  width: 17px;
-  height: 17px;
-  vertical-align: middle;
-  @include ui-sprite(help_hover);
-}
 
-.icon-puce {@include ui-sprite(circle);width:6px;height:6px;margin-right:10px;}
 .is-grey {color: $grey;}
 .is-brown {color:$brown;}
 .is-red {color:$red;}
