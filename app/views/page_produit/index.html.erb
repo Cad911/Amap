@@ -38,8 +38,15 @@
 	      	<span class="switch"></span>
 	      </span>
     </div>
-    <div class="filters">
-      <span>trier par</span><span class="filter">date d'ajout <i class="vertical_devider"></i><i class="down_arrow"></i>&nbsp;</span>
+    <div class="dropdown filters" data-toggle="dropdown">
+     <span>trier par</span>
+      <span class="filter dropdown-toggle"  data-toggle="dropdown"> <span> Date d'ajout </span> <i class="vertical_devider"></i><i class="down_arrow"></i>&nbsp;</span>
+      <ul class="dropdown-menu dropdown_menu">
+      	<li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+      	<li class="is_click" data-order="date_ajout"> <a> Date d'ajout </a> </li>
+      	<li data-order="prix_croissant"> <a>Prix croissant </a></li>
+      	<li data-order="prix_decroissant"> <a>Prix decroissant </a></li>
+      </ul>
     </div>
   </div>
 
@@ -47,11 +54,17 @@
       <div class="filter_zone">
         <p class="title">Filtres</p>
         <p class="label">N'afficher que:</p>
-        <ul>
+        <ul class="filter_categorie">
 	        <% @all_categorie.each do |categorie| %>
 	        	<li data-id="<%= categorie.id %>"> <%= categorie.nom %> </li>
 	        <% end %>
         </ul>
+        <br class="clear">
+        <p class="label">Trier par:</p>
+        <ul class="filter_agriculteur">
+	        <% @all_agriculteurs.each do |agriculteur| %>
+	        	<li data-id="<%= agriculteur.id %>"> <%= agriculteur.nom %> <%= agriculteur.prenom %> </li>
+	        <% end %>
         </ul>
         <br class="clear">
       </div>

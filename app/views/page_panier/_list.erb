@@ -1,0 +1,123 @@
+<% if paniers.count > 0 %>
+	<!-- _______________________ first block ________________________________________-->
+	<% if paniers_first_block.count > 0 %>
+		<ul class="l_product_list huge_left">
+			 <li class="is_huge">
+			      <div class="l_photo_description is_huge is_vertical">
+			        <div class="image">
+			          <div class="has_corners_shadow is_huge">
+			          		<%= link_to page_panier_show_path(first_huge_panier.revendeur_id,first_huge_panier) do %>
+			          			<%= image_tag (first_huge_panier.default_image).image_url(:is_huge) if !(first_huge_panier.default_image).nil? %>
+			          		<% end %>
+			          </div>
+			        </div>
+			        <div class="content">
+			          <p class="title"> <%= link_to first_huge_panier.titre, page_panier_show_path(first_huge_panier.revendeur_id,first_huge_panier), :class => "title" %></p>
+			          <p class="description"><%= first_huge_panier.description %></p>
+			          <span class="price ">A partir de <%= first_huge_panier.min_price  %> € <span class="is_italic"> dès  <%= "#{first_huge_panier.min_personne} personnes"  %></span></span>
+			        </div>
+			      </div>
+    		</li>
+			<% paniers_first_block.each do |p| %>
+				<li>
+			      <div class="l_photo_description is_medium is_vertical">
+			        <div class="image">
+			          <div class="has_corners_shadow is_medium">
+			          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
+			          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
+			          		<% end %>
+			          </div>
+			        </div>
+			        <div class="content">
+			          <p class="title"> <%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
+			          <p class="description"><%= p.description %></p>
+			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic"> dès <%= "#{p.min_personne} personnes"  %></span></span>
+			        </div>
+			      </div>
+			    </li>
+			<% end %>
+			<br class="clear"/>
+		</ul>
+	<% end %>
+
+<!-- _______________________ middle block ________________________________________-->
+	<% if paniers_middle_block.count > 0 %>
+		<!-- <ul class="l_product_list" style=" min-height: 310px;"> -->
+			<% i = 0 %>
+			<% paniers_middle_block.each do |p| %>
+				<% if i%4 == 0 %>
+					<ul class="l_product_list" style=" min-height: 310px;">
+				<% end %>
+							<li>
+						      <div class="l_photo_description is_medium is_vertical">
+						        <div class="image">
+						          <div class="has_corners_shadow is_medium">
+						          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
+						          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
+						          		<% end %>
+						          </div>
+						        </div>
+						        <div class="content">
+						          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
+						          <p class="description"><%= p.description %></p>
+						          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
+						        </div>
+						      </div>
+						    </li>
+			    <% if (i+1)%4 == 0 || i+1 == paniers_middle_block.count %>
+			    	<br class="clear"/>
+			    	</ul>
+			    <% end %>
+			    <% i += 1 %>
+			<% end %>
+			
+	<% end %>
+
+
+<!-- _______________________ last block ________________________________________-->
+	<% if paniers_last_block.count > 0 %>
+		<ul class="l_product_list huge_right">
+			<li class="is_huge">
+		      <div class="l_photo_description is_huge is_vertical">
+		        <div class="image">
+		          <div class="has_corners_shadow is_huge">
+		          		<%= link_to page_panier_show_path(last_huge_panier.revendeur_id,last_huge_panier) do %>
+			          		<%= image_tag (last_huge_panier.default_image).image_url(:is_huge) if !(last_huge_panier.default_image).nil? %>
+			          	<% end %>
+		          </div>
+		        </div>
+		        <div class="content">
+		          <p class="title"><%= link_to last_huge_panier.titre, page_panier_show_path(last_huge_panier.revendeur_id,last_huge_panier), :class => "title" %></p>
+		          <p class="description"><%= last_huge_panier.description %></p>
+		          <span class="price ">A partir de <%= last_huge_panier.min_price %>€ <span class="is_italic">dès <%= "#{last_huge_panier.min_personne} personnes"  %></span></span>
+		        </div>
+		      </div>
+		    </li>
+		    
+		    <% paniers_last_block.each do |p| %>
+				<li>
+			      <div class="l_photo_description is_medium is_vertical">
+			        <div class="image">
+			          <div class="has_corners_shadow is_medium">
+			          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
+			          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
+			          		<% end %>
+			          </div>
+			        </div>
+			        <div class="content">
+			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
+			          <p class="description"><%= p.description %></p>
+			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
+			        </div>
+			      </div>
+			    </li>
+			<% end %>
+			<br class="clear"/>
+		</ul>
+	<% end %>
+<% else %>
+
+	<p class="l_product_list"> Aucun panier </p>
+<% end %>
+
+

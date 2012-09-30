@@ -1,6 +1,6 @@
 <div class="basket_list l_main_gutter">
 
- <div class="breadcrumb">
+<div class="breadcrumb">
     <ul>
       <% 
       @var = @tab_breadcrumb.count + 1
@@ -14,132 +14,74 @@
   	  	<%  @var = @var -1 %>
   	  <% end %>
   	  
-  	  
    <!--
    <li><a class="/" style="z-index:4"><i class="home_icon"></i>Accueil</a></li>
       <li><a class="" style="z-index:3">Produits</a></li>
       <li><a class="" style="z-index:2">Fruits et légumes</a></li>
 -->
     </ul>
+    
+    <div class="activation">
+      <span>activer les filtres:</span>
+	      <span class="toggle_switch is_on">
+	      	<span class="toggles">
+	      		<span class="toggle_on_off">
+		      		<span class="toggle off">
+				      	non 
+			      	</span>
+			      	<span class="toggle on">
+				      	oui
+			      	</span>
+	      		</span>
+	      	</span>
+	      	<span class="switch"></span>
+	      </span>
+    </div>
+    <div class="dropdown filters" data-toggle="dropdown">
+     <span>trier par</span>
+      <span class="filter dropdown-toggle"  data-toggle="dropdown"> <span> Date d'ajout </span> <i class="vertical_devider"></i><i class="down_arrow"></i>&nbsp;</span>
+      <ul class="dropdown-menu dropdown_menu">
+      	<li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
+      	<li class="is_click" data-order="date_ajout"> <a> Date d'ajout </a> </li>
+      </ul>
+    </div>
   </div>
+
+  <div class="filter_bg">
+      <div class="filter_zone">
+        <p class="title">Filtres</p>
+        <p class="label">N'afficher que:</p>
+        <ul class="filter_categorie">
+	        <% @all_categorie.each do |categorie| %>
+	        	<li data-id="<%= categorie.id %>"> <%= categorie.nom %> </li>
+	        <% end %>
+        </ul>
+        <br class="clear">
+        <p class="label">Trier par:</p>
+        <ul class="filter_agriculteur">
+	        <% @all_agriculteurs.each do |agriculteur| %>
+	        	<li data-id="<%= agriculteur.id %>"> <%= agriculteur.nom %> <%= agriculteur.prenom %> </li>
+	        <% end %>
+        </ul>
+        <br class="clear">
+      </div>
+  </div>
+
+  
+  
+  
 
 	<h1><%= @titre %></h1>
 	
-	<!-- _______________________ first block ________________________________________-->
-	<% if @paniers_first_block.count > 0 %>
-		<ul class="l_product_list huge_left">
-			 <li class="is_huge">
-			      <div class="l_photo_description is_huge is_vertical">
-			        <div class="image">
-			          <div class="has_corners_shadow is_huge">
-			          		<%= link_to page_panier_show_path(@first_huge_panier.revendeur_id,@first_huge_panier) do %>
-			          			<%= image_tag (@first_huge_panier.default_image).image_url(:is_huge) if !(@first_huge_panier.default_image).nil? %>
-			          		<% end %>
-			          </div>
-			        </div>
-			        <div class="content">
-			          <p class="title"> <%= link_to @first_huge_panier.titre, page_panier_show_path(@first_huge_panier.revendeur_id,@first_huge_panier), :class => "title" %></p>
-			          <p class="description"><%= @first_huge_panier.description %></p>
-			          <span class="price ">A partir de <%= @first_huge_panier.min_price  %> € <span class="is_italic"> dès  <%= "#{@first_huge_panier.min_personne} personnes"  %></span></span>
-			        </div>
-			      </div>
-    		</li>
-			<% @paniers_first_block.each do |p| %>
-				<li>
-			      <div class="l_photo_description is_medium is_vertical">
-			        <div class="image">
-			          <div class="has_corners_shadow is_medium">
-			          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
-			          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
-			          		<% end %>
-			          </div>
-			        </div>
-			        <div class="content">
-			          <p class="title"> <%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
-			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic"> dès <%= "#{p.min_personne} personnes"  %></span></span>
-			        </div>
-			      </div>
-			    </li>
-			<% end %>
-			<br class="clear"/>
-		</ul>
-	<% end %>
-
-<!-- _______________________ middle block ________________________________________-->
-	<% if @paniers_middle_block.count > 0 %>
-		<ul class="l_product_list" style=" min-height: 310px;">
-			<% i = 0 %>
-			<% @paniers_middle_block.each do |p| %>
-				<% if i%4 == 0 %>
-					<ul class="l_product_list" style=" min-height: 310px;">
-				<% end %>
-							<li>
-						      <div class="l_photo_description is_medium is_vertical">
-						        <div class="image">
-						          <div class="has_corners_shadow is_medium">
-						          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
-						          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
-						          		<% end %>
-						          </div>
-						        </div>
-						        <div class="content">
-						          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-						          <p class="description"><%= p.description %></p>
-						          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
-						        </div>
-						      </div>
-						    </li>
-			    <% if (i+1)%4 == 0 %>
-			    	<br class="clear"/>
-			    	</ul>
-			    <% end %>
-			    <% i += 1 %>
-			<% end %>
-			
-	<% end %>
-
-
-<!-- _______________________ last block ________________________________________-->
-	<% if @paniers_last_block.count > 0 %>
-		<ul class="l_product_list huge_right">
-			<li class="is_huge">
-		      <div class="l_photo_description is_huge is_vertical">
-		        <div class="image">
-		          <div class="has_corners_shadow is_huge">
-		          		<%= link_to page_panier_show_path(@last_huge_panier.revendeur_id,@last_huge_panier) do %>
-			          		<%= image_tag (@last_huge_panier.default_image).image_url(:is_huge) if !(@last_huge_panier.default_image).nil? %>
-			          	<% end %>
-		          </div>
-		        </div>
-		        <div class="content">
-		          <p class="title"><%= link_to @last_huge_panier.titre, page_panier_show_path(@last_huge_panier.revendeur_id,@last_huge_panier), :class => "title" %></p>
-		          <p class="description"><%= @last_huge_panier.description %></p>
-		          <span class="price ">A partir de <%= @last_huge_panier.min_price %>€ <span class="is_italic">dès <%= "#{@last_huge_panier.min_personne} personnes"  %></span></span>
-		        </div>
-		      </div>
-		    </li>
-		    
-		    <% @paniers_last_block.each do |p| %>
-				<li>
-			      <div class="l_photo_description is_medium is_vertical">
-			        <div class="image">
-			          <div class="has_corners_shadow is_medium">
-			          		<%= link_to page_panier_show_path(p.revendeur_id,p) do %>
-			          			<%= image_tag (p.default_image).image_url(:is_medium) if !(p.default_image).nil? %>
-			          		<% end %>
-			          </div>
-			        </div>
-			        <div class="content">
-			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
-			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
-			        </div>
-			      </div>
-			    </li>
-			<% end %>
-			<br class="clear"/>
-		</ul>
-	<% end %>
+	<%= render :partial => "list", :locals => { 
+  				:paniers => @paniers, 
+  				:paniers_first_block => @paniers_first_block,
+  				:first_huge_panier =>  @first_huge_panier,
+  				:paniers_middle_block => @paniers_middle_block,
+  				:paniers_last_block => @paniers_last_block,
+  				:last_huge_panier => @last_huge_panier	
+  		}
+  	%>
+	
 </div>
 

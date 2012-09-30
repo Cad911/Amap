@@ -11,6 +11,8 @@ class PagePanierController < ApplicationController
   
   #__________________________________________________________ LISTING TOUS LES PANIERS ____________________________________________
   def index
+  	@all_categorie = Categorie.all
+  	@all_agriculteurs = User.where(:entite_id => 2)
   	@titre = "Tous les paniers"
   	@paniers = Panier.all
   	@paniers_first_block = []
@@ -207,5 +209,95 @@ class PagePanierController < ApplicationController
 	  	end
 	  end
   end
+  
+  
+  
+  
+    #_________________________________________________________ LISTING BY CATEGORIE _______________________________________________
+  def index_by_filter #JS
+    
+    order_by = ''
+    case params[:order_by]
+    when 'date_ajout'
+    	order_by = 'created_at'
+  #   when 'prix_croissant'
+#     	order_by = 'prix_unite_ttc'
+#     when 'prix_decroissant'
+#     	order_by = 'prix_unite_ttc DESC'
+    
+    else
+    	order_by = 'created_at'
+    end
+    
+    if !params[:filter].nil?
+	    if params[:filter][:categorie_id].nil? && !params[:filter][:revendeur_id].nil?
+	    	@paniers = Panier.where(:revendeur_id => params[:filter][:revendeur_id][:value]).order(order_by)   
+	    elsif params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
+	    	@paniers = Panier.where(:categorie_id => params[:filter][:categorie_id][:value]).order(order_by) 
+	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
+	    	@paniers = Panier.where('categorie_id IN (?) AND revendeur_id IN (?)', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
+	    else
+	    	@paniers = Panier.order(order_by) 
+	    end
+	else
+		@paniers = Panier.order(order_by) 
+	end
+    
+    
+    @paniers_first_block = []
+  	@paniers_middle_block = []
+  	@paniers_last_block = []
+	
+	#___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
+  	if @paniers.count < 5
+  		@paniers_middle_block = @paniers
+  	#___ SI 5 PRODUITS, SEULEMENT LE PREMIER BLOCK _________
+  	elsif @paniers.count == 5
+  		@first_huge_panier = @paniers[0]
+  		(1..4).each do |i|
+  			@paniers_first_block << @paniers[i]
+  		end
+  	#___________ SI PLUS DE 5 PRODUITS _____________________
+  	elsif 5 < @paniers.count
+  		#______ PREMIER BLOCK ___________
+  		@first_huge_panier = @paniers[0]
+  		(1..4).each do |i|
+  			@paniers_first_block << @paniers[i]
+  		end
+  		
+  		#_______ SI ON A LE COMPTE PILE POUR AVOIR LE FIRST BLOCK, MIDDLE BLOCK AND LAST BLOCK
+  		if (@paniers.count - 10) % 4 == 0 && @paniers.count - 10 >= 0
+	  		(5..@paniers.count-6).each do |i|
+	  			@paniers_middle_block << @paniers[i]
+	  		end
+		 
+	  		(@paniers.count-5..@paniers.count-2).each do |i|
+	  			@paniers_last_block << @paniers[i]
+	  		end
+	  		@last_huge_panier = @paniers[@paniers.count-1]
+	  	#_____ PAS DE LAST BLOCK ___________
+  		else
+  			(5..@paniers.count-1).each do |i|
+	  			@panier_middle_block << @paniers[i]
+	  		end
+  		end
+  	end
+    
+    
+    respond_to do |format|
+  		format.json { render :partial => "list", :locals => { 
+  			#render :json => {
+  				:paniers => @paniers, 
+  				:paniers_first_block => @paniers_first_block,
+  				:first_huge_panier =>  @first_huge_panier,
+  				:paniers_middle_block => @paniers_middle_block,
+  				:paniers_last_block => @paniers_last_block,
+  				:last_huge_panier => @last_huge_panier	
+  				}
+  		}
+  		format.html { render :index }
+  	end
+  end
+
 
 end
