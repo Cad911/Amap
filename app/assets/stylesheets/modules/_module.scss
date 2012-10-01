@@ -266,11 +266,11 @@
   .filter_zone {
     @include box-shadow(rgba(0,0,0, 0.8) 0px 0 5px inset);
     width:842px;
-    padding:20px 40px 20px 40px;
+    padding:15px 40px 15px 40px;
     background:url(/../images/patterns/bois.960.130.png);
     .title {
       @include title(1, 30px);
-      margin:0 0 15px 0;
+      margin:0 0 5px 0;
     }
     p {
       color:$brown;
@@ -282,16 +282,17 @@
         display:block;
         width:150px;
         float:left;
-        margin:7px 0 7px 0px;
+        margin:0px 0 7px 0px;
       }
     }
     ul {
       width:600px;
       float:left;
-      margin:7px 0 7px 0px;
+      margin:0px 0 0px 0px;
       li {
         @include embossed_button($light_brown);
         padding: 3px 12px 0px 12px;
+        margin-bottom: 10px;
         display:inline-block;
       }
     }
@@ -1064,14 +1065,6 @@ ul.dropdown_menu {
   
   text-overflow: ellipsis;
   white-space: nowrap;
-  &:hover, &:active {
-    z-index: 100;
-    white-space: normal;
-    overflow: visible;
-
-    background: #fcfcfc;
-    @include single-box-shadow;
-  }
 }
 
 .is-grey {color: $grey;}
