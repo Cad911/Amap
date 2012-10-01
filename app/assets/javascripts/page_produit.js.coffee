@@ -46,7 +46,7 @@ $(document).ready(()->
                 min_position_in_toggle = -2
                 
                 #MAXPOSITION
-                if toggle_switch.hasClass('is_on')
+                if toggle_switch.hasClass('is_off')
                     $(this).animate(
                         left: min_position_in_toggle+'px'
                     ,{
@@ -60,14 +60,14 @@ $(document).ready(()->
                         queue: false
                     })
                     $('.filter_bg').slideUp(1000)
-                    toggle_switch.removeClass('is_on')
-                    toggle_switch.addClass('is_off')
+                    toggle_switch.removeClass('is_off')
+                    toggle_switch.addClass('is_on')
                     that.reset_categorie()
                     that.reset_agriculteur()
                     order_by = that.get_order_by()
                     that.get_produit_filter(null,null,order_by)
                     
-                else if toggle_switch.hasClass('is_off')
+                else if toggle_switch.hasClass('is_on')
                      $(this).animate(
                         left: max_position_in_toggle+'px'
                      ,{
@@ -82,8 +82,8 @@ $(document).ready(()->
                      })
                      $('.filter_bg').slideDown(1000)
                      
-                     toggle_switch.removeClass('is_off')
-                     toggle_switch.addClass('is_on')
+                     toggle_switch.removeClass('is_on')
+                     toggle_switch.addClass('is_off')
             )
 
         
