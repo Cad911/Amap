@@ -28,7 +28,92 @@
         top:2px;
         left:5px;
       }
-    }    
+    }
+    ul.dropdown_menu {
+	  @include borderradius(5px);
+	  border:solid 2px $brown;
+	  margin:0;
+	  padding:0;
+	  min-width: 50px!important;
+	  width: 130px;
+	  left: 47px;
+	  top: 40px;
+	  position:absolute;
+	  background:$bg_color;
+	  -webkit-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+	  -moz-box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+	  box-shadow:  0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+	  li.dropdown_arrow {
+	    .inner_arrow {
+	      border-left: 10px solid transparent;
+	      border-right: 10px solid transparent;
+	      border-bottom: 10px solid transparent;
+	      border-bottom-color: $brown;
+	      position: absolute;
+	      top: -10px;
+	      right: 3px;
+	      left: inherit;
+	      display: inline-block;
+	      margin-left: -2px;
+	    }
+	    .outer_arrow {
+	      border-left: 9px solid transparent;
+	      border-right: 9px solid transparent;
+	      border-bottom: 9px solid $light_bg_color;
+	      border-bottom-color: $light_bg_color;
+	      position: absolute;
+	      top: -7px;
+	      right: 4px;
+	      left: inherit;
+	      display: inline-block;
+	      margin-left: -2px;
+	    }
+	  }
+	  li {
+	    margin:0;
+	    text-align:left;
+	    a {
+	      background:$bg_color;
+	      color: $brown;
+	      border-bottom: solid 1px #e5e2da;
+	      border-top:solid 1px #ffffff;
+	      text-shadow:1px 1px 1px #ffffff;
+	      padding:8px 20px;
+	      margin: 0!important;
+	      border-left: inherit;
+	      &:active {
+	        background:$dark_bg_color;
+	      }
+	      &:hover {
+	        background:$light_bg_color;
+	        color:$red;
+	      }
+	    }
+	    &:first-child {
+	      a {
+	        border-top:none;
+	        -webkit-border-top-left-radius: 5px;
+	        -webkit-border-top-right-radius: 5px;
+	        -moz-border-radius-topleft: 5px;
+	        -moz-border-radius-topright: 5px;
+	        border-top-left-radius: 5px;
+	        border-top-right-radius: 5px;
+	      }
+	    }
+	    &:last-child {
+	      a {
+	        border-bottom: none;
+	        -webkit-border-bottom-right-radius: 5px;
+	        -webkit-border-bottom-left-radius: 5px;
+	        -moz-border-radius-bottomright: 5px;
+	        -moz-border-radius-bottomleft: 5px;
+	        border-bottom-right-radius: 5px;
+	        border-bottom-left-radius: 5px;
+	      }
+	    }
+	  }
+}
+   
   }
   ul.l_product_list {
     margin:0;

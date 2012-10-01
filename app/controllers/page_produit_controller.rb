@@ -10,6 +10,7 @@ class PageProduitController < ApplicationController
   #__________________________________________________________ LISTING TOUS LES PRODUITS ____________________________________________
   def index
   	@all_categorie = Categorie.all
+  	@all_agriculteurs = User.where(:entite_id => 2)
   	@titre = "Tous les produits"
   	@produits = ProduitVenteLibre.all
   	@produits_first_block = []
@@ -238,6 +239,121 @@ class PageProduitController < ApplicationController
 	  	format.html {flash[:notice] = "Produit ajoute et Stock mis a jour en consequence"
 	  		redirect_to [:administration,User.find(params[:user_id]),@produit_vente_libre] }
 	  end
+  end
+  
+  
+  
+  
+  
+  
+  
+    #_________________________________________________________ LISTING BY CATEGORIE _______________________________________________
+  def index_by_filter #JS
+    
+    if !params[:filter].nil?
+	    if params[:filter][:categorie_id].nil? && !params[:filter][:revendeur_id].nil?
+	    	@stocks = Stock.find_all_by_user_id(params[:filter][:revendeur_id][:value])    
+	    elsif params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
+	    	@stocks = Stock.find_all_by_categorie_id(params[:filter][:categorie_id][:value])
+	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
+	    	@stocks = Stock.find_all_by_categorie_id_and_user_id(params[:filter][:categorie_id][:value],params[:filter][:revendeur_id][:value])
+	    else
+	    	@stocks = Stock.all
+	    end
+	else
+		@stocks = Stock.all
+	end
+    
+#     if !params[:order_by].nil?
+#     	@stocks.order(params[:order_by])
+#     end
+    order_by = ''
+    case params[:order_by]
+    when 'date_ajout'
+    	order_by = 'created_at'
+    when 'prix_croissant'
+    	order_by = 'prix_unite_ttc'
+    when 'prix_decroissant'
+    	order_by = 'prix_unite_ttc DESC'
+    
+    else
+    	order_by = 'created_at'
+    end
+    
+    @produits = Array.[]
+    @produits_first_block = Array.[]
+	@produit_middle_block = Array.[]
+	@produit_last_block = Array.[]
+    #__ SI STOCK A CATEGORIE
+    if @stocks.count != 0
+    	all_id = []
+    	@stocks.each do |stock|
+    		all_id << stock.id
+    	end
+		@produit_vente_libre = ProduitVenteLibre.where(:stock_id => all_id).order(order_by)
+		#__ SI PRODUIT EST EN VENTE LIBRE
+		if @produit_vente_libre.count != 0
+			@produit_vente_libre.each do |produit|
+				@produits << produit	
+			end
+			
+			# @produits_first_block = Array.[]
+# 				  	@produit_middle_block = Array.[]
+# 				  	@produit_last_block = Array.[]
+		  	
+		  	if @produits.count < 5
+		  		@produit_middle_block = @produits
+		  	elsif @produits.count == 5
+		  		@first_huge_product = @produits[0]
+		  		(1..4).each do |i|
+		  			@produits_first_block << @produits[i]
+		  		end
+		  	elsif 5 < @produits.count
+		  		@first_huge_product = @produits[0]
+		  		(1..4).each do |i|
+		  			@produits_first_block << @produits[i]
+		  		end
+		  		
+		  		if (@produits.count - 10) % 4 == 0 && @produits.count - 10 >= 0
+			  		(5..@produits.count-6).each do |i|
+			  			@produit_middle_block << @produits[i]
+			  		end
+				 
+			  		(@produits.count-5..@produits.count-2).each do |i|
+			  			@produit_last_block << @produits[i]
+			  		end
+			  		@last_huge_product = @produits[@produits.count-1] 
+		  		else
+		  			(5..@produits.count-1).each do |i|
+			  			@produit_middle_block << @produits[i]
+			  		end
+		  		end
+		  	end
+
+		end   	
+	end
+    
+    if !params[:categorie_id].kind_of?(Array) && !params[:categorie_id].nil? && params[:categorie_id] != "" && @categorie != nil
+	    #__FIL D'ARIANNE__
+	   	@tab_breadcrumb.push({:path => page_produit_index_by_directeur_path(params[:categorie_id]), :title => @categorie.nom})
+	    #_________________
+	else
+	
+	end
+    
+    respond_to do |format|
+  		format.json { render :partial => "list", :locals => { 
+  			#render :json => {
+  				:produits => @produits, 
+  				:produits_first_block => @produits_first_block,
+  				:first_huge_product =>  @first_huge_product,
+  				:produit_middle_block => @produit_middle_block,
+  				:produit_last_block => @produit_last_block,
+  				:last_huge_product => @last_huge_product	
+  				}
+  		}
+  		format.html { render :index }
+  	end
   end
   
 end

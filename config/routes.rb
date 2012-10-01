@@ -70,6 +70,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   #SHOW
   match "page_produit/show/:user_id/:product_id" => 'page_produit#show', :as => :page_produit_show
   #FILTER
+  match 'page_produit/index_by_filter' => "page_produit#index_by_filter", :as => :index_by_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
   match 'product_filter' => "page_produit#product_filter", :as => :product_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
 
 
@@ -82,6 +83,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   #SHOW
   match "page_panier/show/:user_id/:panier_id" => 'page_panier#show', :as => :page_panier_show 
   #FILTER
+  match 'page_panier/index_by_filter' => "page_panier#index_by_filter", :as => :index_by_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
   match 'basket_filter' => "page_panier#basket_filter", :as => :basket_filter, :via => :post #VERIF AJAX SI PRODUIT DEJA EN VENTE
 
 
