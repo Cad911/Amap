@@ -87,10 +87,14 @@
 
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
-          <a href="" class="dropdown-toggle l_link blog" data-toggle="dropdown"><span></span>Le Blog</a>
+          <%= link_to blog_article_index_path, :class => "dropdown-toggle l_link blog" do %>
+          	<span></span>Le Blog
+          <% end %>
         </div>
         <div class="dropdown">
-          <a href="" class="dropdown-toggle l_link about_us" data-toggle="dropdown"><span></span>Nous</a>
+          <%= link_to a_propos_path, :class => "dropdown-toggle l_link about_us" do %>
+          	<span></span>Nous
+          <% end %>
         </div>
       </div>
 

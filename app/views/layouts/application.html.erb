@@ -44,8 +44,10 @@
    <%= javascript_include_tag 'morris/morris' %>
    
    <% if !current_user.nil? && current_user.autorisation_produit %>
+    
    	<%= javascript_include_tag 'administration/blog/wysihtml5/parser_rules/advanced' %>
-   	<%= javascript_include_tag 'administration/blog/wysihtml5/dist/wysihtml5-0.3.0.js' %>
+   	<%= javascript_include_tag 'administration/blog/wysihtml5/dist/wysihtml5-0.3.0.min' %>
+
    	<%= javascript_include_tag 'administration/administration_amap' %>
    <% end %>
 
@@ -157,10 +159,21 @@
 							<% end %>
 						</ul>
 					<% end %>
-					<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
-					<li class="blog"><span class="picture"></span><span class="link">Blog</span></li>
+					<% if current_user.can_stock_ar || current_user.can_stock_sr %>
+						<%= link_to administration_user_abonnement_index_path(current_user) do %>
+							<li class="archive"><span class="picture"></span><span class="link">Historique</span></li>
+						<% end %>
+						<%= link_to administration_user_path(current_user) do %>
+							<li class="farmer"><span class="picture"></span><span class="link">Profil</span></li>
+						<% end %>
+					<% end %>
+					<% if current_user.autorisation_produit %>
+						<%= link_to administration_user_blog_index_path(current_user) do %>
+							<li class="blog"><span class="picture"></span><span class="link">Blog</span></li>
+						<% end %>
+						
+					<% end %>
 					<%= link_to administration_user_path(current_user) do %>
-					<li class="farmer"><span class="picture"></span><span class="link">Profil</span></li>
 					<li class="settings bottom"><span class="picture"></span><span class="link">Paramètres</span></li>
 <!-- 					<li> <%= link_to "deconnexion", user_logout_path() , :method => 'delete' %> </li> -->
 					<% end %>
@@ -196,6 +209,6 @@
 	  </div>
 	</div>
 	<div class="overall_shadow"></div>
-<%= javascript_include_tag 'administration/blog/blog' %>
+   	<%= javascript_include_tag 'administration/blog/blog' %>
 </body>
 </html>

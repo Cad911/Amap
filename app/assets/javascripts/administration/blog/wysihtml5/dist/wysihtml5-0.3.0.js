@@ -8824,6 +8824,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
             } else {
               that.fire("save", attributes);
             }
+            console.log('LOL');
             that.hide();
             event.preventDefault();
             event.stopPropagation();
@@ -8844,7 +8845,9 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
           that.hide();
         }
       });
-
+      
+      // MY MODIF
+      //$(this.container).find("*[data-wysihtml5-dialog-action='save']").on("click", callbackWrapper);
       dom.delegate(this.container, "[data-wysihtml5-dialog-action=save]", "click", callbackWrapper);
 
       dom.delegate(this.container, "[data-wysihtml5-dialog-action=cancel]", "click", function(event) {
