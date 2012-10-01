@@ -21,7 +21,55 @@
 </div>
 
 <ul class="billets">
-	<li class="billet">
+	<% @articles.each do |article| %>
+		<li class="billet">
+		<div class="left_area"></div>
+		<div class="right_area">
+			<div class="header">
+				<h2 class="title"> <%= article.titre %></h2>
+				<ul class="buttons_card">
+
+					<li class="edit button" tool_tip="modifier">
+						<%= link_to administration_user_edit_article_path(current_user.id, article.id), :style => 'float:none' do  %> 
+							<span class="picture"></span>
+						<% end %>
+					</li>
+
+					<li class="delete button" tool_tip="supprimer"><span class="picture"></span></li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<div class="body">
+				<div class="details">
+						<span class="detail date">
+							<span class="icon"></span>
+							<span class="value"  itemprop="dateCreated"><%= article.created_at %></span>
+						</span>
+						<!--
+<span class="detail comments">
+							<span class="icon"></span>
+							<span class="value">2 commentaires</span>
+						</span>
+-->
+						<span class="detail tags">
+							<span class="icon"></span>
+							<span class="value">
+								
+								<a href="" itemprop="keywords"> <%= article.get_categorie_principal.titre %> </a>
+								<% if article.get_categorie_principal.id != article.categorie_blog_id %>
+									,<a href="" itemprop="keywords">amap</a>
+								<% end %>
+							</span>
+						</span>												
+					</div>
+			</div>
+		</div>
+	</li>
+
+	
+	<% end %>
+	<!--
+<li class="billet">
 		<div class="left_area"></div>
 		<div class="right_area">
 			<div class="header">
@@ -83,4 +131,5 @@
 			</div>
 		</div>
 	</li>	
+-->
 </ul>

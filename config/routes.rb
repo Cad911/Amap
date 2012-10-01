@@ -89,6 +89,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
 
 
 
+
   root :to => "devise/sessions#new"
 #_____________________ CONEXION AGRICULTEUR / AMAP USER_________________________________________________________________________  		
   devise_for :users do
@@ -108,9 +109,13 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
       
       
       #ROUTE ADMIN BLOG
-	  match 'blog/index' => 'blog#index', :as => :blog_index, :via => :get
+	  match 'blog/index' => 'blog#index_article', :as => :blog_index, :via => :get
 	  match 'blog/new_article' => 'blog#new_article', :as => :new_article, :via => :get
+	  match 'blog/create_article' => 'blog#create_article', :as => :create_article, :via => :post
+	  match 'blog/edit_article/:article_id' => 'blog#edit_article', :as => :edit_article, :via => :get
+	  match 'blog/update_article/:article_id' => 'blog#update_article', :as => :update_article, :via => :post
 	  match 'blog/upload_image' => 'blog#upload_image', :as => :upload_image, :via => :post
+	  
 	  
 	  #declinaison panier autorise
       match '/panier_autorises/:panier_id/get_declinaison/:declinaison_id' => 'panier_autorises#get_declinaison', :as => :get_declinaison, :via => :get

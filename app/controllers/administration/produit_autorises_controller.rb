@@ -3,6 +3,8 @@ class Administration::ProduitAutorisesController < InheritedResources::Base
   
   #________________ INDEX ____________________________________________
   def index
+	@admin_produit = true
+
   	@produit_autorises = ProduitAutorise.where(:user_id => params[:user_id]).order('created_at DESC')
     authorize! :manage, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
   end

@@ -15,67 +15,70 @@
 		<li><span class="is_bold">Supprimer un article</span> depuis son billet, en cliquant sur le bouton rouge à la corbeille.</li>
 	</ul>
 </div>
+
+
 <input type="hidden" class="user_id" value="<%= current_user.id %>" />
-<div class="title-bar blog">
-	<ul>
-		<li class="filter bold"><i class="icon icon-bold "></i></li>
-		<li class="filter italic"><i class="icon icon-italic"></i></li>
-		<li class="filter list_blog"><i class="icon icon-list_blog"></i></li>
-		<li class="filter picture"><i class="icon icon-picture"></i></li>
-		<li class="filter h1"><i class="icon icon-h1"></i></li>
-		<li class="filter h2"><i class="icon icon-h2"></i></li>
-		<li class="filter link"><i class="icon icon-link"></i></li>
-	</ul>
+
+	
+	<%= simple_form_for Article.new, 
+    	:url => url_for(:action => 'create_article', :controller => 'administration/blog'),
+    	:method => 'post' do |f| %>
+		
+		<%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+
+		<%= f.input :categorie_blog_id, :collection => CategorieBlog.all.map { |r| [r.titre, r.id] }, :label => "Categorie", :include_blank => false%>
+		
+		<%= f.input :titre %>
+		
+		<%= f.input :etat,  :collection => [['publie', 'publie'], ['brouillon', 'brouillon']] %>
+		
+		<br>
+		<div class="title-bar blog">
+		<ul id="toolbar-edit">
+			<li class="filter bold" ><i class="icon icon-bold "></i></li>
+			<li class="filter italic" ><i class="icon icon-italic"></i></li>
+			<li class="filter list_blog" ><i class="icon icon-list_blog"></i></li>
+			<li class="filter picture button_insert_image" ><i class="icon icon-picture"></i></li>
+			
+			
+			<li class="filter h1"><i class="icon icon-h1"></i></li>
+			<li class="filter h2"><i class="icon icon-h2"></i></li>
+			<li class="filter link" ><i class="icon icon-link"></i></li>
+		</ul>
+	</div>
+	<br>
+		<%= f.text_area :content, :cols => 100, :rows => 100, :style => 'width:700px;'  %>
+		
+		<%= f.button :submit %>
+	<% end %>
+
 </div>
-<br><br>
-<div class="wysiwig_admin">
-	<div id="toolbar-edit">
-		<a class="button" data-wysihtml5-command="bold"> <span> G </span></a>
-		<a class="button" data-wysihtml5-command="italic"> <span> I </span></a>
-		
-		<a class="button" data-wysihtml5-command="justifyCenter"> <span> Lien </span></a>
-		
-		<a class="button" data-wysihtml5-command="createLink"> <span> Lien </span></a>
-		
-		
-		<a class="button button_insert_image" data-wysihtml5-command="insertImage"> <span> Image </span></a>
-		<br class="clear" />
-		<div class="div_add_link" data-wysihtml5-dialog="createLink">
-			<label>
-				Lien :
-				<input data-wysihtml5-dialog-field="href" value="http://" />
-			</label>
-			<a class="button" data-wysihtml5-dialog-action="save"> <span> Save </span></a>
-			<a class="button" data-wysihtml5-dialog-action="cancel"> <span> Annuler </span></a>
-		</div>
-		<br class="clear" />
-		
-		<div class="lightbox_wrapper lightbox_insert_image has-menu" >
-			<!-- _______________ form for connexion ____________ -->
+
+
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- LIGHTBOX FOR INSERT IMAGE -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<div class="lightbox_wrapper lightbox_insert_image" >
 			<div class="lightbox " data-wysihtml5-dialog="insertImage">
-				<!-- ________UTILE POUR CHARGER IMAGE DANS BOX____________________ -->
-				<div class="loggin" style="display:none;">
-					<div class="content">
-						<div class="div_add_link">
-						  <label>
-						    Image:
-						    <input class="input_wysihtml5_image" data-wysihtml5-dialog-field="src" value="http://">
-						  </label>
-						  <a class="button_wysihtml5_save_image" data-wysihtml5-dialog-action="save">OK</a>
-						  <a data-wysihtml5-dialog-action="cancel">Cancel</a>
-						</div>
-					</div>
-				</div>
-			<!-- _______________________________________________________ -->
-				
 				<div class="header">
 					<h1 class="title"> Nouvelle image </h1>
 				</div>
 				
 				<div class="content">
-					<img src="" class="apercu_image" width="200px"/>
-					<form>
-						<input type="file" class="input_image" name="input_image"/>
+					
+					<form class="simple_form" style="margin: 0 85px;">
+						<div class="control-group">
+							<label for="input_image" class="optional control-label"> Image</label>
+							<div class="controls">
+								<input type="file" class="input_image" name="input_image"/>
+							</div>
+						</div>
+						<p style="text-align:center">
+						<img src="" class="apercu_image" width="200px"/>
+						</p>
 						
 					</form>
 				</div>
@@ -86,13 +89,43 @@
 				
 			</div>
 		</div>
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
 		
-	</div>
-	
-	
-	<%= simple_form_for([:administration, User.find(7)], :html => {:class => 'form-horizontal' }) do |f| %>
 		
-		<%= f.text_area :nom, :cols => 100, :rows => 100, :style => 'width:700px;'  %>
-	
-	<% end %>
-</div>
+		
+<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- LIGHTBOX FOR INSERT IMAGE -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<div class="lightbox_wrapper lightbox_insert_link has-menu" >
+			<div class="lightbox " data-wysihtml5-dialog="insertImage">
+				<div class="header">
+					<h1 class="title"> Nouveau lien </h1>
+				</div>
+				
+				<div class="content">
+					<form>
+						<input type="text" class="input_link" name="input_link" value="http://"/>
+						
+					</form>
+				</div>
+				
+				<div class="footer">
+					<span class="button button_add_link"> <a> Ajoutez </a> </span>
+				</div>
+				
+			</div>
+		</div>
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
