@@ -19,7 +19,7 @@ $(document).ready( () ->
     #___________________________________________
     #___________________________________________
     #___________________________________________
-#     supp_photo_stock
+#supp_photo_stock
     supp_photo_function = 
         id_photo: ''
         init:()->
@@ -29,6 +29,8 @@ $(document).ready( () ->
                     entite_photo = 'photo_stock'
                 if $(this).hasClass('photo_user')
                     entite_photo = 'photo_user'
+                if $(this).hasClass('photo_panier')
+                    entite_photo = 'photo_panier'
                 
                 class_photo = $(this).attr('id')
                 id_photo_element = parseInt(class_photo.replace(entite_photo+'_',''))
@@ -41,6 +43,10 @@ $(document).ready( () ->
                     #id_user = $(this).parents('.left_area').next().children('.informations_card').children('.id_stock').val()
                     supp_photo_function.supp_photo_user(id_photo_element)
                 
+                if $(this).hasClass('photo_panier')
+                    id_panier = $(this).parents('.left_area').next().children('.informations_card').children('.id_panier').val()
+                    supp_photo_function.supp_photo_basket(id_photo_element,id_panier)
+                
             )
             
         init_one_event:(element)->
@@ -52,6 +58,17 @@ $(document).ready( () ->
                 supp_photo_function.supp(id_photo,id_stock)
             )
         
+        supp_photo_basket:(id_photo,id_panier)->
+            xhr = new XMLHttpRequest();
+            xhr.open('DELETE','/administration/users/'+$('.user_id').val()+'/paniers/'+id_panier+'/delete_image/'+id_photo)
+
+            
+            xhr.send(null)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    supp_photo_function.animation_supp(id_photo)
+
         supp_photo_user:(id_photo)->
             xhr = new XMLHttpRequest();
             xhr.open('DELETE','/administration/users/'+$('.user_id').val()+'/delete_image/'+id_photo)
@@ -102,6 +119,11 @@ $(document).ready( () ->
             
             if $(supp_photo_function.id_photo).hasClass('photo_user')
                 $(supp_photo_function.id_photo).parents('.is_small.has_corners_shadow').parents('li').remove()
+                
+            if $(supp_photo_function.id_photo).hasClass('photo_panier')
+                left_area = $(supp_photo_function.id_photo).parents('.picture').parents('div.left_area')
+                $(supp_photo_function.id_photo).parents('.picture').remove()
+                supp_photo_function.regenerate_class(left_area)
         
         regenerate_class: (element)->
             #element = left_area
@@ -125,7 +147,7 @@ $(document).ready( () ->
                 i++
             )
         
-    if $('.photo_stock').length > 0 || $('.photo_user').length > 0
+    if $('.photo_stock').length > 0 || $('.photo_user').length > 0  || $('.photo_panier').length > 0
         supp_photo_function.init()
     
     
@@ -369,7 +391,8 @@ $(document).ready( () ->
                     
             })
         
-    add_photo_user.init()
+    if $('.photo_user').length > 0
+        add_photo_user.init()
     #___________________________________________
     #___________________________________________
     #___________________________________________
@@ -607,8 +630,249 @@ $(document).ready( () ->
             })
         
         
+    if $('.cards').length >0
+        add_photo_stock.init()
+
+
+ #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ ADD PHOTO BASKET ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+ 
+    add_photo_basket = 
+        card : ''
+        init: ()->
+            $('.add.button.image.add_stock_image').on('click', ()->
+               panier_id = $(this).attr('id').replace('panier_id_','')
+               add_photo_basket.card = $(this).parents('div').parents('div.card')
+               add_photo_basket.generate_form(panier_id)
+            )
         
-    add_photo_stock.init()
+        init_one_element:(button)->
+            $(button).on('click', ()->
+               panier_id = $(this).attr('id').replace('panier_id_','')
+               add_photo_basket.card = $(this).parents('div').parents('div.card')
+               add_photo_basket.generate_form(panier_id)
+            )
+        generate_form : (panier_id)->
+            window.light_box_information.html_content('')
+            # input = $(document.createElement('input'))
+#             input.attr('name','photo_stock[image]')
+#             input.attr('id','photo_stock_image')
+#             input.attr('type','file')
+            
+            form = $(document.createElement('form'))
+            form.addClass('form-horizontal')
+            data_ = 
+                    type_element:'input'
+                    label:
+                        text:'Nouvelle photo'
+                    input:
+                        value: '' #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_panier[image]'
+                        class: ''
+                        id: 'photo_panier_image'
+                        other_attributes: [['type','file']]
+
+            div_input = window.global_functions.standard_input(data_)
+            
+            data_radio = 
+                    type_element:'radio'
+                    label:
+                        text:'First image'
+                    input:
+                        value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
+                        name:'photo_panier[first_image]'
+                        class: 'photo_panier_first_image'
+                        id: 'photo_panier_first_image_1'
+                        other_attributes: [['type','radio']]
+
+            div_input_radio = window.global_functions.standard_input(data_radio)
+            
+            
+            
+            
+            
+            #BUTTON FOOTER
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            
+            a = $(document.createElement('a'))
+            a.addClass('test')
+            a.text('Ajouter')
+            
+            span.append(a)                        
+           
+            span_annuler = window.light_box_information.create_annuler()
+            
+            form.append(div_input)
+            form.append(div_input_radio)
+            
+            window.light_box_information.html_footer(span_annuler)
+            window.light_box_information.append_footer(span)
+            window.light_box_information.header_html_content('')
+            window.light_box_information.append_content(form)
+            window.light_box_information.show()
+            
+            input = $(div_input).find('input')
+            input_radio = $(div_input_radio).find('input.photo_panier_first_image')
+            
+            span.on('click', ()->
+                add_photo_basket.upload_form(input,input_radio,panier_id)
+            )
+            
+        upload_form : (input,input_radio,panier_id)->
+            data = {}
+            xhr = new XMLHttpRequest();
+            xhr.open('POST','/administration/users/'+$('.user_id').val()+'/paniers/'+panier_id+'/add_image')
+            
+            form = new FormData();
+            name = $(input).attr('name')
+            #input_radio_checked = $(input_radio).attr('name')
+            form.append($(input_radio).attr('name'),$(input_radio).filter(':checked').val())
+            console.log(input)
+            fileInput = input[0]
+            console.log(input)
+            console.log(fileInput)        
+            form.append(name,fileInput.files[0])
+            
+            xhr.send(form)
+            
+            xhr.onreadystatechange = ()->
+                if xhr.readyState == xhr.DONE
+                    window.light_box_information.hide()
+                    console.log(xhr.responseText)
+                    data = JSON.parse(xhr.responseText)
+                    add_photo_basket.create_photo(data['photo_panier'])
+                    
+                    
+        create_photo: (data)->
+            console.log(data)
+            div = $(document.createElement('div'))
+            
+            nb_photo = $(add_photo_basket.card).children('.left_area').children('.picture').length
+            class_div = ''
+            if nb_photo%2 == 0
+                class_div = "picture first_cloumn"
+            else
+                class_div = "picture"
+            div.addClass(class_div)
+            
+            img = $(document.createElement('img'))
+            img.attr('src',data['image']['is_small']['url'])
+            
+            span_deleted = $(document.createElement('span'))
+            span_deleted.addClass('deleted_p_c')
+            span_deleted.attr('id','photo_panier_'+data['id'])
+            
+            supp_photo_function.init_one_event(span_deleted)
+            div.append(span_deleted)
+            div.append(img)
+            
+            
+            if $(add_photo_basket.card).children('.left_area').children('.picture').length > 0
+                $(add_photo_basket.card).children('.left_area').children('.picture').last().after(div)
+            else
+                $(add_photo_basket.card).children('.left_area').children('.is_small.has_corners_shadow').after(div)
+            
+						
+            if data['first_image'] == 1
+                new_image = $(add_photo_basket.card).children('.left_area').children('div').last()
+                #console.log(new_image)
+                setTimeout(add_photo_basket.animation_first_image, 200, $(add_photo_basket.card).children('.left_area').children('.is_small.has_corners_shadow'), new_image)
+        
+        animation_first_image: (actual_first_image, new_image)->
+            position_first_image = $(actual_first_image).position() 
+            position_new_image = $(new_image).position()
+            
+            class_new_image = $(new_image).attr('class')
+            width_new_image = parseInt($(new_image).css('width'))
+            height_new_image = parseInt($(new_image).css('height'))
+            margin_left_new_image = parseInt($(new_image).css('margin-left'))
+            margin_bottom_new_image = parseInt($(new_image).css('margin-bottom'))
+            padding_new_image = parseInt($(new_image).css('padding-top'))
+            
+            width_actual_first = parseInt($(actual_first_image).css('width'))
+            height_actual_first = parseInt($(actual_first_image).css('height'))
+            margin_top_first_image = parseInt($(actual_first_image).css('margin-top'))
+            padding_first_image = parseInt($(actual_first_image).css('padding-top'))
+            
+            position_first_image.top += margin_top_first_image
+        
+            console.log(position_new_image)
+            if $(new_image).hasClass('first_cloumn')
+                position_first_image.top += 4 #le "+4" c'est pour le padding
+                position_first_image.left += 3 #le "-4" c'est pour le padding - 1 px de border
+            else
+                position_first_image.top += 4
+                position_first_image.left -= 3
+            div_wait = $(document.createElement('div'))
+            div_wait.addClass(class_new_image)
+            
+            $(new_image).css('position','absolute')
+            $(new_image).css('top',position_new_image.top)
+            $(new_image).css('left',position_new_image.left)
+            $(new_image).css('z-index','10000')
+            $(new_image).after(div_wait)
+            #$(new_image).addClass('has_corners_shadow')
+            $(new_image).animate(
+                top: position_first_image.top+'px'
+                left: position_first_image.left+'px'
+                width: width_actual_first+'px'
+                height:height_actual_first+'px'
+                border: '1px solid #DCDCDC'
+            ,{
+                duration:2000,
+                complete:()->
+                    $(this).removeClass($(this).attr('class'))
+                    $(this).addClass('is_small has_corners_shadow')
+                    $(this).css('position','relative')
+                    $(this).css('top','0px')
+                    $(this).css('left','0px')
+                    
+                    #On place l'element en premier (apres l'anim)
+                    $(actual_first_image).before(this)
+                    $(this).remove
+                    
+                    $(actual_first_image).css('position','absolute')
+                    $(actual_first_image).removeClass('has_corners_shadow')
+                    $(actual_first_image).css('margin-top','Opx')
+                    $(actual_first_image).css('padding','Opx')
+                    $(actual_first_image).css('margin-left',margin_left_new_image+'px')
+                    $(actual_first_image).css('margin-bottom',margin_bottom_new_image+'px')
+                    $(actual_first_image).css('z-index','10000')
+                    $(actual_first_image).css('border','3px solid #FFFFFF')
+                    $(actual_first_image).animate(
+                        top: position_new_image.top+'px'
+                        left: position_new_image.left+'px'
+                        width: width_new_image+'px'
+                        height:height_new_image+'px'
+                        padding:padding_new_image+'px'
+                    ,{
+                        duration:2000,
+                        complete:()->
+                            $(this).removeClass($(this).attr('class'))
+                            $(this).addClass(class_new_image)
+                            $(this).css('position','relative')
+                            $(this).css('top','0px')
+                            $(this).css('left','0px')
+                            
+                            #console.log($(add_photo_stock.card).children('.left_area').children('div').last())
+                            console.log(div_wait)
+                            div_wait.remove()
+                            $(add_photo_stock.card).children('.left_area').children('span').last().before(this)
+                            $(this).remove
+                            
+                    })
+                    
+            })
+        
+        
+    if $('.card_stack').length >0
+        add_photo_basket.init()
        
     #___________________________________________
     #___________________________________________
@@ -638,8 +902,9 @@ $(document).ready( () ->
                     async:false,
                     format:"json",
                     success: (data)->
-                        $('#panier_titre').val(data['titre'])
-                        $('#panier_description').val(data['description'])
+                        console.log(data['panier_autorise']['titre'])
+                        $('#panier_titre').val(data['panier_autorise']['titre'])
+                        $('#panier_description').val(data['panier_autorise']['description'])
                         true
                 })
                 true
@@ -686,7 +951,7 @@ $(document).ready( () ->
                     $($('.card_stack')[0]).before(new_card_2)
                     form_add_basket.anim_for_decli_and_product($($('.card_stack')[0]))
                     #event sur les bouton
-                    #supp_stock.event_one_element(new_card_2.find('.buttons_card li.delete'))
+                    supp_basket.event_one_element(new_card_2.find('.buttons_card li.delete'))
                     #add_photo_stock.init_one_element(new_card_2.find('.add.button.image'))
                     #functions.one_edit_button(new_card_2.find('.buttons_card>.edit'))
                     #form_plugin_element.init_one_card(new_card_2)
@@ -830,7 +1095,7 @@ $(document).ready( () ->
             previous_current.addClass('current')
 
     
-    if $('.card_stack').length > 0
+    if $('.h1_listing_panier').length > 0
             form_add_basket.init()
     
     
@@ -1172,8 +1437,82 @@ $(document).ready( () ->
                 that = this
                 supp_stock.have_confirmation(user_id, stock_id, that)            )
         
-    
-    supp_stock.init()
+    if $('ul.cards').length > 0
+        supp_stock.init()
+        
+        
+        
+        
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    #__________ SUPP STOCK ________________
+    #___________________________________________
+    #___________________________________________
+    #___________________________________________
+    supp_basket = 
+        init:()->
+            that = this
+            $('.buttons_card li.delete').on('click',()->
+                panier_id = $(this).attr('id').replace('panier_id_','')
+                user_id = $('.user_id').val()
+                that.have_confirmation(user_id, panier_id, this)
+            )
+        
+        delete: (user_id, panier_id, element)->
+            $.ajax({
+                type: 'DELETE'
+                url:"/administration/users/"+user_id+"/paniers/"+panier_id
+                format:'json'
+                complete:(data)->
+                    card = $(element).parents('div.card_stack')
+                    card.removeClass('in')
+                    card.css('top','0px')
+                    #card.addClass('out')
+                    card.animate(
+                        opacity:0
+                        top:'-270px'
+                    ,{
+                        duration:500
+                        complete:()->
+                            $(this).remove()
+                    })                    
+                    
+            })
+
+        
+        have_confirmation: (user_id, panier_id, element)->
+            that = this
+            window.light_box_information.html_content('<p> Etes vous sur ? </p>')
+            window.light_box_information.title_header('Confirmation')
+            span_annuler = window.light_box_information.create_annuler()
+            window.light_box_information.html_footer(span_annuler)
+            span = $(document.createElement('span'))
+            span.addClass('button')
+            a = $(document.createElement('a'))
+            a.text('Oui')
+            
+            span.append(a)      
+            window.light_box_information.append_footer(span)
+            window.light_box_information.show()
+            
+            span.on('click', ()->
+                window.light_box_information.hide()
+                that.delete(user_id, panier_id, element)
+            )
+        
+        event_one_element: (button_supp)->
+            that = this
+            $(button_supp).on('click',()->
+                panier_id = $(this).attr('id').replace('panier_id_','')
+                user_id = $('.user_id').val()
+                supp_stock.have_confirmation(user_id, panier_id, this)            )
+        
+    if $('.h1_listing_panier').length > 0
+        supp_basket.init()
+
+
+
     #__________________________________________
     #__________________________________________
     #__________________________________________
@@ -1313,11 +1652,12 @@ $(document).ready( () ->
                $(element).children('.left_area').children('.picture').removeClass('is-editing')
             
             if $('.card_stack').length > 0
-                $(element).children('.packaging').children('.header').children('.title').removeClass('is-editing')
-                $(element).children('.packaging').children('.body').children('.description').removeClass('is-editing')
+                $(element).children('.packaging').children('.header').children('span').children('.title').removeClass('is-editing')
+                $(element).children('.packaging').children('.body').children('span').children('.description').removeClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul').removeClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul.details').removeClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul.main-informations').children('li').removeClass('is-editing')
+                $(element).children('.three').children('.left_area').children('.picture').removeClass('is-editing')
         
         add_editing_class:(element = 'body')->
             #pour user profile
@@ -1339,7 +1679,8 @@ $(document).ready( () ->
                 $(element).children('.packaging').children('.header').children('span').children('.title').addClass('is-editing')
                 $(element).children('.packaging').children('.body').children('span').children('.description').addClass('is-editing')
                 $(element).children('.packaging').children('.footer').children('ul.details').addClass('is-editing')
-                $(element).children('.packaging').children('.footer').children('ul.main-informations').children('li').addClass('is-editing')
+                $(element).children('.packaging').children('.footer').children('ul.main-informations').children('li.product_number').addClass('is-editing')
+                $(element).children('.three').children('.left_area').children('.picture').addClass('is-editing')
     
     functions.init()
     
@@ -1891,7 +2232,8 @@ $(document).ready( () ->
                                 $(this).addClass('check')
                         )
             
-    change_infos_panier.init()
+    if $('div.card_stack').length > 0
+        change_infos_panier.init()
     
     
     
@@ -2267,7 +2609,8 @@ $(document).ready( () ->
                             function_product_in_basket.modify_card()
                        })
 
-    function_product_in_basket.init()
+    if $('.h1_listing_panier').length > 0
+        function_product_in_basket.init()
     
 
 

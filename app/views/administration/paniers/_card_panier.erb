@@ -12,7 +12,7 @@
 
                 <li class="edit button" tool_tip="modifier"><span class="picture"></span></li>
 
-                <li class="delete button" tool_tip="supprimer"><span class="picture"></span></li>
+                <li class="delete button" id="panier_id_<%= panier.id %>" tool_tip="supprimer"><span class="picture"></span></li>
 
             </ul>
             <div class="clear"></div>
@@ -64,14 +64,22 @@
 				<% i = 0 %>
 				<% panier.other_image.each do |image| %>
 					<% if i%2 == 0 %>
-						<div class="picture first_cloumn"> <%= image_tag (image).image_url(:is_small) %> </div>
+						<div class="picture first_cloumn"> 
+							<span class="deleted_p_c photo_panier" id="photo_panier_<%= image.id%>"></span>
+							<%= image_tag (image).image_url(:is_small) %> 
+						</div>
 					<% else %> 
-						<div class="picture"> <%= image_tag (image).image_url(:is_small) %> </div>
+						<div class="picture"> 
+							<span class="deleted_p_c photo_panier" id="photo_panier_<%= image.id%>"></span>
+							<%= image_tag (image).image_url(:is_small) %> 
+						</div>
 					<% end %>
 					<% i+=1 %>
 				<% end %>
 			<% end %>
+			<span class="add button image add_stock_image" id="panier_id_<%= panier.id %>" tool_tip="Ajouter une image"><span class="picture"></span></span>
         </div>
+        
         <div class="right_area">
         </div>
     </div>

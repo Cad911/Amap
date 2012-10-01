@@ -1,6 +1,6 @@
 class Administration::PaniersController < InheritedResources::Base
-load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
-protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in,:all_produit_stock_already_in] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
+#load_and_authorize_resource #LOAD IMPERATIF LORSQU'IL Y A UNE CONDITION DANS LE ABILITY, ICI AVEC l'ID
+protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_stock_already_in,:all_produit_stock_already_in,:add_image, :delete_image] #car erreur lors de l'ajout en ajax, il n'y a pas le bon header de transmis (à voir plus tard) 
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
@@ -221,6 +221,20 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	end
 	
 	
+	def destroy
+		panier = Panier.find(params[:id])
+	  	panier.destroy
+	  	
+	  	#produit_to_delete = ProduitVenteLibre.where(:stock_id => params[:id])
+	  	
+	  	#produit_to_delete.each do |produit|
+	  #		produit.destroy
+	  #	end
+	  	
+	  	render :nothing => true
+	end
+	
+	
 	
 	
 	
@@ -296,6 +310,14 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 
 
 
+
+
+#---------------------------------------------------------------------------------------
+
+
+
+
+
    #____________________________________________________________________________________
   #____________________________________________________________________________________
   #__________________________________ IMAGE ___________________________________________
@@ -306,10 +328,11 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
   def add_image
     @panier = Panier.find(params[:panier_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_panier][:first_image] == "1"
+    
+	if (params[:photo_panier][:first_image]).to_s == "1"
 		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
 		if @photo_first_image.count > 0
-			@photo_first_image[0].first_image = 0
+			@photo_first_image[0].first_image = "0"
 			@photo_first_image[0].save	
 		end
 	else
@@ -317,12 +340,16 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 		if @photo_first_image.count == 0
 			params[:photo_panier][:first_image] = "1"
+		else
+			params[:photo_panier][:first_image] = "0"
 		end
 	end
 	@photo_panier = PhotoPanier.new
 	@photo_panier.panier_id = @panier.id
 	@photo_panier.update_attributes(params[:photo_panier])
-	redirect_to [:administration,current_user,@panier]
+	
+	render :json => {:photo_panier => @photo_panier}
+	#redirect_to [:administration,current_user,@panier]
   end
   
   
@@ -331,14 +358,14 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
     @panier = Panier.find(params[:panier_id])
     @image = PhotoPanier.find(params[:image_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_panier][:first_image] == "1"
+	if params[:photo_panier][:first_image].to_s == "1"
 		#___ SI PAS DE CHANGEMENT ______
-		if @image.first_image == 1
+		if @image.first_image.to_s == '1'
 			flash[:notice] = "Aucun changement"
 		else
 			@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
 			if @photo_first_image.count > 0
-				@photo_first_image[0].first_image = 0
+				@photo_first_image[0].first_image = '0'
 				@photo_first_image[0].save	
 			end
 			@image.first_image = params[:photo_panier][:first_image]
@@ -347,13 +374,15 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		end
 	else
 		#___ SI ON ENLEVE L IMAGE PAR DEFAUT ______
-		if @image.first_image == 1
+		if @image.first_image.to_s == '1'
 			flash[:notice] = "Il est obligatoire d avoir une image par defaut"
 		else
 			flash[:notice] = "Aucun changement"
 		end
 	end
-	redirect_to [:administration,current_user,@panier]
+	
+	render :nothing => true
+	#redirect_to [:administration,current_user,@panier]
   end
   
   #____________________________ DELETE IMAGE _________________________________________________
@@ -361,6 +390,8 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
   	@image_panier = PhotoPanier.find(params[:image_id])
   	@image_panier.remove_image = true
   	@image_panier.destroy
+  	
+  	render :nothing => true
   end
 
 
