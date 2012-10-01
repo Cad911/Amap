@@ -164,7 +164,7 @@
     @include transition-property(all);
     @include transition-duration(0.3s);
     @include transition-timing-function(ease-out);
-	background-color:lighten(#E9D986, 20%);
+	  background-color:lighten(#E9D986, 20%);
     border:solid 1px lighten(#E9D986, 1%)!important;
     cursor:pointer;
 }
@@ -175,7 +175,7 @@
     @include transition-timing-function(ease-out);     
   &:hover {
     background-color:lighten(#E9D986, 20%);
-    border:solid 1px lighten(#E9D986, 1%);
+    border:solid 1px lighten(#E9D986, 1%) !important;
     cursor:pointer;
   }
   &:active {
@@ -397,3 +397,10 @@
 		height:16px;
 	}
 }	
+.card_stack h2.is-editing {
+  padding-bottom:0 !important;
+  padding-top: 0 !important;
+  margin-top:9px !important;
+  margin-left:-11px !important;
+  margin-bottom:5px !important;
+}
