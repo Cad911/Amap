@@ -53,7 +53,7 @@
          <%= f.input :id, :as => :hidden %>
          <%= f.input :nombre_pack, :input_html => {value:1},:as => :hidden %>
         <h1 itemprop="name"><%= @produit.titre %></h1>
-        <p class="note is_italic">Fruits et légumes</p>
+        <p class="note is_italic"><%= @produit.categorie.nom %></p>
         <p itemprop="description">C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
       
         <div class="price_button">

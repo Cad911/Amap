@@ -1250,8 +1250,8 @@ $(document).ready( () ->
                     async:false,
                     format:"json",
                     success: (data)->
-                        $('#stock_titre').val(data['titre'])
-                        $('#stock_description').val(data['description'])
+                        $('#stock_titre').val(data['produit_autorise']['titre'])
+                        $('#stock_description').val(data['produit_autorise']['description'])
                         true
                 })
                 true
