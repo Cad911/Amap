@@ -1,12 +1,12 @@
 class Administration::StocksController < InheritedResources::Base
-protect_from_forgery :except => [:add_image, :delete_image] 
+protect_from_forgery :except => [:add_image, :delete_image, :destroy] 
 
   #________________ INDEX ____________________________________________
   def index
   	#TO DEFINE THE PAGE WHERE I AM
   	@admin_produit = true
   	
-  	@stocks = Stock.where(:user_id => params[:user_id]).order('created_at DESC')
+  	@stocks = Stock.where('user_id = ? AND deleted = "0"', params[:user_id]).order('created_at DESC')
   	@stock_new = Stock.new
    	authorize! :update, User.find(params[:user_id]) #TRADUCTION : EST-IL AUTORISE A UPDATER CETTE UTILISATEUR ?
    	respond_to do |format|
@@ -92,7 +92,7 @@ protect_from_forgery :except => [:add_image, :delete_image]
 	  	@stock = Stock.new(params[:stock])
 	end
 	@stock.user_id = current_user.id
-	
+	@stock.deleted = 0
 	
 	
 	
@@ -106,6 +106,7 @@ protect_from_forgery :except => [:add_image, :delete_image]
 			@produit_vente_libre.titre = @stock.titre
 			@produit_vente_libre.description = @stock.description
 			@produit_vente_libre.user_id = @stock.user_id
+			@produit_vente_libre.deleted = 0
 			
 			@produit_vente_libre.save
 		end
@@ -197,12 +198,17 @@ protect_from_forgery :except => [:add_image, :delete_image]
   
   def destroy
   	stock = Stock.find(params[:id])
-  	stock.destroy
+  	#stock.destroy
+  	stock.deleted = 1
+  	
+  	stock.save
   	
   	produit_to_delete = ProduitVenteLibre.where(:stock_id => params[:id])
   	
   	produit_to_delete.each do |produit|
-  		produit.destroy
+  		produit.deleted = 1
+  		produit.save
+  		#produit.destroy
   	end
   	
   	render :nothing => true
@@ -212,7 +218,7 @@ protect_from_forgery :except => [:add_image, :delete_image]
   #________________ EXIST DEJA ________________________________________
   def alreadyExistStock
   	existe_deja = true
-  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ?",params[:produit_autorise_id], params[:user_id])
+  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ? AND deleted = '0'",params[:produit_autorise_id], params[:user_id])
   	if produit_stock.count > 0 and params[:produit_autorise_id] != ""
   		existe_deja = true
   	else

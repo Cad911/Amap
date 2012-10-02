@@ -96,7 +96,7 @@
 			<div class="l_photo_description is_horizontal">
 	        	<div class="image">
 	          		<div class="has_corners_shadow is_small">
-	          		   <% #image_tag (panier.default_image).image_url(:is_small) if !(panier.default_image).nil? %>
+	          		   <%= image_tag (panier.default_image).image_url(:is_small) if !(panier.default_image).nil? %>
 	          		</div>
 	        	</div>
 		        <div class="content">

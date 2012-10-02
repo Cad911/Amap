@@ -7,7 +7,7 @@ class PanierAutorise < ActiveRecord::Base
 	
 	
 	
-	    def regroup_nombre_personne
+	 def regroup_nombre_personne
     	@panier = DeclinaisonPanierAutorise.where('panier_autorise_id = ?', self.id)
     	@nb_personne = []
     	@panier.each do |panier|

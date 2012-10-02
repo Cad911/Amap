@@ -18,6 +18,15 @@ class Panier < ActiveRecord::Base
     
     end
     
+    def has_declinaison
+    	@declinaison = DeclinaisonPanier.where('panier_id = ?', self.id)
+    	if @declinaison.count > 0
+    		return true
+    	else
+    		return false
+    	end
+    end
+    
     #get min personne of declinaison
     def min_personne
     	@declinaison = DeclinaisonPanier.where('panier_id = ?', self.id)

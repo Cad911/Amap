@@ -12,7 +12,7 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
     #TO DEFINE THE PAGE WHERE I AM
     @admin_produit = true
     
-  	@produit_vente_libres = ProduitVenteLibre.where(:user_id => params[:user_id])
+  	@produit_vente_libres = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', params[:user_id])
   	authorize! :update, User.find(params[:user_id])
   end
   #_________________________________________________________________
@@ -88,6 +88,7 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
 	  @produit_vente_libre.titre = @stock_produit.titre
 	  @produit_vente_libre.description = @stock_produit.description
 	  @produit_vente_libre.user_id = params[:user_id]
+	  @produit_vente_libre.deleted = 0
 	  
 	  #@stock_produit.quantite -=  (@produit_vente_libre.nombre_pack * @produit_vente_libre.quantite) #ON CHANGE LA QUANTITE EN STOCK
 	  
@@ -172,7 +173,7 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   #_________________________________________________________________
   def oneDejaEnVente
   	existe_deja = true
-  	produit_vente = ProduitVenteLibre.where("stock_id = ? AND user_id = ?",params[:stock_id], params[:user_id])
+  	produit_vente = ProduitVenteLibre.where("stock_id = ? AND user_id = ? AND deleted = '0'",params[:stock_id], params[:user_id])
   	
   	if produit_vente.count > 0 and params[:stock_id] != ""
   		existe_deja = true
@@ -197,8 +198,8 @@ class Administration::ProduitVenteLibresController < InheritedResources::Base
   	all_deja_vente = true
   	stock_id = 0
   	
-  	stock_user = Stock.where("user_id = ?", params[:user_id])
-  	produit_vente = ProduitVenteLibre.where("user_id = ?", params[:user_id])
+  	stock_user = Stock.where("user_id = ? AND deleted = '0'", params[:user_id])
+  	produit_vente = ProduitVenteLibre.where("user_id = ? AND deleted = '0'", params[:user_id])
   	
   	stock_user.each do |stock_u|
   	    deja_vente = false

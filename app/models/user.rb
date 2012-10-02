@@ -58,13 +58,21 @@ class User < ActiveRecord::Base
     
     #____________ RECUPERATION PRODUIT EN VENTE ________
     def produit_en_vente
-        my_product_online = ProduitVenteLibre.where(:user_id => self.id)
+        my_product_online = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', self.id)
     	return my_product_online.count
     end
     
     #___________ RECUPERATION PANIER EN VENTE ______
     def panier_en_vente
-    	return Panier.where(:revendeur_id => self.id).count
+    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', self.id)
+    	@paniers= []
+    	@paniers_.each do |panier|
+    		if panier.has_declinaison
+    			@paniers << panier
+    		end
+    	end
+    	
+    	return @paniers.count
     end
     
     #NB_ALL_PRODUCT
@@ -75,14 +83,20 @@ class User < ActiveRecord::Base
     
     #LISTING_ALL_produit_en_vente
     def list_produit_en_vente
-       all_product = ProduitVenteLibre.where(:user_id => self.id)
+       all_product = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', self.id)
        return all_product
     end
     
     #LISTING_ALL_paniert_en_vente
     def list_panier_en_vente
-    	all_panier = Panier.where(:revendeur_id => self.id)
-    	return all_panier
+    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', self.id)
+    	@paniers= []
+    	@paniers_.each do |panier|
+    		if panier.has_declinaison
+    			@paniers << panier
+    		end
+    	end
+    	return @paniers
     end
     
     #_____ IMAGE USER ________________________________

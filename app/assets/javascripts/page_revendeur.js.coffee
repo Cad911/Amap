@@ -93,7 +93,8 @@ $(document).ready(->
               div_issmall.addClass('has_corners_shadow is_small')
               
               img = $(document.createElement('img'))
-              img.attr('src',data['default_image'])
+              if (data['default_image'] != undefined)
+              	img.attr('src',data['default_image']['image']['is_small']['url'])
               
               div_image.append(div_issmall.append(img))
               
@@ -118,14 +119,14 @@ $(document).ready(->
               
               span_price = $(document.createElement('span'))
               span_price.addClass('price')
-              span_price.text(data['prix_unite_ttc']+' €')
+              span_price.text( 'A partir de '+data['min_price']+' €')
               
               span_note = $(document.createElement('span'))
               span_note.addClass('note is_italic')
               if category == 'product'
                   span_note.text(' le '+data['unite_mesure'])
               if category == 'basket'
-                  span_note.text(' pour '+data['nb_personne']+' personnes')
+                  span_note.text(' dès '+data['min_personne'])
               
               div_call_toaction = $(document.createElement('div'))
               div_call_toaction.addClass('call_to_action')
