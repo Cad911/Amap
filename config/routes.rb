@@ -48,7 +48,9 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
   end
 #_________ CLIENTS _________________________________________________________________________________________________________
   namespace :espace_client do
+  		
   		resources :clients do
+  			match 'historique' => 'historique#index', :as => 'historique_index'
   			match "edit_password" => "clients#edit_password", :via => :get
    		end
   end
@@ -112,9 +114,16 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
 	  match 'blog/index' => 'blog#index_article', :as => :blog_index, :via => :get
 	  match 'blog/new_article' => 'blog#new_article', :as => :new_article, :via => :get
 	  match 'blog/create_article' => 'blog#create_article', :as => :create_article, :via => :post
-	  match 'blog/edit_article/:article_id' => 'blog#edit_article', :as => :edit_article, :via => :get
-	  match 'blog/update_article/:article_id' => 'blog#update_article', :as => :update_article, :via => :post
+	  match 'blog/edit_article/:categorie_blog_id' => 'blog#edit_article', :as => :edit_article, :via => :get
+	  match 'blog/update_article/:categorie_blog_id' => 'blog#update_article', :as => :update_article, :via => :post
 	  match 'blog/upload_image' => 'blog#upload_image', :as => :upload_image, :via => :post
+	  
+	  #ROUTE CATEGORIE BLOG 
+	  match 'blog/categorie/index' => 'blog#index_categorie', :as => :index_categorie, :via => :get
+	  match 'blog/categorie./new' => 'blog#new_categorie', :as => :new_categorie, :via => :get
+	  match 'blog/categorie/create' => 'blog#create_categorie', :as => :create_categorie, :via => :post
+	  match 'blog/categorie/edit_categorie/:categorie_id' => 'blog#edit_categorie', :as => :edit_categorie, :via => :get
+	  match 'blog/categorie/update_categorie/:categorie_id' => 'blog#update_categorie', :as => :update_categorie, :via => :post
 	  
 	  
 	  #declinaison panier autorise
