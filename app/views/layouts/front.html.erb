@@ -56,24 +56,26 @@
 
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
-          <a href="" class="dropdown-toggle l_link basket" data-toggle="dropdown"><span></span>Paniers</a>
-          <ul class="dropdown-menu dropdown_menu">
-            <li> <%= link_to "Tous",page_panier_index_path %> </li>
-            <%  Categorie.all.each do |categorie| %>
-            <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
-              <li> <%= link_to categorie.nom,page_panier_index_by_categorie_path(categorie.id) %> </li>
-            <% end %>
-          </ul>
-        </div>
+          <%= link_to page_panier_index_path,:class => "l_link basket" do %>
+          	<span></span>Paniers
+          <% end %>
+         </div>
+         
         <div class="dropdown product">
-          <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown"><span></span>Produits</a>
-          <ul class="dropdown-menu dropdown_menu">
+<!--           <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown"> -->
+          <%= link_to page_produit_index_path, :class => "l_link product" do %>
+          	<span></span>Produits
+<!--           	</a> -->
+          <% end %>
+          <!--
+<ul class="dropdown-menu dropdown_menu">
           <li> <%= link_to "Tous",page_produit_index_path %> </li>
             <% Categorie.all.each do |categorie| %>
             <li class="dropdown_arrow"><span class="inner_arrow"></span><span class="outer_arrow"></span></li>
               <li> <%= link_to categorie.nom,page_produit_index_by_categorie_path(categorie.id) %> </li>
             <% end %>
           </ul>
+-->
         </div>
       </div>
 

@@ -28,7 +28,11 @@
 				<div class="raw raw_panier" id="raw_<%= @abonnement_panier.id %>">
 					<div class="l_photo_description is_horizontal">
 						<div class="image">
-							<div class="has_corners_shadow is_small"></div>
+							<div class="has_corners_shadow is_small">
+								<% if !(@abonnement_panier.panier.default_image).nil? %>
+						            <%= image_tag (@abonnement_panier.panier.default_image).image_url(:is_small), :itemprop => 'image' %>
+						        <% end %>
+							</div>
 						</div>
 						<div class="content">
 							<p class="is_bold title"> <%= @abonnement_panier.panier.titre %>  <span class="note is_italic"> pour <%= @abonnement_panier.nombre_personne %> personne(s)</span></p>						
@@ -75,7 +79,11 @@
 							<div class="raw raw_produit" id="raw_<%= cageot.id %>">
 								<div class="l_photo_description is_horizontal">
 									<div class="image">
-										<div class="has_corners_shadow is_small"></div>
+										<div class="has_corners_shadow is_small">
+											<% if !(cageot.produit_vente_libre.stock.default_image).nil? %>
+									            <%= image_tag (cageot.produit_vente_libre.stock.default_image).image_url(:is_small), :itemprop => 'image' %>
+									        <% end %>
+										</div>
 									</div>
 									<div class="content">
 										<p class="is_bold title"> <%= cageot.produit_vente_libre.titre %>  <span class="note is_italic">les <%= cageot.produit_vente_libre.quantite %>  <%= cageot.produit_vente_libre.stock.unite_mesure.abbreviation %> </span></p>						
