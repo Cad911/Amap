@@ -173,12 +173,12 @@
 							<ul class="subnav <%= 'subnav_isopen' if @admin_article || @admin_categorie_blog %>">
 							<%= link_to administration_user_blog_index_path(current_user) do %>
 								<li class="article subnav_element <%= 'subnav_active' if @admin_article %>" > 
-									<span class="picture"></span><span class="link"> Articles </span>
+									<span class="icon icon-article"></span><span class="link"> Articles </span>
 								</li>
 							<% end %>
 							<%= link_to administration_user_index_categorie_path(current_user) do %>
 								<li class="categorie_blog subnav_element <%= 'subnav_active' if @admin_categorie_blog %>">
-									<span class="picture"></span><span class="link"> Catégories du blog</span>
+									<span class="icon icon-tags-brown"></span><span class="link"> Catégories</span>
 								</li>
 							<% end %>
 						</ul>

@@ -119,7 +119,7 @@ $(document).ready(->
               
               span_price = $(document.createElement('span'))
               span_price.addClass('price')
-              span_price.text( 'A partir de '+data['min_price']+' €')
+              span_price.text( ''+data['min_price']+' €')
               
               span_note = $(document.createElement('span'))
               span_note.addClass('note is_italic')
@@ -136,7 +136,7 @@ $(document).ready(->
               span_button.attr('id', category+'_'+data['id'])
               
               a_button = $(document.createElement('a'))
-              a_button.text('ajouter au panier')
+              a_button.text('voir  le  produit')
               
               div_call_toaction.append(span_button.append(a_button))
               div_purchase.append(span_price)

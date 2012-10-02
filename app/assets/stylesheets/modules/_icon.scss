@@ -126,6 +126,18 @@
   vertical-align: middle;
   @include ui-sprite(help_hover);
 }
+.icon.icon-tags-brown {
+  @include backoffice-sprite(tags-brown);
+  display: inline-block;
+  width: 17px;
+  height: 17px; 
+}
+.icon.icon-article {
+  @include backoffice-sprite(article);
+  display: inline-block;
+  width: 17px;
+  height: 17px; 
+}
 
 .icon-puce {@include ui-sprite(circle);width:6px;height:6px;margin-right:10px;}
 

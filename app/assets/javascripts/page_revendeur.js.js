@@ -120,7 +120,7 @@
         div_content.append(p_title);
         div_content.append(p_descrption);
         div_purchase = $(document.createElement('div'));
-        div_purchase.addClass('purchase');
+        div_purchase.addClass('pursache');
         span_price = $(document.createElement('span'));
         span_price.addClass('price');
         span_price.text(data['prix_unite_ttc'] + ' €');

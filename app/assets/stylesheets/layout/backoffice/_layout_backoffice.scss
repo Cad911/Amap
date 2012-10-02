@@ -220,6 +220,9 @@ body .backoffice {
 							display:inline-block;
 							margin:0 0 0 0px;
 						}
+						.icon {
+							margin-top:5px;
+						}
 						&:hover {
 							color:$red;
 							cursor:pointer;
@@ -272,6 +275,22 @@ body .backoffice {
 								}
 							}
 						}
+						&.article {
+							.link {
+								position:relative;
+								top:7px !important;
+								left: 10px;
+								color: $brown;
+							}
+						}
+						&.categorie_blog {
+							.link {
+								position:relative;
+								top:3px !important;
+								left: 10px;
+								color: $brown;
+							}
+						}						
 						//ELEMENT ACTIF QUAND ON EST DANS LA PAGE
 						&.subnav_product_active
 						{
