@@ -83,7 +83,7 @@
 		        <div class="pursache">
 		        	<span class="price"><%= produit.prix_unite_ttc %> € <span class="note is_italic">le <%= produit.stock.unite_mesure.nom %></span></span><br>
 		        	<div class="call_to_action">
-		        		<span class="button add_product_link" id="product_<%= produit.id %>"><a>ajouter au panier</a></span>
+		        		<span class="button add_product_link" id="product_<%= produit.id %>"><a>voir  le  produit</a></span>
 		        	</div>
 		        </div>
       		</div>
@@ -107,7 +107,7 @@
 		        	<span class="price"> A partir de <%= panier.min_price %> € <span class="is_italic"> dès <%= panier.min_personne %></span></span><br>
 		        	<div class="call_to_action" style="position:relative;">
 <!-- 		        		<span class="button add_basket_link_revendeur" id="basket_<%= panier.id %>"><a> S'abonner</a></span> -->
-							<span class="button" id="basket_<%= panier.id %>"><a href="<%= url_for page_panier_show_path(panier.revendeur_id,panier.id) %>"> Accèder au panier </a></span>
+							<span class="button" id="basket_<%= panier.id %>"><a href="<%= url_for page_panier_show_path(panier.revendeur_id,panier.id) %>"> voir  le  panier </a></span>
 		        	</div>
 		        </div>
 	      </div>
