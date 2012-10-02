@@ -121,10 +121,17 @@ $(document).ready( () ->
                 $(supp_photo_function.id_photo).parents('.is_small.has_corners_shadow').parents('li').remove()
                 
             if $(supp_photo_function.id_photo).hasClass('photo_panier')
+                console.log('le test before')
+                console.log(supp_photo_function.id_photo)
                 left_area = $(supp_photo_function.id_photo).parents('.picture').parents('div.left_area')
+                span_number_image = left_area.parents('.card').parents('div.card_stack').children('.packaging').children('.footer').children('ul.main-informations').children('li.number_image').children('span.number')
+                number_image = parseInt(span_number_image.text())
+                number_image -= 1
+                
+                span_number_image.text(number_image)
                 $(supp_photo_function.id_photo).parents('.picture').remove()
                 supp_photo_function.regenerate_class(left_area)
-        
+                    
         regenerate_class: (element)->
             #element = left_area
             i = 0
@@ -778,10 +785,14 @@ $(document).ready( () ->
             else
                 $(add_photo_basket.card).children('.left_area').children('.is_small.has_corners_shadow').after(div)
             
-						
+            number_image = parseInt((add_photo_basket.card).parents('div.card_stack').children('.packaging').children('.footer').children('ul.main-informations').children('li.number_image').children('span.number').text())
+				
+            number_image += 1
+            (add_photo_basket.card).parents('div.card_stack').children('.packaging').children('.footer').children('ul.main-informations').children('li.number_image').children('span.number').text(number_image)
             if data['first_image'] == 1
                 new_image = $(add_photo_basket.card).children('.left_area').children('div').last()
                 #console.log(new_image)
+                $(add_photo_basket.card)
                 setTimeout(add_photo_basket.animation_first_image, 200, $(add_photo_basket.card).children('.left_area').children('.is_small.has_corners_shadow'), new_image)
         
         animation_first_image: (actual_first_image, new_image)->
@@ -827,6 +838,7 @@ $(document).ready( () ->
             ,{
                 duration:2000,
                 complete:()->
+                    console.log(actual_first_image)
                     $(this).removeClass($(this).attr('class'))
                     $(this).addClass('is_small has_corners_shadow')
                     $(this).css('position','relative')
@@ -863,7 +875,7 @@ $(document).ready( () ->
                             #console.log($(add_photo_stock.card).children('.left_area').children('div').last())
                             console.log(div_wait)
                             div_wait.remove()
-                            $(add_photo_stock.card).children('.left_area').children('span').last().before(this)
+                            $(add_photo_basket.card).children('.left_area').children('span').last().before(this)
                             $(this).remove
                             
                     })
@@ -952,9 +964,9 @@ $(document).ready( () ->
                     form_add_basket.anim_for_decli_and_product($($('.card_stack')[0]))
                     #event sur les bouton
                     supp_basket.event_one_element(new_card_2.find('.buttons_card li.delete'))
-                    #add_photo_stock.init_one_element(new_card_2.find('.add.button.image'))
+                    add_photo_basket.init_one_element(new_card_2.find('.add.button.image'))
                     #functions.one_edit_button(new_card_2.find('.buttons_card>.edit'))
-                    #form_plugin_element.init_one_card(new_card_2)
+                    form_plugin_basket.init_one_card(new_card_2)
                     
                     new_card_2.animate({
                         opacity:1,
@@ -1506,7 +1518,7 @@ $(document).ready( () ->
             $(button_supp).on('click',()->
                 panier_id = $(this).attr('id').replace('panier_id_','')
                 user_id = $('.user_id').val()
-                supp_stock.have_confirmation(user_id, panier_id, this)            )
+                supp_basket.have_confirmation(user_id, panier_id, this)            )
         
     if $('.h1_listing_panier').length > 0
         supp_basket.init()
@@ -1725,26 +1737,26 @@ $(document).ready( () ->
         #         url_get_infos:['user','panier']
         #     )
     
-    init_one_card:(card_stack)->
-        $(card_stack).children('.packaging').find('h2.title').form_plugin(
-                champ: 'titre'
-                element: 
-                    type: 'input'
-                button:
-                    class:'update_titre'
-                    text_update:'Modifier le titre'
-                url_get_infos:['user','panier']
-            )
-        
-            $(card_stack).children('.packaging').find('p.description').form_plugin(
-                champ: 'description'
-                element: 
-                    type: 'input'
-                button:
-                    class:'update_description'
-                    text_update:'Modifier le description'
-                url_get_infos:['user','panier']
-            )
+        init_one_card:(card_stack)->
+            $(card_stack).children('.packaging').find('h2.title').form_plugin(
+                    champ: 'titre'
+                    element: 
+                        type: 'input'
+                    button:
+                        class:'update_titre'
+                        text_update:'Modifier le titre'
+                    url_get_infos:['user','panier']
+                )
+            
+                $(card_stack).children('.packaging').find('p.description').form_plugin(
+                    champ: 'description'
+                    element: 
+                        type: 'input'
+                    button:
+                        class:'update_description'
+                        text_update:'Modifier le description'
+                    url_get_infos:['user','panier']
+                )
     form_plugin_basket.init()
         
     #--------------------------------------------
@@ -2570,6 +2582,11 @@ $(document).ready( () ->
             xhr.onreadystatechange = ()->
                 if xhr.readyState == xhr.DONE
                     data = xhr.responseText
+                    console.log('verif si ul')
+                    console.log(function_product_in_basket.ul_listing_produit.length)
+                    if function_product_in_basket.ul_listing_produit.length == 0
+                        function_product_in_basket.div_sous_content.children('.other_products').html($(document.createElement('ul')))
+                        function_product_in_basket.ul_listing_produit = function_product_in_basket.div_sous_content.children('.other_products').children('ul')
                     function_product_in_basket.ul_listing_produit.prepend(data)
                     function_product_in_basket.ul_listing_produit.first().find('.close_square').on('click',()->
                         li_product = $(this).parents('.content').parents('div').parents('li')

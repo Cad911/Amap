@@ -29,7 +29,11 @@ class ApplicationController < ActionController::Base
   #____ REDIRECTION APRES LE LOGIN-LOGOUT _______
   def after_sign_in_path_for(resource)
   		if resource.is_a?(User)
-    		administration_user_path(current_user.id)
+    		if current_user.autorisation_produit
+    			administration_user_produit_autorises_path(current_user.id)
+    		else
+    			administration_user_path(current_user.id)
+    		end
     	elsif resource.is_a?(Client)
     		#__ ASSOCIATION CAGEOT A L'UTILISATEUR SI IL EXISTE __
     		if !session[:cageot_id].nil?
@@ -87,7 +91,7 @@ class ApplicationController < ActionController::Base
      	    @commande_encours[0].save()
      	    
      	end
-     	new_client_session_path
+     	index_front_path
      else
        new_admin_user_session_path()
      end

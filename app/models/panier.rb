@@ -18,6 +18,12 @@ class Panier < ActiveRecord::Base
     
     end
     
+    def number_photo
+    	@photo = PhotoPanier.where('panier_id = ?', self.id)
+    	
+    	return @photo.count
+    end
+    
     def has_declinaison
     	@declinaison = DeclinaisonPanier.where('panier_id = ?', self.id)
     	if @declinaison.count > 0

@@ -6,7 +6,9 @@
 		<li class="stats button" tool_tip="statistiques"><span class="picture"></span></li>
 		<li class="help button button_active" tool_tip="aide"><span class="picture"></span></li>        
 		<li class="separator"></li>
-		<li class="add button" tool_tip="ajouter un produit"><span class="picture"></span></li>
+		<%= link_to administration_user_new_categorie_path(current_user.id) do %> 
+			<li class="add button" tool_tip="ajouter un produit"><span class="picture"></span></li>
+		<% end %>
 	</ul>
 </div>
 
