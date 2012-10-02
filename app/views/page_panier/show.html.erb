@@ -36,7 +36,7 @@
 			
 			<div class="l_content_right details">
 				<h1 itemprop="name"> <%= @panier.titre %></h1>	 
-				<p class="note is_italic">Fruits et légumes</p>
+				<p class="note is_italic"><%= @panier.categorie.nom %></p>
 				<p itemprop="description"> Description :<%= @panier.description %> </p>
 			
 				<div class="price_button">
