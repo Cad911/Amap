@@ -8,14 +8,34 @@ class Administration::BlogController < ApplicationController
   #----------------------------------------------------------
   #----------------------------------------------------------
   def index_categorie
+  	@categorie_blogs = CategorieBlog.all
   end
   
   def new_categorie
+  	@categorie_blog = CategorieBlog.new
+  	
+  	render :new_categorie
   end
   
-  
   def create_categorie
+  	@categorie_blog = CategorieBlog.new(params[:categorie_blog])
+  	
+  	@categorie_blog.save
+  	
+  	redirect_to "path"
+  end
   
+  def update_categorie
+  	@categorie_blog = CategorieBlog.find(params[:categorie_blog_id])
+  	
+  	render :update_categorie
+  end
+  
+  def edit_categorie
+  	@categorie_blog = CategorieBlog.find(params[:categorie_blog_id])
+  	@categorie_blog.update_attributes(params[:categorie_blog])
+  	
+  	render :update_categorie
   end
   
   #----------------------------------------------------------

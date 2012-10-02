@@ -231,11 +231,13 @@
 
 	<div class="backoffice">
 		<div class="l_wrapper">
-		<% if current_user %>
+		<% if current_client %>
 			<div class="side_navigation">
 				<ul class="pannels">
-					<li class="archive top"><span class="picture"></span><span class="link">Historique</span></li>
-					<%= link_to administration_user_path(current_user) do %>
+					<%= link_to espace_client_client_historique_index_path(current_client) do %>
+						<li class="archive top"><span class="picture"></span><span class="link">Historique</span></li>
+					<% end %>
+					<%= link_to edit_espace_client_client_path(current_client) do %>
 					<li class="settings bottom"><span class="picture"></span><span class="link">Paramètres</span></li>
 <!-- 					<li> <%= link_to "deconnexion", user_logout_path() , :method => 'delete' %> </li> -->
 					<% end %>

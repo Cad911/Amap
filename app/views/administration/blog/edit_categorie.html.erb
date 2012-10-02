@@ -1,0 +1,131 @@
+<div class="page-header">
+	<h1>Nouvel article</h1>
+	<ul class="buttons">
+		<li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+		<li class="separator"></li>
+		<li class="help button button_active" tool_tip="aide"><span class="picture"></span></li>        
+	</ul>
+</div>	
+<div class="helper">
+	<p class="title is_bold"><i class="icon ui-help_hover"></i>Rédaction d'articles</p>
+	<span class="close"><i class="icon-remove"></i></span>
+	<ul class="content">
+		<li><span class="is_bold">Créer un article</span> depuis la barre d'action située en haut de la page, en cliquant sur le bouton ajouter.</li>
+		<li><span class="is_bold">Modifier un article</span> depuis son billet, en cliquant sur le bouton au crayon.</li>
+		<li><span class="is_bold">Supprimer un article</span> depuis son billet, en cliquant sur le bouton rouge à la corbeille.</li>
+	</ul>
+</div>
+
+
+<input type="hidden" class="user_id" value="<%= current_user.id %>" />
+
+	
+	<%= simple_form_for @article, 
+    	:url => url_for(:action => 'update_article', :controller => 'administration/blog'),
+    	:method => 'post' do |f| %>
+		
+		<%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+
+		<%= f.input :categorie_blog_id, :collection => CategorieBlog.all.map { |r| [r.titre, r.id] }, :label => "Categorie", :include_blank => false%>
+		
+		<%= f.input :titre %>
+		
+		<%= f.input :etat,  :collection => [['publie', 'publie'], ['brouillon', 'brouillon']] %>
+		
+		<br>
+		<div class="title-bar blog">
+		<ul id="toolbar-edit">
+			<li class="filter bold" ><i class="icon icon-bold "></i></li>
+			<li class="filter italic" ><i class="icon icon-italic"></i></li>
+			<li class="filter list_blog" ><i class="icon icon-list_blog"></i></li>
+			<li class="filter picture button_insert_image" ><i class="icon icon-picture"></i></li>
+			
+			
+			<li class="filter h1"><i class="icon icon-h1"></i></li>
+			<li class="filter h2"><i class="icon icon-h2"></i></li>
+			<li class="filter link" ><i class="icon icon-link"></i></li>
+		</ul>
+	</div>
+	<br>
+		<%= f.text_area :content, :cols => 100, :rows => 100, :style => 'width:700px;', :placeholder => @article.content  %>
+		
+		<%= f.button :submit %>
+	<% end %>
+
+</div>
+
+
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- LIGHTBOX FOR INSERT IMAGE -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<div class="lightbox_wrapper lightbox_insert_image" >
+			<div class="lightbox " data-wysihtml5-dialog="insertImage">
+				<div class="header">
+					<h1 class="title"> Nouvelle image </h1>
+				</div>
+				
+				<div class="content">
+					
+					<form class="simple_form" style="margin: 0 85px;">
+						<div class="control-group">
+							<label for="input_image" class="optional control-label"> Image</label>
+							<div class="controls">
+								<input type="file" class="input_image" name="input_image"/>
+							</div>
+						</div>
+						<p style="text-align:center">
+						<img src="" class="apercu_image" width="200px"/>
+						</p>
+						
+					</form>
+				</div>
+				
+				<div class="footer">
+					<span class="button button_add_image"> <a> Ajoutez </a> </span>
+				</div>
+				
+			</div>
+		</div>
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		
+		
+		
+<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- LIGHTBOX FOR INSERT IMAGE -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<div class="lightbox_wrapper lightbox_insert_link has-menu" >
+			<div class="lightbox " data-wysihtml5-dialog="insertImage">
+				<div class="header">
+					<h1 class="title"> Nouveau lien </h1>
+				</div>
+				
+				<div class="content">
+					<form>
+						<input type="text" class="input_link" name="input_link" value="http://"/>
+						
+					</form>
+				</div>
+				
+				<div class="footer">
+					<span class="button button_add_link"> <a> Ajoutez </a> </span>
+				</div>
+				
+			</div>
+		</div>
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
+		<!-- __________________________________________ -->
