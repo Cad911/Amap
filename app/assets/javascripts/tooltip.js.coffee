@@ -68,7 +68,7 @@
 	            $('body').append(my_tooltip)
 	           
 	            offset = $(element).offset()
-	            offset.top -= 50 #A CAUSE DE LA MARGE SUR L.wrapper 
+	            offset.top -= 20 #A CAUSE DE LA MARGE SUR L.wrapper 
 	            if $(element).children('circle').length > 0
 	            	outer_width_element = parseInt($(element).children('circle').attr('r')) + 1
 	            else

@@ -15,7 +15,7 @@ ECommerce::Application.routes.draw do
   resources :commandes
   
   match '/a_propos' => "page_front#a_propos", :via => :get
-  match '/' => "page_front#index", :via => :get
+  match '/' => "page_front#index", :as => :index_front, :via => :get
 
 #______ PROCESS ORDER _________________________________________________________________________________________________
   get "process_order/resume"
@@ -120,7 +120,7 @@ match 'cageot/suppProduit/:product_cageot_id' => 'cageots#supprimerProduitCageot
 	  
 	  #ROUTE CATEGORIE BLOG 
 	  match 'blog/categorie/index' => 'blog#index_categorie', :as => :index_categorie, :via => :get
-	  match 'blog/categorie./new' => 'blog#new_categorie', :as => :new_categorie, :via => :get
+	  match 'blog/categorie/new' => 'blog#new_categorie', :as => :new_categorie, :via => :get
 	  match 'blog/categorie/create' => 'blog#create_categorie', :as => :create_categorie, :via => :post
 	  match 'blog/categorie/edit_categorie/:categorie_id' => 'blog#edit_categorie', :as => :edit_categorie, :via => :get
 	  match 'blog/categorie/update_categorie/:categorie_id' => 'blog#update_categorie', :as => :update_categorie, :via => :post

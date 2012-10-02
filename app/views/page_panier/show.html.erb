@@ -25,23 +25,28 @@
 					<%= image_tag (@panier.default_image).image_url(:is_big), :itemprop => 'image' if !(@panier.default_image).nil? %>
 				</div>
 				
-				<ul>
-					<li>
-						<div class="is_small has_corners_shadow">
-						</div>
-					</li>
-				</ul>
+				<% if !(@panier.other_image).nil? %>
+		        <ul>
+		          <% (@panier.other_image).each do |image| %>
+		                <li>
+		                  <div class="is_small has_corners_shadow">
+		                    <%= image_tag image.image_url(:is_small), :itemprop => 'image' %>
+		                  </div>
+		                </li>
+		          <% end %>
+		        </ul>
+		        <% end %>
 			
 			</div>	
 			
 			<div class="l_content_right details">
 				<h1 itemprop="name"> <%= @panier.titre %></h1>	 
 				<p class="note is_italic"><%= @panier.categorie.nom %></p>
-				<p itemprop="description"> Description :<%= @panier.description %> </p>
+				<p itemprop="description"> <%= @panier.description %> </p>
 			
 				<div class="price_button">
 					<span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-						<p class="price is_bold" itemprop="price"> <%= @panier.min_price %> € <span class="note is_italic">le kilo</span></p>
+						<p class="price is_bold" itemprop="price"> <%= @panier.min_price %> € <span class="note is_italic"> </span></p>
 					</span>
 				<div class="control-group select optional">
 					<div class="controls">
