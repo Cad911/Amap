@@ -779,4 +779,14 @@ body .backoffice {
 .packaging .details li {
 	border: solid 1px rgba(0,0,0,0);
 }
+.backoffice .historique {
+	h3 {
+		font-family:'helveticaneue-bold' !important;
+	}
+	.table table {
+		td:first-child {
+			width: inherit;
+		}
+	}
+}
 

@@ -173,9 +173,12 @@
       margin:10px 0 0 40px;
     }
   }
+  .ui-help_hover {
+    margin-top:-2px;
+  }
   .title {
     padding:0 20px 0 0;
-    margin:0;
+    margin:0 0 10px 0;
     @include title(2,18px);
     .is-grey {
       color: $grey;
@@ -271,6 +274,10 @@
     .title {
       @include title(1, 30px);
       margin:0 0 5px 0;
+    }
+    li {
+      background-color:rgba(#E1D5BB, 0.3);
+      text-shadow:1px 1px 1px rgba(white, 0.7);
     }
     p {
       color:$brown;
