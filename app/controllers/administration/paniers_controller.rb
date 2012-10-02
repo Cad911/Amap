@@ -4,7 +4,7 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
-		@paniers = Panier.where(:revendeur_id => params[:user_id]).order('panier_autorise_id')
+		@paniers = Panier.where('revendeur_id = ? AND deleted = "0"', params[:user_id]).order('panier_autorise_id')
 
 
 		authorize! :update, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
@@ -107,7 +107,7 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	#_______ CREATE ________
 	def create
 		@panier = Panier.new(params[:panier])
-		
+		@panier.deleted = 0
 		#_______ CONDITION CAN STOCK AR ______ 
   		if current_user.can_stock_ar
   			@panier_autorise = PanierAutorise.find(params[:panier][:panier_autorise_id])
@@ -223,8 +223,10 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	
 	def destroy
 		panier = Panier.find(params[:id])
-	  	panier.destroy
+	  	#panier.destroy
+	  	panier.deleted = 1
 	  	
+	  	panier.save
 	  	#produit_to_delete = ProduitVenteLibre.where(:stock_id => params[:id])
 	  	
 	  	#produit_to_delete.each do |produit|

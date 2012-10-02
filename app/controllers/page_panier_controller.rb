@@ -14,11 +14,18 @@ class PagePanierController < ApplicationController
   	@all_categorie = Categorie.all
   	@all_agriculteurs = User.where(:entite_id => 2)
   	@titre = "Tous les paniers"
-  	@paniers = Panier.all
+  	@paniers_ = Panier.where('deleted="0"')
   	@paniers_first_block = []
   	@paniers_middle_block = []
   	@paniers_last_block = []
   	
+  	
+  	@paniers = []
+	@paniers_.each do |panier|
+		if panier.has_declinaison
+			@paniers << panier
+		end
+	end 
   	#___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
   	if @paniers.count < 5
   		@paniers_middle_block = @paniers
@@ -64,8 +71,15 @@ class PagePanierController < ApplicationController
   	else
   	
 	  	@titre = "Produit de la categorie : #{@categorie.nom}"
-	    @paniers = Panier.where(:categorie_id => params[:categorie_id])
+	    @paniers_ = Panier.where('categorie_id =? AND deleted = "0"', params[:categorie_id])
 	    @produits = []
+	    
+	    @paniers = []
+	    @paniers_.each do |panier|
+			if panier.has_declinaison
+				@paniers << panier
+			end
+		end 
 	    
 	    #___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
 	  	if @paniers.count < 5
@@ -144,8 +158,13 @@ class PagePanierController < ApplicationController
   def index_by_revendeur
   	@user = User.find(params[:user_id])
   	@titre = "Panier de l'agriculteur #{@user.nom}"
-  	@paniers = Panier.where(:revendeur_id => params[:user_id])
-  	
+  	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', params[:user_id])
+    @paniers = []
+    @paniers_.each do |panier|
+		if panier.has_declinaison
+			@paniers << panier
+		end
+	end 
     #__FIL D'ARIANNE__
    	@tab_breadcrumb.push({:path => page_panier_index_by_revendeur_path(params[:user_id]), :title => @user.prenom})
     #_________________
@@ -161,7 +180,7 @@ class PagePanierController < ApplicationController
   	@vendeur = User.where(:direction_id => params[:direction_id])
   	@paniers = []
   	@vendeur.each do |vendeur|
-  		@panier_vendeur = Panier.where(:revendeur_id =>vendeur.id)
+  		@panier_vendeur = Panier.where('revendeur_id = ? AND deleted = "0"',vendeur.id)
   		@panier_vendeur.each do |produit|
   			@paniers << produit
   		end
@@ -178,7 +197,7 @@ class PagePanierController < ApplicationController
   
   #____________________PANIER EN VENTE WHERE PARAMS FILTER _________________________________
   def basket_filter
-      panier_vente = Panier.all
+      panier_vente = Panier.where('deleted="0"')
       panier_return = []
       
       
@@ -188,18 +207,24 @@ class PagePanierController < ApplicationController
           if params[:user_id] != nil and params[:user_id].to_i != panier.revendeur_id
               condition_respect = false
           end
-          
+ 
           if condition_respect
-              tab_panier = {
-              			:id => panier.id,
-                        :user_id => panier.revendeur_id,
-              			:titre => panier.titre, 
-              			:description => panier.description, 
-              			:default_image => '', 
-              			:prix_unite_ttc => panier.prix_unite_ttc,
-              			:nb_personne => panier.nombre_personne,
-              }
-              panier_return << tab_panier 
+          	if panier.has_declinaison
+	              tab_panier = {
+	              			:id => panier.id,
+	                        :user_id => panier.revendeur_id,
+	              			:titre => panier.titre, 
+	              			:description => panier.description,  
+	              			#:prix_unite_ttc => panier.prix_unite_ttc,
+	              			#:nb_personne => panier.nombre_personne,
+	              			:min_price => panier.min_price,
+	              			:min_personne => panier.min_personne
+	              }
+	              if !panier.default_image.nil?
+	              	tab_panier[:default_image] = panier.default_image
+	              end
+	              panier_return << tab_panier 
+	        end
           end
       end
       
@@ -231,22 +256,29 @@ class PagePanierController < ApplicationController
     
     if !params[:filter].nil?
 	    if params[:filter][:categorie_id].nil? && !params[:filter][:revendeur_id].nil?
-	    	@paniers = Panier.where(:revendeur_id => params[:filter][:revendeur_id][:value]).order(order_by)   
+	    	@paniers_ = Panier.where('revendeur_id IN (?) AND deleted = "0"', params[:filter][:revendeur_id][:value]).order(order_by)   
 	    elsif params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@paniers = Panier.where(:categorie_id => params[:filter][:categorie_id][:value]).order(order_by) 
+	    	@paniers_ = Panier.where('categorie_id IN (?) AND deleted = "0"', params[:filter][:categorie_id][:value]).order(order_by) 
 	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@paniers = Panier.where('categorie_id IN (?) AND revendeur_id IN (?)', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
+	    	@paniers_ = Panier.where('categorie_id IN (?) AND revendeur_id IN (?) AND deleted = "0"', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
 	    else
-	    	@paniers = Panier.order(order_by) 
+	    	@paniers_ = Panier.order(order_by) 
 	    end
 	else
-		@paniers = Panier.order(order_by) 
+		@paniers_ = Panier.order(order_by) 
 	end
     
     
     @paniers_first_block = []
   	@paniers_middle_block = []
   	@paniers_last_block = []
+	@paniers = []
+    @paniers_.each do |panier|
+		if panier.has_declinaison
+			@paniers << panier
+		end
+	end  
+	
 	
 	#___ SI MOINS DE 5 PRODUIT, QUE LE BLOCK DU MILIEU _____
   	if @paniers.count < 5

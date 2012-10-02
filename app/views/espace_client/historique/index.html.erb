@@ -44,48 +44,69 @@
   </div>
 
   <h3><i class="icon icon-basket"></i> Mes abonnements en cours (Paniers)</h3>
-  <div class="table">
-    <table class="">
-      <tr>
-      	<th> Panier </th>
-      	<th> Nombre de personnes </th>
-        <th> Date de début </th>
-        <th> Date de fin </th>
-        <th> Point Relai </th>
-        <th> Total</th>
-      </tr>
-      <tr>
-        <td> Panier de Michou</td>
-      	<td> 4 </td>
-        <td> 10 Juillet 2012 </td>
-        <td> 10 Janvier 2013 </td>
-        <td> 10 rue nationale, Lille </td>
-        <td> 10 € / mois </td>
-      </tr>     
-    </table>
-  </div>
+  <% if @abonnements_en_cours.nil? %>
+	 <p> Aucun panier en cours </p>
+  <% else %>
+  		<% if @abonnements_en_cours.count > 0 %>
+			  <div class="table">
+			  	 <table class="">
+				  <tr>
+			      	<th> Panier </th>
+			      	<th> Nombre de personnes </th>
+			        <th> Date de début </th>
+			        <th> Date de fin </th>
+			        <th> Point Relai </th>
+			        <th> Total</th>
+			      </tr>
+			    
+			    <% @abonnements_en_cours.each do |abonnement| %>
+			      <tr>
+			      	<td> <%= abonnement.panier.titre %> </td>
+			      	<td> <%= abonnement.nombre_personne %> </td>
+			        <td> <%= abonnement.date_debut %> </td>
+			        <td> <%= abonnement.date_fin %> </td>
+			        <td> <%= abonnement.point_relai.adresse %> <%= abonnement.point_relai.ville.nom %> </td>
+			        <td> <%= abonnement.prix_ttc %></td>
+			      </tr>
+			     <% end %>   
+			    </table>
+			  </div>
+		<% else %>
+			<p> Aucun panier en cours </p>
+		<% end %>
+  <% end %>
   
   
   <h3><i class="icon icon-basket"></i> Mes abonnements passés (Paniers)</h3>
-  <div class="table">
-    <table class="">
-      <tr>
-      	<th> Panier </th>
-      	<th> Nombre de personnes </th>
-        <th> Date de début </th>
-        <th> Date de fin </th>
-        <th> Point Relai </th>
-        <th> Total</th>
-      </tr>
-      <tr>
-        <td> Panier Printanier </td>
-      	<td> 4 </td>
-        <td> 22 Mars 2012 </td>
-        <td> 22 Juin 2012 </td>
-        <td> 10 rue nationale, Lille </td>
-        <td> 10 € / mois </td>
-      </tr>     
-    </table>
+  <% if @abonnements_termines.nil?  %>
+  	<p> Aucun abonnements terminés </p>
+  <% else %>
+	<% if @abonnements_termines.count > 0 %>
+		  <div class="table">
+		    <table class="">
+		      <tr>
+		      	<th> Panier </th>
+		      	<th> Nombre de personnes </th>
+		        <th> Date de début </th>
+		        <th> Date de fin </th>
+		        <th> Point Relai </th>
+		        <th> Total</th>
+		      </tr>
+			   <% @abonnements_termines.each do |abonnement| %>
+			      <tr>
+			      	<td> <%= abonnement.panier.titre %> </td>
+			      	<td> <%= abonnement.nombre_personne %> </td>
+			        <td> <%= abonnement.date_debut %> </td>
+			        <td> <%= abonnement.date_fin %> </td>
+			        <td> <%= abonnement.point_relai.adresse %> <%= abonnement.point_relai.ville.nom %> </td>
+			        <td> <%= abonnement.prix_ttc %></td>
+			      </tr>
+			   <% end %>    
+		    </table>
+	<% else %>
+	  	<p> Aucun abonnements terminés </p>
+	<% end %>
+   <% end %>
   </div>
 
 </div>

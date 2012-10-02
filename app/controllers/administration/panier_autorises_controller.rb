@@ -6,7 +6,7 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison]
   def index
   	@admin_basket = true
   	
-  	@panier_autorises = PanierAutorise.where(:user_id => params[:user_id])
+  	@panier_autorises = PanierAutorise.where('user_id =? AND deleted = "0"', params[:user_id])
     authorize! :manage, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
   end
  
@@ -42,7 +42,8 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison]
   def create
   	@panier_autorise = PanierAutorise.new(params[:panier_autorise])
   	@panier_autorise.user_id = current_user.id
-
+  	@panier_autorise.deleted = 0
+  	
   	if @panier_autorise.save
   		flash[:notice] = "Panier ajoute"
 		render :partial => 'card_panier', :locals => {:panier_autorise => @panier_autorise}  	 		

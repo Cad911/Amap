@@ -12,7 +12,7 @@ class PageProduitController < ApplicationController
   	@all_categorie = Categorie.all
   	@all_agriculteurs = User.where(:entite_id => 2)
   	@titre = "Tous les produits"
-  	@produits = ProduitVenteLibre.all
+  	@produits = ProduitVenteLibre.where('deleted="0"')
   	@produits_first_block = []
   	@produit_middle_block = []
   	@produit_last_block = []
@@ -67,7 +67,7 @@ class PageProduitController < ApplicationController
   def index_by_revendeur
   	@user = User.find(params[:user_id])
   	@titre = "Produit de l'agriculteur #{@user.nom}"
-  	@produits = ProduitVenteLibre.where(:user_id => params[:user_id])
+  	@produits = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', params[:user_id])
   	
   	#__FIL D'ARIANNE__
    	@tab_breadcrumb.push({:path => page_produit_index_by_revendeur_path(params[:user_id]), :title => 'Produits de '+@user.prenom})
@@ -83,7 +83,7 @@ class PageProduitController < ApplicationController
   	@vendeur = User.where(:direction_id => params[:direction_id])
   	@produits = []
   	@vendeur.each do |vendeur|
-  		@produit_vendeur = ProduitVenteLibre.where(:user_id =>vendeur.id)
+  		@produit_vendeur = ProduitVenteLibre.where('user_id = ? AND deleted = "0"',vendeur.id)
   		@produit_vendeur.each do |produit|
   			@produits << produit
   		end
@@ -114,17 +114,17 @@ class PageProduitController < ApplicationController
 	
 	if params[:categorie_id].kind_of?(Array) && (params[:categorie_id].nil? || params[:categorie_id] == "")
   		@titre = "Toutes les  categories"
-  		@stocks = Stock.all
+  		@stocks = Stock.where('deleted="0"')
   	else
   		if @categorie.nil? && !params[:categorie_id].kind_of?(Array)
   			@titre = "Toutes les  categories"
-  			@stocks = Stock.all
+  			@stocks = Stock.where('deleted="0"')
   		else
   			if !params[:categorie_id].kind_of?(Array)
   				@titre = "Produit de la categorie : #{@categorie.nom}"
   			end 
   			
-  			@stocks = Stock.where(:categorie_id => params[:categorie_id])
+  			@stocks = Stock.where('categorie_id = ? AND deleted = "0"', params[:categorie_id])
   		end
     end
 
@@ -207,7 +207,7 @@ class PageProduitController < ApplicationController
   
   #____________________ PRODUIT VENTE LIBRE WHERE PARAMS FILTER _________________________________
   def product_filter
-      produit_vente = ProduitVenteLibre.all
+      produit_vente = ProduitVenteLibre.where('deleted="0"')
       product_return = []
       
       
@@ -252,16 +252,16 @@ class PageProduitController < ApplicationController
     
     if !params[:filter].nil?
 	    if params[:filter][:categorie_id].nil? && !params[:filter][:revendeur_id].nil?
-	    	@stocks = Stock.find_all_by_user_id(params[:filter][:revendeur_id][:value])    
+	    	@stocks = Stock.where("user_id IN (?) AND deleted = '0'",params[:filter][:revendeur_id][:value])    
 	    elsif params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@stocks = Stock.find_all_by_categorie_id(params[:filter][:categorie_id][:value])
+	    	@stocks = Stock.where("categorie_id IN (?) AND deleted = '0'",params[:filter][:categorie_id][:value])
 	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@stocks = Stock.find_all_by_categorie_id_and_user_id(params[:filter][:categorie_id][:value],params[:filter][:revendeur_id][:value])
+	    	@stocks = Stock.where("categorie_id IN (?) AND user_id IN (?) AND deleted = '0'",params[:filter][:categorie_id][:value],params[:filter][:revendeur_id][:value])
 	    else
-	    	@stocks = Stock.all
+	    	@stocks = Stock.where('deleted="0"')
 	    end
 	else
-		@stocks = Stock.all
+		@stocks = Stock.where('deleted="0"')
 	end
     
 #     if !params[:order_by].nil?
