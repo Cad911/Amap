@@ -96,15 +96,16 @@ body header .l_header_wrapper .l_nav .l_nav_element {
     width: 220px;
     .dropdown.product {
       .dropdown_menu {
-        left:103px;
+        left:117px;
       }
     }
     .l_link {
       float:left;
       &.basket {
+        padding-left:10px;
         span {
           @include icon(basket);
-          margin-left:32px;
+          margin-left:35px;
         }
           &:hover {
           color:$red;
@@ -114,10 +115,10 @@ body header .l_header_wrapper .l_nav .l_nav_element {
         }
       }
       &.product {
-        width:117px !important;
+        width:103px !important;
         span {
           @include icon(product);
-          margin:5px 0 -0 50px;
+          margin:5px 0 -0 40px;
         }
         &:hover {
           span {

@@ -1,97 +1,101 @@
-<h1>Administration::Abonnements#index</h1>
-<p>Find me in app/views/administration/abonnements/index.html.erb</p>
-
-
-
-
-<div class="page-header">
-   	<h1> Commande Payee</h1>
-</div>
-
-
-<table class="table table-striped">
-  <tr>
-    <th>Mail client</th>
-    <th>Client</th>
-    <th>prix unite ttc</th>
-    <th>Nombre</th>
-  </tr>
-
-<% @mes_commandes_paye.each do |produit_commande| %>
-  <tr>
-  	<td> <%= produit_commande.commande.client.email %></td>
-  	<td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
-  	<td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
-  	<td> <%= produit_commande.nb_pack %></td>
-  	
-
+<div class="historique"><div class="page-header">
+    <h1>Historique ventes</h1>
+      <ul class="buttons">
+      <li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+      <li class="separator"></li>
+      <li class="help button button_active" tool_tip="aide"><span class="picture"></span></li>        
+    </ul>
+  </div>
+  
+  
+       <h3><i class="icon icon-product"></i> Commande Payée</h3>
+  
+  
+  <div class="table">
+    <table class="">
+      <tr>
+        <th>Mail client</th>
+        <th>Client</th>
+        <th>prix unite ttc</th>
+        <th>Nombre</th>
+      </tr>
     
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-
-<!-- COMMANDE ANNULLEE -->
-<div class="page-header">
-   	<h1> Commande Annulee</h1>
-</div>
-
-
-<table class="table table-striped">
-  <tr>
-    <th>Mail client</th>
-    <th>Client</th>
-    <th>prix unite ttc</th>
-    <th>Nombre</th>
-  </tr>
-
-<% @mes_commandes_annule.each do |produit_commande| %>
-  <tr>
-  	<td> <%= produit_commande.commande.client.email %></td>
-  	<td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
-  	<td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
-  	<td> <%= produit_commande.nb_pack %></td>
-  	
-
+    <% @mes_commandes_paye.each do |produit_commande| %>
+      <tr>
+        <td> <%= produit_commande.commande.client.email %></td>
+        <td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
+        <td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
+        <td> <%= produit_commande.nb_pack %></td>
+        
     
-  </tr>
-<% end %>
-</table>
-
-
-
-<br />
-
-
-<!-- COMMANDE EN COURS -->
-<div class="page-header">
-   	<h1> Commande En Cours</h1>
-</div>
-
-<% if @mes_commandes_encours.count > 0 %>
-	<table class="table table-striped">
-	  <tr>
-	    <th>Mail client</th>
-	    <th>Client</th>
-	    <th>prix unite ttc</th>
-	    <th>Nombre</th>
-	  </tr>
-	
-	<% @mes_commandes_encours.each do |produit_commande| %>
-	  <tr>
-	  	<td> <%= produit_commande.commande.client.email %></td>
-	  	<td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
-	  	<td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
-	  	<td> <%= produit_commande.nb_pack %></td>
-	  	
-	
-	    
-	  </tr>
-	<% end %>
-	</table>
-<% else %>
-	<p> Aucune commande en cours </p>
-
-<% end %>
+        
+      </tr>
+    <% end %>
+    </table>
+  </div>
+  
+  <br />
+  
+  
+  <!-- COMMANDE ANNULLEE -->
+       <h3><i class="icon icon-product"></i> Commande Annulée</h3>
+  
+  
+  <div class="table">
+    <table class="">
+      <tr>
+        <th>Mail client</th>
+        <th>Client</th>
+        <th>prix unite ttc</th>
+        <th>Nombre</th>
+      </tr>
+    
+    <% @mes_commandes_annule.each do |produit_commande| %>
+      <tr>
+        <td> <%= produit_commande.commande.client.email %></td>
+        <td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
+        <td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
+        <td> <%= produit_commande.nb_pack %></td>
+        
+    
+        
+      </tr>
+    <% end %>
+    </table>
+  </div>
+  
+  
+  
+  <br />
+  
+  
+  <!-- COMMANDE EN COURS -->
+       <h3><i class="icon icon-product"></i> Commande En Cours</h3>
+  
+  <% if @mes_commandes_encours.count > 0 %>
+    <div class="table">
+      <table class="table table-striped">
+        <tr>
+          <th>Mail client</th>
+          <th>Client</th>
+          <th>prix unite ttc</th>
+          <th>Nombre</th>
+        </tr>
+      
+      <% @mes_commandes_encours.each do |produit_commande| %>
+        <tr>
+          <td> <%= produit_commande.commande.client.email %></td>
+          <td> <%= produit_commande.commande.client.prenom %> <%= produit_commande.commande.client.nom %></td>
+          <td> <%= produit_commande.prix_unite_ttc %> € les <%= produit_commande.quantite %> <%= produit_commande.produit_vente_libre.stock.unite_mesure.abbreviation %></td>
+          <td> <%= produit_commande.nb_pack %></td>
+          
+      
+          
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  <% else %>
+    <p> Aucune commande en cours </p>
+  
+  <% end %></div>

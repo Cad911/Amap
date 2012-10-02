@@ -57,11 +57,6 @@
       <div class="l_nav_element l_dual_sign">
         <div class="dropdown">
 
-          <%= link_to page_panier_index_path,:class => "l_link basket" do %>
-          	<span></span>Paniers
-          <% end %>
-         </div>
-         
         <div class="dropdown product">
 <!--           <a href="#" class="dropdown-toggle l_link product" data-toggle="dropdown"> -->
           <%= link_to page_produit_index_path, :class => "l_link product" do %>
@@ -78,6 +73,11 @@
           </ul>
 -->
         </div>
+          <%= link_to page_panier_index_path,:class => "l_link basket" do %>
+            <span></span>Paniers
+          <% end %>
+         </div>
+         
       </div>
 
       <div class="l_nav_element l_single_sign">

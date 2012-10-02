@@ -47,6 +47,8 @@ body {
         .other_products {
           padding-top:20px;
           ul {
+            max-height: 300px;
+            overflow: hidden;
             li {
               padding-bottom: 20px;
               border-bottom: 1px solid #ccc6c0;
@@ -63,6 +65,7 @@ body {
         h2 {
           @include title(2, 18px);
           font-family: helveticaneue-bold;
+          line-height: 1.5em;
         }
         .about_the_farmer {
           padding:20px 0 20px 0;
