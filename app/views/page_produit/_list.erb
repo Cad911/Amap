@@ -36,7 +36,7 @@
 			        </div>
 			        <div class="content">
 			          <p class="title"> <%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
+			          <p class="description"><%= p.stock.categorie.nom %></p>
 			          <span class="price "><%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.quantite} #{p.stock.unite_mesure.nom}"  %></span></span>
 			        </div>
 			      </div>
@@ -67,7 +67,7 @@
 					        </div>
 					        <div class="content">
 					          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
-					          <p class="description"><%= p.description %></p>
+					          <p class="description"><%= p.stock.categorie.nom %></p>
 					          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{p.quantite} #{p.stock.unite_mesure.nom}"  %></span></span>
 					        </div>
 					      </div>
@@ -117,7 +117,7 @@
 			        </div>
 			        <div class="content">
 			          <p class="title"><%= link_to p.titre, page_produit_show_path(p.user_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
+			          <p class="description"><%= p.stock.categorie.nom %></p>
 			          <span class="price "> <%= p.prix_unite_ttc %>€ <span class="is_italic">les <%= "#{last_huge_product.quantite} #{last_huge_product.stock.unite_mesure.nom}"  %></span></span>
 			        </div>
 			      </div>

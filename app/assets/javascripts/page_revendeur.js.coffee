@@ -119,13 +119,15 @@ $(document).ready(->
               
               span_price = $(document.createElement('span'))
               span_price.addClass('price')
-              span_price.text( ''+data['min_price']+' €')
+              #span_price.text( ''+data['min_price']+' €')
               
               span_note = $(document.createElement('span'))
               span_note.addClass('note is_italic')
               if category == 'product'
-                  span_note.text(' le '+data['unite_mesure'])
+                  span_price.text( ''+data['prix_unite_ttc']+' €')
+                  span_note.text(' les '+data['quantite']+' '+data['unite_mesure'])
               if category == 'basket'
+                  span_price.text( ''+data['min_price']+' €')
                   span_note.text(' dès '+data['min_personne'])
               
               div_call_toaction = $(document.createElement('div'))

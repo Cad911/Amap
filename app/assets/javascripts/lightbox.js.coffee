@@ -134,12 +134,13 @@ $(document).ready(->
         html_content:(data)->
             $(@id_lightbox+'>.lightbox>.content').html(data)
         html_footer: (data)->
-            $(@id_lightbox+'>.lightbox>.footer').html(data)
+            $(@id_lightbox+'>.lightbox>.footer').html(data) 
+        prepend_footer: (data)->
+            $(@id_lightbox+'>.lightbox>.footer').prepend(data)
         append_footer: (data)->
             $(@id_lightbox+'>.lightbox>.footer').append(data)
-        
         remove_footer: ()->
-        	$(@id_lightbox+'>.lightbox>.footer').remove()
+            $(@id_lightbox+'>.lightbox>.footer').remove()
             
         
             

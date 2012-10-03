@@ -232,9 +232,13 @@ $(document).ready(()->
                 if xhr.readyState == xhr.DONE
                     #console.log(xhr.responseText)
                     footer_next_step = $(xhr.responseText).find('.next_step')
+                    
+                    span_annuler = window.lightbox_new_produit_autorise.create_annuler()
                     window.lightbox_new_produit_autorise.html_footer(footer_next_step)
+                    window.lightbox_new_produit_autorise.prepend_footer(span_annuler)
                     form = $(xhr.responseText)
                     console.log(form.children('.modal-footer.form-actions').remove())
+                    window.lightbox_new_produit_autorise.title_header('Nouveau produit')
                     window.lightbox_new_produit_autorise.append_content(form)
                     window.lightbox_new_produit_autorise.css_lightbox({'top':'20%'})
                     form_add_produit_autorise.event()
@@ -553,7 +557,7 @@ $(document).ready(()->
             previous_current.addClass('current')
 
     
-    if $('.card_stack').length > 0
+    if $('.new_panier_autorise').length > 0
             form_add_panier_autorise.init()
 
 

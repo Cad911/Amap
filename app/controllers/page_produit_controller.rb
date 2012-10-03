@@ -223,6 +223,7 @@ class PageProduitController < ApplicationController
               			:id => produit.id,
                         :user_id => produit.stock.user_id,
               			:titre => produit.titre, 
+              			:quantite => produit.quantite,
               			:description => produit.description, 
               			:default_image => produit.stock.default_image, 
               			:prix_unite_ttc => produit.prix_unite_ttc,

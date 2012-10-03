@@ -173,7 +173,20 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
 	
    if @stock.update_attributes(params[:stock])
   		flash[:notice] = 'Stock modifie'
+
+		@produit_vente_libres = ProduitVenteLibre.where('stock_id = ?', @stock.id)
+		@produit_vente_libre = ProduitVenteLibre.find(@produit_vente_libres[0].id)
 		
+		@produit_vente_libre.prix_unite_ht = @produit_vente_libre.prix_unite_ttc
+		@produit_vente_libre.titre = @stock.titre
+		@produit_vente_libre.description = @stock.description
+		@produit_vente_libre.user_id = @stock.user_id
+		@produit_vente_libre.deleted = 0
+		
+		@produit_vente_libre.save
+
+
+
 		respond_to do |format|
 	  		format.json { render :json => {
 	  			:status => "OK"

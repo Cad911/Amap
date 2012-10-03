@@ -961,7 +961,11 @@ $(document).ready( () ->
                     listing_tooltip.listing_one_tooltip(new_card_2.find('.buttons_card>.delete'))
                     change_infos_panier.init_one_card(new_card_2)
                     function_product_in_basket.init_one_card(new_card_2)
-                    $($('.card_stack')[0]).before(new_card_2)
+                    if $('.card_stack').length > 0
+                        $($('.card_stack')[0]).before(new_card_2)
+                    else
+                        $('.helper').after(new_card_2)
+                    
                     form_add_basket.anim_for_decli_and_product($($('.card_stack')[0]))
                     #event sur les bouton
                     supp_basket.event_one_element(new_card_2.find('.buttons_card li.delete'))
@@ -1723,7 +1727,7 @@ $(document).ready( () ->
                 champ: 'description'
                 titre:'La description'
                 element: 
-                    type: 'input'
+                    type: 'textarea'
                 button:
                     class:'update_description'
                     text_update:'Modifier le description'
@@ -1756,7 +1760,7 @@ $(document).ready( () ->
                     champ: 'description'
                     titre:'La description'
                     element: 
-                        type: 'input'
+                        type: 'textarea'
                     button:
                         class:'update_description'
                         text_update:'Modifier le description'

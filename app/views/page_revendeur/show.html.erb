@@ -81,7 +81,7 @@
 							<p class="description"><%= produit.description %></p>
 		        </div>
 		        <div class="pursache">
-		        	<span class="price"><%= produit.prix_unite_ttc %> € <span class="note is_italic">le <%= produit.stock.unite_mesure.nom %></span></span><br>
+		        	<span class="price"><%= produit.prix_unite_ttc.to_i %> € <span class="note is_italic">les <%= produit.quantite %> <%= produit.stock.unite_mesure.nom %></span></span><br>
 		        	<div class="call_to_action">
 		        		<span class="button add_product_link" id="product_<%= produit.id %>"><a>voir  le  produit</a></span>
 		        	</div>

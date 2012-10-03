@@ -30,8 +30,9 @@
 			        </div>
 			        <div class="content">
 			          <p class="title"> <%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
-			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic"> dès <%= "#{p.min_personne} personnes"  %></span></span>
+			          <p class="description"><%= p.categorie.nom %></p>
+			          <span class="price ">A partir de <%= p.min_price.to_i %> €</span>
+			          <span class="price"> dès <%= "#{p.min_personne} personnes"  %></span>
 			        </div>
 			      </div>
 			    </li>
@@ -59,8 +60,9 @@
 						        </div>
 						        <div class="content">
 						          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-						          <p class="description"><%= p.description %></p>
-						          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
+						          <p class="description"><%= p.categorie.nom %></p>
+						          <span class="price "> A partir de <%= p.min_price %>€ </span>
+						          <span class="price">dès <%= "#{p.min_personne} personnes"  %></span>
 						        </div>
 						      </div>
 						    </li>
@@ -106,8 +108,9 @@
 			        </div>
 			        <div class="content">
 			          <p class="title"><%= link_to p.titre, page_panier_show_path(p.revendeur_id,p), :class => "title" %></p>
-			          <p class="description"><%= p.description %></p>
-			          <span class="price "> A partir de <%= p.min_price %>€ <span class="is_italic">dès <%= "#{p.min_personne} personnes"  %></span></span>
+			          <p class="description"><%= p.categorie.nom %></p>
+			          <span class="price "> A partir de <%= p.min_price %>€ </span>
+			          <span class="price">dès <%= "#{p.min_personne} personnes"  %></span>
 			        </div>
 			      </div>
 			    </li>
