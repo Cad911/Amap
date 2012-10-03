@@ -100,9 +100,14 @@ class ApplicationController < ActionController::Base
   
   
   #____ RECUPERATION ERREUR ________________________________________
-  #rescue_from ActiveRecord::RecordNotFound, :with => :render_missing
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_missing
   
-  #def render_missing
-  #	render :file => "public/404.html", :status => 404
-  #end
+  rescue_from CanCan::AccessDenied, :with => :render_acces
+  def render_missing
+  	render :file => "public/404.html", :status => 404
+  end
+  
+  def render_acces
+  	render :file => "public/422.html", :status => 422
+  end
 end

@@ -159,6 +159,7 @@ $(document).ready(->
         event: (li)->
             $(li).find('*').each ( () ->
                 $(this).on('click', (event) ->
+                    console.log(this)
                     if $(this).hasClass('pursache')
                         event.stopImmediatePropagation()
                                  
@@ -170,8 +171,9 @@ $(document).ready(->
                             user_id = $('#user_id').val()
                             $(location).attr('href','/page_produit/show/'+user_id+'/'+id_product) 
                             console.log('/page_produit/show/'+user_id+'/'+id_product)
+                        
                         if $(this).parents('.li_basket').length > 0
-                            id_bakset = ($(this).parents('.li_basket').find('.add_basket_link_revendeur').attr('id')).replace('basket_','')
+                            id_bakset = ($(this).parents('.li_basket').find('.add_basket_link').attr('id')).replace('basket_','')
                             user_id = $('#user_id').val()
                             console.log('/page_panier/show/'+user_id+'/'+id_bakset)
                             $(location).attr('href','/page_panier/show/'+user_id+'/'+id_bakset)

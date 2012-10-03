@@ -9,41 +9,41 @@
 	</div>
 	
 	
-	   	<h3><i class="icon icon-basket"></i> Abonnement payé, souscrit</h3>
-	
-	<% if @mes_abonnements_paye.count > 0 %>
+	<h3><i class="icon icon-basket"></i> Mes commandes </h3>
+	<% if @mes_commandes.count > 0 %>
 		<div class="table">
 			<table class="">
 			  <tr>
-			    <th>panier</th>
-			    <th>Client</th>
-			    <th>Duree</th>
-			    <th>Debut</th>
-			    <th>Fin</th>
+			    <th>Référence commande </th>
+			    <th> Date de commande </th>
+		      	<th> Date de livraison </th>
+		        <th> Point Relai </th>
+		        <th> Etat de la commande </th>
+		        <th> Total</th>
+		        <th> Informations </th>
 			  </tr>
 			
-			<% @mes_abonnements_paye.each do |abonnement| %>
+			<% @mes_commandes.each do |commande| %>
 			  <tr>
 			  
-			    <td><%= abonnement.panier.titre %></td>
-			    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
-			    <td><%= abonnement.duree %> mois</td>
-			    <td><%= abonnement.date_debut %></td>
-			    <td><%= abonnement.date_fin %></td>
-			    
+			    <td><%= commande.id %></td>
+			    <td><%= commande.created_at %></td>
+			    <td><%= commande.date_livraison %> </td>
+			    <td><%= commande.point_relai.adresse %></td>
+			    <th> <%= commande.etat %> </th>
+			    <td><%= commande.total %></td>
+			    <td> <a> Details </a></td>
 			  </tr>
 			<% end %>
 			</table>
 		</div>
+	
 	<% else %>
-		<p> Aucun abonnement de souscrit </p>
-	<% end %>
-	
-	<br />
-	
+		<p> Aucune commande </p>
+	<%end %>
 	
 	<!-- ABONNEMENT PAYE EN COURS -->
-	   	<h3><i class="icon icon-basket"></i> Abonnement payé, en cours</h3>
+	   	<h3><i class="icon icon-basket"></i> Abonnement en cours</h3>
 	
 	<% if @mes_abonnements_encours.count > 0 %>
 		<div class="table">
@@ -78,7 +78,7 @@
 	
 	
 	<!-- ABONNEMENT PAYE TERMINE -->
-	   	<h3><i class="icon icon-basket"></i> Abonnement payé, terminé </h3>
+	   	<h3><i class="icon icon-basket"></i> Abonnement terminé </h3>
 	
 	<% if @mes_abonnements_termine.count > 0 %>
 		<div class="table">
@@ -109,40 +109,6 @@
 	<% end %>
 	
 	<br />
-	
-	
-	
-	
-	<!-- ABONNEMENT ANNULE AVANT PAIEMENT -->
-	   	<h3><i class="icon icon-basket"></i> Abonnement annulé avant paiement </h3>
-	
-	<% if @mes_abonnements_annule.count > 0 %>
-		<div class="table">
-			<table class="">
-			  <tr>
-			    <th>panier</th>
-			    <th>Client</th>
-			    <th>Duree</th>
-			    <th>Debut</th>
-			    <th>Fin</th>
-			  </tr>
-			
-			<% @mes_abonnements_annule.each do |abonnement| %>
-			  <tr>
-			  
-			    <td><%= abonnement.panier.titre %></td>
-			    <td><%= abonnement.client.nom %> <%= abonnement.client.prenom %></td>
-			    <td><%= abonnement.duree %> mois</td>
-			    <td><%= abonnement.date_debut %></td>
-			    <td><%= abonnement.date_fin %></td>
-			    
-			  </tr>
-			<% end %>
-			</table>
-		</div>
-	<% else %>
-		<p> Aucun abonnement annule </p>
-	<% end %>
 	
 	<br />
 </div>

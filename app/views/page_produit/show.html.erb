@@ -54,7 +54,7 @@
          <%= f.input :nombre_pack, :input_html => {value:1},:as => :hidden %>
         <h1 itemprop="name"><%= @produit.titre %></h1>
         <p class="note is_italic"><%= @produit.stock.categorie.nom %></p>
-        <p itemprop="description">C'est un légume très anciennement connu. L'empereur romain Néron fut surnommé le « porrophage » car il en consommait, paraît-il, de grandes quantités pour s'éclaircir la voix.</p>
+        <p itemprop="description"> <%= @produit.description %></p>
       
         <div class="price_button">
           <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -113,7 +113,7 @@
               </div>
               <div class="content">
                 <p class="note is_bold title"> <%= link_to other_produit.titre, page_produit_show_path(@produit.user,other_produit) %> </p>
-                <p class="note "><%= other_produit.prix_unite_ttc %> € <span class="is_italic">le <%= other_produit.stock.unite_mesure.nom %></span></p>
+                <p class="note "><%= other_produit.prix_unite_ttc %> € <span class="is_italic">les  <%= other_produit.quantite %> <%= other_produit.stock.unite_mesure.abbreviation %></span></p>
               </div>
             </div>
           </li>

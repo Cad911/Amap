@@ -149,12 +149,12 @@
 						<ul class="subnav <%= 'subnav_isopen' if @admin_produit || @admin_basket %>">
 							<%= link_to administration_user_produit_autorises_path(current_user) do %>
 								<li class="product subnav_element <%= 'subnav_product_active' if @admin_produit %>" > 
-									<span class="picture"></span><span class="link">Produits</span>
+									<span class="picture"></span><span class="link">Produit aut.</span>
 								</li>
 							<% end %>
 							<%= link_to administration_user_panier_autorises_path(current_user) do %>
 								<li class="basket subnav_element <%= 'subnav_basket_active' if @admin_basket %>">
-									<span class="picture"></span><span class="link">Paniers</span>
+									<span class="picture"></span><span class="link">Paniers aut.</span>
 								</li>
 							<% end %>
 						</ul>

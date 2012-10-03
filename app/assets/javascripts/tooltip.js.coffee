@@ -68,9 +68,10 @@
 	            $('body').append(my_tooltip)
 	           
 	            offset = $(element).offset()
-	            offset.top -= 20 #A CAUSE DE LA MARGE SUR L.wrapper 
-	            if $(element).children('circle').length > 0
-	            	outer_width_element = parseInt($(element).children('circle').attr('r')) + 1
+	            offset.top -= 20 #A CAUSE DE LA MARGE SUR L.wrapper
+	            console.log($(element)[0].localName)
+	            if $(element)[0].localName == "circle"
+	            	outer_width_element = parseInt($(element).attr('r')) + 5
 	            else
 	            	outer_width_element = $(element).outerWidth()
 	            position_left = offset.left - parseInt(my_tooltip.outerWidth() / 2) + outer_width_element / 2 #POSITION DE LELEMENT HOVER - TAILLE / 2 DU TOOLTIP + TAILLE / 2 ELEMENT HOVER

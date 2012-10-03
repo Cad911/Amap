@@ -208,7 +208,7 @@ $(document).ready( () ->
             data_radio = 
                     type_element:'radio'
                     label:
-                        text:'First image'
+                        text:'Photo par defaut'
                     input:
                         value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
                         name:'photo_user[first_image]'
@@ -389,6 +389,7 @@ $(document).ready( () ->
                             $(this).css('left','0px')
                             
                             #console.log($(add_photo_stock.card).children('.left_area').children('div').last())
+                            console.log('test div wait')
                             console.log(div_wait)
                             div_wait.remove()
                             $(add_photo_user.card).children('li').last().prev().append(this)
@@ -398,7 +399,7 @@ $(document).ready( () ->
                     
             })
         
-    if $('.photo_user').length > 0
+    if $('.add_user_image').length > 0
         add_photo_user.init()
     #___________________________________________
     #___________________________________________
@@ -448,7 +449,7 @@ $(document).ready( () ->
             data_radio = 
                     type_element:'radio'
                     label:
-                        text:'First image'
+                        text:'Photo par defaut'
                     input:
                         value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
                         name:'photo_stock[first_image]'
@@ -689,7 +690,7 @@ $(document).ready( () ->
             data_radio = 
                     type_element:'radio'
                     label:
-                        text:'First image'
+                        text:'Photo par defaut'
                     input:
                         value: [[1,'Oui'],[0,'Non']] #'' #tableau d'obj si select {value:'',text:''},....   , string si input
                         name:'photo_panier[first_image]'
@@ -1709,6 +1710,7 @@ $(document).ready( () ->
         init:()->
             $('div.card_stack>.packaging h2.title').form_plugin(
                 champ: 'titre'
+                titre:'Le titre'
                 element: 
                     type: 'input'
                 button:
@@ -1719,6 +1721,7 @@ $(document).ready( () ->
         
             $('div.card_stack>.packaging p.description').form_plugin(
                 champ: 'description'
+                titre:'La description'
                 element: 
                     type: 'input'
                 button:
@@ -1740,6 +1743,7 @@ $(document).ready( () ->
         init_one_card:(card_stack)->
             $(card_stack).children('.packaging').find('h2.title').form_plugin(
                     champ: 'titre'
+                    titre:'Le titre'
                     element: 
                         type: 'input'
                     button:
@@ -1750,6 +1754,7 @@ $(document).ready( () ->
             
                 $(card_stack).children('.packaging').find('p.description').form_plugin(
                     champ: 'description'
+                    titre:'La description'
                     element: 
                         type: 'input'
                     button:
@@ -1955,10 +1960,13 @@ $(document).ready( () ->
             change_infos_panier.div_sous_content.append(change_infos_panier.div_list)
             window.light_box_information.append_content(change_infos_panier.div_sous_content)
             
-            window.light_box_information.title_header('titre')
+            window.light_box_information.title_header('Les declinaisons')
             span_annuler = window.light_box_information.create_annuler()
             window.light_box_information.html_footer(span_annuler)
             #change_infos_panier.add_select()
+            div_clear = $(document.createElement('div'))
+            div_clear.addClass('clear')
+            change_infos_panier.div_sous_content.append(div_clear)
             window.light_box_information.show()
         
         header_list:()->
@@ -1979,7 +1987,7 @@ $(document).ready( () ->
             span_new.addClass('button new-declinaision button_declinaion')
             
             a  = $(document.createElement('a'))
-            a.text('nouvelle déclinaison')
+            a.text('Nouvelle déclinaison')
             span_new.append(a)
             a.on('click', ()->
                    change_infos_panier.animate_for_form(1000)
@@ -2400,6 +2408,10 @@ $(document).ready( () ->
                             function_product_in_basket.supp_product_basket(id_product,li_product)
                         )
                     )
+                    #DIVCLEAR SEE
+                    div_clear = $(document.createElement('div'))
+                    div_clear.addClass('clear')
+                    function_product_in_basket.div_sous_content.append(div_clear)
                     #function_product_in_basket.button_add_product()
                     window.light_box_information.show()
                     
@@ -2643,7 +2655,7 @@ $(document).ready( () ->
     $('.user_profile .content>.title').form_plugin(
         url_get_infos:['user']
         champ: 'prenom, nom'
-        titre:'Modifier le prenom et le nom'
+        titre:'Modifier son identité'
         element: 
             type: 'input'
         button:
@@ -2805,7 +2817,7 @@ $(document).ready( () ->
             $('.card li.quantite_lot').form_plugin(
                 url_get_infos:['user','stock']
                 url_to_update:['user','produit_vente_libre'] 
-                titre:'quantite d\'un lot'
+                titre:'Quantite d\'un lot'
                 champ: 'quantite'
                 element: 
                     type: 'input'
@@ -2839,7 +2851,7 @@ $(document).ready( () ->
             $('.card li.nombre_pack').form_plugin(
                 url_get_infos:['user','stock']
                 url_to_update:['user','produit_vente_libre']
-                titre:'nombre de lot'
+                titre:'Nombre de lot'
                 champ: 'nombre_pack'
                 element: 
                     type: 'input'
@@ -2961,7 +2973,7 @@ $(document).ready( () ->
             $(card).find('li.quantite_lot').form_plugin(
                 url_get_infos:['user','stock']
                 url_to_update:['user','produit_vente_libre'] 
-                titre:'quantite d\'un lot'
+                titre:'Quantite d\'un lot'
                 champ: 'quantite'
                 element: 
                     type: 'input'
@@ -2995,7 +3007,7 @@ $(document).ready( () ->
             $(card).find('li.nombre_pack').form_plugin(
                 url_get_infos:['user','stock']
                 url_to_update:['user','produit_vente_libre']
-                titre:'nombre de lot'
+                titre:'Nombre de lot'
                 champ: 'nombre_pack'
                 element: 
                     type: 'input'

@@ -1,7 +1,7 @@
 <div class="historique"><div class="page-header">
     <h1>Historique ventes</h1>
       <ul class="buttons">
-      <li class="logoff button" tool_tip="deconnexion"><span class="picture"></span></li>
+      <li class="logoff button" tool_tip="deconnexion"> <%= link_to user_logout_path() , :method => 'delete' do %> <span class="picture"> </span> <% end %> </li>
       <li class="separator"></li>
       <li class="help button button_active" tool_tip="aide"><span class="picture"></span></li>        
     </ul>

@@ -7,7 +7,7 @@ $(document).ready( () ->
     window.statisitques = 
         user_id : $('.user_id').val()
         init: () ->
-            $('.page-header').tooltip({'trigger': 'hover', 'placement': 'left'})
+            #$('.page-header').tooltip({'trigger': 'hover', 'placement': 'left'})
             statisitques.data_month()
             statisitques.data_year()
         data_month : () ->

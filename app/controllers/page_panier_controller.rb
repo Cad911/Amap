@@ -146,8 +146,14 @@ class PagePanierController < ApplicationController
   def show
    @panier = Panier.find(params[:panier_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
-   @other_paniers = Panier.where("revendeur_id=? AND id != ?",@panier.revendeur_id, @panier.id)
+   @other_paniers_ = Panier.where("revendeur_id=? AND id != ?",@panier.revendeur_id, @panier.id)
    
+    @other_paniers = []
+	@other_paniers_.each do |panier|
+		if panier.has_declinaison
+			@other_paniers << panier
+		end
+	end
    #__FIL D'ARIANNE__
    	@tab_breadcrumb.push({:path => page_panier_show_path(@panier.revendeur_id,params[:panier_id]), :title => @panier.titre})
    #_________________

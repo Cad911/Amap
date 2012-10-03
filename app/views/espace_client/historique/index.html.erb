@@ -6,41 +6,36 @@
 <div class="l_main_gutter commandes">
   <h3><i class="icon icon-product"></i> Mes commandes </h3>
   <div class="table">
-    <table class="">
-      <tr>
-      	<th> Date de commande </th>
-      	<th> Date de livraison </th>
-        <th> Point Relai </th>
-        <th> Etat de la commande </th>
-        <th> Total</th>
-        <th> Informations </th>
-      </tr>
-      <tr>
-      	<td> 7/09/2012</td>
-        <td> 12/09/2012</td>
-        <td> 10 Rue nationale, Lille</td>
-        <td> Payé, préparation de la commande </td>
-        <td> 25 €</td>
-        <td> <span class=""> <a> Details </a> </span></td>
-      </tr> 
-      <tr>
-        <td> 26/06/2012</td>
-        <td> 30/06/2012</td>
-        <td> 10 Rue nationale, Lille</td>
-        <td> Envoyé </td>
-        <td> 52 €</td>
-        <td> <span class=""> <a> Details </a> </span></td>
-      </tr>   
-      <tr>
-      	<td> 04/01/2012</td>
-        <td> 10/01/2012</td>
-        <td> 10 Rue nationale, Lille</td>
-        <td> Envoyé </td>
-        <td> 120 €</td>
-        <td> <span class=""> <a> Details </a> </span></td>
-      </tr>
-  
-    </table>
+          <% if @mes_commandes.nil? %>
+      	<p> Aucune commande </p>
+      <% else %>
+      	<% if @mes_commandes.count == 0 %>
+      		<p> Aucune commande </p>
+      	<% else %>
+      		<table class="">
+		      <tr>
+		      	<th> Date de commande </th>
+		      	<th> Date de livraison </th>
+		        <th> Point Relai </th>
+		        <th> Etat de la commande </th>
+		        <th> Total</th>
+		        <th> Informations </th>
+		      </tr>
+
+      		<% @mes_commandes.each do |commande| %>
+      			<tr>
+		      	<td> <%= commande.created_at %> </td>
+		        <td> <%= commande.date_livraison %> </td>
+		        <td> <%= commande.point_relai.adresse %>, <%= commande.point_relai.ville.nom %> </td>
+		        <td> <%= commande.etat %> </td>
+		        <td> <%= commande.total %>€</td>
+		        <td> <span class=""> <a> Details </a> </span></td>
+		      </tr> 
+      		<% end %>
+      		</table>
+      	<% end %>
+      
+      <% end %>    
   </div>
 
   <h3><i class="icon icon-basket"></i> Mes abonnements en cours (Paniers)</h3>

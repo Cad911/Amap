@@ -262,6 +262,7 @@ $(document).ready(->
                   if data['statut'] == true
                       $('li#'+id_product).remove()
                       cageot.verif_if_product_present(data['total'])
+                      event_resume_p.update_html_price(data)
                   else
                       #alert(data[2])
             )

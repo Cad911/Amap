@@ -6,6 +6,7 @@ class EspaceClient::HistoriqueController < InheritedResources::Base
 
 	def index
 		@client = Client.find(current_client.id)
+		@mes_commandes = @client.mes_commandes
 		@abonnements_en_cours = @client.mes_abonnements_en_cours
 		@abonnements_termines = @client.mes_abonnements_termines
 	end

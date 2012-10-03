@@ -20,7 +20,42 @@ class User < ActiveRecord::Base
   belongs_to :direction, :class_name => "User",
     :foreign_key => "direction_id"
     
-
+    
+    def mes_commandes
+    	#CONTINUEZ ICI BITCHT
+    	@all_commande = Commande.where('etat = "paye"')
+    	@cageot_ids = []
+    	@all_commande_format = []
+    	@ma_commande = false
+    	@all_commande.each do |commande|
+    		@ma_commande = false
+    		#JE RECUPERE LES PRODUIT RELIE AU CAGEOT LIER LUI MEME A LA COMMANDE
+    		commande.cageot.rel_cageot_produits.each do |produit_cageot|
+    			#@all_commande << "test"
+    			if produit_cageot.produit_vente_libre.stock.user_id == self.id
+    				@ma_commande = true
+    			end
+    			break if @ma_commande
+    		end
+    		
+    		if @ma_commande
+    			@all_commande_format << commande
+    		end
+    		
+    		#@cageot_ids << commande.id
+    	end
+    	
+    	return @all_commande_format
+    	
+    	# @all_cageot = RelCageotProduit.where('cageot_id IN (?)',@cageot_ids)
+#     	@produit_vente_libre_ids = []
+#     	@all_cageot.each do |produit_cageot|
+#     		@produit_vente_libre_ids << produit_cageot.produit_vente_libre_id
+#     	end
+#     	
+#     	@
+    	
+    end
 	#______ VERIFICATION DES DROITS _______________
     def has_revendeur
     	if(self.entite.droit.has_revendeur == 1)

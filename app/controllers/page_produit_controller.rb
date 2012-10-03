@@ -57,7 +57,7 @@ class PageProduitController < ApplicationController
   def show
    @produit = ProduitVenteLibre.find(params[:product_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
-   @other_produits = ProduitVenteLibre.where("user_id=? AND id != ?",@produit.user_id, @produit.id)
+   @other_produits = ProduitVenteLibre.where("user_id=? AND id != ? AND deleted = '0'",@produit.user_id, @produit.id)
    
    #__FIL D'ARIANNE__
    @tab_breadcrumb.push({:path => page_produit_show_path(@produit.user_id,params[:product_id]), :title => @produit.titre})

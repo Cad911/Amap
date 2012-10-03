@@ -295,14 +295,15 @@ class Morris.Line
             .attr('stroke-width', 2)
             .attr('stroke', @options.lineColors[index_color])
             .attr('rel','tooltip_graph')
-            .attr('title','titre')
+            .attr('tool_tip','titre')
     #AJOUT DATTRIBUT POUR LES TOOLTIP
-    $(circle['node']['parentElement']).attr('rel','tooltip')
+    #console.log(circle)
+    #$(circle['node']['parentElement']).attr('rel','tooltip')
     switch index_color
-        when 0 then $(circle['node']['parentElement']).attr('title',"#{@seriesLabels[index_color]} : #{@options.data[index_text].a}")
-        when 1 then $(circle['node']['parentElement']).attr('title',"#{@seriesLabels[index_color]} : #{@options.data[index_text].b}")
-    $(circle['node']['parentElement']).attr('description','description')
-    $(circle['node']['parentElement']).tool_tip()
+        when 0 then $(circle['node']).attr('tool_tip',"#{@seriesLabels[index_color]} : #{@options.data[index_text].a}")
+        when 1 then $(circle['node']).attr('tool_tip',"#{@seriesLabels[index_color]} : #{@options.data[index_text].b}")
+    $(circle['node']).attr('description','description')
+    $(circle['node']).tool_tip()
     
       
     return circle

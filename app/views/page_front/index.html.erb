@@ -90,7 +90,7 @@
 			<div class="wrapper">
 				<h4>Nous soutenons les agriculteurs locaux</h4>
 				<p> Quoi de plus important que de soutenir les agiculteurs locaux. Mis à part le fait que leur produit sont de qualité, la dimension humaine est une partie très importante pour les Amaps.</p>
-				<span class="button"><a href="">Joignez notre cause</a></span>
+				<span class="button"> <%= link_to 'Joignez notre cause', blog_article_index_path %></span>
 			</div>
 		</div>
 	</div>
@@ -100,7 +100,7 @@
 		<div class="content">
 			<h3 class="title">Découvrez  notre  boutique !</h3>
 			<p class="description"> Vous avez besoin de produit en particulier ? Nous avons une boutique riche en fruits et légumes, fournis par nos agriculteusr locaux. </p>
-			<span class="button"><a href="">parcourir  nos  produits</a></span>
+			<span class="button"><%= link_to "parcourir  nos  produits", page_produit_index_path %></span>
 		</div>
 	</div>
 
@@ -112,7 +112,7 @@
 				  Nous voulons faire de nos produits, des produits de qualités sans pour autant polluer nos champs.
 				  C'est pour ça que nous cultivons seulement des produits de saisons avec des techniques alternatives que l'épandage d'engrais et de produits toxiques quand cela nous est possible.
 				</p>
-				<span class="button"><a href="">en savoir plus</a></span>
+				<span class="button"> <%= link_to "en savoir plus", a_propos_path %></span>
 			</div>
 		</div>
 	</div>
@@ -125,7 +125,7 @@
 			Au moins une fois par mois, nos agriculteurs organisent des cueillettes afin de récolter les fruits (et légumes) de leur récolte.
 			C'est un moment convivial, permettant d'échanger entre amapiens et amapiennes !
 			</p>
-			<span class="button"><a href="">rejoindre l'évènement</a></span>
+			<span class="button"><%= link_to 'rejoindre l\'évènement', blog_article_index_path %></span>
 		</div>
 	</div>
 

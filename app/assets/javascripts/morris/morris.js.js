@@ -332,18 +332,16 @@
     Line.prototype.drawCircle = function(x, y, index_color, index_text) {
       var circle, that;
       that = this;
-      circle = that.r.circle(x, y, that.options.pointSize).attr('opacity', 1).attr('fill', '#f7f4ec').attr('stroke-width', 2).attr('stroke', this.options.lineColors[index_color]).attr('rel', 'tooltip_graph').attr('title', 'titre');
-      $(circle['node']['parentElement']).attr('rel', 'tooltip');
+      circle = that.r.circle(x, y, that.options.pointSize).attr('opacity', 1).attr('fill', '#f7f4ec').attr('stroke-width', 2).attr('stroke', this.options.lineColors[index_color]).attr('rel', 'tooltip_graph').attr('tool_tip', 'titre');
       switch (index_color) {
         case 0:
-          $(circle['node']['parentElement']).attr('title', "" + this.seriesLabels[index_color] + " : " + this.options.data[index_text].a);
+          $(circle['node']).attr('tool_tip', "" + this.seriesLabels[index_color] + " : " + this.options.data[index_text].a);
           break;
         case 1:
-          $(circle['node']['parentElement']).attr('title', "" + this.seriesLabels[index_color] + " : " + this.options.data[index_text].b);
+          $(circle['node']).attr('tool_tip', "" + this.seriesLabels[index_color] + " : " + this.options.data[index_text].b);
       }
-      $(circle['node']['parentElement']).attr('description', 'description');
-      $(circle['node']['parentElement']).tool_tip();
-      console.log(index_text);
+      $(circle['node']).attr('description', 'description');
+      $(circle['node']).tool_tip();
       return circle;
     };
 
@@ -362,7 +360,6 @@
         coords = this.seriesCoords[i];
         if (coords.length > 1) {
           path = this.createPath(coords, this.options.marginTop, this.left, this.options.marginTop + this.height, this.left + this.width);
-          console.log(this.r);
           this.drawCircle(this.seriesCoords[i][path.length - 1].x, this.seriesCoords[i][path.length - 1].y, i, 11);
           this.drawPath(path, path.length - 1, i);
         }
@@ -483,8 +480,7 @@
     };
 
     Line.prototype.hideHover = function() {
-      this.hoverSet.hide();
-      return console.log(this.hoverSet.hide());
+      return this.hoverSet.hide();
     };
 
     Line.prototype.hilight = function(index) {

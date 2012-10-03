@@ -2,6 +2,8 @@ class Administration::AbonnementsController < ApplicationController
   
   #_____ LISTING DES ABONNEMENTS ____
   def index
+      @user = User.find(current_user.id)
+  	  @mes_commandes =  @user.mes_commandes
       @mes_paniers = Panier.where(:revendeur_id => current_user.id)
       @mes_abonnements_paye = []
       

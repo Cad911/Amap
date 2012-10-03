@@ -44,7 +44,7 @@ class AbonnementsController < InheritedResources::Base
   		@abonnement.etat = 'en_cours'
   		@abonnement.quantite = 1
   		@abonnement.date_debut = @date_debut
-  		@abonnement.date_fin = @date_debut.months_since(params[:panier][:duree].to_i)
+  		@abonnement.date_fin = @date_debut.months_since(@declinaison_panier.duree.to_i)
   	
 	  	@abonnement.save  	
   		redirect_to process_order_resume_path
@@ -86,7 +86,7 @@ class AbonnementsController < InheritedResources::Base
   		@abonnement.prix_ttc = @declinaison_panier.prix_panier_ttc
   		@abonnement.etat = 'en_cours'
   		@abonnement.date_debut = @date_debut
-  		@abonnement.date_fin = @date_debut.months_since(params[:panier][:duree].to_i)
+  		@abonnement.date_fin = @date_debut.months_since(@declinaison_panier.duree.to_i)
   	
 	  	@abonnement.save
 	  	

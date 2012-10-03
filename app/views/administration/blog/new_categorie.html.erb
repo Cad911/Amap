@@ -20,15 +20,15 @@
 <input type="hidden" class="user_id" value="<%= current_user.id %>" />
 
 	<%= simple_form_for @categorie_blog, 
-    	:url => url_for(:action => :update_categorie, :controller => 'administration/blog'),
+    	:url => url_for(:action => :create_categorie, :controller => 'administration/blog'),
     	:method => 'post' do |f| %>
     	
     	
-    	<%= f.input :categorie_blog_id, :collection => CategorieBlog.where('categorie_blog_id = NULL || categorie_blog = "0"').map { |r| [r.titre, r.id] }, :label => "Categorie", :include_blank => false %>
+    	<%= f.input :categorie_blog_id, :collection => CategorieBlog.where('categorie_blog_id = NULL || categorie_blog_id = "0"').map { |r| [r.titre, r.id] }, :label => "Appartient à une Categorie", :prompt => 'Aucune' %>
     	<%= f.input :titre %>
     	<%= f.input :description %>
     	
-    	<%= f.input :submit %>
+    	<%= f.button :submit %>
 		
 	<% end %>
 	

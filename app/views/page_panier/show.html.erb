@@ -46,7 +46,7 @@
 			
 				<div class="price_button">
 					<span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-						<p class="price is_bold" itemprop="price"> <%= @panier.min_price %> € <span class="note is_italic"> </span></p>
+						<p class="price is_bold" itemprop="price"> <%= @panier.min_price %> € <span class="note is_italic"> par semaine </span></p>
 					</span>
 				<div class="control-group select optional">
 					<div class="controls">
@@ -122,7 +122,7 @@
 						</div>
 						<div class="content">
 							<p class="note is_bold title"> <%= link_to other_panier.titre, page_panier_show_path(@panier.user,other_panier) %></p>
-							<p class="note ">A partir de <%= other_panier.min_price %> € <span class="is_italic"> dès <%= other_panier.min_personne %></span></p>
+							<p class="note ">A partir de <%= other_panier.min_price %> € <span class="is_italic"> dès <%= other_panier.min_personne %> personne</span></p>
 						</div>
 					</div>
 				</li>

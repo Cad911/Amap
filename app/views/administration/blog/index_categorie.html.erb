@@ -24,7 +24,14 @@
 
 <ul class="billets">
 	<% @categorie_blogs.each do |categorie_blog| %>
-		<h1> <%= categorie_blog.titre %> </h1>
+		<li style="list-style:disc;"> <%= categorie_blog.titre %> </li>
+		<% if categorie_blog.sous_categorie %>
+			<ul>
+				<% categorie_blog.sous_categorie.each do |sous_categorie| %>
+					<li> <%= sous_categorie.titre %></li>
+				<% end %> 
+			</ul>
+		<% end %>
 	
 	<% end %>
 	<!--

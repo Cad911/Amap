@@ -8,7 +8,7 @@ class Administration::BlogController < ApplicationController
   #----------------------------------------------------------
   #----------------------------------------------------------
   def index_categorie
-  	@categorie_blogs = CategorieBlog.all
+  	@categorie_blogs = CategorieBlog.where('categorie_blog_id = 0')
   end
   
   def new_categorie
@@ -19,10 +19,14 @@ class Administration::BlogController < ApplicationController
   
   def create_categorie
   	@categorie_blog = CategorieBlog.new(params[:categorie_blog])
-  	
+  	  	if @categorie_blog.categorie_blog_id.nil?
+  	  		@categorie_blog.categorie_blog_id = 0
+  	  	end
+  	@categorie_blog.user_id = current_user.id
+  	@categorie_blog.deleted = 0
   	@categorie_blog.save
   	
-  	redirect_to "path"
+  	redirect_to administration_user_index_categorie_path(current_user.id)
   end
   
   def update_categorie
