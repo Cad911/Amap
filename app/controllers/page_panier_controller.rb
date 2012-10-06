@@ -146,7 +146,7 @@ class PagePanierController < ApplicationController
   def show
    @panier = Panier.find(params[:panier_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
-   @other_paniers_ = Panier.where("revendeur_id=? AND id != ?",@panier.revendeur_id, @panier.id)
+   @other_paniers_ = Panier.where("revendeur_id=? AND id != ? AND deleted = '0'",@panier.revendeur_id, @panier.id)
    
     @other_paniers = []
 	@other_paniers_.each do |panier|
@@ -268,10 +268,10 @@ class PagePanierController < ApplicationController
 	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
 	    	@paniers_ = Panier.where('categorie_id IN (?) AND revendeur_id IN (?) AND deleted = "0"', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
 	    else
-	    	@paniers_ = Panier.order(order_by) 
+	    	@paniers_ = Panier.where('deleted="0"').order(order_by) 
 	    end
 	else
-		@paniers_ = Panier.order(order_by) 
+		@paniers_ = Panier.where('deleted="0"').order(order_by) 
 	end
     
     
@@ -279,6 +279,7 @@ class PagePanierController < ApplicationController
   	@paniers_middle_block = []
   	@paniers_last_block = []
 	@paniers = []
+	
     @paniers_.each do |panier|
 		if panier.has_declinaison
 			@paniers << panier

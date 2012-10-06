@@ -15,6 +15,8 @@ ECommerce::Application.routes.draw do
   resources :commandes
   
   match '/a_propos' => "page_front#a_propos", :via => :get
+  match '/mentions_legales' => "page_front#mentions_legales", :via => :get
+  match '/conditions_generales' => "page_front#conditions_generales", :via => :get
   match '/' => "page_front#index", :as => :index_front, :via => :get
 
 #______ PROCESS ORDER _________________________________________________________________________________________________

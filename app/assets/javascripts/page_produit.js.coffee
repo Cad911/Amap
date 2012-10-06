@@ -48,7 +48,7 @@ $(document).ready(()->
                 #MAXPOSITION
                 if toggle_switch.hasClass('is_off')
                     $(this).animate(
-                        left: min_position_in_toggle+'px'
+                        left:min_position_in_toggle+'px'
                     ,{
                         duration: 200
                         queue: false
@@ -59,17 +59,14 @@ $(document).ready(()->
                         duration: 200
                         queue: false
                     })
-                    $('.filter_bg').slideUp(1000)
+                    $('.filter_bg').slideDown(1000)
                     toggle_switch.removeClass('is_off')
                     toggle_switch.addClass('is_on')
-                    that.reset_categorie()
-                    that.reset_agriculteur()
-                    order_by = that.get_order_by()
-                    that.get_produit_filter(null,null,order_by)
+                    
                     
                 else if toggle_switch.hasClass('is_on')
                      $(this).animate(
-                        left: max_position_in_toggle+'px'
+                        left:max_position_in_toggle+'px'
                      ,{
                         duration: 200
                         queue: false
@@ -80,10 +77,14 @@ $(document).ready(()->
                         duration: 200
                         queue: false
                      })
-                     $('.filter_bg').slideDown(1000)
+                     $('.filter_bg').slideUp(1000)
                      
                      toggle_switch.removeClass('is_on')
                      toggle_switch.addClass('is_off')
+                     that.reset_categorie()
+                     that.reset_agriculteur()
+                     order_by = that.get_order_by()
+                     that.get_produit_filter(null,null,order_by)
             )
 
         

@@ -121,6 +121,7 @@
     li {
       float:left;
       margin:0 0 25px 40px;
+      height: 308px;
       &:first-child {
         margin-left:0;
       }
@@ -151,6 +152,8 @@
       margin:0 40px 25px 0;
       &.is_huge {
         margin-right:0px;
+             height: 600px;
+ 
         .content .title {
           margin-top:20px;
         }
@@ -160,7 +163,9 @@
   ul.l_product_list.huge_left {
     li {
       margin:0 0 25px 40px;
+
       &.is_huge {
+            height: 600px;
         margin-left:0px;
         .content .title {
           margin-top:20px;

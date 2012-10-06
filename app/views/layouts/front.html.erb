@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <title>ECommerce</title>
+  <title>Jardins Lillois, ventes aux détails et de paniers </title>
   <!-- ___________________________ CSS __________________________________ -->
   <%= stylesheet_link_tag    "bootstrap-responsive", :media => "all" %>
   <%= stylesheet_link_tag    "bootstrap", :media => "all" %>
@@ -310,11 +310,11 @@
       <span class="icon"></span>      
       <span class="title">Nous</span>
       <ul>
-        <li><a href="">À propos</a></li>
-        <li><a href="">Le blog</a></li>
+        <li><%= link_to "À propos", mentions_legales_path %> </li>
+        <li> <%= link_to "Le blog", blog_article_index_path %></li> 
         <li><a href="">Contact</a></li>
-        <li><a href="">Mention légales</a></li>
-        <li><a href="">Conditions générales de vente</a></li>        
+        <li> <%= link_to "Mention légales", mentions_legales_path %></li>
+        <li> <%= link_to "Conditions générales de vente", conditions_generales_path %> </li>         
       </ul>
     </li>
     <li class="is_box social">

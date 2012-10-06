@@ -17,6 +17,8 @@
 			          <span class="price ">A partir de <%= first_huge_panier.min_price  %> € <span class="is_italic"> dès  <%= "#{first_huge_panier.min_personne} personnes"  %></span></span>
 			        </div>
 			      </div>
+			      		      <div class="clear"></div>		      
+
     		</li>
 			<% paniers_first_block.each do |p| %>
 				<li>
@@ -94,6 +96,8 @@
 		          <span class="price ">A partir de <%= last_huge_panier.min_price %>€ <span class="is_italic">dès <%= "#{last_huge_panier.min_personne} personnes"  %></span></span>
 		        </div>
 		      </div>
+		      </div>
+		      <div class="clear"></div>		      
 		    </li>
 		    
 		    <% paniers_last_block.each do |p| %>

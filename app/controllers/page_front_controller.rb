@@ -5,4 +5,8 @@ class PageFrontController < ApplicationController
   
   def a_propos
   end
+  
+  def mentions_legales
+  
+  end
 end

@@ -361,7 +361,7 @@
 	.switch {
 		    position:absolute;
 		    top:-1px;
-		    left:33px;
+		    left:-2px;
 		    z-index: 100;
     }
 	.toggles{
@@ -382,7 +382,7 @@
 		.toggle_on_off
 		{
 			position: absolute;
-			left: 0;
+			left: -35px;
 			top:-2px;
 			.toggle {
 			  @include borderradius(50px);

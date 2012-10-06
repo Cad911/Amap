@@ -1,5 +1,6 @@
 class ProcessOrderController < ApplicationController
   layout 'front'
+  require 'date'
   
   #_________________________________________________________________ RESUME DU PANIER ____________________________________________________________________
   def resume
@@ -229,6 +230,11 @@ class ProcessOrderController < ApplicationController
   		#__UPDATE COMMANDE
   		@ma_commande_payer = Commande.find(@commande_apayer[0].id)
   		@ma_commande_payer.etat = "paye"
+  		
+  		
+  		@date_livraison = Date.today
+  		@ma_commande_payer.date_livraison = (@date_livraison + 3).to_formatted_s(:db)
+  		
   		@ma_commande_payer.save
   		#__UPDATE CAGEOT
   		@cageot_valide = Cageot.find(@ma_commande_payer.cageot_id)
