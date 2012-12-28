@@ -34,10 +34,10 @@ test:
 
 production:
   adapter: postgresql
-  encoding: utf8
   reconnect: false
-  database: e_commerce_production
+  database: daf5t7m4ovngt1
   pool: 5
-  username: root
-  password:
-  host: localhost
+  port: 5482
+  username: tjafqikxakvnxm
+  password: GxXNvPet1ZLqMS7qMfU__RadfS
+  host: ec2-54-243-188-54.compute-1.amazonaws.com
