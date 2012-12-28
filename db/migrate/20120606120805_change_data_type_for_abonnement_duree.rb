@@ -1,6 +1,11 @@
 class ChangeDataTypeForAbonnementDuree < ActiveRecord::Migration
   def up
-      change_column :abonnements, :duree, :integer
+	  	connection.execute(%q{
+		    alter table abonnements
+		    alter column duree
+		    type integer using cast(duree as integer)
+		})
+      #change_column :abonnements, :duree, :integer
   end
 
   def down
