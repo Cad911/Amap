@@ -61,6 +61,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    compass-colors (0.9.0)
+      compass (>= 0.8.7)
     compass-rails (1.0.1)
       compass (~> 0.12.0)
     daemons (1.1.8)
@@ -185,10 +187,10 @@ DEPENDENCIES
   cancan
   carrierwave
   coffee-rails (~> 3.2.1)
-  compass-rails
+  compass-colors
+  compass-rails (~> 1.0.0.rc.2)
   formtastic (~> 2.1.1)
   heroku
-  jquery-rails
   mini_magick (~> 3.4)
   mysql2
   pg
