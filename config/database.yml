@@ -17,6 +17,7 @@ development:
   password: GxXNvPet1ZLqMS7qMfU__RadfS
   host: ec2-54-243-188-54.compute-1.amazonaws.com
   port: 5482
+
   # adapter: mysql2
   # encoding: utf8
   # reconnect: false
