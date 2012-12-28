@@ -9,35 +9,43 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: amap_2
+  adapter:  postgresql
+  encoding: unicode
   pool: 5
-  username: root
-  password: root
-  host: localhost
-  socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  database: daf5t7m4ovngt1
+  username: tjafqikxakvnxm
+  password: GxXNvPet1ZLqMS7qMfU__RadfS
+  host: ec2-54-243-188-54.compute-1.amazonaws.com
+  port: 5482
+  # adapter: mysql2
+  # encoding: utf8
+  # reconnect: false
+  # database: amap_2
+  # pool: 5
+  # username: root
+  # password: root
+  # host: localhost
+  # socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: e_commerce_test
-  pool: 5
-  username: root
-  password:
-  host: localhost
+# test:
+#   adapter: mysql2
+#   encoding: utf8
+#   reconnect: false
+#   database: e_commerce_test
+#   pool: 5
+#   username: root
+#   password:
+#   host: localhost
 
 production:
-  adapter: postgresql
-  reconnect: false
-  database: daf5t7m4ovngt1
+  adapter:  postgresql
+  encoding: unicode
   pool: 5
-  port: 5482
+  database: daf5t7m4ovngt1
   username: tjafqikxakvnxm
   password: GxXNvPet1ZLqMS7qMfU__RadfS
   host: ec2-54-243-188-54.compute-1.amazonaws.com
+  port: 5482
