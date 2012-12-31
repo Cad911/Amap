@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -10,7 +10,11 @@ gem 'mysql2' , :group => :development
 gem 'pg', :group => :production
 gem 'thin'
 
+gem 'sass'
+gem 'sass-rails'
+
 gem 'activeadmin'
+gem "meta_search",    '>= 1.1.0.pre'
 gem 'cancan'
 gem 'simple_form'
 gem "formtastic", "~> 2.1.1"
@@ -23,10 +27,12 @@ gem "heroku"
 
 # Gems used only for assets and not required
 # in production environments by default.
+
 group :assets do
+  gem 'compass'
   gem 'compass-rails','~> 1.0.0.rc.2'
   gem 'compass-colors'
-  gem 'sass-rails',   '~> 3.2.3'
+  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'pg'
 
@@ -46,7 +52,7 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+# gem 'capistrano
 
-# To use debugger
+# To usedebugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

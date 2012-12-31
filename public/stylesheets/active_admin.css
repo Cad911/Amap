@@ -67,7 +67,7 @@ Backtrace:
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activerecord-3.2.1/lib/active_record/query_cache.rb:64:in `call'
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activerecord-3.2.1/lib/active_record/connection_adapters/abstract/connection_pool.rb:443:in `call'
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/actionpack-3.2.1/lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
-/Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activesupport-3.2.1/lib/active_support/callbacks.rb:405:in `_run__1706242689413881147__call__2464833711804002675__callbacks'
+/Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activesupport-3.2.1/lib/active_support/callbacks.rb:405:in `_run__45836402635822973__call__1492945908883290698__callbacks'
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activesupport-3.2.1/lib/active_support/callbacks.rb:405:in `__run_callback'
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activesupport-3.2.1/lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
 /Users/georges/.rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/activesupport-3.2.1/lib/active_support/callbacks.rb:81:in `run_callbacks'
