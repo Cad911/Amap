@@ -10,12 +10,13 @@
   <%#= stylesheet_link_tag    "users", :media => "all" %>
   <%#= stylesheet_link_tag    "produit_vente_libres", :media => "all" %>
   <%#= stylesheet_link_tag    "main", :media => "all" %>
-  <%= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
-  <%= stylesheet_link_tag 'print.css', :media => 'print' %>
+  <%#= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
+  <%#= stylesheet_link_tag 'print.css', :media => 'print' %>
   <!--[if IE]><%= stylesheet_link_tag 'ie.css', :media => 'screen, projection' %><![endif]-->
   <%= stylesheet_link_tag    "main" %>
 
-
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
 
   <%= javascript_include_tag "jquery-1.7.1.min" %>
   <%= javascript_include_tag "bootstrap" %>
