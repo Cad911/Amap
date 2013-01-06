@@ -1,1 +1,0 @@
-wysihtml5.dom.insert=function(e){return{after:function(t){t.parentNode.insertBefore(e,t.nextSibling)},before:function(t){t.parentNode.insertBefore(e,t)},into:function(t){t.appendChild(e)}}};

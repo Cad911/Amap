@@ -1,1 +1,0 @@
-(function(){var e={className:"class"};wysihtml5.dom.setAttributes=function(t){return{on:function(n){for(var r in t)n.setAttribute(e[r]||r,t[r])}}}})();

@@ -1,1 +1,0 @@
-(function(e){var t,n="wysiwyg-text-align-right",r=/wysiwyg-text-align-[a-z]+/g;e.commands.justifyRight={exec:function(t,i){return e.commands.formatBlock.exec(t,"formatBlock",null,n,r)},state:function(t,i){return e.commands.formatBlock.state(t,"formatBlock",null,n,r)},value:function(){return t}}})(wysihtml5);

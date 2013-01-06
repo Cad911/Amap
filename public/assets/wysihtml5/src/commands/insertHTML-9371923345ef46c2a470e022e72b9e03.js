@@ -1,1 +1,0 @@
-(function(e){var t;e.commands.insertHTML={exec:function(e,t,n){e.commands.support(t)?e.doc.execCommand(t,!1,n):e.selection.insertHTML(n)},state:function(){return!1},value:function(){return t}}})(wysihtml5);

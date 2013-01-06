@@ -1,1 +1,0 @@
-(function(e){var t;e.commands.underline={exec:function(t,n){return e.commands.formatInline.exec(t,n,"u")},state:function(t,n){return e.commands.formatInline.state(t,n,"u")},value:function(){return t}}})(wysihtml5);
