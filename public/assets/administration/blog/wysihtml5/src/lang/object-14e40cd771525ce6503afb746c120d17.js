@@ -1,0 +1,1 @@
+wysihtml5.lang.object=function(e){return{merge:function(t){for(var n in t)e[n]=t[n];return this},get:function(){return e},clone:function(){var t={},n;for(n in e)t[n]=e[n];return t},isArray:function(){return Object.prototype.toString.call(e)==="[object Array]"}}};
