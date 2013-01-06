@@ -499,7 +499,7 @@ wysihtml5/website/img/icn_safari.png: wysihtml5/website/img/icn_safari-e8173922a
 wysihtml5/website/img/spr_toolbar_icons_r1.png: wysihtml5/website/img/spr_toolbar_icons_r1-7aa37b0e0684c9afdc009f2d4da2e950.png
 wysihtml5/website.html: wysihtml5/website-6716dd143fdf9e88bc85bc4cfeb9602e.html
 active_admin.css: active_admin-b37340c4e2837604e681fe83321164ee.css
-bootstrap-responsive.min.css: bootstrap-responsive.min-71e98485e8963580493cf9c57a656d09.css
+bootstrap-responsive.css: bootstrap-responsive-71e98485e8963580493cf9c57a656d09.css
 bootstrap.css: bootstrap-4970081218d614a258a34b7e7b79d600.css
 coffee-script.js: coffee-script-7fa376506e451a0e8613440eda43472f.js
 active_admin/admin_notes_icon.png: active_admin/admin_notes_icon-04bd616ed9d1ff51d7a53422d4caf510.png
