@@ -1,0 +1,1 @@
+(function(e){var t;e.commands.italic={exec:function(t,n){return e.commands.formatInline.exec(t,n,"i")},state:function(t,n,r){return e.commands.formatInline.state(t,n,"i")},value:function(){return t}}})(wysihtml5);
