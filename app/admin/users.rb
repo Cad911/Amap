@@ -10,8 +10,8 @@ ActiveAdmin.register User do
 		  	f.inputs "Informations" do
 		  		f.input :ville, :as => :select, :collection => Ville.all.map{ |v| [v.nom, v.id]}
 		  		f.input :entite, :as => :select, :collection => Entite.all.map{ |e| [e.nom, e.id]}
-		  		if User.where('entite_id = "1"').exists?
-		  			f.input :direction_id, :as => :select, :collection => User.where('entite_id = "1"').map{ |e| [e.nom, e.id]}
+		  		if User.where(:entite_id => 1).exists?
+		  			f.input :direction_id, :as => :select, :collection => User.where(:entite_id => 1).map{ |e| [e.nom, e.id]}
 		  		end
 		  		f.input :nom
 		  		f.input :prenom
