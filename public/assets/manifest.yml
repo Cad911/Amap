@@ -501,6 +501,7 @@ wysihtml5/website.html: wysihtml5/website-6716dd143fdf9e88bc85bc4cfeb9602e.html
 active_admin.css: active_admin-b37340c4e2837604e681fe83321164ee.css
 bootstrap-responsive.css: bootstrap-responsive-71e98485e8963580493cf9c57a656d09.css
 bootstrap.css: bootstrap-4970081218d614a258a34b7e7b79d600.css
+main.css: main-0f87cb7b80b49becd358a60a66b7b731.css
 coffee-script.js: coffee-script-7fa376506e451a0e8613440eda43472f.js
 active_admin/admin_notes_icon.png: active_admin/admin_notes_icon-04bd616ed9d1ff51d7a53422d4caf510.png
 active_admin/datepicker/datepicker-header-bg.png: active_admin/datepicker/datepicker-header-bg-5f452fde9ca93c1fe7e9d47f0a3ece6a.png
