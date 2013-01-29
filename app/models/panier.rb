@@ -120,7 +120,7 @@ class Panier < ActiveRecord::Base
     
     #_____ IMAGE USER ________________________________
     def default_image
-  	  @default_photo = PhotoPanier.where('panier_id = ? AND first_image = "1"',self.id)
+  	  @default_photo = PhotoPanier.where('panier_id = ? AND first_image = 1',self.id)
   	  if @default_photo.count > 0
   		@mydefault_photo = PhotoPanier.find(@default_photo[0].id)
   		return @mydefault_photo
@@ -130,7 +130,7 @@ class Panier < ActiveRecord::Base
     end
   
     def other_image
-  	  @other_image = PhotoPanier.where('panier_id = ? AND first_image = "0"',self.id)
+  	  @other_image = PhotoPanier.where('panier_id = ? AND first_image = 0',self.id)
   	  if @other_image.count > 0
   		return @other_image
   	  else

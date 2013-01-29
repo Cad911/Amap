@@ -93,13 +93,13 @@ class User < ActiveRecord::Base
     
     #____________ RECUPERATION PRODUIT EN VENTE ________
     def produit_en_vente
-        my_product_online = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', self.id)
+        my_product_online = ProduitVenteLibre.where('user_id = ? AND deleted = 0', self.id)
     	return my_product_online.count
     end
     
     #___________ RECUPERATION PANIER EN VENTE ______
     def panier_en_vente
-    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', self.id)
+    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = 0', self.id)
     	@paniers= []
     	@paniers_.each do |panier|
     		if panier.has_declinaison
@@ -118,13 +118,13 @@ class User < ActiveRecord::Base
     
     #LISTING_ALL_produit_en_vente
     def list_produit_en_vente
-       all_product = ProduitVenteLibre.where('user_id = ? AND deleted = "0"', self.id)
+       all_product = ProduitVenteLibre.where('user_id = ? AND deleted = 0', self.id)
        return all_product
     end
     
     #LISTING_ALL_paniert_en_vente
     def list_panier_en_vente
-    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', self.id)
+    	@paniers_ = Panier.where('revendeur_id = ? AND deleted = 0', self.id)
     	@paniers= []
     	@paniers_.each do |panier|
     		if panier.has_declinaison
@@ -136,7 +136,7 @@ class User < ActiveRecord::Base
     
     #_____ IMAGE USER ________________________________
     def default_image
-  	  @default_photo = PhotoUser.where('user_id = ? AND first_image = "1"',self.id)
+  	  @default_photo = PhotoUser.where('user_id = ? AND first_image = 1',self.id)
   	  if @default_photo.count > 0
   		@mydefault_photo = PhotoUser.find(@default_photo[0].id)
   		return @mydefault_photo
@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
     end
   
     def other_image
-  	  @other_image = PhotoUser.where('user_id = ? AND first_image = "0"',self.id)
+  	  @other_image = PhotoUser.where('user_id = ? AND first_image = 0',self.id)
   	  if @other_image.count > 0
   		return @other_image
   	  else
