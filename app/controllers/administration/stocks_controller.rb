@@ -6,7 +6,7 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   	#TO DEFINE THE PAGE WHERE I AM
   	@admin_produit = true
   	
-  	@stocks = Stock.where('user_id = ? AND deleted = "0"', params[:user_id]).order('created_at DESC')
+  	@stocks = Stock.where('user_id = ? AND deleted = 0', params[:user_id]).order('created_at DESC')
   	@stock_new = Stock.new
    	authorize! :update, User.find(params[:user_id]) #TRADUCTION : EST-IL AUTORISE A UPDATER CETTE UTILISATEUR ?
    	respond_to do |format|
@@ -231,7 +231,7 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   #________________ EXIST DEJA ________________________________________
   def alreadyExistStock
   	existe_deja = true
-  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ? AND deleted = '0'",params[:produit_autorise_id], params[:user_id])
+  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ? AND deleted = 0",params[:produit_autorise_id], params[:user_id])
   	if produit_stock.count > 0 and params[:produit_autorise_id] != ""
   		existe_deja = true
   	else
