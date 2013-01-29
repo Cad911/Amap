@@ -14,7 +14,7 @@ class PagePanierController < ApplicationController
   	@all_categorie = Categorie.all
   	@all_agriculteurs = User.where(:entite_id => 2)
   	@titre = "Tous les paniers"
-  	@paniers_ = Panier.where('deleted="0"')
+  	@paniers_ = Panier.where('deleted=0')
   	@paniers_first_block = []
   	@paniers_middle_block = []
   	@paniers_last_block = []
@@ -71,7 +71,7 @@ class PagePanierController < ApplicationController
   	else
   	
 	  	@titre = "Produit de la categorie : #{@categorie.nom}"
-	    @paniers_ = Panier.where('categorie_id =? AND deleted = "0"', params[:categorie_id])
+	    @paniers_ = Panier.where('categorie_id =? AND deleted = 0', params[:categorie_id])
 	    @produits = []
 	    
 	    @paniers = []
@@ -146,7 +146,7 @@ class PagePanierController < ApplicationController
   def show
    @panier = Panier.find(params[:panier_id])
    #PRODUIT APPARTENANT A L'AGRICULTEUR
-   @other_paniers_ = Panier.where("revendeur_id=? AND id != ? AND deleted = '0'",@panier.revendeur_id, @panier.id)
+   @other_paniers_ = Panier.where("revendeur_id=? AND id != ? AND deleted = 0",@panier.revendeur_id, @panier.id)
    
     @other_paniers = []
 	@other_paniers_.each do |panier|
@@ -164,7 +164,7 @@ class PagePanierController < ApplicationController
   def index_by_revendeur
   	@user = User.find(params[:user_id])
   	@titre = "Panier de l'agriculteur #{@user.nom}"
-  	@paniers_ = Panier.where('revendeur_id = ? AND deleted = "0"', params[:user_id])
+  	@paniers_ = Panier.where('revendeur_id = ? AND deleted = 0', params[:user_id])
     @paniers = []
     @paniers_.each do |panier|
 		if panier.has_declinaison
@@ -186,7 +186,7 @@ class PagePanierController < ApplicationController
   	@vendeur = User.where(:direction_id => params[:direction_id])
   	@paniers = []
   	@vendeur.each do |vendeur|
-  		@panier_vendeur = Panier.where('revendeur_id = ? AND deleted = "0"',vendeur.id)
+  		@panier_vendeur = Panier.where('revendeur_id = ? AND deleted = 0',vendeur.id)
   		@panier_vendeur.each do |produit|
   			@paniers << produit
   		end
@@ -203,7 +203,7 @@ class PagePanierController < ApplicationController
   
   #____________________PANIER EN VENTE WHERE PARAMS FILTER _________________________________
   def basket_filter
-      panier_vente = Panier.where('deleted="0"')
+      panier_vente = Panier.where('deleted=0')
       panier_return = []
       
       
@@ -262,16 +262,16 @@ class PagePanierController < ApplicationController
     
     if !params[:filter].nil?
 	    if params[:filter][:categorie_id].nil? && !params[:filter][:revendeur_id].nil?
-	    	@paniers_ = Panier.where('revendeur_id IN (?) AND deleted = "0"', params[:filter][:revendeur_id][:value]).order(order_by)   
+	    	@paniers_ = Panier.where('revendeur_id IN (?) AND deleted = 0', params[:filter][:revendeur_id][:value]).order(order_by)   
 	    elsif params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@paniers_ = Panier.where('categorie_id IN (?) AND deleted = "0"', params[:filter][:categorie_id][:value]).order(order_by) 
+	    	@paniers_ = Panier.where('categorie_id IN (?) AND deleted = 0', params[:filter][:categorie_id][:value]).order(order_by) 
 	    elsif !params[:filter][:revendeur_id].nil? && !params[:filter][:categorie_id].nil?
-	    	@paniers_ = Panier.where('categorie_id IN (?) AND revendeur_id IN (?) AND deleted = "0"', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
+	    	@paniers_ = Panier.where('categorie_id IN (?) AND revendeur_id IN (?) AND deleted = 0', params[:filter][:categorie_id][:value], params[:filter][:revendeur_id][:value]).order(order_by) 
 	    else
-	    	@paniers_ = Panier.where('deleted="0"').order(order_by) 
+	    	@paniers_ = Panier.where('deleted=0').order(order_by) 
 	    end
 	else
-		@paniers_ = Panier.where('deleted="0"').order(order_by) 
+		@paniers_ = Panier.where('deleted=0').order(order_by) 
 	end
     
     

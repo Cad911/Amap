@@ -82,17 +82,17 @@ protect_from_forgery :except => [:add_image, :delete_image]
   #_________________________________ ADD IMAGE _______________________________________
   def add_image
 	    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-		if params[:photo_user][:first_image] == "1"
-			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
+		if params[:photo_user][:first_image] == 1
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = 1', current_user.id)
 			if @photo_first_image.count > 0
 				@photo_first_image[0].first_image = 0
 				@photo_first_image[0].save	
 			end
 		else
-			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = 1', current_user.id)
 			#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 			if @photo_first_image.count == 0
-				params[:photo_user][:first_image] = "1"
+				params[:photo_user][:first_image] = 1
 			end	
 		end
 		@photo_user = PhotoUser.new
@@ -109,12 +109,12 @@ protect_from_forgery :except => [:add_image, :delete_image]
   def update_image
     @image = PhotoUser.find(params[:image_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_user][:first_image] == "1"
+	if params[:photo_user][:first_image] == 1
 		#___ SI PAS DE CHANGEMENT ______
 		if @image.first_image == 1
 			flash[:notice] = "Aucun changement"
 		else
-			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = "1"', current_user.id)
+			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = 1', current_user.id)
 			if @photo_first_image.count > 0
 				@photo_first_image[0].first_image = 0
 				@photo_first_image[0].save	
