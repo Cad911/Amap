@@ -124,6 +124,7 @@ GEM
     multi_json (1.5.0)
     mysql2 (0.3.11)
     netrc (0.7.7)
+    newrelic_rpm (3.5.5.38)
     orm_adapter (0.4.0)
     pg (0.14.1)
     polyamorous (0.5.0)
@@ -206,6 +207,7 @@ DEPENDENCIES
   meta_search (>= 1.1.0.pre)
   mini_magick (~> 3.4)
   mysql2
+  newrelic_rpm
   pg
   rails (= 3.2.8)
   rmagick
