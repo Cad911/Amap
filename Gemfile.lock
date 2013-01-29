@@ -70,6 +70,7 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     daemons (1.1.9)
+    dalli (2.6.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -199,6 +200,7 @@ DEPENDENCIES
   compass
   compass-colors
   compass-rails (~> 1.0.0.rc.2)
+  dalli
   formtastic (~> 2.1.1)
   heroku
   meta_search (>= 1.1.0.pre)
