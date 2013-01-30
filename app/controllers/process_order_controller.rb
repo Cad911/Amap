@@ -7,9 +7,9 @@ class ProcessOrderController < ApplicationController
   	
   	#__ REGARDE SI ABONNEMENT 
   	if current_client.nil?
-  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
+  		@abonnement_exist = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
   	else
-  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND client_id = ?', current_client.id)
+  		@abonnement_exist = Abonnement.where("etat = 'en_cours' AND client_id = ?", current_client.id)
   	end
   	@listing_produit = nil
   	@abonnement_panier = nil
@@ -55,9 +55,9 @@ class ProcessOrderController < ApplicationController
     @has_cageot_or_abo = false 
     #__ REGARDE SI ABONNEMENT 
   	if current_client.nil?
-  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND session_id = ?', session[:abonnement_id])
+  		@abonnement_exist = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
   	else
-  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND client_id = ?', current_client.id)
+  		@abonnement_exist = Abonnement.where("etat = 'en_cours' AND client_id = ?", current_client.id)
   	end
   	@listing_produit = nil
   	@abonnement_panier = nil
@@ -106,7 +106,7 @@ class ProcessOrderController < ApplicationController
   #_____________________________ ENREGISTREMENT DU POINT RELAIS ET CREATION FICHE COMMANDE __________________________________________________________________
   def selectPr
   	if params[:point_relai][:id] != ""
-  		@cageot_encours = Cageot.where('etat = "en_cours" AND client_id = ?', current_client.id)
+  		@cageot_encours = Cageot.where("etat = 'en_cours' AND client_id = ?", current_client.id)
   		#_____ SI CAGEOT ACUTEL EXIST __________________________________________________________________
   		if @cageot_encours.count > 0
   			@cageot_ = Cageot.find(@cageot_encours[0].id)
