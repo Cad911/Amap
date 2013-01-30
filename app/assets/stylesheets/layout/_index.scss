@@ -70,7 +70,7 @@ body .l_wrapper .l_main_gutter.home_page {
 		}
 		&.ceuillettes {					// définie les images d'illustration
 			.image {
-				height:320px;
+				height:319px;
 				margin-top:40px;
 				margin-right:-1px;
 				@include home_page-sprite(hand);
@@ -102,7 +102,7 @@ body .l_wrapper .l_main_gutter.home_page {
 			.image {
 				display:bock;
 				width:720px;
-				height:105px;
+				height:104px;
 				@include home_page-sprite(process);
 				@include margin;
 			}

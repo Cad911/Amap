@@ -409,15 +409,18 @@
 
 // Bouton basique
 span.button {
-  border:solid 1px #518c3a;
-  padding:6px 0 5px  0;
-  @include borderradius(20px);
+
   font-size: 22px;
+  position: relative;
+  z-index: 800;
+        padding:5px;
+      @include borderradius(20px);
+      padding:10px 5px 10px  5px;
+
+      border:solid 1px rgba(255,255,255, 0.8);
+      background: url("/../images/cta/bg_ombre_1.png") repeat top;
   &:hover, &:hover a {
     cursor:pointer;
-  }
-  &:active {
-    border:solid 1px rgba(139, 230,104, 0);
   }
   a {
     border:solid 1px #8be668; // pour IE
@@ -446,21 +449,22 @@ span.button {
       -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
       -o-box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
       box-shadow: inset 2px 2px 3px rgba(0,0,0, 0.5);
+      &:before {
+        border:solid 1px rgba(139, 230,104, 0);
+      }
     }
-    &::before {
+    &:before {
       content: "";
       display:block;
       height: 100%;
       width: 100%;
       position: absolute;
-      top:-7px;
-      left:-7px;
-      padding:5px;
-      @include borderradius(20px);
+      padding: 1px;
+      top:-2px;
+      left:-2px;
       z-index:-1;
-      padding:6px 2px 6px 10px;
-      border:solid 1px rgba(255,255,255, 0.8);
-      background: url("/../images/cta/bg_ombre_1.png") repeat top;
+      border:solid 1px #518c3a;
+      @include borderradius(20px);
     }
   }
 }
