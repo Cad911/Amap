@@ -5,7 +5,7 @@ class Administration::CommandesController < ApplicationController
       @mes_commandes_paye = []
       
       #__RECHERCHE TOUTES LES COMMANDES PAYE
-      @commandes_paye = Commande.where('etat = "paye"')
+      @commandes_paye = Commande.where("etat = 'paye'")
       
       @commandes_paye.each do |commande|
          (commande.rel_commande_produits).each do |produit_commande|
@@ -20,7 +20,7 @@ class Administration::CommandesController < ApplicationController
       #___ COMMANDE ANNULEE AVANT PAIEMENT DU CLIENT _____
       @mes_commandes_annule = []
       
-      @commandes_annule = Commande.where('etat = "annule"')
+      @commandes_annule = Commande.where("etat = 'annule'")
       @commandes_annule.each do |commande|
          (commande.rel_commande_produits).each do |produit_commande|
              #__ ON RECUPERE SEULEMENt LES PRODUITS CORRESPONDANT A l'UTILISATEUR
@@ -34,7 +34,7 @@ class Administration::CommandesController < ApplicationController
       #___ COMMANDE EN COURS _____
       @mes_commandes_encours = []
       
-      @commandes_encours = Commande.where('etat = "en_cours"')
+      @commandes_encours = Commande.where("etat = 'en_cours'")
       @commandes_encours.each do |commande|
          (commande.rel_commande_produits).each do |produit_commande|
              #__ ON RECUPERE SEULEMENt LES PRODUITS CORRESPONDANT A l'UTILISATEUR

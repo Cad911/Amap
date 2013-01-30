@@ -11,7 +11,7 @@ class AbonnementsController < InheritedResources::Base
   		if session[:abonnement_id].nil?
   			session[:abonnement_id] = "#{DateTime.now.to_i}"+("#{(1..100).to_a.shuffle.join}#{('a'..'z').to_a.shuffle.join}").split('').shuffle.join #__ GENERATION ID POUR PANIER __
   		else
-  			@abonnement_exist = Abonnement.where('etat = "en_cours" AND session_id = ?',session[:abonnement_id])
+  			@abonnement_exist = Abonnement.where("etat = 'en_cours' AND session_id = ?",session[:abonnement_id])
   			#____ SI ABONNEMENT EXIST __
   			if @abonnement_exist.count > 0
   				@abonnement_exist1 =  Abonnement.find(@abonnement_exist[0].id)
@@ -22,7 +22,7 @@ class AbonnementsController < InheritedResources::Base
   		
   		#__ SUPPRESSION CAGEOT SI IL EXISTE
   		if !session[:cageot_id].nil?
-  			@cageot_exist = Cageot.where('etat = "en_cours" AND session_id = ?',session[:cageot_id])
+  			@cageot_exist = Cageot.where("etat = 'en_cours' AND session_id = ?",session[:cageot_id])
   			#____ SI ABONNEMENT EXIST __
   			if @cageot_exist.count > 0
   				@cageot =  Cageot.find(@cageot_exist[0].id)
@@ -54,7 +54,7 @@ class AbonnementsController < InheritedResources::Base
   	#						   #
   	#__________________________#
   	else
-  		@abonnement_exist = Abonnement.where('etat = "en_cours" AND client_id = ?', current_client.id)
+  		@abonnement_exist = Abonnement.where("etat = 'en_cours' AND client_id = ?", current_client.id)
 		#____ SI ABONNEMENT EXIST __
 		if @abonnement_exist.count > 0
 			@abonnement_exist1 =  Abonnement.find(@abonnement_exist[0].id)
@@ -64,7 +64,7 @@ class AbonnementsController < InheritedResources::Base
 		
 		#__ SUPPRESSION CAGEOT SI IL EXISTE
   		if !session[:cageot_id].nil?
-  			@cageot_exist = Cageot.where('etat = "en_cours" AND client_id = ?',current_client.id)
+  			@cageot_exist = Cageot.where("etat = 'en_cours' AND client_id = ?",current_client.id)
   			#____ SI ABONNEMENT EXIST __
   			if @cageot_exist.count > 0
   				@cageot =  Cageot.find(@cageot_exist[0].id)
