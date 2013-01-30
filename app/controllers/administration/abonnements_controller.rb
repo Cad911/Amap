@@ -10,7 +10,7 @@ class Administration::AbonnementsController < ApplicationController
       
       if @mes_paniers.count > 0
 	      @mes_paniers.each do |panier|
-	           @some_abonnement = Abonnement.where('panier_id = ? AND etat = "paye"',panier.id)
+	           @some_abonnement = Abonnement.where("panier_id = ? AND etat = 'paye'",panier.id)
 	           
 	           if @some_abonnement.count > 0
 	               @some_abonnement.each do |abonnement|
@@ -27,7 +27,7 @@ class Administration::AbonnementsController < ApplicationController
       @today = Date.today #return aaaa-mm-jj
       if @mes_paniers.count > 0
 	      @mes_paniers.each do |panier|
-	           @some_abonnement = Abonnement.where('panier_id = ? AND etat = "paye" AND date_fin >= ?',panier.id,@today)
+	           @some_abonnement = Abonnement.where("panier_id = ? AND etat = 'paye' AND date_fin >= ?",panier.id,@today)
 	           
 	           if @some_abonnement.count > 0
 	               @some_abonnement.each do |abonnement|
@@ -44,7 +44,7 @@ class Administration::AbonnementsController < ApplicationController
       @today = Date.today #return aaaa-mm-jj
       if @mes_paniers.count > 0
 	      @mes_paniers.each do |panier|
-	           @some_abonnement = Abonnement.where('panier_id = ? AND etat = "paye" AND date_fin < ?',panier.id,@today)
+	           @some_abonnement = Abonnement.where("panier_id = ? AND etat = 'paye' AND date_fin < ?",panier.id,@today)
 	           
 	           if @some_abonnement.count > 0
 	               @some_abonnement.each do |abonnement|
@@ -61,7 +61,7 @@ class Administration::AbonnementsController < ApplicationController
       @today = Date.today #return aaaa-mm-jj
       if @mes_paniers.count > 0
 	      @mes_paniers.each do |panier|
-	           @some_abonnement = Abonnement.where('panier_id = ? AND etat = "annule"',panier.id)
+	           @some_abonnement = Abonnement.where("panier_id = ? AND etat = 'annule'",panier.id)
 	           
 	           if @some_abonnement.count > 0
 	               @some_abonnement.each do |abonnement|
