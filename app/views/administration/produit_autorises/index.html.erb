@@ -19,8 +19,10 @@
 
 
 <ul class="cards">
-	<% @produit_autorises.each do |produit_autorises| %>
-		<%= render :partial => 'card', :locals => {:produit_autorise => produit_autorises} %>
+	<% if @produit_autorises.count > 0 %>
+		<% @produit_autorises.each do |produit_autorises| %>
+			<%= render :partial => 'card', :locals => {:produit_autorise => produit_autorises} %>
+		<% end %>
 	<% end %>
 </ul>
 

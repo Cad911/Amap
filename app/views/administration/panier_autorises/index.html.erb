@@ -20,9 +20,10 @@
 <% if @panier_autorises.nil? %>
 
 <% else %>
-
-	<% @panier_autorises.each do |panier_autorises| %>
-		<%= render :partial => "card_panier", :locals => {:panier_autorise => panier_autorises} %>
+	<% if @panier_autorises.count > 0 %>
+		<% @panier_autorises.each do |panier_autorises| %>
+			<%= render :partial => "card_panier", :locals => {:panier_autorise => panier_autorises} %>
+		<% end %>
 	<% end %>
 
 <% end %>

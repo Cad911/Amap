@@ -35,9 +35,11 @@
 </div>
 
 <ul class="cards">
-	<% @stocks.each do |stock| %>
-	<%= render :partial => 'card', :locals => {:stock => stock} %>
-<% end %>
+	<% if @stocks.count > 0 %>
+		<% @stocks.each do |stock| %>
+			<%= render :partial => 'card', :locals => {:stock => stock} %>
+		<% end %>
+	<% end %>
 </ul>
 
 <div class="lightbox_wrapper lightbox_new_stock has-menu">

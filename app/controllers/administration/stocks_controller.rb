@@ -6,7 +6,7 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   	#TO DEFINE THE PAGE WHERE I AM
   	@admin_produit = true
   	
-  	@stocks = Stock.where('user_id = ? AND deleted = "0"', params[:user_id]).order('created_at DESC')
+  	@stocks = Stock.where('user_id = ? AND deleted = 0', params[:user_id]).order('created_at DESC')
   	@stock_new = Stock.new
    	authorize! :update, User.find(params[:user_id]) #TRADUCTION : EST-IL AUTORISE A UPDATER CETTE UTILISATEUR ?
    	respond_to do |format|
@@ -114,17 +114,17 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
 		#CREATE PHOTO STOCK SI IL EN A
 		if !params[:photo_stock].nil?	
 		    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-			if params[:photo_stock][:first_image] == "1"
-				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+			if params[:photo_stock][:first_image] == 1
+				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 				if @photo_first_image.count > 0
 					@photo_first_image[0].first_image = 0
 					@photo_first_image[0].save	
 				end
 			else
-				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+				@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 				#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 				if @photo_first_image.count == 0
-					params[:photo_stock][:first_image] = "1"
+					params[:photo_stock][:first_image] = 1
 				end
 			end
 		@photo_stock = PhotoStock.new(params[:photo_stock])
@@ -231,7 +231,7 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   #________________ EXIST DEJA ________________________________________
   def alreadyExistStock
   	existe_deja = true
-  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ? AND deleted = '0'",params[:produit_autorise_id], params[:user_id])
+  	produit_stock = Stock.where("produit_autorise_id = ? AND user_id = ? AND deleted = 0",params[:produit_autorise_id], params[:user_id])
   	if produit_stock.count > 0 and params[:produit_autorise_id] != ""
   		existe_deja = true
   	else
@@ -258,18 +258,18 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
     @stock = Stock.find(params[:stock_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
 	if params[:photo_stock][:first_image] == "1"
-		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 		if @photo_first_image.count > 0
 			@photo_first_image[0].first_image = 0
 			@photo_first_image[0].save	
 		end
 	else
-		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 		if @photo_first_image.count == 0
-			params[:photo_stock][:first_image] = "1"
+			params[:photo_stock][:first_image] = 1
 		else
-			params[:photo_stock][:first_image] = "0"
+			params[:photo_stock][:first_image] = 0
 		end
 	end
 	@photo_stock = PhotoStock.new(params[:photo_stock])
@@ -286,12 +286,12 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
     @stock = Stock.find(params[:stock_id])
     @image = PhotoStock.find(params[:image_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_stock][:first_image] == "1"
+	if params[:photo_stock][:first_image] == 1
 		#___ SI PAS DE CHANGEMENT ______
 		if @image.first_image == 1
 			flash[:notice] = "Aucun changement"
 		else
-			@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = "1"', @stock.id)
+			@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 			if @photo_first_image.count > 0
 				@photo_first_image[0].first_image = 0
 				@photo_first_image[0].save	

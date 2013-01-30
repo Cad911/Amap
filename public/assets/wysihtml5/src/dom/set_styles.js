@@ -1,0 +1,1 @@
+wysihtml5.dom.setStyles=function(e){return{on:function(t){var n=t.style;if(typeof e=="string"){n.cssText+=";"+e;return}for(var r in e)r==="float"?(n.cssFloat=e[r],n.styleFloat=e[r]):n[r]=e[r]}}};

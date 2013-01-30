@@ -4,7 +4,7 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 	#_______ INDEX _________
 	def index
 	    @admin_basket = true
-		@paniers = Panier.where('revendeur_id = ? AND deleted = "0"', params[:user_id]).order('created_at DESC')
+		@paniers = Panier.where('revendeur_id = ? AND deleted = 0', params[:user_id]).order('created_at DESC')
 
 
 		authorize! :update, User.find(params[:user_id]) #AUTORISATION POUR LA PRODUITS
@@ -331,19 +331,19 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
     @panier = Panier.find(params[:panier_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
     
-	if (params[:photo_panier][:first_image]).to_s == "1"
-		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+	if (params[:photo_panier][:first_image]) == 1
+		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = 1', @panier.id)
 		if @photo_first_image.count > 0
 			@photo_first_image[0].first_image = "0"
 			@photo_first_image[0].save	
 		end
 	else
-		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+		@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = 1', @panier.id)
 		#__ SI PAS ENCORE DIMAGE PAR DEFAUT, ON L'APPLIQUE __
 		if @photo_first_image.count == 0
-			params[:photo_panier][:first_image] = "1"
+			params[:photo_panier][:first_image] = 1
 		else
-			params[:photo_panier][:first_image] = "0"
+			params[:photo_panier][:first_image] = 0
 		end
 	end
 	@photo_panier = PhotoPanier.new
@@ -360,14 +360,14 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
     @panier = Panier.find(params[:panier_id])
     @image = PhotoPanier.find(params[:image_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_panier][:first_image].to_s == "1"
+	if params[:photo_panier][:first_image] == 1
 		#___ SI PAS DE CHANGEMENT ______
 		if @image.first_image.to_s == '1'
 			flash[:notice] = "Aucun changement"
 		else
-			@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = "1"', @panier.id)
+			@photo_first_image = PhotoPanier.where('panier_id = ? AND first_image = 1', @panier.id)
 			if @photo_first_image.count > 0
-				@photo_first_image[0].first_image = '0'
+				@photo_first_image[0].first_image = 0
 				@photo_first_image[0].save	
 			end
 			@image.first_image = params[:photo_panier][:first_image]
@@ -376,7 +376,7 @@ protect_from_forgery :except => [:create_declinaison,:supp_declinaison,:produit_
 		end
 	else
 		#___ SI ON ENLEVE L IMAGE PAR DEFAUT ______
-		if @image.first_image.to_s == '1'
+		if @image.first_image == 1
 			flash[:notice] = "Il est obligatoire d avoir une image par defaut"
 		else
 			flash[:notice] = "Aucun changement"

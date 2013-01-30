@@ -1,0 +1,1 @@
+wysihtml5.dom.insertCSS=function(e){return e=e.join("\n"),{into:function(t){var n=t.head||t.getElementsByTagName("head")[0],r=t.createElement("style");r.type="text/css",r.styleSheet?r.styleSheet.cssText=e:r.appendChild(t.createTextNode(e)),n&&n.appendChild(r)}}};
