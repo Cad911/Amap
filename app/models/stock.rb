@@ -28,8 +28,11 @@ class Stock < ActiveRecord::Base
   def default_image
   	@default_photo = PhotoStock.where('stock_id = ? AND first_image = 1',self.id)
   	if @default_photo.count > 0
-  		@mydefault_photo = PhotoStock.find(@default_photo[0].id)
-  		return @mydefault_photo
+      if !@default_photo.nil?
+    		@mydefault_photo = PhotoStock.find(@default_photo[0].id)
+    		return @mydefault_photo
+
+      return nil
   	else
   		return nil
   	end
@@ -38,7 +41,8 @@ class Stock < ActiveRecord::Base
   def other_image
   	@other_image = PhotoStock.where('stock_id = ? AND first_image = 0',self.id)
   	if @other_image.count > 0
-  		return @other_image
+  		 @other_image.delete_if {|x| x.image.nil? } 
+      return @other_image
   	else
   		return nil
   	end
