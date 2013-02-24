@@ -41,7 +41,11 @@ class Stock < ActiveRecord::Base
   def other_image
   	@other_image = PhotoStock.where('stock_id = ? AND first_image = 0',self.id)
   	if @other_image.count > 0
-  		 @other_image.delete_if {|x| x.image.nil? } 
+  		  @other_image.each do |image|
+          if image.image.nil?
+            @other_image.delete(image)
+          end
+        end
       return @other_image
   	else
   		return nil
