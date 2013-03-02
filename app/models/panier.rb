@@ -111,7 +111,7 @@ class Panier < ActiveRecord::Base
     #___ nb personne inscrite
     def customer_number
     	@today = Date.today #return aaaa-mm-jj
-	    @number_customer = Abonnement.where('panier_id = ? AND etat = "paye" AND date_fin >= ?',self.id,@today).count
+	    @number_customer = Abonnement.where("panier_id = ? AND etat = 'paye' AND date_fin >= ?",self.id,@today).count
 	    
 	    return @number_customer
     	#@number_customer = Abonnement.where()
