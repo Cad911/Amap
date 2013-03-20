@@ -257,7 +257,8 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   def add_image
     @stock = Stock.find(params[:stock_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
-	if params[:photo_stock][:first_image] == "1"
+    params[:photo_stock][:first_image] = params[:photo_stock][:first_image].to_i
+	if params[:photo_stock][:first_image] == 1
 		@photo_first_image = PhotoStock.where('stock_id = ? AND first_image = 1', @stock.id)
 		if @photo_first_image.count > 0
 			@photo_first_image[0].first_image = 0
@@ -285,6 +286,7 @@ protect_from_forgery :except => [:add_image, :delete_image, :destroy]
   def update_image
     @stock = Stock.find(params[:stock_id])
     @image = PhotoStock.find(params[:image_id])
+    params[:photo_stock][:first_image] = params[:photo_stock][:first_image].to_i
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
 	if params[:photo_stock][:first_image] == 1
 		#___ SI PAS DE CHANGEMENT ______

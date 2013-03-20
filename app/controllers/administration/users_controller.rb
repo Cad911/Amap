@@ -82,6 +82,7 @@ protect_from_forgery :except => [:add_image, :delete_image]
   #_________________________________ ADD IMAGE _______________________________________
   def add_image
 	    #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
+		params[:photo_user][:first_image] = params[:photo_user][:first_image].to_i
 		if params[:photo_user][:first_image] == 1
 			@photo_first_image = PhotoUser.where('user_id = ? AND first_image = 1', current_user.id)
 			if @photo_first_image.count > 0
@@ -107,6 +108,7 @@ protect_from_forgery :except => [:add_image, :delete_image]
 
   #_________________________________ UPDATE  IMAGE _______________________________________
   def update_image
+  	params[:photo_user][:first_image] = params[:photo_user][:first_image].to_i
     @image = PhotoUser.find(params[:image_id])
     #____  SI IMAGE MISE EN PLACE IMAGE PAR DEFAUT
 	if params[:photo_user][:first_image] == 1
