@@ -13,7 +13,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
-  # storage :file
+  storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
@@ -36,6 +36,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
+
+
+  #FOR CLOUDINARY
+  def public_id
+   return model.photo_file_name
+  end
 
   # Create different versions of your uploaded files:
   
