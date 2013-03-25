@@ -40,7 +40,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   #FOR CLOUDINARY
   def public_id
-   return model.photo_file_name
+   return original_filename
   end
 
   # Create different versions of your uploaded files:
