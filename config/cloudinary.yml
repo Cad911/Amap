@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: ht5glykmi
+  api_key: '511354594823599'
+  api_secret: Uq7RlsjOl6QbXsIc89LPLbnFyOc
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: ht5glykmi
+  api_key: '511354594823599'
+  api_secret: Uq7RlsjOl6QbXsIc89LPLbnFyOc
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: ht5glykmi
+  api_key: '511354594823599'
+  api_secret: Uq7RlsjOl6QbXsIc89LPLbnFyOc
+  enhance_image_tag: true
+  static_image_support: false
