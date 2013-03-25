@@ -39,9 +39,9 @@ class ImageUploader < CarrierWave::Uploader::Base
 
 
   #FOR CLOUDINARY
-  def public_id
-   return version_name
-  end
+  # def public_id
+  #  return version_name
+  # end
 
   # Create different versions of your uploaded files:
   
