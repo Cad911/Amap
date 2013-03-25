@@ -51,7 +51,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
   
   version :is_small do
-    process :eager => true
+    eager
  	  process  :resize_to_fill => [53, 53,"NorthEast"]
   end
   
