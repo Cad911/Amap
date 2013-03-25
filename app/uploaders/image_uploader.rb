@@ -5,15 +5,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
   
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  # include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
   # include Sprockets::Helpers::RailsHelper
   # include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
@@ -46,14 +46,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   
   def who_is_bigger
-  	manipulate! do |img|
-  		image = MiniMagick::Image.open(img.path)
-  		if image[:heigth] > image[:width]
-  			return "h"
-  		else
-  			return "w"
-  		end
-  	end
+  	# manipulate! do |img|
+  	# 	image = MiniMagick::Image.open(img.path)
+  	# 	if image[:heigth] > image[:width]
+  	# 		return "h"
+  	# 	else
+  	# 		return "w"
+  	# 	end
+  	# end
+    return "h"
   end
   
   version :is_small do
