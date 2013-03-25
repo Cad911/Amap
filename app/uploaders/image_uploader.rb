@@ -59,22 +59,22 @@ class ImageUploader < CarrierWave::Uploader::Base
   
   version :is_small do
     eager
- 	  process  :resize_to_fill => [53, 53,"NorthEast"]
+ 	  process  :resize_to_fill => [53, 53,:north]
   end
   
   version :is_medium do
      eager
-     process  :resize_to_fill => [188, 188,"NorthEast"]
+     process  :resize_to_fill => [188, 188,:north]
   end
   
   version :is_big do
      eager
-     process  :resize_to_fill => [273, 273,"NorthEast"]
+     process  :resize_to_fill => [273, 273,:north]
   end
   
   version :is_huge do
      eager
-     process  :resize_to_fill => [428, 428,"NorthEast"]
+     process  :resize_to_fill => [428, 428,:north]
   end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
