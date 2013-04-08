@@ -5,6 +5,7 @@ development:
   api_secret: Uq7RlsjOl6QbXsIc89LPLbnFyOc
   enhance_image_tag: true
   static_image_support: false
+  CLOUDINARY_URL: 'https://cloudinary-a.akamaihd.net/ht5glykmi'
 production:
   cloud_name: ht5glykmi
   api_key: '511354594823599'
