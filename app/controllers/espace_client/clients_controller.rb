@@ -10,7 +10,7 @@ class EspaceClient::ClientsController < InheritedResources::Base
 		    sign_in(:client,@client) #Connexion devise
 		    #_____________ PARTIE OÙ ON RATTACHE LE CAGEOT OU L'ABONNEMENT A L'UTILISATEUR ____________
 		    @abonnement_en_cours = Abonnement.where("etat = 'en_cours' AND session_id = ?", session[:abonnement_id])
-		    @cageot__en_cours = Cageot.where('etat = "en_cours" AND session_id = ?',session[:cageot_id])
+		    @cageot__en_cours = Cageot.where("etat = 'en_cours' AND session_id = ?",session[:cageot_id])
 		    if @abonnement_en_cours.count > 0
 		    	@abonnement_user = Abonnement.find(@abonnement_en_cours[0].id)
 		    	@abonnement_user.client_id = @client.id
