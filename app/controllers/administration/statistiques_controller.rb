@@ -8,8 +8,13 @@ class Administration::StatistiquesController < ApplicationController
   #_________________________________________________________________
   def CAProductSellThisMonth
 	    date = Date.today
-	  	all_commande_month = Commande.where("etat = 'paye' AND MONTH(updated_at) = ? AND YEAR(updated_at) = ?",date.month, date.year)
-	  	all_abonnement_month = Abonnement.where("etat = 'paye' AND MONTH(updated_at) = ? AND YEAR(updated_at) = ?",date.month, date.year)
+	  	if ENV["RAILS_ENV"] == 'production'
+	  		all_commande_month = Commande.where("etat = 'paye' AND extract(MONTH from updated_at) = ? AND extract(YEAR from updated_at) = ?",date.month, date.year)
+		  	all_abonnement_month = Abonnement.where("etat = 'paye' AND extract(MONTH from updated_at) = ? AND extract(YEAR from updated_at) = ?",date.month, date.year)
+	  	else
+		  	all_commande_month = Commande.where("etat = 'paye' AND MONTH(updated_at) = ? AND YEAR(updated_at) = ?",date.month, date.year)
+		  	all_abonnement_month = Abonnement.where("etat = 'paye' AND MONTH(updated_at) = ? AND YEAR(updated_at) = ?",date.month, date.year)
+	  	end
 	  	@CA = { :CA_product_ttc => 0,:CA_product_ht => 0,:CA_abonnement_ttc => 0,:CA_abonnement_ht => 0, :CA_total_ttc => 0, :CA_total_ht => 0 }
 	  	
 	  	all_commande_month.each do |commande|
@@ -43,8 +48,13 @@ class Administration::StatistiquesController < ApplicationController
   
     def CAProductSellThisYear
 	    date = Date.today
-	  	all_commande_month = Commande.where("etat = 'paye' AND YEAR(updated_at) = ?", date.year)
-	  	all_abonnement_month = Abonnement.where("etat = 'paye' AND YEAR(updated_at) = ?", date.year)
+	    if ENV["RAILS_ENV"] == 'production'
+	    	all_commande_month = Commande.where("etat = 'paye' AND extract(YEAR from updated_at) = ?", date.year)
+		  	all_abonnement_month = Abonnement.where("etat = 'paye' AND extract(YEAR from updated_at) = ?", date.year)
+	    else
+		  	all_commande_month = Commande.where("etat = 'paye' AND YEAR(updated_at) = ?", date.year)
+		  	all_abonnement_month = Abonnement.where("etat = 'paye' AND YEAR(updated_at) = ?", date.year)
+		end
 	  	@CA_by_month = {}
 	  	@CA_incrementer_by_month = {}
 	  	@CA_total = { :CA_product_ttc => 0,:CA_product_ht => 0,:CA_abonnement_ttc => 0,:CA_abonnement_ht => 0 }
